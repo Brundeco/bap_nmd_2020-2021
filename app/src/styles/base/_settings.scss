@@ -1,0 +1,30 @@
+body {
+  position: relative;
+  width: 100%;
+  background-color: $base-white;
+  height: 100vh;
+  width: 100vw;
+}
+
+li {
+  list-style-type: none;
+  display: inline-block;
+}
+
+a {
+  text-decoration: none;
+  color: $base-black;
+  display: block;
+}
+
+a, button {
+  cursor: pointer;
+}
+
+::selection { background: $base-black; color: lightgray; }
+
+.App {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
