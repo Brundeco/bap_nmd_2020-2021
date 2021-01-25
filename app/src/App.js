@@ -1,9 +1,17 @@
 import "./App.scss";
-import "./components/Menu"
-import "./pages/Home"
+import "./components/Nav";
+import "./pages/Home";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Home from "./pages/Home";
 
 function App() {
-  return <div className="App"></div>;
+  return (
+    <Router>
+      <div className="App">
+        <Route exact path='/' component={Home} />
+      </div>
+    </Router>
+  );
 }
 
 export default App;
