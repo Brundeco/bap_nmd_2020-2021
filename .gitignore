@@ -6,7 +6,6 @@ logs
 **/*.back.*
 
 node_modules
-nodemon.*
 bower_components
 
 .env
