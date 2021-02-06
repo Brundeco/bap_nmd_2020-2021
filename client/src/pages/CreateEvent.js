@@ -5,6 +5,7 @@ import axios from "axios";
 
 export default () => {
   const [data, setData] = React.useState({});
+  const [images, setImages] = useState([]);
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }));
@@ -57,10 +58,11 @@ export default () => {
       <FileBase
         type="file"
         multiple={false}
-        onDone={({ base64 }) =>
-          setData({ ...data, image: base64 })
-        }
+        onDone={({ base64 }) => setData({ ...data, image: base64 })}
       />
+      <div>
+        <img src={data?.image} alt="" />
+      </div>
       <input type="submit" value="Submit" />
     </form>
   );

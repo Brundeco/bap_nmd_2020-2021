@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 
 import eventRoutes from './routes/events.js'
+import propertyRoutes from './routes/properties.js'
 
 const app = express();
 dotenv.config()
@@ -14,6 +15,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 app.use('/events', eventRoutes)
+app.use('/properties', propertyRoutes)
 
 const CONNECTION_URL = `mongodb+srv://Bruno:${process.env.MONGODB_PASSWORD}@cluster0.2gkzu.mongodb.net/<dbname>?retryWrites=true&w=majority`;
 const PORT = process.env.PORT || 5000;
