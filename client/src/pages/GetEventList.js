@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default () => {
@@ -19,7 +20,13 @@ export default () => {
           <div key={i}>
             <h2> {item.title} </h2>
             <p> {item.description} </p>
-            <img src={item.image} alt=""/>
+            <img src={item.image} alt="" />
+            <Link to={{ pathname: `/event/${item._id}` }}>
+              <li>DETAIL</li>
+            </Link>
+            <Link to={{ pathname: `/update-event/${item._id}` }}>
+              <li>UPDATE</li>
+            </Link>
           </div>
         );
       })}

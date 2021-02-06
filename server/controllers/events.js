@@ -1,4 +1,5 @@
 import Event from "../models/events.js";
+import mongoose from "mongoose";
 
 export const getEvents = async (req, res) => {
   try {
@@ -36,35 +37,21 @@ export const createEvent = async (req, res) => {
 
 export const updateEvent = async (req, res) => {
   const { id } = req.params;
-  const {
-    title,
-    description,
-    zip,
-    city,
-    street,
-    houseNumber,
-    author,
-    datePublished,
-    image,
-  } = req.body;
+  const { title, description, author, datePublished, image } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`);
 
-  const updatedPost = {
+  const updateEvent = {
     title,
     description,
-    zip,
-    city,
-    street,
-    houseNumber,
     author,
     datePublished,
     image,
     _id: id,
   };
 
-  await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true });
+  await Event.findByIdAndUpdate(id, updateEvent, { new: true });
 
-  res.json(updatedPost);
+  res.json(updateEvent);
 };

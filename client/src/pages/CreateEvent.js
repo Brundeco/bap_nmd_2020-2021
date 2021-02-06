@@ -5,7 +5,6 @@ import axios from "axios";
 
 export default () => {
   const [data, setData] = React.useState({});
-  const [images, setImages] = useState([]);
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }));
@@ -13,7 +12,6 @@ export default () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data);
     axios.post("http://localhost:5000/events", data);
   };
 

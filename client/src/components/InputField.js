@@ -16,8 +16,7 @@ export default (props) => {
         name={props.name}
         onChange={(e) => handleChange(e)}
         type={props.type}
-        // value={props.value ? props.value : value}
-        // autoComplete={props.autoComplete}
+        value={props.value ? props.value : value}
       />
     </div>
   );
