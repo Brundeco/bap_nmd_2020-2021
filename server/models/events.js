@@ -3,7 +3,10 @@ import mongoose from "mongoose";
 const eventSchema = mongoose.Schema({
   title: String,
   description: String,
-  address: String,
+  city: String,
+  street: String,
+  houseNumber: Number,
+  zip: Number,
   attendees: {
     type: Number,
     default: 0,
@@ -13,6 +16,7 @@ const eventSchema = mongoose.Schema({
     default: new Date(),
   },
   author: String,
+  image: String,
 });
 
 const Event = mongoose.model("Event", eventSchema);

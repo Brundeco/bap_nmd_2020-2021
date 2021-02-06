@@ -10,7 +10,19 @@ export const getEvents = async (req, res) => {
   }
 };
 
-export const createEvents = async (req, res) => {
+export const getEvent = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const event = await Event.findById(id);
+
+    res.status(200).json(event);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const createEvent = async (req, res) => {
   const event = req.body;
 
   const newEvent = new Event(event);
@@ -20,4 +32,39 @@ export const createEvents = async (req, res) => {
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
+};
+
+export const updateEvent = async (req, res) => {
+  const { id } = req.params;
+  const {
+    title,
+    description,
+    zip,
+    city,
+    street,
+    houseNumber,
+    author,
+    datePublished,
+    image,
+  } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No post with id: ${id}`);
+
+  const updatedPost = {
+    title,
+    description,
+    zip,
+    city,
+    street,
+    houseNumber,
+    author,
+    datePublished,
+    image,
+    _id: id,
+  };
+
+  await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true });
+
+  res.json(updatedPost);
 };
