@@ -8,6 +8,7 @@ import cors from "cors";
 
 import eventRoutes from './routes/events.js'
 import propertyRoutes from './routes/properties.js'
+import userRoutes from './routes/users.js'
 
 const key = fs.readFileSync('./certs/selfsigned.key');
 const cert = fs.readFileSync('./certs/selfsigned.crt');
@@ -25,6 +26,7 @@ app.use(cors());
 
 app.use('/events', eventRoutes)
 app.use('/properties', propertyRoutes)
+app.use('/users', userRoutes)
 
 const CONNECTION_URL = `mongodb+srv://Bruno:${process.env.MONGODB_PASSWORD}@cluster0.2gkzu.mongodb.net/<dbname>?retryWrites=true&w=majority`;
 const PORT = process.env.PORT || 5000;
