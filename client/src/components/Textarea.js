@@ -17,6 +17,7 @@ export default (props) => {
         onChange={(e) => handleChange(e)}
         type={props.type}
         value={props.value ? props.value : value}
+        required={props.required}
       />
     </div>
   );

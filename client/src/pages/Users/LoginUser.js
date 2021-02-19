@@ -29,16 +29,18 @@ export default () => {
         <InputField
           name="email"
           placeholder="Email"
-          type="text"
+          type="email"
           onChange={handleChange}
+          required
         />
         <InputField
           name="password"
           placeholder="password"
           type="password"
           onChange={handleChange}
+          required
         />
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Login" />
         <h5> {status} </h5>
       </form>
     </div>

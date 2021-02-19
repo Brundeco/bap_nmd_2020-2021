@@ -7,9 +7,8 @@ export const register = async (req, res, next) => {
 
   bcrypt.hash(password, 10, async (err, hashedPass) => {
     if (err) {
-      // console.log(err)
       res.status(400).json({
-        message: "Please enter a password",
+        message: "An error ocucurred",
       });
     } else {
       const user = {
@@ -23,7 +22,10 @@ export const register = async (req, res, next) => {
       const newUser = new User(user);
       try {
         await newUser.save();
-        res.status(201).json(newUser);
+        res.status(201).json({
+          user: newUser,
+          message: "Registration successfull",
+        });
       } catch (error) {
         res.status(400).json({
           message: "Username or email already taken.",
