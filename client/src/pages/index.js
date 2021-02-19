@@ -17,3 +17,4 @@ export { default as Favorites } from './Favorites/Favorites';
 export { default as Chat } from './Chat/Chat';
 
 export { default as CreateUser } from './Users/CreateUser';
+export { default as LoginUser } from './Users/LoginUser';

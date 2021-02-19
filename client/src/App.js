@@ -10,7 +10,8 @@ import {
   GetEventList,
   CreateProperty,
   GetProperty,
-  CreateUser
+  CreateUser,
+  LoginUser
 } from "./pages";
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path="/create-property" component={CreateProperty} />
 
         <Route path="/create-user" component={CreateUser} />
+        <Route path="/login-user" component={LoginUser} />
       </div>
     </Router>
   );
