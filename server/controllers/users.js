@@ -7,26 +7,27 @@ export const register = async (req, res, next) => {
 
   bcrypt.hash(password, 10, async (err, hashedPass) => {
     if (err) {
-      console.log(err);
+      // console.log(err)
+      res.status(400).json({
+        message: "Please enter a password",
+      });
     } else {
-      console.log(hashedPass);
-
       const user = {
         username,
         phone,
         email,
         image,
-        password: hashedPass
+        password: hashedPass,
       };
-
-      console.log(user);
 
       const newUser = new User(user);
       try {
         await newUser.save();
         res.status(201).json(newUser);
       } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(400).json({
+          message: "Username or email already taken.",
+        });
       }
     }
   });
@@ -37,16 +38,13 @@ export const login = async (req, res, next) => {
 
   try {
     const foundUser = await User.findOne({ email: email });
-    console.log(foundUser);
     bcrypt.compare(password, foundUser.password, function (err, result) {
       if (err) {
-        console.log(err);
         res.status(400).json({
           message: err,
         });
       }
       if (result) {
-        console.log(result);
         let token = jwt.sign(
           { username: foundUser.username },
           "verysecretvalue",
@@ -57,14 +55,23 @@ export const login = async (req, res, next) => {
         res.status(200).json({
           message: "Login successfull",
           token,
+          user: {
+            email: foundUser.email,
+            username: foundUser.username,
+            image: foundUser.image,
+            phone: foundUser.phone,
+            createdAt: foundUser.createdAt,
+          },
         });
       } else {
-        res.status(400).json({
+        res.status(401).json({
           message: "Wrong password",
         });
       }
     });
   } catch (error) {
-    res.status(400).json({ message: "This user could not be found in our database" });
+    res
+      .status(400)
+      .json({ message: "This user could not be found in our database" });
   }
 };

@@ -5,6 +5,7 @@ import axios from "axios";
 
 export default () => {
   const [data, setData] = React.useState({});
+  const [status, setStatus] = useState('Status');
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }));
@@ -15,7 +16,7 @@ export default () => {
     axios
       .post("http://localhost:5000/users/register", data)
       .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .catch((err) => setStatus(err.response.data.message));
   };
 
   return (
@@ -38,7 +39,7 @@ export default () => {
         type="text"
         onChange={handleChange}
       />
-        <InputField
+      <InputField
         name="password"
         placeholder="password"
         type="password"
@@ -53,6 +54,7 @@ export default () => {
         <img src={data?.image} alt="" />
       </div>
       <input type="submit" value="Submit" />
+      <h5> {status} </h5>
     </form>
   );
 };

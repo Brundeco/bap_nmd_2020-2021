@@ -30,8 +30,8 @@ function App() {
         <Route path="/property" component={GetProperty} />
         <Route path="/create-property" component={CreateProperty} />
 
-        <Route path="/create-user" component={CreateUser} />
-        <Route path="/login-user" component={LoginUser} />
+        <Route path="/register" component={CreateUser} />
+        <Route path="/login" component={LoginUser} />
       </div>
     </Router>
   );

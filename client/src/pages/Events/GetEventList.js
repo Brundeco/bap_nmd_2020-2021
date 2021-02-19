@@ -47,10 +47,10 @@ export default () => {
     );
   } else {
     return (
-      <div className={showLayer ? "show-bg-layer" : "hide-bg-layer"}>
-        <Preloader text="Events are loading" />
-        {toggleLayer}
-      </div>
+      // <div className={showLayer ? "show-bg-layer" : "hide-bg-layer"}>
+      <Preloader text="Events are loading" />
+      //   {toggleLayer}
+      // </div>
     );
   }
 };
