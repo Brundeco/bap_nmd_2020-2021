@@ -2,12 +2,15 @@ import Event from "../models/events.js";
 import mongoose from "mongoose";
 
 export const getEvents = async (req, res) => {
+  console.log(req.user);
+
   try {
     const events = await Event.find();
+    
 
-    res.status(200).json(events);
+    return res.status(200).json({events : events, user: req.user });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    return res.status(404).json({ message: error.message });
   }
 };
 
@@ -15,6 +18,8 @@ export const getEvent = async (req, res) => {
   const { id } = req.params;
 
   try {
+    console.log(req.user);
+
     const event = await Event.findById(id);
 
     res.status(200).json(event);
@@ -25,6 +30,8 @@ export const getEvent = async (req, res) => {
 
 export const createEvent = async (req, res) => {
   const event = req.body;
+
+  console.log(event)
 
   const newEvent = new Event(event);
   try {

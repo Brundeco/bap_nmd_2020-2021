@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { InputField, Textarea } from "./../../components";
+import { InputField } from "./../../components";
 import FileBase from "react-file-base64";
 import axios from "axios";
 

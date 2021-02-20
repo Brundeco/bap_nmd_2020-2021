@@ -16,8 +16,10 @@ export default () => {
       .post("http://localhost:5000/users/login", data)
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data.user));
+        localStorage.setItem("auth_token", res.data.token);
         setStatus(res.data.message)
-        window.location = "/";
+        console.log(res.data.token)
+        // window.location = "/";
       })
       .catch((err) => setStatus(err.response.data.message));
   };

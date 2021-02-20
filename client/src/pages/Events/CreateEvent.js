@@ -4,15 +4,25 @@ import FileBase from "react-file-base64";
 import axios from "axios";
 
 export default () => {
-  const [data, setData] = React.useState({});
+  const user = JSON.parse(localStorage.getItem("user"));
+  const jwt = localStorage.getItem("auth_token");
+  const [data, setData] = React.useState({author: user.username, author_id: user.id});
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5000/events", data);
+    axios.post("http://localhost:5000/events", data, {
+      headers: {
+        auth_token: jwt,
+      },
+    });
   };
 
   return (

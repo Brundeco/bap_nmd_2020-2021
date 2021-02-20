@@ -40,6 +40,7 @@ export const login = async (req, res, next) => {
 
   try {
     const foundUser = await User.findOne({ email: email });
+    console.log(foundUser)
     bcrypt.compare(password, foundUser.password, function (err, result) {
       if (err) {
         res.status(400).json({
@@ -48,8 +49,8 @@ export const login = async (req, res, next) => {
       }
       if (result) {
         let token = jwt.sign(
-          { username: foundUser.username },
-          "verysecretvalue",
+          { user: foundUser._id },
+          process.env.TOKEN_SECRET,
           {
             expiresIn: "1h",
           }
@@ -59,6 +60,7 @@ export const login = async (req, res, next) => {
           token,
           user: {
             email: foundUser.email,
+            id: foundUser._id,
             username: foundUser.username,
             image: foundUser.image,
             phone: foundUser.phone,

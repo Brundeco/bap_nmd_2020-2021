@@ -15,6 +15,7 @@ const eventSchema = mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  author_id: String,
   author: String,
   image: String,
 });
