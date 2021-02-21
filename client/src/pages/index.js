@@ -18,3 +18,4 @@ export { default as Chat } from './Chat/Chat';
 
 export { default as CreateUser } from './Users/CreateUser';
 export { default as LoginUser } from './Users/LoginUser';
+export { default as LogoutUser } from './Users/LogoutUser';

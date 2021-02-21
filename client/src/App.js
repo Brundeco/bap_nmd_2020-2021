@@ -1,6 +1,7 @@
 import "./App.scss";
 import "./components/Nav";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 import {
   Home,
   Dashboard,
@@ -11,8 +12,9 @@ import {
   CreateProperty,
   GetProperty,
   CreateUser,
-  LoginUser
+  LoginUser,
 } from "./pages";
+import { ExpiredSession } from "./components";
 
 function App() {
   return (
@@ -20,7 +22,9 @@ function App() {
       <div className="App">
         <Route exact path="/" component={Home} />
 
-        <Route exact path="/dashboard" component={Dashboard} />
+        <Route path="/expired" component={ExpiredSession} />
+
+        <Route path="/dashboard" component={Dashboard} />
 
         <Route path="/events" component={GetEventList} />
         <Route path="/event/:id" component={GetEvent} />

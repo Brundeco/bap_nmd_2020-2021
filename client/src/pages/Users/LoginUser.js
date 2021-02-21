@@ -18,8 +18,8 @@ export default () => {
         localStorage.setItem("user", JSON.stringify(res.data.user));
         localStorage.setItem("auth_token", res.data.token);
         setStatus(res.data.message)
-        console.log(res.data.token)
-        // window.location = "/";
+        // console.log(res.data.token)
+        window.location = "/";
       })
       .catch((err) => setStatus(err.response.data.message));
   };
