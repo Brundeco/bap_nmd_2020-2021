@@ -24,7 +24,6 @@ export const getProperty = async (req, res) => {
 
 export const createProperty = async (req, res) => {
   const property = req.body;
-  console.log('controller fnuctoon fired')
 
   const newProperty = new Property(property);
   try {

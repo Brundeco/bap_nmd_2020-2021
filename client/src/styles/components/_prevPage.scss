@@ -1,0 +1,46 @@
+.prev-page-component {
+  width: 10vw;
+  height: 10vw;
+  display: flex;
+  align-items: center;
+  background-color: rgb(238, 238, 238);
+  border-radius: 5px;
+  justify-content: flex-start;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.menu-actions-homepage {
+//   width: 30vw;
+  height: 10vh;
+  display: flex;
+  align-items: center;
+    justify-content: space-between;
+}
+
+.menu-actions-homepage .search,
+.menu-actions-homepage .radius {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1000px;
+}
+
+.menu-actions-homepage .search img,
+.menu-actions-homepage .radius img {
+  width: 30%;
+  height: 30%;
+}
+
+
+.menu-actions-homepage .search {
+  background-color: #f5f5f5;
+}
+
+.menu-actions-homepage .radius {
+  background-color: #e4e4dc;
+  margin-left: 10px;
+}

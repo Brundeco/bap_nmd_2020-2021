@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Header } from "../../components";
 
 import { Favorites, Chat, New } from "./../../pages";
 
@@ -12,6 +13,8 @@ export default () => {
 
   return (
     <div>
+      <Header />
+
       <h1>Dashboard</h1>
 
       <div className="buttons">
