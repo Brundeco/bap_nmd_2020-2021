@@ -40,7 +40,7 @@ export const login = async (req, res, next) => {
 
   try {
     const foundUser = await User.findOne({ email: email });
-    console.log(foundUser)
+    // console.log(foundUser);
     bcrypt.compare(password, foundUser.password, function (err, result) {
       if (err) {
         res.status(400).json({
@@ -57,7 +57,7 @@ export const login = async (req, res, next) => {
         );
         res.status(200).json({
           message: "Login successfull",
-          token,
+          token: token,
           user: {
             email: foundUser.email,
             id: foundUser._id,

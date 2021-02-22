@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { InputField } from "../../components";
+import React, { useState } from "react";
+import { InputField, CheckSession } from "../../components";
 import axios from "axios";
 
 export default () => {
@@ -15,11 +15,12 @@ export default () => {
     axios
       .post("http://localhost:5000/users/login", data)
       .then((res) => {
+        setStatus(res.data.message);
         localStorage.setItem("user", JSON.stringify(res.data.user));
-        localStorage.setItem("auth_token", res.data.token);
-        setStatus(res.data.message)
-        // console.log(res.data.token)
-        window.location = "/";
+        localStorage.setItem("jwt", res.data.token);
+        if (CheckSession(res.data.token)) {
+          window.location = "/";
+        }
       })
       .catch((err) => setStatus(err.response.data.message));
   };

@@ -8,7 +8,8 @@ export default () => {
   return (
     <div className="session-fullpage">
       <h2>Sorry your session has expired. Please sign in again.</h2>
-      <button onClick={handleClick}>To login page</button>;
+      <br/>
+      <button onClick={handleClick}>To login page</button>
     </div>
   );
 };

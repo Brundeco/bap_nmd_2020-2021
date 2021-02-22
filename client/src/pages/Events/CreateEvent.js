@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { InputField, Textarea } from "./../../components";
+import {
+  InputField,
+  Textarea,
+  Preloader,
+  CheckSession,
+} from "./../../components";
 import FileBase from "react-file-base64";
 import axios from "axios";
 
 export default () => {
+  CheckSession(localStorage.getItem("jwt"));
   const user = JSON.parse(localStorage.getItem("user"));
-  const jwt = localStorage.getItem("auth_token");
-  const [data, setData] = React.useState({author: user.username, author_id: user.id});
+  const [data, setData] = React.useState({
+    author: user.username,
+    author_id: user.id,
+  });
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }));
@@ -18,11 +26,7 @@ export default () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5000/events", data, {
-      headers: {
-        auth_token: jwt,
-      },
-    });
+    axios.post("http://localhost:5000/events", data);
   };
 
   return (

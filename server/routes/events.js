@@ -5,9 +5,9 @@ import { auth } from "./../auth/auth.js";
 
 const router = express.Router();
 
-router.get("/", auth, getEvents);
-router.get('/:id', auth, getEvent);
-router.post("/", auth, createEvent);
-router.patch("/:id", auth, updateEvent);
+router.get("/", getEvents);
+router.get('/:id', getEvent);
+router.post("/", createEvent);
+router.patch("/:id", updateEvent);
 
 export default router;

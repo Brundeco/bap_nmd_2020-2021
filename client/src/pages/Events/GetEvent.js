@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { CheckSession } from "../../components";
 
 export default ({ match }) => {
-  console.log(match);
+  CheckSession(localStorage.getItem("jwt"));
   const [data, setData] = useState();
 
   useEffect(() => {

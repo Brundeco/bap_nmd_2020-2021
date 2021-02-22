@@ -3,7 +3,7 @@ import React from "react";
 export default () => {
   const logout = () => {
     localStorage.removeItem("user");
-    localStorage.removeItem("auth_token");
+    localStorage.removeItem("jwt");
     window.location = '/login'
   };
 

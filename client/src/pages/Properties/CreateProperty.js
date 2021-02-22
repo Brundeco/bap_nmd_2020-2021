@@ -13,7 +13,6 @@ export default () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data);
     axios.post("http://localhost:5000/properties", {
       title: data.title,
       images: images,
@@ -37,6 +36,7 @@ export default () => {
         return (
           <section key={i}>
             <img src={item} alt="" />
+            <button>Delete</button>
           </section>
         );
       })}
