@@ -1,0 +1,20 @@
+.property-images {
+  width: 15vh;
+  height: 15vh;
+}
+
+.property-item {
+  width: 100vw;
+  height: auto;
+  margin: 10vh 0;
+}
+
+.property-images {
+  height: auto;
+}
+
+.property-images img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

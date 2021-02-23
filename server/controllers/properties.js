@@ -23,12 +23,14 @@ export const getProperty = async (req, res) => {
 };
 
 export const createProperty = async (req, res) => {
-  const property = req.body;
+  const property = req.body
+  // console.log(property);
 
   const newProperty = new Property(property);
   try {
     await newProperty.save();
-    res.status(201).json(newProperty);
+    console.log('Property added')
+    res.status(201).send("Property added");
   } catch (error) {
     res.status(409).json({ message: error.message });
   }

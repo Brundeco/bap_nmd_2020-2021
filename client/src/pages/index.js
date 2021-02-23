@@ -8,6 +8,7 @@ export { default as GetEventList } from './Events/GetEventList';
 export { default as UpdateEvent } from './Events/UpdateEvent';
 
 export { default as CreateProperty } from './Properties/CreateProperty';
+export { default as GetPropertyList } from './Properties/GetPropertyList';
 export { default as GetProperty } from './Properties/GetProperty';
 
 export { default as New } from './New/New';
@@ -15,6 +16,7 @@ export { default as New } from './New/New';
 export { default as Favorites } from './Favorites/Favorites';
 
 export { default as Chat } from './Chat/Chat';
+export { default as Conversation } from './Chat/Conversation';
 
 export { default as CreateUser } from './Users/CreateUser';
 export { default as LoginUser } from './Users/LoginUser';

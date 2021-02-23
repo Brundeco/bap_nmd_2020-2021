@@ -11,6 +11,7 @@ export default () => {
   let currentPath = location.pathname;
 
   const handleClick = () => {
+    console.log(history)
     history.goBack();
   };
 

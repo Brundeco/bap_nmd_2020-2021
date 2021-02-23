@@ -18,8 +18,7 @@ export default () => {
       })
       .catch((err) => {
         err.response.status === 401
-          ? // ? (window.location = "/login")
-            console.log(err.response.data.message)
+          ? console.log(err.response.data.message)
           : console.log(err);
       });
   }, []);

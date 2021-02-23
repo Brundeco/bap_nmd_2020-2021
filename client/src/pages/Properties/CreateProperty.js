@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { InputField, Textarea } from "./../../components";
+import { InputField, CheckSession, Textarea } from "./../../components";
 import FileBase from "react-file-base64";
 import axios from "axios";
 
 export default () => {
-  const [data, setData] = React.useState({});
+  CheckSession(localStorage.getItem("jwt"));
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [data, setData] = React.useState({
+    author: user.username,
+    author_id: user.id,
+  });
   const [images, setImages] = useState([]);
 
   const handleChange = (name, value) => {
@@ -13,8 +19,11 @@ export default () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(images)
     axios.post("http://localhost:5000/properties", {
       title: data.title,
+      author_id: data.author_id,
+      author: data.author,
       images: images,
     });
   };
