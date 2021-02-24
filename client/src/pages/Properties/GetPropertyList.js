@@ -28,7 +28,7 @@ export default () => {
               })}
             </div>
             <ul>
-              <Link to={{ pathname: `/property/${item._id}` }}>
+              <Link to={{ pathname: `/property/${item._id}/${item.author_id}` }}>
                 <li>DETAIL</li>
               </Link>
             </ul>

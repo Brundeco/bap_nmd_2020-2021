@@ -14,7 +14,7 @@ import {
   CreateUser,
   LoginUser,
   Chat,
-  Conversation,
+  Messages,
   GetProperty,
 } from "./pages";
 import { ExpiredSession } from "./components";
@@ -39,10 +39,10 @@ function App() {
 
         <Route path="/properties" component={GetPropertyList} />
         <Route path="/create-property" component={CreateProperty} />
-        <Route path="/property/:id" component={GetProperty} />
+        <Route path="/property/:id/:author_id" component={GetProperty} />
 
         <Route path="/chat/:author_id/:author" component={Chat} />
-        <Route path="/conversation" component={Conversation} />
+        <Route path="/messages/:user" component={Messages} />
       </div>
     </Router>
   );

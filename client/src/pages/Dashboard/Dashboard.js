@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "../../components";
 
-import { Favorites, Chat, New } from "./../../pages";
+import { Favorites, Chat, New, Messages } from "./../../pages";
 
 export default () => {
   const [currentComponent, setCurrentComponent] = useState("favorites");
+  const dashboardTab = localStorage.getItem("dashboard");
 
+  useEffect(() => {
+    if (dashboardTab) {
+      setCurrentComponent(dashboardTab);
+    }
+  }, []);
+  
   const handleClick = (component) => {
+    console.log(component);
+    localStorage.setItem("dashboard", component);
     setCurrentComponent(component);
-    console.log(currentComponent);
   };
 
   return (
@@ -45,7 +53,7 @@ export default () => {
         {currentComponent === "favorites" ? (
           <Favorites />
         ) : currentComponent === "chat" ? (
-          <Chat />
+          <Messages />
         ) : (
           <New />
         )}

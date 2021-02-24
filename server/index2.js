@@ -18,14 +18,14 @@ const server = http.createServer(app);
 const socketio = new io.Server(server);
 
 socketio.on("connection", (socket) => {
-  console.log("New connection :)");
+  // console.log("New connection :)");
 
   socket.on("join", ({ author, author_id }) => {
-    console.log(author, author_id);
+    // console.log(author, author_id);
   });
 
   socket.on("disconnect", () => {
-    console.log("User left the chat :(");
+    // console.log("User left the chat :(");s
   });
 });
 

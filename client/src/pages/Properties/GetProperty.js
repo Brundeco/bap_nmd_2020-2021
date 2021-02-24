@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default ({ match }) => {
-  console.log("Arrived at property detail page ! ! :) ! !");
   const [data, setData] = useState();
 
   useEffect(() => {
+    console.log('Show prop pleaaasse')
     axios
       .get(`http://localhost:5000/properties/${match.params.id}`)
       .then((res) => setData(res.data));
