@@ -43,7 +43,7 @@ export default () => {
       />
       {images?.map(function (item, i) {
         return (
-          <section key={i}>
+          <section className="property" key={i}>
             <img src={item} alt="" />
             <button>Delete</button>
           </section>

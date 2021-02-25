@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { InputField } from "./../../components";
 import FileBase from "react-file-base64";
 import axios from "axios";
+import TextLogo from "./../../icons/text_logo.svg";
 
 export default () => {
   const [data, setData] = React.useState({});
@@ -23,48 +24,53 @@ export default () => {
   };
 
   return (
-    <div>
-      <h1>Register</h1>
-      <form action="" onSubmit={handleSubmit}>
-        <InputField
-          name="username"
-          placeholder="Username"
-          type="text"
-          onChange={handleChange}
-          required
-        />
-        <InputField
-          name="phone"
-          placeholder="Phone"
-          type="text"
-          onChange={handleChange}
-          required
-        />
-        <InputField
-          name="email"
-          placeholder="Email"
-          type="email"
-          onChange={handleChange}
-          required
-        />
-        <InputField
-          name="password"
-          placeholder="password"
-          type="password"
-          onChange={handleChange}
-          required
-        />
-        <FileBase
-          type="file"
-          multiple={false}
-          onDone={({ base64 }) => setData({ ...data, image: base64 })}
-        />
-        <div>
-          <img src={data?.image} alt="" />
-        </div>
-        <input type="submit" value="Register" />
+    <div className="login-screen">
+      <div className="wrapper">
+      <img src={TextLogo} alt="Suitswap logo" />
+        <form action="" onSubmit={handleSubmit}>
+          <InputField
+            name="username"
+            placeholder="Username"
+            type="text"
+            onChange={handleChange}
+            required
+          />
+          <InputField
+            name="phone"
+            placeholder="Phone"
+            type="text"
+            onChange={handleChange}
+            required
+          />
+          <InputField
+            name="email"
+            placeholder="Email"
+            type="email"
+            onChange={handleChange}
+            required
+          />
+          <InputField
+            name="password"
+            placeholder="password"
+            type="password"
+            onChange={handleChange}
+            required
+          />
+          <FileBase
+            type="file"
+            multiple={false}
+            onDone={({ base64 }) => setData({ ...data, image: base64 })}
+          />
+          <div>
+            <img src={data?.image} alt="" />
+          </div>
+          <input className="main-btn" type="submit" value="Register" />
+        </form>
+        <button onClick={() => (window.location = "/login")}>
+          Already a member? / Login here
+        </button>
         <h5> {status} </h5>
-      </form>
+      </div>
     </div>
   );
 };

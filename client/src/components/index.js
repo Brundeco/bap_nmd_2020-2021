@@ -8,3 +8,4 @@ export { default as UserToken } from "./UserToken";
 export { default as PrevPage } from "./PrevPage";
 export { default as FontAwesome } from "./FontAwesome"; 
 export { default as Header } from "./Header";
+// export { default as SliderData } from './SliderData'

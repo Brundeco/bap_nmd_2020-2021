@@ -3,12 +3,15 @@
   height: 10vw;
   display: flex;
   align-items: center;
-  background-color: rgb(238, 238, 238);
   border-radius: 5px;
   justify-content: flex-start;
   &:hover {
     cursor: pointer;
   }
+}
+
+.prev-page-component svg path {
+  fill: $dark-green;
 }
 
 .menu-actions-homepage {

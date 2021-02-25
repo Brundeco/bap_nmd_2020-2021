@@ -1,15 +1,14 @@
-section {
+section.property {
     width: 300px;
     height: 100px;
 }
 
-section img {
+section.property img {
     object-fit: cover;
     height: 100%;
     width: 100%;
 }
 
-
-img {
-    width: 70vw;
-}
+// img {
+//     width: 70vw;
+// }

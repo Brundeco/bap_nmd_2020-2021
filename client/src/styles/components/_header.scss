@@ -3,9 +3,11 @@
   justify-content: space-between;
   align-items: center;
   width: 100vw;
-  height: 10vh;
+  height: 15vh;
   padding: 0 7vw;
   box-sizing: border-box;
+  position: fixed;
+  top: 0;
 }
 
 .header .user-img {
