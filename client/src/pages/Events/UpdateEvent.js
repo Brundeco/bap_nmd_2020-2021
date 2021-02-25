@@ -19,7 +19,7 @@ export default ({ match }) => {
   const updateEvent = (e) => {
     e.preventDefault();
     axios
-      .patch(`http://localhost:5000/events/${match.params.id}`, data)
+      .put(`http://localhost:5000/events/${match.params.id}`, data)
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));
   };

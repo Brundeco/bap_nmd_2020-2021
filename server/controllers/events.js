@@ -46,6 +46,8 @@ export const updateEvent = async (req, res) => {
   const { id } = req.params;
   const { title, description, author, datePublished, image } = req.body;
 
+  console.log(req.body)
+
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`);
 

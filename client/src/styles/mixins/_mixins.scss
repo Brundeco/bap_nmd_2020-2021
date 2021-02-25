@@ -1,0 +1,22 @@
+@mixin main-input-field {
+    background-color: $soft-grey;
+    color: $text-grey;
+    border: 0px;
+    padding: 5%;
+    box-sizing: border-box;
+    outline: none;
+    border-radius: 5px;
+    width: 100%;
+}
+
+
+@mixin main-btn {
+    background-color: $soft-grey;
+    border: 0px;
+    padding: 5%;
+    box-sizing: border-box;
+    outline: none;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 25px;
+}

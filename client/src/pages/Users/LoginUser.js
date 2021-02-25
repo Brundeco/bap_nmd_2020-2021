@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { InputField, CheckSession } from "../../components";
 import axios from "axios";
+import TextLogo from "./../../icons/text_logo.svg";
 
 export default () => {
   const [data, setData] = React.useState({});
@@ -26,26 +27,33 @@ export default () => {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form action="" onSubmit={handleSubmit}>
-        <InputField
-          name="email"
-          placeholder="Email"
-          type="email"
-          onChange={handleChange}
-          required
-        />
-        <InputField
-          name="password"
-          placeholder="password"
-          type="password"
-          onChange={handleChange}
-          required
-        />
-        <input type="submit" value="Login" />
+    <div className="login-screen">
+      <div className="wrapper">
+        <img src={TextLogo} alt="Suitswap logo" />
+        <form action="" onSubmit={handleSubmit}>
+          <InputField
+            name="email"
+            placeholder="Email"
+            type="email"
+            onChange={handleChange}
+            className="main-input-field"
+            required
+          />
+          <InputField
+            name="password"
+            placeholder="password"
+            type="password"
+            onChange={handleChange}
+            className="main-input-field"
+            required
+          />
+          <input className="main-btn" type="submit" value="Login" />
+        </form>
+        <button onClick={() => (window.location = "/register")}>
+          Not a member yet? / Sign up here
+        </button>
         <h5> {status} </h5>
-      </form>
+      </div>
     </div>
   );
 };

@@ -39,7 +39,7 @@ app.use("/auth", authRoutes);
 app.use("/events", eventRoutes);
 app.use("/properties", propertyRoutes);
 app.use("/users", userRoutes);
-app.use("/chat", chatRoutes);
+app.use("/messages", chatRoutes);
 
 const CONNECTION_URL = `mongodb+srv://Bruno:${process.env.MONGODB_PASSWORD}@cluster0.2gkzu.mongodb.net/<dbname>?retryWrites=true&w=majority`;
 const PORT = process.env.PORT || 5000;

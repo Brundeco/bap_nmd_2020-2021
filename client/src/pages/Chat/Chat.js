@@ -8,27 +8,28 @@ let socket;
 
 export default ({ match }) => {
   const [data, setData] = useState();
-  const sender = JSON.parse(localStorage.getItem("user")).id;
-  const recepient = match.params.author_id;
+  const sender = JSON.parse(localStorage.getItem("user"));
+  const recepient = match.params;
 
   const handleChange = (name, value) => {
-    setData((prev) => ({ ...prev, [name]: value }))
-}
+    setData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const postMessage = () => {
     axios
-      .post("http://localhost:5000/chat", {
+      .post("http://localhost:5000/messages", {
         message: data.message,
-        from: sender,
-        to: recepient,
-        // read: time,
+        from: sender.id,
+        fromName: sender.username,
+        to: recepient.author_id,
+        toName: recepient.author,
+        // conversationId: sender.id + recepient.author_id,
+        // conversationNameStr:
+        //   sender.username.toLowerCase() + recepient.author.toLowerCase().trim(),
       })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
-
-
-
 
   // const [author, setAuthor] = useState();
   // const [author_id, setAuthor_id] = useState();

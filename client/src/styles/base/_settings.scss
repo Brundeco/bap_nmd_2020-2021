@@ -17,14 +17,23 @@ a {
   display: block;
 }
 
-a, button {
+a,
+button {
   cursor: pointer;
 }
 
-::selection { background: $base-black; color: lightgray; }
+::selection {
+  background: $base-black;
+  color: lightgray;
+}
 
 .App {
   width: 100vw;
   height: 100vh;
   position: relative;
+}
+
+input::placeholder {
+  color: $med-grey;
+  box-sizing: border-box;
 }

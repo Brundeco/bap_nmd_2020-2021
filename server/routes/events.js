@@ -8,6 +8,6 @@ const router = express.Router();
 router.get("/", getEvents);
 router.get('/:id', getEvent);
 router.post("/", createEvent);
-router.patch("/:id", updateEvent);
+router.put("/:id", updateEvent);
 
 export default router;

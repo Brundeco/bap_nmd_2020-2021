@@ -9,16 +9,14 @@ export default (props) => {
   };
 
   return (
-    <div className="form-group">
-      <input
-        className="user-credentials"
-        placeholder={props.placeholder}
-        name={props.name}
-        onChange={(e) => handleChange(e)}
-        type={props.type}
-        value={props.value ? props.value : value}
-        required={props.required}
-      />
-    </div>
+    <input
+      className={props.className}
+      placeholder={props.placeholder}
+      name={props.name}
+      onChange={(e) => handleChange(e)}
+      type={props.type}
+      value={props.value ? props.value : value}
+      required={props.required}
+    />
   );
 };
