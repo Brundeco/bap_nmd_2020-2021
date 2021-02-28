@@ -1,0 +1,29 @@
+.dashboard-screen nav {
+  width: 100%;
+  height: 6vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5vh;
+}
+
+.btn-dashboard {
+  background: $color-none;
+  border: 0px solid $color-none;
+  width: 30%;
+  padding: 5% 0;
+  outline: none;
+  border-radius: 5px;
+  text-transform: capitalize;
+  font-weight: 100;
+}
+
+.btn-active-true {
+  background-color: $soft-grey;
+  color: $base-black;
+}
+
+.btn-active-false {
+  background-color: $color-none;
+  color: $text-grey;
+}
