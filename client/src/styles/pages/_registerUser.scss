@@ -1,0 +1,40 @@
+.file-upload-cta {
+  position: relative;
+  height: 8vh;
+}
+
+.file-upload-cta input[type="file"] {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  outline: none;
+}
+
+.userphoto-register {
+  display: block;
+  margin: 3vh auto !important;
+  border-radius: 5px;
+  width: 25vw !important;
+  height: 25vw !important;
+  object-fit: cover;
+}
+
+#show-custom-file-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: $soft-grey;
+  text-decoration: none;
+  border-radius: 5px;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $text-grey;
+  display: flex;
+  flex-direction: column;
+  font-weight: 300;
+  font-size: 0.7em;
+}

@@ -1,3 +1,8 @@
+* {
+  font-family: 'Montserrat', sans-serif !important;
+  // font-weight: 400;
+}
+
 body {
   position: relative;
   width: 100%;
@@ -42,11 +47,40 @@ input::placeholder {
   box-sizing: border-box;
 }
 
+button {
+  outline: none;
+  border: none;
+  background: none;
+}
+
 .page-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 15vh 5% 0;
+  padding: 0 5%;
   box-sizing: border-box;
   width: 100vw;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.form-col-sm {
+  width: 25%;
+}
+
+.form-col-md {
+  width: 45%;
+}
+
+.form-col-lg {
+  width: 65%;
+}
+
+.form-col-sm input, .form-col-lg input {
+  width: 100%;
 }

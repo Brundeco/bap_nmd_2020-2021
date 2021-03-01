@@ -10,7 +10,6 @@
 }
 
 .login-screen .wrapper {
-  height: 70vh;
   width: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -20,6 +19,7 @@
 
 .login-screen img {
   width: 100px;
+  margin-bottom: 3vh;
 }
 
 .login-screen form {
@@ -32,21 +32,19 @@
 .login-screen input[type="text"],
 .login-screen input[type="password"] {
   @include main-input-field;
-  margin-bottom: 25px
+  margin-bottom: 25px;
 }
 
 .login-screen input.main-btn {
   @include main-btn;
   background-color: $theme-green;
+  margin-top: 25px;
 }
 
 .login-screen button {
-    outline: none;
-    border: none;
-    background: none;
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .file-button {
-    display: none !important;
+  display: none !important;
 }

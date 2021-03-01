@@ -3,6 +3,8 @@ import { InputField } from "./../../components";
 import FileBase from "react-file-base64";
 import axios from "axios";
 import TextLogo from "./../../icons/text_logo.svg";
+import { FontAwesome } from "./../../components";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
 
 export default () => {
   const [data, setData] = React.useState({});
@@ -26,8 +28,15 @@ export default () => {
   return (
     <div className="login-screen">
       <div className="wrapper">
-      <img src={TextLogo} alt="Suitswap logo" />
+        <img src={TextLogo} alt="Suitswap logo" />
         <form action="" onSubmit={handleSubmit}>
+          <div>
+            <img
+              src={data?.image}
+              className={data?.image ? "userphoto-register" : ""}
+              alt=""
+            />
+          </div>
           <InputField
             name="username"
             placeholder="Username"
@@ -56,13 +65,17 @@ export default () => {
             onChange={handleChange}
             required
           />
-          <FileBase
-            type="file"
-            multiple={false}
-            onDone={({ base64 }) => setData({ ...data, image: base64 })}
-          />
-          <div>
-            <img src={data?.image} alt="" />
+          <div className="file-upload-cta">
+            <FileBase
+              className="hide-std-file-btn"
+              type="file"
+              multiple={false}
+              onDone={({ base64 }) => setData({ ...data, image: base64 })}
+            />
+            <button id="show-custom-file-btn">
+              {/* <FontAwesome icon={faImage} /> */}
+              <span> {data?.image ? "Replace picture" : "Choose your profile image"} </span>
+            </button>
           </div>
           <input className="main-btn" type="submit" value="Register" />
         </form>

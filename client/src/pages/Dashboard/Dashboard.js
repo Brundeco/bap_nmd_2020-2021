@@ -25,9 +25,9 @@ export default () => {
   };
 
   return (
-    <div>
+    <div className="dashboard-screen ">
       <Header />
-      <div className="dashboard-screen page-wrapper">
+      <div className="page-wrapper">
         <h2>Dashboard</h2>
         <nav>
           {dashboardBtns.map((button, index) => {
