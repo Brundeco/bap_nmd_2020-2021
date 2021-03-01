@@ -1,0 +1,28 @@
+footer {
+  position: fixed;
+  bottom: 10vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  left: 0;
+  right: 0;
+}
+
+footer button {
+  margin: 0 1vh;
+  background: #F3F9FF;
+  border: none;
+  outline: none;
+  width: 25vw;
+  height: 4vh;
+  border-radius: 5px;
+}
+
+footer button:nth-of-type(2) {
+  background: $theme-red;
+}
+
+footer button img {
+  width: 10px;
+}

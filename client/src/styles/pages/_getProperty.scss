@@ -1,20 +1,66 @@
-.property-images {
-  width: 15vh;
-  height: 15vh;
+.property-screen .subject-image {
+  height: 30vh;
+  width: 100%;
 }
 
-.property-item {
-  width: 100vw;
-  height: auto;
-  margin: 10vh 0;
-}
-
-.property-images {
-  height: auto;
-}
-
-.property-images img {
+.property-screen .subject-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.property-screen .wrapper {
+  padding: 5%;
+  padding-bottom: 5vh;
+}
+
+.property-screen h1 {
+  font-size: 1.2em;
+  font-weight: 900;
+  margin: 3vh 0;
+}
+
+.property-screen h2 {
+  font-size: 0.9em;
+  font-weight: 300;
+  margin-bottom: 3vh;
+  font-style: italic;
+}
+
+.property-screen p {
+  font-weight: 100;
+  line-height: 22px;
+  font-size: 0.9em;
+}
+
+.property-screen .grid {
+  display: flex;
+  flex-direction: column;
+  margin: 5vh 0;
+}
+
+.property-screen .row {
+  display: flex;
+  flex-direction: row;
+  margin: 2vh 0;
+}
+
+.property-screen .col {
+  width: 50%;
+}
+
+.property-screen h3 {
+  @include main-h2-title;
+  margin-bottom: 8px;
+  font-size: 0.9em;
+}
+
+.property-screen button {
+  @include main-btn;
+  background: $theme-green;
+}
+
+.property-screen button:nth-of-type(2) {
+  @include main-btn;
+  background: $theme-blue;
 }

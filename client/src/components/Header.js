@@ -5,13 +5,16 @@ import { PrevPage } from ".";
 export default () => {
   const userImage = JSON.parse(localStorage.getItem("user")).image;
   return (
-    <div className="header">
+    <header className="header">
       <PrevPage />
       <div className="user-img">
-        <Link className="link-to-dashboard" to={{ pathname: "/dashboard", state: { from: "root" } }}>
+        <Link
+          className="link-to-dashboard"
+          to={{ pathname: "/dashboard", state: { from: "root" } }}
+        >
           <img src={userImage} alt="" />
         </Link>
       </div>
-    </div>
+    </header>
   );
 };

@@ -1,12 +1,15 @@
 import React from "react";
+import LogoutIcon from "./../../icons/logout.svg";
 
 export default () => {
   const logout = () => {
-    window.location = '/login'
-    localStorage.removeItem("user");
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("dashboard");
+    window.location = "/login";
+    localStorage.clear();
   };
 
-  return <button onClick={logout}>Logout</button>;
+  return (
+    <button onClick={logout}>
+      <img src={LogoutIcon} />
+    </button>
+  );
 };

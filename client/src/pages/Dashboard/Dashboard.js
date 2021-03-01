@@ -56,7 +56,6 @@ export default () => {
             <New />
           )}
         </div>
-        <LogoutUser onClick={onclick} />
       </div>
     </div>
   );
