@@ -1,11 +1,36 @@
-.session-fullpage {
+// .session-page {
+//    display: flex;
+//    justify-content: center;
+//    align-items: center;
+//    width: 100vw;
+//    height: 100vh;
+//    flex-direction: column;
+//    // background-color: rgb(62, 124, 91);
+//    // position: absolute;
+//    // top: 0;
+// }
+
+.session-page {
    display: flex;
+   flex-direction: column;
    justify-content: center;
    align-items: center;
-   width: 100vw;
+   padding: 0 5%;
+   box-sizing: border-box;
    height: 100vh;
-   flex-direction: column;
-   // background-color: rgb(62, 124, 91);
-   // position: absolute;
-   // top: 0;
+   width: 100vw;
+}
+
+.session-page img {
+   margin-bottom: 5vh;
+}
+
+.session-page h1 {
+   text-align: center;
+   margin-bottom: 5vh;
+   font-size: 1.3em;
+}
+
+.session-page button {
+   @include main-btn;
 }

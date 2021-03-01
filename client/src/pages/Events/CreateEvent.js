@@ -6,6 +6,7 @@ import {
   CheckSession,
   PrevPage,
 } from "./../../components";
+import SelectImage from "./../../icons/selectimage.svg";
 import FileBase from "react-file-base64";
 import axios from "axios";
 
@@ -46,6 +47,9 @@ export default () => {
                 onDone={({ base64 }) => setData({ ...data, image: base64 })}
               />
               <button id="show-custom-file-btn">
+                {/* {SelectImage} */}
+                {/* <svg> {SelectImage} </svg> */}
+                <img src={SelectImage} alt=""/>
                 <span>
                   {data?.image ? "Replace picture" : "Event wallpaper"}{" "}
                 </span>
