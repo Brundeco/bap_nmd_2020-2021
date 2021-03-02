@@ -36,7 +36,7 @@ export default () => {
       <div className="page-wrapper">
         <PrevPage />
         <h1>Fill out the data below to create your event</h1>
-        <form action="" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <section>
             <h2>Event image</h2>
             <div className="file-upload-cta">
@@ -47,8 +47,6 @@ export default () => {
                 onDone={({ base64 }) => setData({ ...data, image: base64 })}
               />
               <button id="show-custom-file-btn">
-                {/* {SelectImage} */}
-                {/* <svg> {SelectImage} </svg> */}
                 <img src={SelectImage} alt=""/>
                 <span>
                   {data?.image ? "Replace picture" : "Event wallpaper"}{" "}

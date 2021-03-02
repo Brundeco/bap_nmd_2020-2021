@@ -1,6 +1,7 @@
 .file-upload-cta {
   position: relative;
   height: 8vh;
+  height: 15vh;
 }
 
 .file-upload-cta input[type="file"] {
@@ -30,11 +31,15 @@
   border-radius: 5px;
   pointer-events: none;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   color: $text-grey;
   display: flex;
   flex-direction: column;
   font-weight: 300;
   font-size: 0.7em;
+}
+
+.register-btn {
+  margin-top: 5vh;
 }

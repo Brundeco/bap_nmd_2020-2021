@@ -3,10 +3,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 5%;
+  padding: 15vh 5%;
   box-sizing: border-box;
-  height: 100vh;
   width: 100vw;
+}
+
+.login-screen.full-screen {
+  height: 100vh;
 }
 
 .login-screen .wrapper {
@@ -17,7 +20,7 @@
   flex-direction: column;
 }
 
-.login-screen img {
+.login-screen .logo {
   width: 100px;
   margin-bottom: 3vh;
 }
@@ -38,7 +41,7 @@
 .login-screen input.main-btn {
   @include main-btn;
   background-color: $theme-green;
-  margin-top: 25px;
+  // margin-top: 10vh;
 }
 
 .login-screen button {

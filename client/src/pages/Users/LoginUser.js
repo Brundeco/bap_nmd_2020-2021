@@ -28,9 +28,9 @@ export default () => {
   };
 
   return (
-    <div className="login-screen">
+    <div className="login-screen full-screen">
       <div className="wrapper">
-        <img src={TextLogo} alt="Suitswap logo" />
+        <img src={TextLogo} alt="Suitswap logo" className="logo" />
         <form action="" onSubmit={handleSubmit}>
           <InputField
             name="email"

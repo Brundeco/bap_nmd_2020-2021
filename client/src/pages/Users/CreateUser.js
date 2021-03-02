@@ -3,8 +3,7 @@ import { InputField } from "./../../components";
 import FileBase from "react-file-base64";
 import axios from "axios";
 import TextLogo from "./../../icons/text_logo.svg";
-import { FontAwesome } from "./../../components";
-import { faImage } from "@fortawesome/free-solid-svg-icons";
+import SelectImage from "./../../icons/selectimage.svg";
 
 export default () => {
   const [data, setData] = React.useState({});
@@ -28,7 +27,7 @@ export default () => {
   return (
     <div className="login-screen">
       <div className="wrapper">
-        <img src={TextLogo} alt="Suitswap logo" />
+        <img src={TextLogo} alt="Suitswap logo" className="logo" />
         <form action="" onSubmit={handleSubmit}>
           <div>
             <img
@@ -73,11 +72,13 @@ export default () => {
               onDone={({ base64 }) => setData({ ...data, image: base64 })}
             />
             <button id="show-custom-file-btn">
-              {/* <FontAwesome icon={faImage} /> */}
-              <span> {data?.image ? "Replace picture" : "Choose your profile image"} </span>
+              <img src={SelectImage} alt="" />
+              <span>
+                {data?.image ? "Replace picture" : "Choose your profile image"}
+              </span>
             </button>
           </div>
-          <input className="main-btn" type="submit" value="Register" />
+          <input className="main-btn register-btn" type="submit" value="Register" />
         </form>
         <button onClick={() => (window.location = "/login")}>
           Already a member? / Login here
