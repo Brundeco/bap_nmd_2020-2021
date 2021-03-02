@@ -1,23 +1,25 @@
 .img-gallery {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: $soft-grey;
+  padding: 0 0 3vh 0;
 }
 
 .img-gallery img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
 }
 
 .img-gallery .img-box {
-    width: 40vw;
-    height: 10vh;
-    display: flex;
-    flex-direction: column;
-    margin: 2vh 1vh;
+  width: 40vw;
+  height: 10vh;
+  display: flex;
+  flex-direction: column;
+  margin: 2vh 1vh;
 }
 
-// .file-upload-cta.lg {
-//     height: 15vh;
-// }
+.file-upload-cta.fit {
+  margin-bottom: 0 !important;
+}

@@ -165,7 +165,7 @@ export default () => {
           <section>
             <h2>Images</h2>
 
-            <div className="file-upload-cta lg">
+            <div className="file-upload-cta fit">
               <FileBase
                 className="hide-std-file-btn"
                 type="file"
@@ -193,7 +193,7 @@ export default () => {
             </div>
           </section>
 
-          <input type="submit" value="Submit" className="main-input-field" />
+          <input type="submit" value="Verify info" className="main-input-field" />
         </form>
       </div>
     </div>
