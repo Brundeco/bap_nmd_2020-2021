@@ -15,12 +15,7 @@ export default (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(data);
-    // axios.post("http://localhost:5000/properties", {
-    //   title: data.title,
-    //   author_id: data.author_id,
-    //   author: data.author,
-    //   images: images,
-    // });
+    axios.post("http://localhost:5000/properties", data);
   };
 
   return (

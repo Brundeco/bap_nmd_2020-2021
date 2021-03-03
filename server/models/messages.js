@@ -15,8 +15,8 @@ const messageSchema = mongoose.Schema(
       required: true,
     },
     toName: { type: String, required: true },
-    // conversationId: { type: String, required: true },
-    // conversationNameStr: { type: String, required: true },
+    conversationId: { type: String, required: true },
+    conversationNameStr: { type: String, required: true },
     read: { type: Date },
   },
   { timestamps: true }

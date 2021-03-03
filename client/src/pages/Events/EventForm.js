@@ -16,7 +16,7 @@ export default (props) => {
 
   return (
     <React.Fragment>
-      <h1>Fill out the data below to create your event</h1>
+      <h1>Fill out the form below to create your event</h1>
       <form onSubmit={props.onSubmit} formdata={props.formdata(data)}>
         <section>
           <h2>Event image</h2>
@@ -38,7 +38,7 @@ export default (props) => {
             <img
               src={data?.image}
               className={data?.image ? "wallphoto" : ""}
-              alt={data?.image ? "Profile image" : ""}
+              alt={data?.image ? "Event wallphoto" : ""}
             />
           </div>
         </section>
@@ -67,31 +67,72 @@ export default (props) => {
           />
           <div className="form-row">
             <div className="form-col-md">
+              <div className="form-row">
+                <div className="form-col-md">
+                  <InputField
+                    name="startHrs"
+                    onChange={handleChange}
+                    placeholder="13"
+                    type="number"
+                    className="main-input-field"
+                  />
+                </div>
+                <div className="form-col-md">
+                  <InputField
+                    name="startMins"
+                    onChange={handleChange}
+                    placeholder="00"
+                    type="number"
+                    className="main-input-field"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="form-col-md">
+              <p className="form-hour-field">Start hour</p>
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-col-md">
+              <div className="form-row">
+                <div className="form-col-md">
+                  <InputField
+                    name="endHrs"
+                    onChange={handleChange}
+                    placeholder="20"
+                    type="number"
+                    className="main-input-field"
+                  />
+                </div>
+                <div className="form-col-md">
+                  <InputField
+                    name="endMins"
+                    onChange={handleChange}
+                    placeholder="30"
+                    type="number"
+                    className="main-input-field"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="form-col-md">
+              <p className="form-hour-field">End hour</p>
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-col-lmd">
               <InputField
-                name="startHour"
-                onChange={handleChange}
-                placeholder="Start hour"
+                name="price"
+                placeholder="Price"
                 type="number"
+                onChange={handleChange}
                 className="main-input-field"
               />
             </div>
             <div className="form-col-md">
-              <InputField
-                name="endHour"
-                onChange={handleChange}
-                placeholder="End hour"
-                type="number"
-                className="main-input-field"
-              />
+              <p className="form-hour-field">Price in Eur</p>
             </div>
           </div>
-          <InputField
-            name="price"
-            placeholder="Price"
-            type="number"
-            onChange={handleChange}
-            className="main-input-field"
-          />
         </section>
 
         <section>

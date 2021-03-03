@@ -23,9 +23,8 @@ export default ({ match }) => {
         fromName: sender.username,
         to: recepient.author_id,
         toName: recepient.author,
-        // conversationId: sender.id + recepient.author_id,
-        // conversationNameStr:
-        //   sender.username.toLowerCase() + recepient.author.toLowerCase().trim(),
+        conversationId: sender.id + "_" + recepient.author_id,
+        conversationNameStr: sender.username + "_" + recepient.author,
       })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));

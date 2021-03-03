@@ -6,7 +6,6 @@
 
 @mixin main-input-field {
   background-color: $soft-grey;
-  color: $text-grey;
   border: 0px;
   padding: 4vw;
   box-sizing: border-box;
@@ -14,7 +13,7 @@
   border-radius: 5px;
   width: 100%;
   font-weight: 300;
-  font-size: 0.7em;
+  font-size: 0.8em;
 }
 
 @mixin main-btn {

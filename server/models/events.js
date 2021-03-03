@@ -7,17 +7,18 @@ const eventSchema = mongoose.Schema({
   street: String,
   houseNumber: Number,
   zip: Number,
-  attendees: {
-    type: Number,
-    default: 0,
-  },
-  datePublished: {
-    type: Date,
-    default: new Date(),
-  },
+  date: Date,
+  startHrs: Number,
+  startMins: Number,
+  endHrs: Number,
+  endMins: Number,
+  image: String,
   author_id: String,
   author: String,
-  image: String,
+  createdAt: {
+    type: Number,
+    default: Date.now(),
+  },
 });
 
 const Event = mongoose.model("Event", eventSchema);

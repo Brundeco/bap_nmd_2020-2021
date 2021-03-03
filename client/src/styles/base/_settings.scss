@@ -1,5 +1,5 @@
 * {
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: "Montserrat", sans-serif !important;
   // font-weight: 400;
 }
 
@@ -81,6 +81,11 @@ button {
   width: 65%;
 }
 
-.form-col-sm input, .form-col-lg input {
+.form-col-xl {
+  width: 80%;
+}
+
+.form-col-sm input,
+.form-col-lg input {
   width: 100%;
 }

@@ -17,24 +17,26 @@ export default () => {
   }, [data]);
 
   return (
-    <div className="property-list">
-      {data?.map(function (item, i) {
-        return (
-          <div key={i} className="property-item">
-            <h2> {item.title}</h2>
-            <div className="property-images">
-              {item.images.map(function (image, i) {
-                return <img src={image} alt="" />;
-              })}
+    <div className="property-screen">
+      <div className="wrapper">
+        {data?.map(function (item, i) {
+          return (
+            <div key={i} className="list-item">
+              <h2> {item.description}</h2>
+              <div className="image">
+                <img src={item.images[0]} alt="" />
+              </div>
+              <ul>
+                <Link
+                  to={{ pathname: `/property/${item._id}/${item.author_id}` }}
+                >
+                  <li>DETAIL</li>
+                </Link>
+              </ul>
             </div>
-            <ul>
-              <Link to={{ pathname: `/property/${item._id}/${item.author_id}` }}>
-                <li>DETAIL</li>
-              </Link>
-            </ul>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };

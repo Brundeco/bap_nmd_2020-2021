@@ -24,16 +24,8 @@ export default ({ match }) => {
       .catch(console.log("NO DATA"));
   };
 
-  // const tmpArr = [];
-
   useEffect(() => {
     console.log(messages);
-
-    // messages.messages?.map((messages) => {
-    //   console.log(messages);
-    //   tmpArr.push(messages);
-    // });
-    // console.log(tmpArr);
   }, [messages]);
 
   return (

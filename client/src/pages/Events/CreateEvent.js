@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  CheckSession,
-  PrevPage,
-} from "./../../components";
+import { CheckSession, PrevPage } from "./../../components";
 import axios from "axios";
 import { EventForm } from "..";
 
@@ -10,7 +7,7 @@ export default () => {
   CheckSession(localStorage.getItem("jwt"));
 
   const [data, setData] = React.useState();
-  
+
   const handleData = (formData) => {
     setData(formData);
   };
@@ -18,12 +15,10 @@ export default () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(data);
-    // axios.post("http://localhost:5000/events", {
-    //   title: data.title,
-    //   author_id: data.author_id,
-    //   author: data.author,
-    //   images: images,
-    // });
+    axios
+      .post("http://localhost:5000/events", data)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
   return (
     <div className="create-product-screen">

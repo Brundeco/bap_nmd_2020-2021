@@ -22,7 +22,7 @@ export default (props) => {
 
   return (
     <React.Fragment>
-      <h1>Fill out the data below to start hosting your property</h1>
+      <h1>Fill out the form below to start hosting your property</h1>
       <form onSubmit={props.onSubmit} formdata={props.formdata(data)}>
         <section>
           <h2>General information</h2>
@@ -83,7 +83,7 @@ export default (props) => {
             </div>
             <div className="form-col-sm">
               <InputField
-                name="number"
+                name="houseNumber"
                 onChange={handleChange}
                 placeholder="No"
                 type="number"
