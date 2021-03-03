@@ -6,6 +6,7 @@ export { default as GetEvent } from './Events/GetEvent';
 export { default as CreateEvent } from './Events/CreateEvent';
 export { default as GetEventList } from './Events/GetEventList';
 export { default as UpdateEvent } from './Events/UpdateEvent';
+export { default as EventForm } from './Events/EventForm';
 
 export { default as CreateProperty } from './Properties/CreateProperty';
 export { default as GetPropertyList } from './Properties/GetPropertyList';
