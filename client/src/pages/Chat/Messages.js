@@ -4,40 +4,37 @@ import axios from "axios";
 export default ({ match }) => {
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const [data, setData] = useState([]);
+  const [messages, setMessages] = useState([]);
   // const [setArrayFormatted, arrayFormatted] = useState([]);
 
   useEffect(() => {
     axios
       .get(`http://localhost:5000/messages/${user.id}`)
-      .then((res) => setData(res))
-      // .then((res) => console.log(res))
+      .then((res) => setMessages(res.data))
+      .then((res) => console.log(res))
       .catch(console.log("NO DATA"));
   }, []);
 
-  const tmpArr = [];
+  const filterConverstaions = () => {
+    console.log("filter converstaions");
 
-  //   function groupByKey(data, key) {
-  //     return array
-  //       .reduce((hash, obj) => {
-  //         if(obj[key] === undefined) return hash;
-  //         return Object.assign(hash, { [obj[key]]:( hash[obj[key]] || [] ).concat(obj)})
-  //       }, {})
-  //  }
+    axios
+      .get(`http://localhost:5000/messages/filter/${user.id}`)
+      .then((res) => console.log(res.data))
+      .catch(console.log("NO DATA"));
+  };
 
-  //  groupByKey()
+  // const tmpArr = [];
 
   useEffect(() => {
-    data.data?.map((data) => {
-      // console.log(data)
-      tmpArr.push(data);
-    });
-    console.log(tmpArr);
-  }, [data]);
+    console.log(messages);
 
-  // useEffect(() => {
-  //   console.log(arrayFormatted);
-  // }, [arrayFormatted]);
+    // messages.messages?.map((messages) => {
+    //   console.log(messages);
+    //   tmpArr.push(messages);
+    // });
+    // console.log(tmpArr);
+  }, [messages]);
 
   return (
     <div>

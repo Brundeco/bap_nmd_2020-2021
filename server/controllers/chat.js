@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 export const getMessages = async (req, res) => {
   const { user } = req.params;
-  // console.log(user);
+  console.log(user);
 
   try {
     const messages = await Messages.aggregate([
@@ -12,6 +12,18 @@ export const getMessages = async (req, res) => {
           $or: [
             { from: new mongoose.Types.ObjectId(user) },
             { to: new mongoose.Types.ObjectId(user) },
+            // {
+            //   $and: [
+            //     { from: new mongoose.Types.ObjectId(user) },
+            //     { to: new mongoose.Types.ObjectId(user) },
+            //   ],
+            // },
+            // {
+            //   $and: [
+            //     { from: new mongoose.Types.ObjectId(user) },
+            //     { to: new mongoose.Types.ObjectId(user) },
+            //   ],
+            // },
           ],
         },
       },

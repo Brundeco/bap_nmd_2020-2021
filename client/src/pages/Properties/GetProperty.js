@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
+import Event1 from "./../../images/event-1.jpg";
 import Event2 from "./../../images/event-4.jpg";
+import Event3 from "./../../images/event-2.jpg";
+import Event4 from "./../../images/event-3.jpg";
 import axios from "axios";
 import { PrevPage } from "../../components";
+import ImageSlider from "../../components/ImageSlider";
 
 export default ({ match }) => {
   const [data, setData] = useState();
@@ -13,6 +17,13 @@ export default ({ match }) => {
       .then((res) => setData(res.data));
   }, []);
 
+  const images = [
+    { image: Event1 },
+    { image: Event2 },
+    { image: Event3 },
+    { image: Event4 },
+  ];
+
   useEffect(() => {
     console.log(data);
   }, [data]);
@@ -20,7 +31,7 @@ export default ({ match }) => {
   return (
     <div className="property-screen">
       <div className="subject-image">
-        <img src={Event2} alt="" />
+        <ImageSlider slides={images} />
       </div>
       <div className="wrapper">
         <PrevPage />

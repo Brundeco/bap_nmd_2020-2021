@@ -10,6 +10,7 @@ export { default as UpdateEvent } from './Events/UpdateEvent';
 export { default as CreateProperty } from './Properties/CreateProperty';
 export { default as GetPropertyList } from './Properties/GetPropertyList';
 export { default as GetProperty } from './Properties/GetProperty';
+export { default as PropertyForm } from './Properties/PropertyForm';
 
 export { default as New } from './New/New';
 
