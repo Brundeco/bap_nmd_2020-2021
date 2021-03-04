@@ -13,7 +13,6 @@ export default () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data)
     axios
       .post("http://localhost:5000/users/login", data)
       .then((res) => {

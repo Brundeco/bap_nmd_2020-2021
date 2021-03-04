@@ -1,15 +1,13 @@
 import React from "react";
 
-export default ({text}) => {
-
+export default () => {
   return (
-    <React.Fragment>
-      <div className="content">
-        <div className="loading">
-          <p>{text}</p>
-          <span></span>
-        </div>
-      </div>
-    </React.Fragment>
+    <div className="preloader-wrapper">
+      <h2 className="preloader-title">Loading</h2>
+      <section>
+        <div className="origin" />
+        <div className="origin" />
+      </section>
+    </div>
   );
 };

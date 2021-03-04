@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import { InputField, Textarea } from "./../../components";
 import SelectImage from "./../../icons/selectimage.svg";
 import FileBase from "react-file-base64";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+// import { DateRangePicker } from "react-date-range";
+
+import MultipleDatePicker from "react-multiple-datepicker";
 
 export default (props) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -11,6 +16,7 @@ export default (props) => {
     author_id: user.id,
     images: [],
   });
+  const [dates, setDates] = useState();
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }));
@@ -20,8 +26,16 @@ export default (props) => {
     setData((prev) => ({ ...prev, images: images }));
   }, [images]);
 
+  useEffect(() => {
+    console.log(dates)
+  }, [dates]);
+
   return (
     <React.Fragment>
+      <MultipleDatePicker
+        onSubmit={(dates) => setDates(dates) }
+      />
+
       <h1>Fill out the form below to start hosting your property</h1>
       <form onSubmit={props.onSubmit} formdata={props.formdata(data)}>
         <section>

@@ -25,23 +25,26 @@ export default () => {
 
   if (data != undefined) {
     return (
-      <React.Fragment>
-        {data?.map(function (item, i) {
-          return (
-            <div key={i}>
-              <h2> {item.title} </h2>
-              <p> {item.description} </p>
-              <img src={item.image} alt="" />
-              <Link to={{ pathname: `/event/${item._id}` }}>
-                <li>DETAIL</li>
-              </Link>
-              <Link to={{ pathname: `/update-event/${item._id}` }}>
-                <li>UPDATE</li>
-              </Link>
-            </div>
-          );
-        })}
-      </React.Fragment>
+      <div className="event-screen">
+        <div className="wrapper">
+          {data?.map(function (item, i) {
+            return (
+              <div key={i} className="list-item">
+                <h2> {item.title} </h2>
+                <div className="image">
+                  <img src={item.image} alt="" />
+                </div>
+                <Link to={{ pathname: `/event/${item._id}` }}>
+                  <li>DETAIL</li>
+                </Link>
+                <Link to={{ pathname: `/update-event/${item._id}` }}>
+                  <li>UPDATE</li>
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     );
   } else {
     return (

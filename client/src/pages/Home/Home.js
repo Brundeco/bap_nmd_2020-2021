@@ -39,6 +39,14 @@ export default () => {
               </div>
             </div>
           </section>
+          <section>
+            <button
+              className="main-btn"
+              onClick={() => (window.location = "/events")}
+            >
+              Show all events
+            </button>
+          </section>
 
           <section className="event-section">
             <h2>Places for rent now</h2>
@@ -57,6 +65,14 @@ export default () => {
                 <p className="event-title">Vintage clothing</p>
               </div>
             </div>
+          </section>
+          <section>
+            <button
+              className="main-btn"
+              onClick={() => (window.location = "/properties")}
+            >
+              Show all properties
+            </button>
           </section>
         </div>
         <section className="cta-section">
