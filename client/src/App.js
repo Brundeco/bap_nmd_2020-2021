@@ -16,6 +16,7 @@ import {
   Chat,
   Messages,
   GetProperty,
+  NoLocation,
 } from "./pages";
 import { ExpiredSession } from "./components";
 
@@ -29,6 +30,7 @@ function App() {
         <Route path="/login" component={LoginUser} />
 
         <Route path="/expired" component={ExpiredSession} />
+        <Route path="/no-location" component={NoLocation} />
 
         <Route path="/dashboard" component={Dashboard} />
 

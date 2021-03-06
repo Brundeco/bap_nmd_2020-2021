@@ -1,5 +1,5 @@
 .home-screen .wrapper {
-  width: 105%;
+  width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -12,15 +12,16 @@
 }
 
 .home-screen .event-list {
-  display: flex;
   width: 100%;
   height: auto;
-  justify-content: space-between;
+  justify-content: center;
+  display: flex;
+  align-items: center;
 }
 
 .home-screen .event-card {
-  width: 45vw;
-  height: 45vw;
+  width: 75vw;
+  height: 75vw;
 }
 
 .home-screen .property-card {
@@ -54,3 +55,13 @@
   display: flex;
   justify-content: space-around;
 }
+
+.home-screen .slider {
+  width: auto;
+  justify-content: space-between;
+}
+
+// .home-screen .slider .left-arrow,
+// .home-screen .slider .right-arrow {
+//   display: none !important;
+// }

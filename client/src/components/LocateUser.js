@@ -4,9 +4,10 @@ export default (props) => {
   const [userLocation, setLocation] = useState({
     coordinates: { lat: "", lng: "" },
   });
-  const [loading, setLoading] = useState();
+  const [response, setResponse] = useState();
 
   const onSuccess = async (userLoc) => {
+    setResponse('')
     setLocation({
       coordinates: {
         lat: userLoc.coords.latitude,
@@ -16,6 +17,8 @@ export default (props) => {
   };
 
   const onError = (error) => {
+    setResponse('Location sharing is disabled')
+
     setLocation({
       error: {
         code: error.code,
@@ -35,10 +38,11 @@ export default (props) => {
   };
 
   if (
-    userLocation?.coordinates?.lat &&
+    userLocation?.coordinates != undefined &&
     typeof userLocation?.coordinates?.lat != "number"
-  )
+  ) {
     locateUser();
+  }
 
-  return <div data={props.coords(userLocation)}></div>;
+  return <div data={props.coords(userLocation)} err={props.err(response)} ></div>;
 };

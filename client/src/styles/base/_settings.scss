@@ -36,11 +36,11 @@ h2 {
   @include main-h2-title;
 }
 
-.App {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-}
+// .App {
+//   width: 100vw;
+//   height: 100vh;
+//   position: relative;
+// }
 
 input::placeholder {
   color: $med-grey;

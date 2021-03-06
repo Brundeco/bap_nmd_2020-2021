@@ -1,0 +1,54 @@
+.no-location-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15vh 5%;
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 1000;
+  background: rgba($color: $base-white, $alpha: 0.9);
+  animation: fadeOut 2s forwards;
+  animation-delay: 5s;
+}
+
+.no-location-screen .wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba($color: $base-white, $alpha: 0.9);
+  height: 50%;
+}
+
+.no-location-screen h1 {
+  @include main-h2-title;
+  text-align: center;
+}
+
+.no-location-screen button {
+  @include main-btn;
+}
+
+.no-location-screen button:nth-of-type(1) {
+  background: $theme-green;
+}
+
+.hide-err-message {
+  opacity: 0;
+}
+
+.show-err-message {
+  opacity: 1;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

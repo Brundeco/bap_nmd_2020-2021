@@ -1,5 +1,11 @@
 import React, { useState } from "react";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
+import { FontAwesome } from "./../components";
+
+import {
+  faChevronRight,
+  faChevronLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 const ImageSlider = ({ slides }) => {
   const SliderData = slides;
@@ -21,6 +27,9 @@ const ImageSlider = ({ slides }) => {
   return (
     <section className="slider">
       <FaArrowAltCircleLeft className="left-arrow" onClick={prevSlide} />
+      {/* <FontAwesome icon={faChevronLeft} onClick={prevSlide} />
+      <FontAwesome icon={faChevronRight} onClick={nextSlide} /> */}
+
       <FaArrowAltCircleRight className="right-arrow" onClick={nextSlide} />
       {SliderData.map((slide, index) => {
         return (
