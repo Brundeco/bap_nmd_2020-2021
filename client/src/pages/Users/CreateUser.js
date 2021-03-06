@@ -18,8 +18,8 @@ export default () => {
     axios
       .post("http://localhost:5000/users/register", data)
       .then((res) => {
-        localStorage.setItem("user", JSON.stringify(res.data.user));
         setStatus(res.data.message);
+        window.location = '/login?email=' + res.data.user.email
       })
       .catch((err) => setStatus(err.response.data.message));
   };
