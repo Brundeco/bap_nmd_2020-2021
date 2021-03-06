@@ -1,24 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { Header, CheckSession } from "../../components";
+import { Header, CheckSession, LocateUser } from "../../components";
 import Event1 from "./../../images/event-5.jpeg";
 import Event2 from "./../../images/event-4.jpg";
 import Event3 from "./../../images/event-2.jpg";
 import Event4 from "./../../images/event-3.jpg";
 import { FontAwesome } from "./../../components";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import ImageSlider from "./../../components/ImageSlider";
-import { SliderData } from "./../../components/SliderData";
 
 export default () => {
   CheckSession(localStorage.getItem("jwt"));
+  const [coords, setCoords] = useState();
 
   const user = JSON.parse(localStorage.getItem("user")).username;
 
-  // console.log(SliderData);
+  const handleCoords = (coords) => {
+    setCoords(coords);
+  };
+
+  useEffect(() => {
+    console.log(coords);
+    if (coords != undefined) {
+      localStorage.setItem("userLat", coords.coordinates.lat);
+      localStorage.setItem("userLon", coords.coordinates.lng);
+    }
+  }, [coords]);
 
   return (
     <div>
       <Header />
+      <LocateUser coords={handleCoords} />
       <div className="home-screen page-wrapper">
         <div className="wrapper">
           <section className="event-section">
@@ -81,7 +91,6 @@ export default () => {
           </button>
         </section>
       </div>
-
       {/* <ImageSlider slides={SliderData} /> */}
     </div>
   );

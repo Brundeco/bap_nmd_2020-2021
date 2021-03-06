@@ -10,4 +10,4 @@ export { default as FontAwesome } from "./FontAwesome";
 export { default as Header } from "./Header";
 export { default as DeleteUser } from "./DeleteUser";
 export { default as Footer } from "./Footer";
-// export { default as SliderData } from './SliderData'
+export { default as LocateUser } from './LocateUser'
