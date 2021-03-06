@@ -4,6 +4,7 @@ import axios from "axios";
 import TextLogo from "./../../icons/text_logo.svg";
 
 export default () => {
+  localStorage.clear();
   const [data, setData] = React.useState({});
   const [status, setStatus] = useState();
 
