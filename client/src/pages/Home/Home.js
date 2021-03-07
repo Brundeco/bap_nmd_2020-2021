@@ -19,13 +19,14 @@ export default () => {
   const [coords, setCoords] = useState();
   const [error, setError] = useState();
   const [images, setImages] = useState([]);
+  const [titles, setTitles] = useState();
+  const [current, setCurrent] = useState(0);
 
   const handleCoords = (coords) => {
     setCoords(coords);
   };
 
   useEffect(() => {
-    // console.log(coords);
     if (coords != undefined) {
       localStorage.setItem("userLat", coords?.coordinates?.lat);
       localStorage.setItem("userLon", coords?.coordinates?.lng);
@@ -42,37 +43,33 @@ export default () => {
   }, []);
 
   useEffect(() => {
-    // console.log(data);
-    let tmpArr = [];
+    let tmpImgs = [];
+    let tmpTitles = [];
     data?.map((item, i) => {
-      // console.log(item)
-      tmpArr.push({ image: item.image });
-      setImages(tmpArr);
+      tmpTitles.push({ title: item.title });
+      tmpImgs.push({ image: item.image });
+      setImages(tmpImgs);
+      setTitles(tmpTitles);
     });
   }, [data]);
 
-  useEffect(() => {
-    console.log(images);
-  }, [images]);
+  const handleIndex = (currentItem) => {
+    setCurrent(currentItem);
+  };
 
   return (
     <div>
       <Header />
       <LocateUser coords={handleCoords} err={setError} />
       {error ? <NoLocation /> : ""}
-
       <div className="home-screen page-wrapper">
         <div className="wrapper">
           <section className="event-section">
             <h2>Events around you</h2>
             <div className="event-list">
-              {/* <FontAwesome icon={faChevronLeft} /> */}
-              <ImageSlider slides={images} />
-              {/* <FontAwesome icon={faChevronRight} /> */}
+              <ImageSlider slides={images} index={handleIndex} />
             </div>
-          </section>
-
-          <section>
+            <p className="event-title">{titles && titles[current].title}</p>
             <button
               className="main-btn"
               onClick={() => (window.location = "/events")}
@@ -80,42 +77,28 @@ export default () => {
               Show all events
             </button>
           </section>
-
-          {/* <section className="event-section">
-            <h2>Places for rent now</h2>
-            <div className="event-list">
-              <div className="event-card property-card">
-                <div className="event-image">
-                  <img src={Event4} alt="Event 1" />
-                </div>
-                <p className="event-title">Moderat invites friends</p>
-              </div>
-
-              <div className="event-card property-card">
-                <div className="event-image">
-                  <img src={Event3} alt="Event 2" />
-                </div>
-                <p className="event-title">Vintage clothing</p>
-              </div>
-            </div>
-          </section> */}
-
-          {/* <section>
-            <button
-              className="main-btn"
-              onClick={() => (window.location = "/properties")}
-            >
-              Show all properties
-            </button>
-          </section> */}
         </div>
-        <section className="cta-section">
+      </div>
+
+      <section className="property-section-homepage">
+        <h2>Organise your next event</h2>
+        <p>
+          You want to organise your next event but are still looking for a host?
+          You might find what you are looking for below.
+        </p>
+        <img src={Event4} alt="Event 1" />
+        <button
+          className="main-btn"
+          onClick={() => (window.location = "/properties")}
+        >
+          Show available properties
+        </button>
+      </section>
+      {/* <section className="cta-section">
           <button className="main-btn">
             Host property for popup event <FontAwesome icon={faChevronRight} />
           </button>
-        </section>
-      </div>
-      {/* <ImageSlider slides={SliderData} /> */}
+        </section> */}
     </div>
   );
 };

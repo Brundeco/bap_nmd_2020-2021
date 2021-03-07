@@ -8,6 +8,8 @@
   box-sizing: border-box;
   position: fixed;
   top: 0;
+  background-color: $base-white;
+  z-index: 50;
 }
 
 .header .user-img {

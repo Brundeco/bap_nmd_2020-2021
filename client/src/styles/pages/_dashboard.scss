@@ -31,3 +31,12 @@
   background-color: $color-none;
   color: $text-grey;
 }
+
+.dashboard-screen .dashboard-btn-create {
+  @include main-btn;
+}
+
+.dashboard-screen .dashboard-btn-create:nth-of-type(1) {
+  @include main-btn;
+  background-color: $theme-green;
+}

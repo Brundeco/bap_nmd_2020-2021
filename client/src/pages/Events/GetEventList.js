@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Preloader, CheckSession } from "./../../components";
+import { Preloader, CheckSession, PrevPage, Header } from "./../../components";
 
 export default () => {
   CheckSession(localStorage.getItem("jwt"));
@@ -25,26 +25,29 @@ export default () => {
 
   if (data != undefined) {
     return (
-      <div className="event-screen">
-        <div className="wrapper">
-          {data?.map(function (item, i) {
-            return (
-              <div key={i} className="list-item">
-                <h2> {item.title} </h2>
-                <div className="image">
-                  <img src={item.image} alt="" />
+      <React.Fragment>
+        <Header />
+        <div className="event-screen">
+          <div className="wrapper">
+            {data?.map(function (item, i) {
+              return (
+                <div key={i} className="list-item">
+                  <h2> {item.title} </h2>
+                  <div className="image">
+                    <img src={item.image} alt="" />
+                  </div>
+                  <Link to={{ pathname: `/event/${item._id}` }}>
+                    <li>DETAIL</li>
+                  </Link>
+                  <Link to={{ pathname: `/update-event/${item._id}` }}>
+                    <li>UPDATE</li>
+                  </Link>
                 </div>
-                <Link to={{ pathname: `/event/${item._id}` }}>
-                  <li>DETAIL</li>
-                </Link>
-                <Link to={{ pathname: `/update-event/${item._id}` }}>
-                  <li>UPDATE</li>
-                </Link>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   } else {
     return (
