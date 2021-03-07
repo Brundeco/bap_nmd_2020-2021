@@ -4,9 +4,11 @@ import SelectImage from "./../../icons/selectimage.svg";
 import FileBase from "react-file-base64";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-// import { DateRangePicker } from "react-date-range";
-
+import { DateRangePicker } from "react-date-range";
 import MultipleDatePicker from "react-multiple-datepicker";
+
+import DayPicker from "react-day-picker";
+import "react-day-picker/lib/style.css";
 
 export default (props) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -16,7 +18,11 @@ export default (props) => {
     author_id: user.id,
     images: [],
   });
-  const [dates, setDates] = useState();
+  const [dates, setDates] = useState([
+    new Date(2021, 3, 20),
+    new Date(2021, 3, 15),
+    new Date(2021, 3, 10),
+  ]);
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }));
@@ -26,15 +32,29 @@ export default (props) => {
     setData((prev) => ({ ...prev, images: images }));
   }, [images]);
 
-  useEffect(() => {
-    console.log(dates)
-  }, [dates]);
+  // const handleSelect = (ranges) => {
+  //   setStartDate(ranges.selection.startDate);
+  //   setEndDate(ranges.selection.endDate);
+  // };
+
+  const birthdayStyle = `.DayPicker-Day--highlighted {
+    background-color: orange;
+    color: white;
+  }`;
+
+  let modifiers = [];
+  dates.forEach((element) => {
+    modifiers = {
+      highlighted: element,
+    };
+  });
 
   return (
     <React.Fragment>
-      <MultipleDatePicker
-        onSubmit={(dates) => setDates(dates) }
-      />
+      {/* <MultipleDatePicker onSubmit={(dates) => setDates(dates)} />
+      <DateRangePicker ranges={[selectionRange]} onChange={handleSelect} /> */}
+      <style>{birthdayStyle}</style>
+      <DayPicker modifiers={modifiers} month={new Date(2021, 3)} />
 
       <h1>Fill out the form below to start hosting your property</h1>
       <form onSubmit={props.onSubmit} formdata={props.formdata(data)}>
