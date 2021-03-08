@@ -2,11 +2,6 @@ import React, { useState, useEffect } from "react";
 import { InputField, Textarea } from "./../../components";
 import SelectImage from "./../../icons/selectimage.svg";
 import FileBase from "react-file-base64";
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
-import { DateRangePicker } from "react-date-range";
-import MultipleDatePicker from "react-multiple-datepicker";
-
 import DayPicker from "react-day-picker";
 import "react-day-picker/lib/style.css";
 
@@ -18,6 +13,8 @@ export default (props) => {
     author_id: user.id,
     images: [],
   });
+  const [tmpArray, setTmpArray] = useState([]);
+
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }));
   };
@@ -26,47 +23,31 @@ export default (props) => {
     setData((prev) => ({ ...prev, images: images }));
   }, [images]);
 
+  const [dates, setDates] = useState([]);
+
   const handleDayClick = (day, { sunday, disabled }) => {
-    console.log(day);
-    if (sunday) {
-      window.alert("Sunday has been clicked");
-    }
-    if (disabled) {
-      window.alert("This day is disabled");
-    }
+    let newArray = [...dates];
+    let indexItem = newArray.indexOf(day);
+    indexItem === -1 ? newArray.push(day) : newArray.splice(indexItem, 2);
+    setDates(newArray);
+    setData((prev) => ({ ...prev, dates }));
+
+    // if (sunday) {
+    //   window.alert("Sunday has been clicked");
+    // }
+    // if (disabled) {
+    //   window.alert("This day is disabled");
+    // }
   };
 
-  const birthdayStyle = `.DayPicker-Day--weekends {
-    background-color: orange;
-    color: white;
-  }`;
-
-  const handleDayMouseEnter = (day, { firstOfMonth }) => {
-    if (firstOfMonth) {
-      // Do something when the first day of month has been mouse-entered
-      console.log("First of month");
-    }
-  };
-  console.log( new Date(2021,3,12))
-
-  const testDates = [
-    "Wed Mar 12 2021 00:00:00 GMT+0200 (Central European Summer Time)",
-    "Wed Mar 17 2021 00:00:00 GMT+0200 (Central European Summer Time)",
-  ];
+  useEffect(() => {
+    console.log(dates);
+  }, [dates]);
 
   return (
     <React.Fragment>
-      {/* <MultipleDatePicker onSubmit={(dates) => setDates(dates)} />
-      <DateRangePicker ranges={[selectionRange]} onChange={handleSelect} /> */}
-      <style>{birthdayStyle}</style>
-      <DayPicker
-        selectedDays={[  new Date(), new Date(2021, 3, 2)]}
-        // selectedDays={[
-        //   testDates
-        // ]}
-        onDayClick={handleDayClick}
-        // onDayMouseEnter={handleDayMouseEnter}
-      />
+      {/* <style>{birthdayStyle}</style> */}
+      <DayPicker selectedDays={dates} onDayClick={handleDayClick} />
 
       <h1>Fill out the form below to start hosting your property</h1>
       <form onSubmit={props.onSubmit} formdata={props.formdata(data)}>

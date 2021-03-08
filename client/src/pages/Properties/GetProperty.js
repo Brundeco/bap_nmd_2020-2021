@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { Preloader, PrevPage } from "../../components";
 import ImageSlider from "../../components/ImageSlider";
+import DayPicker from "react-day-picker";
+import "react-day-picker/lib/style.css";
 
 export default ({ match }) => {
   const [data, setData] = useState();
   const [images, setImages] = useState([]);
+  const [dates, setDates] = useState([]);
 
   useEffect(() => {
     console.log("Show prop pleaaasse");
@@ -16,20 +19,34 @@ export default ({ match }) => {
   }, []);
 
   useEffect(() => {
-    console.log(data);
     let tmpArr = [];
-    data?.images?.map((item, i) => {
+    data?.images?.map((item) => {
       tmpArr.push({ image: item });
       setImages(tmpArr);
     });
   }, [data]);
 
+  useEffect(() => {
+    let tmpArr = [];
+    data?.dates?.map((item) => {
+      console.log(item);
+      tmpArr.push(new Date(item));
+      setDates(tmpArr);
+    });
+  }, [data]);
+
+  const handleIndex = () => console.log();
+
+  const handleDayClick = () => console.log();
+
   if (data != undefined) {
     return (
       <div className="property-screen">
         <div className="subject-image">
-          <ImageSlider slides={images} />
+          <ImageSlider slides={images} index={handleIndex} />
         </div>
+        <DayPicker selectedDays={dates} onDayClick={handleDayClick} />
+
         <div className="wrapper">
           <PrevPage />
           <h1>
