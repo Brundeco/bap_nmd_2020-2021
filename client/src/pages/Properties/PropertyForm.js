@@ -18,12 +18,6 @@ export default (props) => {
     author_id: user.id,
     images: [],
   });
-  const [dates, setDates] = useState([
-    new Date(2021, 3, 20),
-    new Date(2021, 3, 15),
-    new Date(2021, 3, 10),
-  ]);
-
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }));
   };
@@ -32,29 +26,47 @@ export default (props) => {
     setData((prev) => ({ ...prev, images: images }));
   }, [images]);
 
-  // const handleSelect = (ranges) => {
-  //   setStartDate(ranges.selection.startDate);
-  //   setEndDate(ranges.selection.endDate);
-  // };
+  const handleDayClick = (day, { sunday, disabled }) => {
+    console.log(day);
+    if (sunday) {
+      window.alert("Sunday has been clicked");
+    }
+    if (disabled) {
+      window.alert("This day is disabled");
+    }
+  };
 
-  const birthdayStyle = `.DayPicker-Day--highlighted {
+  const birthdayStyle = `.DayPicker-Day--weekends {
     background-color: orange;
     color: white;
   }`;
 
-  let modifiers = [];
-  dates.forEach((element) => {
-    modifiers = {
-      highlighted: element,
-    };
-  });
+  const handleDayMouseEnter = (day, { firstOfMonth }) => {
+    if (firstOfMonth) {
+      // Do something when the first day of month has been mouse-entered
+      console.log("First of month");
+    }
+  };
+  console.log( new Date(2021,3,12))
+
+  const testDates = [
+    "Wed Mar 12 2021 00:00:00 GMT+0200 (Central European Summer Time)",
+    "Wed Mar 17 2021 00:00:00 GMT+0200 (Central European Summer Time)",
+  ];
 
   return (
     <React.Fragment>
       {/* <MultipleDatePicker onSubmit={(dates) => setDates(dates)} />
       <DateRangePicker ranges={[selectionRange]} onChange={handleSelect} /> */}
       <style>{birthdayStyle}</style>
-      <DayPicker modifiers={modifiers} month={new Date(2021, 3)} />
+      <DayPicker
+        selectedDays={[  new Date(), new Date(2021, 3, 2)]}
+        // selectedDays={[
+        //   testDates
+        // ]}
+        onDayClick={handleDayClick}
+        // onDayMouseEnter={handleDayMouseEnter}
+      />
 
       <h1>Fill out the form below to start hosting your property</h1>
       <form onSubmit={props.onSubmit} formdata={props.formdata(data)}>
