@@ -9,8 +9,10 @@ import "react-day-picker/lib/style.css";
 export default ({ match }) => {
   const [data, setData] = useState();
   const [images, setImages] = useState([]);
-  const [dates, setDates] = useState([]);
+  const [availableDates, setAvailableDates] = useState([]);
   const handleIndex = () => console.log();
+  const [selectedDay, setSelectedDay] = useState(undefined);
+  const [dates, setDates] = useState([]);
 
   useEffect(() => {
     console.log("Show prop pleaaasse");
@@ -30,18 +32,25 @@ export default ({ match }) => {
   useEffect(() => {
     let tmpArr = [];
     data?.dates?.map((item) => {
-      console.log(item);
+      console.log(item)
       tmpArr.push(new Date(item));
-      setDates(tmpArr);
+      setAvailableDates(tmpArr);
     });
   }, [data]);
 
-  const handleDayClick = (day) => {
-    console.log(day);
+  const handleDayClick = (day, modifiers = {}) => {
+    if (modifiers.disabled) {
+      return;
+    }
+    let newArray = [...dates];
+    let indexItem = newArray.indexOf(day);
+    indexItem === -1 ? newArray.push(day) : newArray.splice(indexItem, 2);
+    setDates(newArray);
+    // setSelectedDay(modifiers.selected ? undefined : day);
   };
 
   const isDayDisabled = (day) => {
-    return !dates.some((disabledDay) => DateUtils.isSameDay(day, disabledDay));
+    return !availableDates.some((disabledDay) => DateUtils.isSameDay(day, disabledDay));
   };
 
   if (data != undefined) {
@@ -51,7 +60,7 @@ export default ({ match }) => {
           <ImageSlider slides={images} index={handleIndex} />
         </div>
         <DayPicker
-          // selectedDays={dates}
+          selectedDays={dates}
           onDayClick={handleDayClick}
           disabledDays={isDayDisabled}
         />

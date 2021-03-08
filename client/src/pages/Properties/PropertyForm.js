@@ -13,7 +13,7 @@ export default (props) => {
     author_id: user.id,
     images: [],
   });
-  const [tmpArray, setTmpArray] = useState([]);
+  const [dates, setDates] = useState([]);
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }));
@@ -23,23 +23,31 @@ export default (props) => {
     setData((prev) => ({ ...prev, images: images }));
   }, [images]);
 
-  const [dates, setDates] = useState([]);
-
-  const handleDayClick = (day, { sunday, disabled }) => {
+  const handleDayClick = (day) => {
+    let currentDay = new Date(day).getTime();
     let newArray = [...dates];
-    let indexItem = newArray.indexOf(day);
-    indexItem === -1 ? newArray.push(day) : newArray.splice(indexItem, 2);
+    let indexItem = newArray.indexOf(currentDay);
+
+    indexItem === -1
+      ? newArray.push(currentDay)
+      : newArray.splice(indexItem, 1);
     setDates(newArray);
-    setData((prev) => ({ ...prev, dates }));
   };
 
   useEffect(() => {
-    console.log(dates);
+    setData((prev) => ({
+      ...prev,
+      dates: dates?.map((date) => new Date(date)),
+    }));
   }, [dates]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <React.Fragment>
-      <DayPicker selectedDays={dates} onDayClick={handleDayClick} />
+      <DayPicker selectedDays={data.dates} onDayClick={handleDayClick} />
 
       <h1>Fill out the form below to start hosting your property</h1>
       <form onSubmit={props.onSubmit} formdata={props.formdata(data)}>
