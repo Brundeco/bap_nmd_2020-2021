@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { Preloader, PrevPage } from "../../components";
 import ImageSlider from "../../components/ImageSlider";
-import DayPicker from "react-day-picker";
+import DayPicker, { DateUtils } from "react-day-picker";
 import "react-day-picker/lib/style.css";
 
 export default ({ match }) => {
   const [data, setData] = useState();
   const [images, setImages] = useState([]);
   const [dates, setDates] = useState([]);
+  const handleIndex = () => console.log();
 
   useEffect(() => {
     console.log("Show prop pleaaasse");
@@ -35,9 +36,13 @@ export default ({ match }) => {
     });
   }, [data]);
 
-  const handleIndex = () => console.log();
+  const handleDayClick = (day) => {
+    console.log(day);
+  };
 
-  const handleDayClick = () => console.log();
+  const isDayDisabled = (day) => {
+    return !dates.some((disabledDay) => DateUtils.isSameDay(day, disabledDay));
+  };
 
   if (data != undefined) {
     return (
@@ -45,7 +50,11 @@ export default ({ match }) => {
         <div className="subject-image">
           <ImageSlider slides={images} index={handleIndex} />
         </div>
-        <DayPicker selectedDays={dates} onDayClick={handleDayClick} />
+        <DayPicker
+          // selectedDays={dates}
+          onDayClick={handleDayClick}
+          disabledDays={isDayDisabled}
+        />
 
         <div className="wrapper">
           <PrevPage />

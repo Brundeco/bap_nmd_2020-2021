@@ -31,13 +31,6 @@ export default (props) => {
     indexItem === -1 ? newArray.push(day) : newArray.splice(indexItem, 2);
     setDates(newArray);
     setData((prev) => ({ ...prev, dates }));
-
-    // if (sunday) {
-    //   window.alert("Sunday has been clicked");
-    // }
-    // if (disabled) {
-    //   window.alert("This day is disabled");
-    // }
   };
 
   useEffect(() => {
@@ -46,7 +39,6 @@ export default (props) => {
 
   return (
     <React.Fragment>
-      {/* <style>{birthdayStyle}</style> */}
       <DayPicker selectedDays={dates} onDayClick={handleDayClick} />
 
       <h1>Fill out the form below to start hosting your property</h1>

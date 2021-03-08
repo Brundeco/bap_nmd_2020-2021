@@ -89,3 +89,14 @@ button {
 .form-col-lg input {
   width: 100%;
 }
+
+// .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+//   background-color: $theme-green !important;
+//   color: black !important;
+//   font-weight: 200 !important;
+// }
+
+.DayPicker-Day,
+.DayPicker-wrapper {
+  outline: none !important;
+}
