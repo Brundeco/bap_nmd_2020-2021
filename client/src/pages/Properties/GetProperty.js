@@ -7,51 +7,79 @@ import DayPicker, { DateUtils } from "react-day-picker";
 import "react-day-picker/lib/style.css";
 
 export default ({ match }) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [propertyCreatedAt, setPropertyCreatedAt] = useState();
   const [data, setData] = useState();
   const [images, setImages] = useState([]);
   const [availableDates, setAvailableDates] = useState([]);
-  const handleIndex = () => console.log();
-  const [selectedDay, setSelectedDay] = useState(undefined);
+  const [selectedDates, setSelectedDates] = useState([]);
   const [dates, setDates] = useState([]);
+  const [booking, setBooking] = useState({
+    client: user.username,
+    client_id: user.id,
+  });
+  const handleIndex = () => {};
 
   useEffect(() => {
-    console.log("Show prop pleaaasse");
+    console.log(booking);
+  }, [booking]);
+
+  const isDayDisabled = (day) => {
+    return !availableDates.some((disabledDay) =>
+      DateUtils.isSameDay(day, disabledDay)
+    );
+  };
+
+  useEffect(() => {
     axios
       .get(`http://localhost:5000/properties/${match.params.id}`)
       .then((res) => setData(res.data));
   }, []);
 
   useEffect(() => {
-    let tmpArr = [];
+    let tmpImgs = [];
+    let tmpDates = [];
     data?.images?.map((item) => {
-      tmpArr.push({ image: item });
-      setImages(tmpArr);
+      tmpImgs.push({ image: item });
+      setImages(tmpImgs);
     });
+    data?.dates?.map((item) => {
+      tmpDates.push(new Date(item));
+      setAvailableDates(tmpDates);
+    });
+    setBooking((prev) => ({
+      ...prev,
+      owner_id: data?.author_id,
+      owner: data?.author,
+    }));
+    setPropertyCreatedAt(new Date(data?.createdAt));
   }, [data]);
 
   useEffect(() => {
-    let tmpArr = [];
-    data?.dates?.map((item) => {
-      console.log(item)
-      tmpArr.push(new Date(item));
-      setAvailableDates(tmpArr);
-    });
-  }, [data]);
+    console.log(propertyCreatedAt);
+  }, [propertyCreatedAt]);
 
   const handleDayClick = (day, modifiers = {}) => {
     if (modifiers.disabled) {
       return;
     }
+    let currentDay = new Date(day).getTime();
     let newArray = [...dates];
-    let indexItem = newArray.indexOf(day);
-    indexItem === -1 ? newArray.push(day) : newArray.splice(indexItem, 2);
+    let indexItem = newArray.indexOf(currentDay);
+
+    indexItem === -1
+      ? newArray.push(currentDay)
+      : newArray.splice(indexItem, 1);
     setDates(newArray);
-    // setSelectedDay(modifiers.selected ? undefined : day);
   };
 
-  const isDayDisabled = (day) => {
-    return !availableDates.some((disabledDay) => DateUtils.isSameDay(day, disabledDay));
-  };
+  useEffect(() => {
+    setSelectedDates(dates?.map((date) => new Date(date)));
+  }, [dates]);
+
+  useEffect(() => {
+    setBooking((prev) => ({ ...prev, dates: selectedDates }));
+  }, [selectedDates]);
 
   if (data != undefined) {
     return (
@@ -60,7 +88,7 @@ export default ({ match }) => {
           <ImageSlider slides={images} index={handleIndex} />
         </div>
         <DayPicker
-          selectedDays={dates}
+          selectedDays={selectedDates}
           onDayClick={handleDayClick}
           disabledDays={isDayDisabled}
         />
@@ -76,7 +104,9 @@ export default ({ match }) => {
               " " +
               data?.city}
           </h1>
-          <h2>By Leda Lenskens | created on 16 feb, 2021</h2>
+          <h2>
+            By {data?.author} | created on {data?.createdAt}
+          </h2>
           <p>{data?.description}</p>
           <div className="grid">
             <div className="row">

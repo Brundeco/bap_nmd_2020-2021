@@ -49,7 +49,7 @@ export default () => {
   } else {
     return (
       <React.Fragment>
-        <Preloader />
+        <Preloader text={"properties"} />
       </React.Fragment>
     );
   }
