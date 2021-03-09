@@ -16,7 +16,7 @@ export default () => {
     const input = document.querySelectorAll("input[type='password']")[0];
     if (email) {
       input.focus();
-      setData((prev) => ({ ...prev, email: email }));
+      setData((prev) => ({ ...prev, email }));
     }
   }, []);
 

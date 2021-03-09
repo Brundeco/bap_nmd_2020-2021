@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import { InputField, Textarea } from "../../components";
 import SelectImage from "./../../icons/selectimage.svg";
 import FileBase from "react-file-base64";
+import DayPicker from "react-day-picker";
+import "react-day-picker/lib/style.css";
 
 export default (props) => {
   const user = JSON.parse(localStorage.getItem("user"));
+  const [dates, setDates] = useState([]);
   const [data, setData] = React.useState({
     author: user.username,
     author_id: user.id,
@@ -14,9 +17,33 @@ export default (props) => {
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleDayClick = (day) => {
+    let currentDay = new Date(day).getTime();
+    let newArray = [...dates];
+    let indexItem = newArray.indexOf(currentDay);
+
+    indexItem === -1
+      ? newArray.push(currentDay)
+      : newArray.splice(indexItem, 1);
+    setDates(newArray);
+  };
+
+  useEffect(() => {
+    setData((prev) => ({
+      ...prev,
+      dates: dates?.map((date) => new Date(date)),
+    }));
+  }, [dates]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
+
   return (
     <React.Fragment>
       <h1>Fill out the form below to create your event</h1>
+      <DayPicker selectedDays={data.dates} onDayClick={handleDayClick} />
       <form onSubmit={props.onSubmit} formdata={props.formdata(data)}>
         <section>
           <h2>Event image</h2>
@@ -55,13 +82,6 @@ export default (props) => {
             name="description"
             placeholder="Description"
             type="textarea"
-            onChange={handleChange}
-            className="main-input-field"
-          />
-          <InputField
-            name="date"
-            placeholder="Datepicker"
-            type="number"
             onChange={handleChange}
             className="main-input-field"
           />

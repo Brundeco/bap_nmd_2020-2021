@@ -8,12 +8,12 @@ import "react-day-picker/lib/style.css";
 export default (props) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const [images, setImages] = useState([]);
+  const [dates, setDates] = useState([]);
   const [data, setData] = React.useState({
     author: user.username,
     author_id: user.id,
     images: [],
   });
-  const [dates, setDates] = useState([]);
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }));
@@ -84,13 +84,6 @@ export default (props) => {
             name="light"
             placeholder="Natural light"
             type="text"
-            onChange={handleChange}
-            className="main-input-field"
-          />
-          <InputField
-            name="date"
-            placeholder="Datepicker"
-            type="number"
             onChange={handleChange}
             className="main-input-field"
           />

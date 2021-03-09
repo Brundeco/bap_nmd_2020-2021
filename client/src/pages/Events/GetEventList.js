@@ -52,7 +52,7 @@ export default () => {
   } else {
     return (
       <React.Fragment>
-        <Preloader text="Events are loading" />
+        <Preloader text="events" />
       </React.Fragment>
     );
   }

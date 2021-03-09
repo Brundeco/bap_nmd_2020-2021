@@ -51,7 +51,7 @@ export const login = async (req, res, next) => {
           { user: foundUser._id },
           process.env.TOKEN_SECRET,
           {
-            expiresIn: "1h",
+            expiresIn: "10h",
           }
         );
         res.status(200).json({

@@ -12,6 +12,7 @@ import {
 import { NoLocation } from "..";
 import ImageSlider from "../../components/ImageSlider";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default () => {
   CheckSession(localStorage.getItem("jwt"));
@@ -20,6 +21,7 @@ export default () => {
   const [error, setError] = useState();
   const [images, setImages] = useState([]);
   const [titles, setTitles] = useState();
+  const [ids, setIds] = useState();
   const [current, setCurrent] = useState(0);
 
   const handleCoords = (coords) => {
@@ -45,11 +47,14 @@ export default () => {
   useEffect(() => {
     let tmpImgs = [];
     let tmpTitles = [];
+    let tmpId = [];
     data?.map((item, i) => {
       tmpTitles.push({ title: item.title });
       tmpImgs.push({ image: item.image });
+      tmpId.push({ id: item._id });
       setImages(tmpImgs);
       setTitles(tmpTitles);
+      setIds(tmpId);
     });
   }, [data]);
 
@@ -66,10 +71,12 @@ export default () => {
         <div className="wrapper">
           <section className="event-section">
             <h2>Events around you</h2>
-            <div className="event-list">
-              <ImageSlider slides={images} index={handleIndex} />
-            </div>
-            <p className="event-title">{titles && titles[current].title}</p>
+            <Link to={{ pathname: "/event/" + ids?.[current].id }}>
+              <div className="event-list">
+                <ImageSlider slides={images} index={handleIndex} />
+              </div>
+              <p className="event-title">{titles && titles[current].title}</p>
+            </Link>
             <button
               className="main-btn"
               onClick={() => (window.location = "/events")}

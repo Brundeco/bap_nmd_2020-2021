@@ -15,13 +15,17 @@ export default () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:5000/users/register", data)
-      .then((res) => {
-        setStatus(res.data.message);
-        window.location = '/login?email=' + res.data.user.email
-      })
-      .catch((err) => setStatus(err.response.data.message));
+    if (data.password !== data.passwordRepeat)
+      setStatus("Passwords do not match");
+    else {
+      axios
+        .post("http://localhost:5000/users/register", data)
+        .then((res) => {
+          setStatus(res.data.message);
+          window.location = "/login?email=" + res.data.user.email;
+        })
+        .catch((err) => setStatus(err.response.data.message));
+    }
   };
 
   return (
@@ -64,6 +68,13 @@ export default () => {
             onChange={handleChange}
             required
           />
+          <InputField
+            name="passwordRepeat"
+            placeholder="Repeat password"
+            type="password"
+            onChange={handleChange}
+            required
+          />
           <div className="file-upload-cta">
             <FileBase
               className="hide-std-file-btn"
@@ -78,7 +89,11 @@ export default () => {
               </span>
             </button>
           </div>
-          <input className="main-btn register-btn" type="submit" value="Register" />
+          <input
+            className="main-btn register-btn"
+            type="submit"
+            value="Register"
+          />
         </form>
         <button onClick={() => (window.location = "/login")}>
           Already a member? / Login here

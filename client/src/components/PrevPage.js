@@ -11,7 +11,7 @@ export default () => {
   let currentPath = location.pathname;
 
   const handleClick = () => {
-    console.log(history)
+    if (history.location.pathname.includes("login")) return;
     history.goBack();
   };
 

@@ -159,7 +159,7 @@ export default ({ match }) => {
   } else {
     return (
       <React.Fragment>
-        <Preloader text="Events are loading" />
+        <Preloader text="property" />
       </React.Fragment>
     );
   }
