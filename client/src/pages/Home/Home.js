@@ -71,12 +71,10 @@ export default () => {
         <div className="wrapper">
           <section className="event-section">
             <h2>Events around you</h2>
-            <Link to={{ pathname: "/event/" + ids?.[current].id }}>
-              <div className="event-list">
-                <ImageSlider slides={images} index={handleIndex} />
-              </div>
-              <p className="event-title">{titles && titles[current].title}</p>
-            </Link>
+            <div className="event-list">
+              <ImageSlider slides={images} index={handleIndex} id={ids} />
+            </div>
+            <p className="event-title">{titles && titles[current].title}</p>
             <button
               className="main-btn"
               onClick={() => (window.location = "/events")}
