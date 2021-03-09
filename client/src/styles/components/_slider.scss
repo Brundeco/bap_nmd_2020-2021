@@ -12,7 +12,7 @@
 .image {
   width: 65vw;
   height: 65vw;
-  border-radius: 10px;
+  border-radius: 0px 0px 5px 5px !important;
 }
 
 .right-arrow {
@@ -56,4 +56,8 @@
 
 .slider-row {
   display: flex;
+}
+
+.link-to-event {
+  height: 100%;
 }

@@ -47,7 +47,7 @@ const ImageSlider = (props) => {
             className={index === current ? "slide active" : "slide"}
             key={index}
           >
-            <Link to={{ pathname: "/event/" + ids?.[current].id }}>
+            <Link to={{ pathname: "/event/" + ids?.[current].id }} className="link-to-event" >
               {index === current && (
                 <img src={slide.image} alt="image" className="image" />
               )}

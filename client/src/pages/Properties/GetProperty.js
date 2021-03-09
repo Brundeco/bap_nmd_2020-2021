@@ -81,6 +81,13 @@ export default ({ match }) => {
     setBooking((prev) => ({ ...prev, dates: selectedDates }));
   }, [selectedDates]);
 
+  const handleReservation = (e) => {
+    e.preventDefault();
+    axios
+      .put(`http://localhost:5000/properties/${match.params.id}`, booking.dates)
+      .then((res) => setData(res.data));
+  };
+
   if (data != undefined) {
     return (
       <div className="property-screen">
@@ -151,7 +158,9 @@ export default ({ match }) => {
             <Link to={{ pathname: `/chat/${data?.author_id}/${data?.author}` }}>
               <li>Contact owner</li>
             </Link>
-            <button className="main-btn">Make reservation</button>
+            <button className="main-btn" onClick={(e) => handleReservation(e)}>
+              Make reservation
+            </button>
           </section>
         </div>
       </div>

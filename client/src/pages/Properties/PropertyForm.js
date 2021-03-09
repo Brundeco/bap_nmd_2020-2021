@@ -47,9 +47,8 @@ export default (props) => {
 
   return (
     <React.Fragment>
-      <DayPicker selectedDays={data.dates} onDayClick={handleDayClick} />
-
       <h1>Fill out the form below to start hosting your property</h1>
+      <DayPicker selectedDays={data.dates} onDayClick={handleDayClick} />
       <form onSubmit={props.onSubmit} formdata={props.formdata(data)}>
         <section>
           <h2>General information</h2>
