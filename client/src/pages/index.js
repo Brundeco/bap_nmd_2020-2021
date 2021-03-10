@@ -11,7 +11,9 @@ export { default as EventForm } from "./Events/EventForm";
 export { default as CreateProperty } from "./Properties/CreateProperty";
 export { default as GetPropertyList } from "./Properties/GetPropertyList";
 export { default as GetProperty } from "./Properties/GetProperty";
-export { default as PropertyForm } from "./Properties/PropertyForm";
+export { default as UpdateProperty } from "./Properties/UpdateProprety";
+export { default as PropertyFormCreate } from "./Properties/PropertyFormCreate";
+export { default as PropertyFormUpdate } from "./Properties/PropertyFormUpdate";
 export { default as GetPropertyListAdmin } from "./Properties/GetPropertyListAdmin";
 
 export { default as New } from "./New/New";

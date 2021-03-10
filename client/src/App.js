@@ -18,6 +18,7 @@ import {
   GetProperty,
   NoLocation,
   GetPropertyListAdmin,
+  UpdateProperty,
 } from "./pages";
 import { ExpiredSession } from "./components";
 
@@ -41,6 +42,7 @@ function App() {
 
         <Route path="/properties" component={GetPropertyList} />
         <Route path="/create-property" component={CreateProperty} />
+        <Route path="/update-property/:id" component={UpdateProperty} />
         <Route path="/property/:id/:author_id" component={GetProperty} />
         <Route path="/properties-admin" component={GetPropertyListAdmin} />
 

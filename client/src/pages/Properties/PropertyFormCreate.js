@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { InputField, Textarea } from "./../../components";
+import { InputField, Textarea } from "../../components";
 import SelectImage from "./../../icons/selectimage.svg";
 import FileBase from "react-file-base64";
 import DayPicker from "react-day-picker";

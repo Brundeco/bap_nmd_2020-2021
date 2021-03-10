@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CheckSession, PrevPage } from "./../../components";
 import axios from "axios";
-import { PropertyForm } from "..";
+import { PropertyFormCreate } from "..";
 
 export default (props) => {
   CheckSession(localStorage.getItem("jwt"));
@@ -22,7 +22,7 @@ export default (props) => {
     <div className="create-product-screen">
       <div className="page-wrapper">
         <PrevPage />
-        <PropertyForm onSubmit={handleSubmit} formdata={handleData} />
+        <PropertyFormCreate onSubmit={handleSubmit} formdata={handleData} />
       </div>
     </div>
   );
