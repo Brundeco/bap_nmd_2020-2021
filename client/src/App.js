@@ -17,6 +17,7 @@ import {
   Messages,
   GetProperty,
   NoLocation,
+  GetPropertyListAdmin,
 } from "./pages";
 import { ExpiredSession } from "./components";
 
@@ -33,7 +34,6 @@ function App() {
         <Route path="/no-location" component={NoLocation} />
 
         <Route path="/dashboard" component={Dashboard} />
-
         <Route path="/events" component={GetEventList} />
         <Route path="/event/:id" component={GetEvent} />
         <Route path="/update-event/:id" component={UpdateEvent} />
@@ -42,6 +42,7 @@ function App() {
         <Route path="/properties" component={GetPropertyList} />
         <Route path="/create-property" component={CreateProperty} />
         <Route path="/property/:id/:author_id" component={GetProperty} />
+        <Route path="/properties-admin" component={GetPropertyListAdmin} />
 
         <Route path="/chat/:author_id/:author" component={Chat} />
         <Route path="/messages/:user" component={Messages} />

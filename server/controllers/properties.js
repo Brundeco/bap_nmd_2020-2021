@@ -25,7 +25,6 @@ export const getProperty = async (req, res) => {
 
 export const createProperty = async (req, res) => {
   const property = req.body;
-  // console.log(property);
 
   const newProperty = new Property(property);
   try {
@@ -40,7 +39,6 @@ export const createProperty = async (req, res) => {
 export const updateProperty = async (req, res) => {
   const { id } = req.params;
   const reservations = req.body;
-  const newDates = [];
   console.log(reservations);
 
   if (!mongoose.Types.ObjectId.isValid(id))
@@ -49,30 +47,27 @@ export const updateProperty = async (req, res) => {
   try {
     const property = await Property.findById(id);
     const dates = property.dates;
-    console.log("Original dates");
-    console.log(dates);
-    console.log("Formatted dates");
     const newDates = dates.filter((val) => !reservations.includes(val));
-
     const updateProperty = {
       dates: newDates,
     };
-
-    console.log(newDates);
 
     await Property.findByIdAndUpdate(id, updateProperty, { new: true });
     res.json(updateProperty);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
+};
 
-  // console.log(newDates)
-
-  // const updateProperty = {
-  //   dates: newDates,
-  // };
-
-  // await Property.findByIdAndUpdate(id, updateProperty, { new: true });
-
-  // res.json(updateProperty);
+export const getPropertiesAdmin = async (req, res) => {
+  console.log(req.body);
+  try {
+    const user = req.body;
+    const properties = await Property.find({ author_id: user.id });
+    console.log(properties);
+    res.status(200).json(properties);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ message: error.message });
+  }
 };
