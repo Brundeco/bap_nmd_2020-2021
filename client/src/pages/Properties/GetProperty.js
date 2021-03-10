@@ -84,7 +84,7 @@ export default ({ match }) => {
   const handleReservation = (e) => {
     e.preventDefault();
     axios
-      .put(`http://localhost:5000/properties/${match.params.id}`, booking.dates)
+      .put(`http://localhost:5000/properties/book/${match.params.id}`, booking.dates)
       .then((res) => setData(res.data));
   };
 

@@ -9,6 +9,7 @@ export default (props) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const [images, setImages] = useState([]);
   const [dates, setDates] = useState([]);
+  // const [prevData, setPrevData] = useState();
   const [data, setData] = React.useState({
     author: user.username,
     author_id: user.id,
@@ -35,20 +36,30 @@ export default (props) => {
   };
 
   useEffect(() => {
+    setData(props.currentdata);
+    let newArray = [...dates]
+    props.currentdata?.dates?.map((day) => newArray.push(new Date(day).getTime()));
+    setDates(newArray);
+  }, [props.currentdata]);
+
+  useEffect(() => {
     setData((prev) => ({
       ...prev,
       dates: dates?.map((date) => new Date(date)),
     }));
+    // console.log(dates);
+
   }, [dates]);
 
   useEffect(() => {
-    console.log(data);
+    // console.log(data);
   }, [data]);
+  
 
   return (
     <React.Fragment>
       <h1>Fill out the form below to start hosting your property</h1>
-      <DayPicker selectedDays={data.dates} onDayClick={handleDayClick} />
+      <DayPicker selectedDays={data?.dates} onDayClick={handleDayClick} />
       <form onSubmit={props.onSubmit} formdata={props.formdata(data)}>
         <section>
           <h2>General information</h2>
@@ -58,6 +69,7 @@ export default (props) => {
             type="textarea"
             onChange={handleChange}
             className="main-input-field"
+            value={data?.description}
           />
           <div className="form-row">
             <div className="form-col-md">
@@ -67,6 +79,7 @@ export default (props) => {
                 type="number"
                 onChange={handleChange}
                 className="main-input-field"
+                value={data?.price}
               />
             </div>
             <div className="form-col-md">
@@ -76,6 +89,7 @@ export default (props) => {
                 placeholder="Square meters"
                 type="number"
                 className="main-input-field"
+                value={data?.surface}
               />
             </div>
           </div>
@@ -85,6 +99,7 @@ export default (props) => {
             type="text"
             onChange={handleChange}
             className="main-input-field"
+            value={data?.light}
           />
         </section>
 
@@ -98,6 +113,7 @@ export default (props) => {
                 placeholder="Street"
                 type="text"
                 className="main-input-field"
+                value={data?.street}
               />
             </div>
             <div className="form-col-sm">
@@ -107,6 +123,7 @@ export default (props) => {
                 placeholder="No"
                 type="number"
                 className="main-input-field"
+                value={data?.houseNumber}
               />
             </div>
           </div>
@@ -118,6 +135,7 @@ export default (props) => {
                 placeholder="Zip"
                 type="number"
                 className="main-input-field"
+                value={data?.zip}
               />
             </div>
             <div className="form-col-lg">
@@ -127,6 +145,7 @@ export default (props) => {
                 placeholder="City"
                 type="text"
                 className="main-input-field"
+                value={data?.city}
               />
             </div>
           </div>
@@ -139,6 +158,7 @@ export default (props) => {
             placeholder="Email"
             type="email"
             onChange={handleChange}
+            value={data?.email}
             required
           />
           <InputField
@@ -146,6 +166,7 @@ export default (props) => {
             placeholder="Phone"
             type="number"
             onChange={handleChange}
+            value={data?.phone}
             required
           />
           <InputField
@@ -153,6 +174,7 @@ export default (props) => {
             placeholder="Firstname"
             type="text"
             onChange={handleChange}
+            value={data?.firstname}
             required
           />
           <InputField
@@ -160,6 +182,7 @@ export default (props) => {
             placeholder="Lastname"
             type="text"
             onChange={handleChange}
+            value={data?.lastname}
             required
           />
         </section>
@@ -182,7 +205,7 @@ export default (props) => {
             </button>
           </div>
           <div className="img-gallery">
-            {data.images?.map(function (item, i) {
+            {data?.images?.map(function (item, i) {
               return (
                 <React.Fragment key={i}>
                   <div className="img-box">
