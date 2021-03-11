@@ -1,28 +1,15 @@
 import Messages from "../models/messages.js";
-import mongoose from "mongoose";
 
 export const getMessages = async (req, res) => {
-  const fromTo = req.body.from + req.body.to;
-  const toFrom = req.body.to + req.body.from;
-
-  const { user } = req.params;
-  console.log(user);
+  console.log(req.params.user);
 
   try {
-    const messages = await Messages.aggregate([
-      {
-        $match: {
-          $or: [
-            { from: new mongoose.Types.ObjectId(user) },
-            { to: new mongoose.Types.ObjectId(user) },
-          ],
-        },
-      },
-    ]);
-
-    res.status(200).json(messages);
-  } catch (error) {
-    console.log(error);
+    const conversations = await Messages.find({
+      conversationId: { $regex: req.params.user, $options: "i" },
+    });
+    res.status(200).json(conversations);
+  } catch (err) {
+    console.log(err);
   }
 };
 

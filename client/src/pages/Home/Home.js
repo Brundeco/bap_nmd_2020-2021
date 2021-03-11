@@ -42,16 +42,12 @@ export default () => {
   useEffect(() => {
     let tmpImgs = [];
     let tmpTitles = [];
-    // let tmpIndex = [];
     data?.map((item, i) => {
-      // tmpIndex.push(i);
       tmpTitles.push({ title: item.title });
       tmpImgs.push({ image: item.image });
       setImages(tmpImgs);
       setTitles(tmpTitles);
-      // setEvtIndex(tmpIndex);
     });
-    // console.log(data?.length);
   }, [data]);
 
   const prevEvent = () => {
@@ -72,13 +68,18 @@ export default () => {
           <h2>Events around you</h2>
           <div className="event-list">
             {data?.map((item) => {
+              console.log(item);
               return (
                 <div className="event-featured">
-                  <img src={item?.image} alt="" />
+                  <img
+                    src={item?.image}
+                    alt=""
+                    onClick={() => (window.location = "/event/" + item._id)}
+                  />
                   <p className="event-title">{item?.title}</p>
-                  {/* <button onClick={prevEvent} className="evt-prev-btn">
+                  <button onClick={prevEvent} className="evt-prev-btn">
                     <FontAwesome icon={faChevronLeft} />
-                  </button> */}
+                  </button>
                 </div>
               );
             })}

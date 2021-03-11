@@ -56,9 +56,12 @@
 }
 
 .home-screen .event-title {
-  width: 100%;
+  width: 90%;
   margin-top: 3vh;
   color: $text-grey;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .home-screen button.main-btn {
