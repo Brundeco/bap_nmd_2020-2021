@@ -6,8 +6,9 @@ export { default as CheckSession } from "./CheckSession";
 export { default as ExpiredSession } from "./ExpiredSession";
 export { default as UserToken } from "./UserToken";
 export { default as PrevPage } from "./PrevPage";
-export { default as FontAwesome } from "./FontAwesome"; 
+export { default as FontAwesome } from "./FontAwesome";
 export { default as Header } from "./Header";
 export { default as DeleteUser } from "./DeleteUser";
 export { default as Footer } from "./Footer";
-export { default as LocateUser } from './LocateUser'
+export { default as LocateUser } from "./LocateUser";
+export { default as ConvertDate } from "./ConvertDate";

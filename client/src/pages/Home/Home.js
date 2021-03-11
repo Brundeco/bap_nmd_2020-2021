@@ -71,19 +71,17 @@ export default () => {
         <section className="event-section">
           <h2>Events around you</h2>
           <div className="event-list">
-            <div className="event-featured">
-              <img src={images?.[evtIndex]?.image} alt="" />
-              <p className="event-title">{titles?.[evtIndex]?.title}</p>
-              <button onClick={prevEvent} className="evt-prev-btn">
-                <FontAwesome icon={faChevronLeft} />
-              </button>
-            </div>
-            <div className="event-next">
-              <img src={images?.[evtIndex + 1]?.image} />
-              <button onClick={nextEvent} className="evt-next-btn">
-                <FontAwesome icon={faChevronRight} />
-              </button>
-            </div>
+            {data?.map((item) => {
+              return (
+                <div className="event-featured">
+                  <img src={item?.image} alt="" />
+                  <p className="event-title">{item?.title}</p>
+                  {/* <button onClick={prevEvent} className="evt-prev-btn">
+                    <FontAwesome icon={faChevronLeft} />
+                  </button> */}
+                </div>
+              );
+            })}
           </div>
         </section>
         <button

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Preloader, PrevPage } from "../../components";
+import { Preloader, PrevPage, ConvertDate } from "../../components";
 import ImageSlider from "../../components/ImageSlider";
 import DayPicker, { DateUtils } from "react-day-picker";
 import "react-day-picker/lib/style.css";
@@ -52,11 +52,19 @@ export default ({ match }) => {
       owner_id: data?.author_id,
       owner: data?.author,
     }));
-    setPropertyCreatedAt(new Date(data?.createdAt));
+    setPropertyCreatedAt(ConvertDate(data?.createdAt));
+
+    // const longEnUSFormatter = new Intl.DateTimeFormat("en-US", {
+    //   year: "numeric",
+    //   month: "long",
+    //   day: "numeric",
+    // });
+    // // console.log(longEnUSFormatter.format(data?.createdAt));
+    // setPropertyCreatedAt(longEnUSFormatter.format(data?.createdAt));
   }, [data]);
 
   useEffect(() => {
-    console.log(propertyCreatedAt);
+    // console.log(propertyCreatedAt);
   }, [propertyCreatedAt]);
 
   const handleDayClick = (day, modifiers = {}) => {
@@ -84,7 +92,10 @@ export default ({ match }) => {
   const handleReservation = (e) => {
     e.preventDefault();
     axios
-      .put(`http://localhost:5000/properties/book/${match.params.id}`, booking.dates)
+      .put(
+        `http://localhost:5000/properties/book/${match.params.id}`,
+        booking.dates
+      )
       .then((res) => setData(res.data));
   };
 
@@ -112,7 +123,7 @@ export default ({ match }) => {
               data?.city}
           </h1>
           <h2>
-            By {data?.author} | created on {data?.createdAt}
+            By {data?.author} | created on {propertyCreatedAt}
           </h2>
           <p>{data?.description}</p>
           <div className="grid">
