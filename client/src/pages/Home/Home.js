@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Header, CheckSession, LocateUser } from "../../components";
-import Event1 from "./../../images/event-5.jpeg";
-import Event2 from "./../../images/event-4.jpg";
-import Event3 from "./../../images/event-2.jpg";
 import Event4 from "./../../images/event-3.jpg";
 import { FontAwesome } from "./../../components";
 import {
@@ -12,7 +9,6 @@ import {
 import { NoLocation } from "..";
 import ImageSlider from "../../components/ImageSlider";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 export default () => {
   CheckSession(localStorage.getItem("jwt"));
@@ -21,8 +17,7 @@ export default () => {
   const [error, setError] = useState();
   const [images, setImages] = useState([]);
   const [titles, setTitles] = useState();
-  const [ids, setIds] = useState();
-  const [current, setCurrent] = useState(0);
+  const [evtIndex, setEvtIndex] = useState(0);
 
   const handleCoords = (coords) => {
     setCoords(coords);
@@ -47,19 +42,24 @@ export default () => {
   useEffect(() => {
     let tmpImgs = [];
     let tmpTitles = [];
-    let tmpId = [];
+    // let tmpIndex = [];
     data?.map((item, i) => {
+      // tmpIndex.push(i);
       tmpTitles.push({ title: item.title });
       tmpImgs.push({ image: item.image });
-      tmpId.push({ id: item._id });
       setImages(tmpImgs);
       setTitles(tmpTitles);
-      setIds(tmpId);
+      // setEvtIndex(tmpIndex);
     });
+    // console.log(data?.length);
   }, [data]);
 
-  const handleIndex = (currentItem) => {
-    setCurrent(currentItem);
+  const prevEvent = () => {
+    if (evtIndex > 0) setEvtIndex(evtIndex - 1);
+  };
+
+  const nextEvent = () => {
+    if (evtIndex < data?.length - 1) setEvtIndex(evtIndex + 1);
   };
 
   return (
@@ -67,22 +67,31 @@ export default () => {
       <Header />
       <LocateUser coords={handleCoords} err={setError} />
       {error ? <NoLocation /> : ""}
-      <div className="home-screen page-wrapper">
-        <div className="wrapper">
-          <section className="event-section">
-            <h2>Events around you</h2>
-            <div className="event-list">
-              <ImageSlider slides={images} index={handleIndex} id={ids} />
+      <div className="home-screen">
+        <section className="event-section">
+          <h2>Events around you</h2>
+          <div className="event-list">
+            <div className="event-featured">
+              <img src={images?.[evtIndex]?.image} alt="" />
+              <p className="event-title">{titles?.[evtIndex]?.title}</p>
+              <button onClick={prevEvent} className="evt-prev-btn">
+                <FontAwesome icon={faChevronLeft} />
+              </button>
             </div>
-            <p className="event-title">{titles && titles[current].title}</p>
-            <button
-              className="main-btn"
-              onClick={() => (window.location = "/events")}
-            >
-              Show all events
-            </button>
-          </section>
-        </div>
+            <div className="event-next">
+              <img src={images?.[evtIndex + 1]?.image} />
+              <button onClick={nextEvent} className="evt-next-btn">
+                <FontAwesome icon={faChevronRight} />
+              </button>
+            </div>
+          </div>
+        </section>
+        <button
+          className="main-btn"
+          onClick={() => (window.location = "/events")}
+        >
+          Show all events
+        </button>
       </div>
 
       <section className="property-section-homepage">
