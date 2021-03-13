@@ -3,19 +3,19 @@ import { Link } from "react-router-dom";
 
 import axios from "axios";
 import { Header, Preloader } from "../../components";
+import { app } from "../../base";
 
 export default () => {
   const [data, setData] = useState();
+  const storageRef = app.storage().ref();
+
+  console.log(app);
 
   useEffect(() => {
     axios
       .get("http://localhost:5000/properties")
       .then((res) => setData(res.data));
   }, []);
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   if (data != undefined) {
     return (

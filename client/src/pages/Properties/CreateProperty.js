@@ -3,14 +3,15 @@ import { CheckSession, PrevPage } from "./../../components";
 import axios from "axios";
 import { PropertyFormCreate } from "..";
 import { app } from "../../base";
-import uuid from "react-uuid";
 
 export default (props) => {
   CheckSession(localStorage.getItem("jwt"));
 
   const [data, setData] = React.useState();
   const [files, setFiles] = useState([]);
-  const storageRef = app.storage().ref();
+  const [fileUrls, setFileUrls] = useState([]);
+  const database = app.database();
+  const storageRef = app.storage();
 
   const handleData = (formData) => {
     setData(formData);
@@ -23,43 +24,36 @@ export default (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(files);
-
     files.forEach((file) => {
       storageRef
-        .child(`${data.firebaseRef}/${file.id}`)
+        .ref(`${data.firebaseRef}/${file.id}`)
         .put(file)
-        .then((res) => {
-          console.log(res);
-        });
+        .on(
+          "state_changed",
+          (snapshot) => {
+            const progress = Math.round(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            // setProgress(progress);
+            console.log(progress);
+          },
+          (error) => {
+            console.log(error);
+          },
+          () => {
+            storageRef
+              .ref(`${data.firebaseRef}`)
+              .child(file.id)
+              .getDownloadURL()
+              .then((url) => {
+                // setUrl(url);
+                console.log(url);
+              });
+          }
+        );
     });
-
-    // console.log(data);
-    axios.post("http://localhost:5000/properties", data);
+    // axios.post("http://localhost:5000/properties", data);
   };
-
-  // const onChange = (e) => {
-  //   Array.from(e.target.files).map((file, i) => {
-  //     const newFile = file;
-  //     newFile["id"] = uuid();
-  //     setFiles((prevState) => [...prevState, newFile]);
-  //   });
-  // };
-
-  // const handleClick = () => {
-  //   files.forEach((file) => {
-  //     storageRef
-  //       .child(`images/${file.id}`)
-  //       .put(file)
-  //       .then((res) => {
-  //         console.log(res);
-  //       });
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   console.log(files);
-  // }, [files]);
 
   useEffect(() => {
     console.log(data);
@@ -74,8 +68,6 @@ export default (props) => {
           formdata={handleData}
           files={handleFiles}
         />
-        {/* <input type="file" onChange={onChange} multiple /> */}
-        {/* <button onClick={handleClick}>Submit upload</button> */}
       </div>
     </div>
   );
