@@ -42,8 +42,7 @@ export default ({ match }) => {
             </div>
             <section className="cta-section">
               <button className="main-btn">
-                {" "}
-                <img src={LikeImage} alt="" />{" "}
+                <img src={LikeImage} alt="" />
               </button>
             </section>
           </div>

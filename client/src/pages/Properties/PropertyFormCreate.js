@@ -4,24 +4,34 @@ import SelectImage from "./../../icons/selectimage.svg";
 import FileBase from "react-file-base64";
 import DayPicker from "react-day-picker";
 import "react-day-picker/lib/style.css";
+import uuid from "react-uuid";
 
 export default (props) => {
   const user = JSON.parse(localStorage.getItem("user"));
-  const [images, setImages] = useState([]);
+  const [files, setFiles] = useState([]);
   const [dates, setDates] = useState([]);
   const [data, setData] = React.useState({
     author: user.username,
     author_id: user.id,
     images: [],
+    firebaseRef: uuid()
   });
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleFiles = (e) => {
+    Array.from(e.target.files).map((file) => {
+      const newFile = file;
+      newFile["id"] = uuid();
+      setFiles((prevState) => [...prevState, newFile]);
+    });
+  };
+
   useEffect(() => {
-    setData((prev) => ({ ...prev, images: images }));
-  }, [images]);
+    setData((prev) => ({ ...prev, images: files }));
+  }, [files]);
 
   const handleDayClick = (day) => {
     let currentDay = new Date(day).getTime();
@@ -41,15 +51,19 @@ export default (props) => {
     }));
   }, [dates]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data]);
 
   return (
     <React.Fragment>
       <h1>Fill out the form below to start hosting your property</h1>
       <DayPicker selectedDays={data.dates} onDayClick={handleDayClick} />
-      <form onSubmit={props.onSubmit} formdata={props.formdata(data)}>
+      <form
+        onSubmit={props.onSubmit}
+        formdata={props.formdata(data)}
+        files={props.files(files)}
+      >
         <section>
           <h2>General information</h2>
           <Textarea
@@ -168,12 +182,8 @@ export default (props) => {
           <h2>Images</h2>
 
           <div className="file-upload-cta fit">
-            <FileBase
-              className="hide-std-file-btn"
-              type="file"
-              multiple={false}
-              onDone={({ base64 }) => setImages(() => [...images, base64])}
-            />
+            <input type="file" onChange={handleFiles} multiple />
+
             <button id="show-custom-file-btn">
               <img src={SelectImage} alt="" />
               <span>

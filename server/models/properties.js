@@ -20,6 +20,7 @@ const propertySchema = mongoose.Schema({
   images: Array,
   author_id: String,
   author: String,
+  firebaseRef: String,
   createdAt: {
     type: Number,
     default: Date.now(),

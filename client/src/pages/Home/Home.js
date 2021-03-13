@@ -68,7 +68,6 @@ export default () => {
           <h2>Events around you</h2>
           <div className="event-list">
             {data?.map((item) => {
-              console.log(item);
               return (
                 <div className="event-featured">
                   <img
