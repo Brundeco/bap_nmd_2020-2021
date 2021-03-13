@@ -29,9 +29,9 @@ export default (props) => {
     });
   };
 
-  useEffect(() => {
-    setData((prev) => ({ ...prev, images: files }));
-  }, [files]);
+  // useEffect(() => {
+  //   setData((prev) => ({ ...prev, images: files }));
+  // }, [files]);
 
   const handleDayClick = (day) => {
     let currentDay = new Date(day).getTime();
@@ -52,8 +52,8 @@ export default (props) => {
   }, [dates]);
 
   // useEffect(() => {
-  //   console.log(data);
-  // }, [data]);
+  //   console.log(files);
+  // }, [files]);
 
   return (
     <React.Fragment>
@@ -192,7 +192,8 @@ export default (props) => {
             </button>
           </div>
           <div className="img-gallery">
-            {data.images?.map(function (item, i) {
+            {files?.map(function (item, i) {
+              console.log(item)
               return (
                 <React.Fragment key={i}>
                   <div className="img-box">

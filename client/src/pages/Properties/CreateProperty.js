@@ -46,8 +46,8 @@ export default (props) => {
               .child(file.id)
               .getDownloadURL()
               .then((url) => {
-                // setUrl(url);
                 console.log(url);
+                setFileUrls((prevState) => [...prevState, url]);
               });
           }
         );
@@ -56,8 +56,8 @@ export default (props) => {
   };
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    console.log(fileUrls);
+  }, [fileUrls]);
 
   return (
     <div className="create-product-screen">
