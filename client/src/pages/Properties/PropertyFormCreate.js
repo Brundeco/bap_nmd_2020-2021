@@ -14,7 +14,7 @@ export default (props) => {
     author: user.username,
     author_id: user.id,
     images: [],
-    firebaseRef: uuid()
+    firebaseRef: uuid(),
   });
 
   const handleChange = (name, value) => {
@@ -29,9 +29,13 @@ export default (props) => {
     });
   };
 
-  // useEffect(() => {
-  //   setData((prev) => ({ ...prev, images: files }));
-  // }, [files]);
+  useEffect(() => {
+    let tmpArr = [];
+    files.forEach((element) => {
+      tmpArr.push(element.id);
+      setData((prev) => ({ ...prev, images: tmpArr }));
+    });
+  }, [files]);
 
   const handleDayClick = (day) => {
     let currentDay = new Date(day).getTime();
@@ -52,8 +56,15 @@ export default (props) => {
   }, [dates]);
 
   // useEffect(() => {
-  //   console.log(files);
-  // }, [files]);
+  //   setData((prev) => ({
+  //     ...prev,
+  //     images: fileUrls?.map((url) => url),
+  //   }));
+  // }, [fileUrls]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <React.Fragment>
@@ -193,7 +204,7 @@ export default (props) => {
           </div>
           <div className="img-gallery">
             {files?.map(function (item, i) {
-              console.log(item)
+              // console.log(item)
               return (
                 <React.Fragment key={i}>
                   <div className="img-box">

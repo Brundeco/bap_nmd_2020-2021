@@ -5,6 +5,7 @@ import { Preloader, PrevPage, ConvertDate } from "../../components";
 import ImageSlider from "../../components/ImageSlider";
 import DayPicker, { DateUtils } from "react-day-picker";
 import "react-day-picker/lib/style.css";
+import { app } from "../../base";
 
 export default ({ match }) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -14,6 +15,7 @@ export default ({ match }) => {
   const [availableDates, setAvailableDates] = useState([]);
   const [selectedDates, setSelectedDates] = useState([]);
   const [dates, setDates] = useState([]);
+  const storageRef = app.storage();
   const [booking, setBooking] = useState({
     client: user.username,
     client_id: user.id,

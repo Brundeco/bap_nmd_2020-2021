@@ -1,7 +1,7 @@
 import express from "express";
 
 import { getEvents, createEvent, getEvent, updateEvent } from "../controllers/events.js";
-import { auth } from "./../auth/auth.js";
+import { auth } from "../auth/auth.js";
 
 const router = express.Router();
 

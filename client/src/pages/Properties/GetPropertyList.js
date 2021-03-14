@@ -12,6 +12,19 @@ export default () => {
   console.log(app);
 
   useEffect(() => {
+    data?.forEach((element) => {
+      element?.images?.forEach((el) => {
+        console.log(
+          storageRef
+            .child(element.firebaseRef + "/" + el)
+            .getDownloadURL()
+            .then((res) => console.log(res))
+        );
+      });
+    });
+  }, [data]);
+
+  useEffect(() => {
     axios
       .get("http://localhost:5000/properties")
       .then((res) => setData(res.data));

@@ -10,7 +10,7 @@ export default (props) => {
   const [data, setData] = React.useState();
   const [files, setFiles] = useState([]);
   const [fileUrls, setFileUrls] = useState([]);
-  const database = app.database();
+  const [progress, setProgress] = useState(0);
   const storageRef = app.storage();
 
   const handleData = (formData) => {
@@ -21,43 +21,30 @@ export default (props) => {
     setFiles(files);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     files.forEach((file) => {
+      console.log(file.id);
       storageRef
         .ref(`${data.firebaseRef}/${file.id}`)
         .put(file)
-        .on(
-          "state_changed",
-          (snapshot) => {
-            const progress = Math.round(
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            );
-            // setProgress(progress);
-            console.log(progress);
-          },
-          (error) => {
-            console.log(error);
-          },
-          () => {
-            storageRef
-              .ref(`${data.firebaseRef}`)
-              .child(file.id)
-              .getDownloadURL()
-              .then((url) => {
-                console.log(url);
-                setFileUrls((prevState) => [...prevState, url]);
-              });
-          }
-        );
+        .then((res) => console.log(res));
     });
-    // axios.post("http://localhost:5000/properties", data);
+
+    axios
+      .post("http://localhost:5000/properties", data)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    console.log(fileUrls);
-  }, [fileUrls]);
+    console.log(data);
+  }, [data]);
+
+  useEffect(() => {
+    console.log(files);
+  }, [files]);
 
   return (
     <div className="create-product-screen">
