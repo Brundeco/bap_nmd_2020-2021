@@ -49,7 +49,7 @@ export default (props) => {
 
     const promises = props.currentdata?.images
       ?.map(async (el) => {
-        // console.log(el)
+        console.log(el)
         const img = await storageRef
           .child(props.currentdata?.firebaseRef + '/' + el)
           .getDownloadURL()
@@ -63,10 +63,6 @@ export default (props) => {
       })
   }, [props.currentdata])
 
-  useEffect(() => {
-    // console.log(data)
-  }, [data])
-
   const handleFiles = (e) => {
     Array.from(e.target.files).map((file) => {
       const newFile = file
@@ -79,14 +75,15 @@ export default (props) => {
     let tmpArr = data?.images
     files.forEach((element) => {
       if (tmpArr.indexOf(element.id) == -1) tmpArr.push(element.id)
-      // setFilenames(tmpArr)
-      setData((prev) => ({ ...prev, images: tmpArr }));
+      setData((prev) => ({ ...prev, images: tmpArr }))
     })
   }, [files])
 
-  // useEffect(() => {
-  //   setData((prev) => ({ ...prev, images: filenames }))
-  // }, [filenames])
+  const handleDelete = (item) => {
+    // e.preventDefault()
+    console.log(item.id)
+    // console.log('I was clicked')
+  }
 
   return (
     <React.Fragment>
@@ -96,7 +93,6 @@ export default (props) => {
         onSubmit={props.onSubmit}
         formdata={props.formdata(data)}
         files={props.files(files)}
-        // filenames={props.filenames(filenames)}
       >
         <section>
           <h2>General information</h2>
@@ -239,11 +235,14 @@ export default (props) => {
           <div className="img-gallery">
             <h2>New pictures</h2>
             {files?.map((item, i) => {
+              console.log(item)
               return (
                 <React.Fragment key={i}>
                   <div className="img-box">
                     <img src={URL.createObjectURL(item)} alt="" />
-                    <button>Delete</button>
+                    <button onClick={() => handleDelete(item)}>
+                      Delete
+                    </button>
                   </div>
                 </React.Fragment>
               )
@@ -252,6 +251,7 @@ export default (props) => {
           <div className="img-gallery">
             <h2>Previous pictures</h2>
             {thumbnails?.map((item, i) => {
+              // console.log(item)
               return (
                 <React.Fragment key={i}>
                   <div className="img-box">

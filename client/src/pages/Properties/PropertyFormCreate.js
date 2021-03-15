@@ -199,7 +199,7 @@ export default (props) => {
               return (
                 <React.Fragment key={i}>
                   <div className="img-box">
-                    <img src={item} alt="" />
+                    <img src={URL.createObjectURL(item)} alt="" />
                     <button>Delete</button>
                   </div>
                 </React.Fragment>

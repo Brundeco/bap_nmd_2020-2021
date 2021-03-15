@@ -40,7 +40,7 @@ export default ({ match }) => {
   }
 
   useEffect(() => {
-    console.log(data)
+    // console.log(data)
   }, [data])
 
   return (
@@ -51,7 +51,6 @@ export default ({ match }) => {
           formdata={handleData}
           currentdata={currentProprety}
           files={handleFiles}
-          // filenames={handlefilenames}
         />
       </div>
     </div>
