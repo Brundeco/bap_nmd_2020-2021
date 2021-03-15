@@ -1,34 +1,39 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, Profiler } from 'react'
+import { Link } from 'react-router-dom'
 
-import axios from "axios";
-import { Header, Preloader } from "../../components";
-import { app } from "../../base";
+import axios from 'axios'
+import { Header, Preloader } from '../../components'
+import { app } from '../../base'
 
 export default () => {
-  const [data, setData] = useState();
-  const storageRef = app.storage().ref();
-
-  console.log(app);
-
-  useEffect(() => {
-    data?.forEach((element) => {
-      element?.images?.forEach((el) => {
-        console.log(
-          storageRef
-            .child(element.firebaseRef + "/" + el)
-            .getDownloadURL()
-            .then((res) => console.log(res))
-        );
-      });
-    });
-  }, [data]);
-
+  const [data, setData] = useState()
+  const storageRef = app.storage().ref()
+  const [propFiles, setPropFiles] = useState([])
+  const [properties, setProperties] = useState([])
   useEffect(() => {
     axios
-      .get("http://localhost:5000/properties")
-      .then((res) => setData(res.data));
-  }, []);
+      .get('http://localhost:5000/properties')
+      .then((res) => setData(res.data))
+  }, [])
+
+  useEffect(() => {
+    const promises = data
+      ?.map((element) => {
+        return element?.images?.map(async (el) => {
+          const url = await storageRef
+            .child(element.firebaseRef + '/' + el)
+            .getDownloadURL()
+          return url
+        })
+      })
+      .filter(Boolean)
+    const promisesArr = promises?.flat()
+    promisesArr &&
+      Promise.all(promisesArr).then((newArray) => {
+        console.log(newArray)
+        setPropFiles((prevPropsFiles) => [...prevPropsFiles, ...newArray])
+      })
+  }, [data])
 
   if (data != undefined) {
     return (
@@ -41,7 +46,11 @@ export default () => {
                 <div key={i} className="list-item">
                   <h2> {item.description}</h2>
                   <div className="image">
-                    <img src={item.images[0]} alt="" />
+                    {propFiles?.map(function (image, i) {
+                      if (image?.includes(item.images[0])) {
+                        return <img src={image} alt="" />
+                      }
+                    })}
                   </div>
                   <ul>
                     <Link
@@ -53,17 +62,17 @@ export default () => {
                     </Link>
                   </ul>
                 </div>
-              );
+              )
             })}
           </div>
         </div>
       </React.Fragment>
-    );
+    )
   } else {
     return (
       <React.Fragment>
-        <Preloader text={"properties"} />
+        <Preloader text={'properties'} />
       </React.Fragment>
-    );
+    )
   }
-};
+}
