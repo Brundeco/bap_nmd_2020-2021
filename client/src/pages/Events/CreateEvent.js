@@ -1,31 +1,52 @@
-import React, { useState, useEffect } from "react";
-import { CheckSession, PrevPage } from "./../../components";
-import axios from "axios";
-import { EventForm } from "..";
+import React, { useState, useEffect } from 'react'
+import { CheckSession, PrevPage } from './../../components'
+import axios from 'axios'
+import { EventForm } from '..'
+import { app } from '../../base'
 
 export default () => {
-  CheckSession(localStorage.getItem("jwt"));
+  CheckSession(localStorage.getItem('jwt'))
 
-  const [data, setData] = React.useState();
+  const [data, setData] = React.useState()
+  const [file, setFile] = useState()
+  const storageRef = app.storage()
 
   const handleData = (formData) => {
-    setData(formData);
-  };
+    setData(formData)
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(data);
-    axios
-      .post("http://localhost:5000/events", data)
+    e.preventDefault()
+    console.log(data)
+
+    storageRef
+      .ref(`${data.firebaseRef}/${file.id}`)
+      .put(file)
       .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  };
+
+    axios
+      .post('http://localhost:5000/events', data)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+  }
+
+  useEffect(() => {
+    console.log(data)
+  }, [data])
+
+  const handleFile = (file) => {
+    setFile(file)
+  }
   return (
     <div className="create-product-screen">
       <div className="page-wrapper">
         <PrevPage />
-        <EventForm onSubmit={handleSubmit} formdata={handleData} />
+        <EventForm
+          onSubmit={handleSubmit}
+          formdata={handleData}
+          file={handleFile}
+        />
       </div>
     </div>
-  );
-};
+  )
+}

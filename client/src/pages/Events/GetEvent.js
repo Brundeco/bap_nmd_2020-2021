@@ -1,36 +1,40 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import LikeImage from "./../../icons/heart-full.svg";
-import { Preloader, CheckSession, PrevPage } from "./../../components";
-import { Date } from "prismic-reactjs";
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import { Preloader, CheckSession, PrevPage } from './../../components'
+import { app } from '../../base'
 
 export default ({ match }) => {
-  CheckSession(localStorage.getItem("jwt"));
-  const [data, setData] = useState();
+  CheckSession(localStorage.getItem('jwt'))
+  const [data, setData] = useState()
+  const storageRef = app.storage().ref()
+  const [image, setImage] = useState()
 
   useEffect(() => {
     axios
       .get(`http://localhost:5000/events/${match.params.id}`)
-      .then((res) => setData(res.data));
-  }, []);
+      .then((res) => setData(res.data))
+  }, [])
 
   useEffect(() => {
-    const timestamp = data?.createdAt;
-
+    const timestamp = data?.createdAt
     if (timestamp) {
-      console.log(timestamp.toString());
-
-      // const timestampToString = Date(timestamp).toString()
-      // console.log(timestampToString)
+      console.log(timestamp.toString())
+      const timestampToString = Date(timestamp).toString()
+      console.log(timestampToString)
     }
-  }, [data]);
+
+    storageRef
+      .child(data?.firebaseRef + '/' + data?.image)
+      .getDownloadURL()
+      .then((url) => setImage(url))
+  }, [data])
 
   if (data != undefined) {
     return (
       <div>
         <div className="event-screen">
           <div className="subject-image">
-            <img src={data?.image} alt="" />
+            <img src={image} alt="" />
           </div>
           <div className="wrapper">
             <PrevPage />
@@ -41,19 +45,17 @@ export default ({ match }) => {
               <h3>Practical</h3>
             </div>
             <section className="cta-section">
-              <button className="main-btn">
-                <img src={LikeImage} alt="" />
-              </button>
+              <button className="main-btn">Button</button>
             </section>
           </div>
         </div>
       </div>
-    );
+    )
   } else {
     return (
       <React.Fragment>
         <Preloader />
       </React.Fragment>
-    );
+    )
   }
-};
+}

@@ -1,71 +1,72 @@
-import React, { useState, useEffect } from "react";
-import { InputField, Textarea } from "../../components";
-import SelectImage from "./../../icons/selectimage.svg";
-import FileBase from "react-file-base64";
-import DayPicker from "react-day-picker";
-import "react-day-picker/lib/style.css";
+import React, { useState, useEffect } from 'react'
+import { InputField, Textarea } from '../../components'
+import SelectImage from './../../icons/selectimage.svg'
+import DayPicker from 'react-day-picker'
+import 'react-day-picker/lib/style.css'
+import uuid from 'react-uuid'
 
 export default (props) => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  const [dates, setDates] = useState([]);
+  const user = JSON.parse(localStorage.getItem('user'))
+  const [file, setFile] = useState()
+  const [dates, setDates] = useState([])
   const [data, setData] = React.useState({
     author: user.username,
     author_id: user.id,
-  });
+    firebaseRef: uuid(),
+  })
 
   const handleChange = (name, value) => {
-    setData((prev) => ({ ...prev, [name]: value }));
-  };
+    setData((prev) => ({ ...prev, [name]: value }))
+  }
 
   const handleDayClick = (day) => {
-    let currentDay = new Date(day).getTime();
-    let newArray = [...dates];
-    let indexItem = newArray.indexOf(currentDay);
+    let currentDay = new Date(day).getTime()
+    let newArray = [...dates]
+    let indexItem = newArray.indexOf(currentDay)
 
-    indexItem === -1
-      ? newArray.push(currentDay)
-      : newArray.splice(indexItem, 1);
-    setDates(newArray);
-  };
+    indexItem === -1 ? newArray.push(currentDay) : newArray.splice(indexItem, 1)
+    setDates(newArray)
+  }
 
   useEffect(() => {
     setData((prev) => ({
       ...prev,
       dates: dates?.map((date) => new Date(date)),
-    }));
-  }, [dates]);
+    }))
+  }, [dates])
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
+  const handleFile = (e) => {
+    const newFile = e.target.files[0]
+    newFile['id'] = uuid()
+    setFile(newFile)
+    setData((prev) => ({ ...prev, image: newFile.id }))
+  }
 
   return (
     <React.Fragment>
       <h1>Fill out the form below to create your event</h1>
       <DayPicker selectedDays={data.dates} onDayClick={handleDayClick} />
-      <form onSubmit={props.onSubmit} formdata={props.formdata(data)}>
+      <form
+        onSubmit={props.onSubmit}
+        formdata={props.formdata(data)}
+        file={props.file(file)}
+      >
         <section>
           <h2>Event image</h2>
           <div className="file-upload-cta">
-            <FileBase
-              className="hide-std-file-btn"
-              type="file"
-              multiple={false}
-              onDone={({ base64 }) => setData({ ...data, image: base64 })}
-            />
+            <input type="file" onChange={handleFile} multiple />
+
             <button id="show-custom-file-btn">
-              <img src={SelectImage} alt="" />
               <span>
-                {data?.image ? "Replace picture" : "Event wallpaper"}{" "}
+                {data?.image ? 'Replace picture' : 'Event wallpaper'}{' '}
               </span>
             </button>
           </div>
           <div>
             <img
-              src={data?.image}
-              className={data?.image ? "wallphoto" : ""}
-              alt={data?.image ? "Event wallphoto" : ""}
+              src={file && URL.createObjectURL(file)}
+              className={data?.image ? 'wallphoto' : ''}
+              alt={data?.image ? 'Event wallphoto' : ''}
             />
           </div>
         </section>
@@ -202,5 +203,5 @@ export default (props) => {
         <input type="submit" value="Submit" className="main-input-field" />
       </form>
     </React.Fragment>
-  );
-};
+  )
+}

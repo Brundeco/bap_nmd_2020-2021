@@ -18,6 +18,7 @@ const eventSchema = mongoose.Schema({
 
   author_id: String,
   author: String,
+  firebaseRef: String,
   createdAt: {
     type: Number,
     default: Date.now(),
