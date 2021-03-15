@@ -1,23 +1,44 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
-import axios from "axios";
-import { Header, Preloader } from "../../components";
+import axios from 'axios'
+import { Header, Preloader } from '../../components'
+import { app } from '../../base'
 
 export default () => {
-  const user = JSON.parse(localStorage.getItem("user")).id;
-  const [data, setData] = useState();
-
-  const userId = user;
+  const user = JSON.parse(localStorage.getItem('user')).id
+  const [data, setData] = useState()
+  const [propFiles, setPropFiles] = useState([])
+  const storageRef = app.storage().ref()
+  const userId = user
   useEffect(() => {
     axios
-      .post("http://localhost:5000/properties/admin", { id: userId })
-      .then((res) => setData(res.data));
-  }, []);
+      .post('http://localhost:5000/properties/admin', { id: userId })
+      .then((res) => setData(res.data))
+  }, [])
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    const promises = data
+      ?.map((element) => {
+        return element?.images?.map(async (el) => {
+          const url = await storageRef
+            .child(element.firebaseRef + '/' + el)
+            .getDownloadURL()
+          return url
+        })
+      })
+      .filter(Boolean)
+    const promisesArr = promises?.flat()
+    promisesArr &&
+      Promise.all(promisesArr).then((newArray) => {
+        console.log(newArray)
+        setPropFiles((prevPropsFiles) => [...prevPropsFiles, ...newArray])
+      })
+  }, [data])
+
+  useEffect(() => {
+    console.log(data)
+  }, [data])
 
   if (data != undefined) {
     return (
@@ -31,25 +52,29 @@ export default () => {
                 <div className="list-part">
                   <button
                     onClick={() =>
-                      (window.location = "update-property/" + item._id)
+                      (window.location = 'update-property/' + item._id)
                     }
                   >
                     Update
                   </button>
                 </div>
                 <div className="list-part">
-                  <img src={item.images[0]} alt="" />
+                  {propFiles?.map(function (image, i) {
+                    if (image?.includes(item.images[0])) {
+                      return <img src={image} alt="" />
+                    }
+                  })}
                 </div>
                 <div className="list-part">
-                  <h3> {item?.zip + ", " + item?.city} </h3>
+                  <h3> {item?.zip + ', ' + item?.city} </h3>
                 </div>
               </div>
-            );
+            )
           })}
         </div>
       </React.Fragment>
-    );
+    )
   } else {
-    return <Preloader text="Loading your properties" />;
+    return <Preloader text="Loading your properties" />
   }
-};
+}

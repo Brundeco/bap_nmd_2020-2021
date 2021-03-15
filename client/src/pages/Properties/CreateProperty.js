@@ -9,8 +9,6 @@ export default (props) => {
 
   const [data, setData] = React.useState()
   const [files, setFiles] = useState([])
-  const [fileUrls, setFileUrls] = useState([])
-  const [progress, setProgress] = useState(0)
   const storageRef = app.storage()
 
   const handleData = (formData) => {

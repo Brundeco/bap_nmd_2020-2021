@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { InputField, Textarea } from "../../components";
 import SelectImage from "./../../icons/selectimage.svg";
-import FileBase from "react-file-base64";
 import DayPicker from "react-day-picker";
 import "react-day-picker/lib/style.css";
 import uuid from "react-uuid";
@@ -54,13 +53,6 @@ export default (props) => {
       dates: dates?.map((date) => new Date(date)),
     }));
   }, [dates]);
-
-  // useEffect(() => {
-  //   setData((prev) => ({
-  //     ...prev,
-  //     images: fileUrls?.map((url) => url),
-  //   }));
-  // }, [fileUrls]);
 
   useEffect(() => {
     console.log(data);
@@ -204,7 +196,6 @@ export default (props) => {
           </div>
           <div className="img-gallery">
             {files?.map(function (item, i) {
-              // console.log(item)
               return (
                 <React.Fragment key={i}>
                   <div className="img-box">

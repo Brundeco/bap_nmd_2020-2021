@@ -1,66 +1,103 @@
-import React, { useState, useEffect } from "react";
-import { InputField, Textarea } from "../../components";
-import SelectImage from "./../../icons/selectimage.svg";
-import FileBase from "react-file-base64";
-import DayPicker from "react-day-picker";
-import "react-day-picker/lib/style.css";
+import React, { useState, useEffect } from 'react'
+import { InputField, Textarea } from '../../components'
+import SelectImage from './../../icons/selectimage.svg'
+import DayPicker from 'react-day-picker'
+import 'react-day-picker/lib/style.css'
+import uuid from 'react-uuid'
+import { app } from '../../base'
 
 export default (props) => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  const [images, setImages] = useState([]);
-  const [dates, setDates] = useState([]);
-  // const [prevData, setPrevData] = useState();
+  const user = JSON.parse(localStorage.getItem('user'))
+  const [files, setFiles] = useState([])
+  const [thumbnails, setThumbnails] = useState([])
+  const [filenames, setFilenames] = useState([])
+  const [dates, setDates] = useState([])
+  const storageRef = app.storage().ref()
   const [data, setData] = React.useState({
     author: user.username,
     author_id: user.id,
     images: [],
-  });
+  })
 
   const handleChange = (name, value) => {
-    setData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  useEffect(() => {
-    setData((prev) => ({ ...prev, images: images }));
-  }, [images]);
+    setData((prev) => ({ ...prev, [name]: value }))
+  }
 
   const handleDayClick = (day) => {
-    let currentDay = new Date(day).getTime();
-    let newArray = [...dates];
-    let indexItem = newArray.indexOf(currentDay);
-
-    indexItem === -1
-      ? newArray.push(currentDay)
-      : newArray.splice(indexItem, 1);
-    setDates(newArray);
-  };
-
-  useEffect(() => {
-    setData(props.currentdata);
+    let currentDay = new Date(day).getTime()
     let newArray = [...dates]
-    props.currentdata?.dates?.map((day) => newArray.push(new Date(day).getTime()));
-    setDates(newArray);
-  }, [props.currentdata]);
+    let indexItem = newArray.indexOf(currentDay)
+    indexItem === -1 ? newArray.push(currentDay) : newArray.splice(indexItem, 1)
+    setDates(newArray)
+  }
 
   useEffect(() => {
     setData((prev) => ({
       ...prev,
       dates: dates?.map((date) => new Date(date)),
-    }));
-    // console.log(dates);
-
-  }, [dates]);
+    }))
+  }, [dates])
 
   useEffect(() => {
-    // console.log(data);
-  }, [data]);
-  
+    setData(props.currentdata)
+
+    let newArray = [...dates]
+    props.currentdata?.dates?.map((day) =>
+      newArray.push(new Date(day).getTime())
+    )
+    setDates(newArray)
+
+    const promises = props.currentdata?.images
+      ?.map(async (el) => {
+        // console.log(el)
+        const img = await storageRef
+          .child(props.currentdata?.firebaseRef + '/' + el)
+          .getDownloadURL()
+        return img
+      })
+      .filter(Boolean)
+    const promisesArr = promises?.flat()
+    promisesArr &&
+      Promise.all(promisesArr).then((newArray) => {
+        setThumbnails((prevImgs) => [...prevImgs, ...newArray])
+      })
+  }, [props.currentdata])
+
+  useEffect(() => {
+    // console.log(data)
+  }, [data])
+
+  const handleFiles = (e) => {
+    Array.from(e.target.files).map((file) => {
+      const newFile = file
+      newFile['id'] = uuid()
+      setFiles((prevState) => [...prevState, newFile])
+    })
+  }
+
+  useEffect(() => {
+    let tmpArr = data?.images
+    files.forEach((element) => {
+      if (tmpArr.indexOf(element.id) == -1) tmpArr.push(element.id)
+      // setFilenames(tmpArr)
+      setData((prev) => ({ ...prev, images: tmpArr }));
+    })
+  }, [files])
+
+  // useEffect(() => {
+  //   setData((prev) => ({ ...prev, images: filenames }))
+  // }, [filenames])
 
   return (
     <React.Fragment>
       <h1>Fill out the form below to start hosting your property</h1>
       <DayPicker selectedDays={data?.dates} onDayClick={handleDayClick} />
-      <form onSubmit={props.onSubmit} formdata={props.formdata(data)}>
+      <form
+        onSubmit={props.onSubmit}
+        formdata={props.formdata(data)}
+        files={props.files(files)}
+        // filenames={props.filenames(filenames)}
+      >
         <section>
           <h2>General information</h2>
           <Textarea
@@ -191,21 +228,30 @@ export default (props) => {
           <h2>Images</h2>
 
           <div className="file-upload-cta fit">
-            <FileBase
-              className="hide-std-file-btn"
-              type="file"
-              multiple={false}
-              onDone={({ base64 }) => setImages(() => [...images, base64])}
-            />
+            <input type="file" onChange={handleFiles} multiple />
             <button id="show-custom-file-btn">
               <img src={SelectImage} alt="" />
               <span>
-                {data?.image ? "Replace picture" : "Property pictures"}{" "}
+                {data?.image ? 'Replace picture' : 'Property pictures'}{' '}
               </span>
             </button>
           </div>
           <div className="img-gallery">
-            {data?.images?.map(function (item, i) {
+            <h2>New pictures</h2>
+            {files?.map((item, i) => {
+              return (
+                <React.Fragment key={i}>
+                  <div className="img-box">
+                    <img src={URL.createObjectURL(item)} alt="" />
+                    <button>Delete</button>
+                  </div>
+                </React.Fragment>
+              )
+            })}
+          </div>
+          <div className="img-gallery">
+            <h2>Previous pictures</h2>
+            {thumbnails?.map((item, i) => {
               return (
                 <React.Fragment key={i}>
                   <div className="img-box">
@@ -213,7 +259,7 @@ export default (props) => {
                     <button>Delete</button>
                   </div>
                 </React.Fragment>
-              );
+              )
             })}
           </div>
         </section>
@@ -221,5 +267,5 @@ export default (props) => {
         <input type="submit" value="Verify info" className="main-input-field" />
       </form>
     </React.Fragment>
-  );
-};
+  )
+}

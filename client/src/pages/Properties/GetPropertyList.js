@@ -8,7 +8,7 @@ import { app } from '../../base'
 export default () => {
   const [data, setData] = useState()
   const storageRef = app.storage().ref()
-  const [propFiles, setPropFiles] = useState([])
+  const [images, setImages] = useState([])
   const [properties, setProperties] = useState([])
   useEffect(() => {
     axios
@@ -17,8 +17,10 @@ export default () => {
   }, [])
 
   useEffect(() => {
+    console.log(data)
     const promises = data
       ?.map((element) => {
+        console.log(element)
         return element?.images?.map(async (el) => {
           const url = await storageRef
             .child(element.firebaseRef + '/' + el)
@@ -31,7 +33,7 @@ export default () => {
     promisesArr &&
       Promise.all(promisesArr).then((newArray) => {
         console.log(newArray)
-        setPropFiles((prevPropsFiles) => [...prevPropsFiles, ...newArray])
+        setImages((prevPropsFiles) => [...prevPropsFiles, ...newArray])
       })
   }, [data])
 
@@ -46,7 +48,7 @@ export default () => {
                 <div key={i} className="list-item">
                   <h2> {item.description}</h2>
                   <div className="image">
-                    {propFiles?.map(function (image, i) {
+                    {images?.map(function (image, i) {
                       if (image?.includes(item.images[0])) {
                         return <img src={image} alt="" />
                       }
