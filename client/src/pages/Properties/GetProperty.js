@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Route } from 'react-router-dom'
 import axios from 'axios'
 import { Preloader, PrevPage, ConvertDate } from '../../components'
 import ImageSlider from '../../components/ImageSlider'
@@ -22,10 +22,6 @@ export default ({ match }) => {
   })
   const handleIndex = () => {}
 
-  useEffect(() => {
-    // console.log(booking)
-  }, [booking])
-
   const isDayDisabled = (day) => {
     return !availableDates.some((disabledDay) =>
       DateUtils.isSameDay(day, disabledDay)
@@ -39,17 +35,25 @@ export default ({ match }) => {
   }, [])
 
   useEffect(() => {
-    let tmpImgs = []
+    // Get Firestore img Urls
+    const promises = data?.images
+      ?.map(async (el) => {
+        console.log(el)
+        const img = await storageRef
+          .child(data?.firebaseRef + '/' + el)
+          .getDownloadURL()
+        return img
+      })
+      .filter(Boolean)
+    const promisesArr = promises?.flat()
+    promisesArr &&
+      Promise.all(promisesArr).then((newArray) => {
+        setImages((prevImgs) => [...prevImgs, ...newArray])
+      })
+
     let tmpDates = []
-    data?.images?.map((el) => {
-      storageRef
-        .child(el.firebaseRef + '/' + el)
-        .getDownloadURL()
-        .then((url) => {
-          console.log(url)
-        })
-    })
     data?.dates?.map((item) => {
+      console.log(item)
       tmpDates.push(new Date(item))
       setAvailableDates(tmpDates)
     })
@@ -59,19 +63,11 @@ export default ({ match }) => {
       owner: data?.author,
     }))
     setPropertyCreatedAt(ConvertDate(data?.createdAt))
-
-    // const longEnUSFormatter = new Intl.DateTimeFormat("en-US", {
-    //   year: "numeric",
-    //   month: "long",
-    //   day: "numeric",
-    // });
-    // // console.log(longEnUSFormatter.format(data?.createdAt));
-    // setPropertyCreatedAt(longEnUSFormatter.format(data?.createdAt));
   }, [data])
 
   useEffect(() => {
-    // console.log(propertyCreatedAt);
-  }, [propertyCreatedAt])
+    // console.log(images)
+  }, [images])
 
   const handleDayClick = (day, modifiers = {}) => {
     if (modifiers.disabled) {
