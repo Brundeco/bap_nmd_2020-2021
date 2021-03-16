@@ -10,7 +10,7 @@ export default (props) => {
   const user = JSON.parse(localStorage.getItem('user'))
   const [files, setFiles] = useState([])
   const [thumbnails, setThumbnails] = useState([])
-  const [filenames, setFilenames] = useState([])
+  const [newImgArr, setNewImgArr] = useState([])
   const [dates, setDates] = useState([])
   const storageRef = app.storage().ref()
   const [data, setData] = React.useState({
@@ -46,21 +46,6 @@ export default (props) => {
       newArray.push(new Date(day).getTime())
     )
     setDates(newArray)
-
-    const promises = props.currentdata?.images
-      ?.map(async (el) => {
-        console.log(el)
-        const img = await storageRef
-          .child(props.currentdata?.firebaseRef + '/' + el)
-          .getDownloadURL()
-        return img
-      })
-      .filter(Boolean)
-    const promisesArr = promises?.flat()
-    promisesArr &&
-      Promise.all(promisesArr).then((newArray) => {
-        setThumbnails((prevImgs) => [...prevImgs, ...newArray])
-      })
   }, [props.currentdata])
 
   const handleFiles = (e) => {
@@ -79,11 +64,41 @@ export default (props) => {
     })
   }, [files])
 
-  const handleDelete = (item) => {
-    // e.preventDefault()
-    console.log(item.id)
-    // console.log('I was clicked')
+  const handleDelete = (e, data, i) => {
+    e.preventDefault()
+    newImgArr.splice(i, 1)
+    setData((prev) => ({ ...prev, images: newImgArr }))
   }
+
+  const handleDeleteNewFiles = (e, i) => {
+    e.preventDefault()
+    let newImgArr = []
+    files.map((file) => newImgArr.push(file))
+    newImgArr.splice(i, 1)
+    setFiles(newImgArr)
+  }
+
+  useEffect(() => {
+    let currentArr = []
+    data?.images?.map((el) => currentArr.push(el))
+    setNewImgArr(currentArr)
+
+    const promises = data?.images
+      ?.map(async (el) => {
+        const img = await storageRef
+          .child(data?.firebaseRef + '/' + el)
+          .getDownloadURL()
+          // .then(url => console.log( "Url was found" + url))
+          .catch((err) => console.log(err))
+        return img
+      })
+      .filter(Boolean)
+    const promisesArr = promises?.flat()
+    promisesArr &&
+      Promise.all(promisesArr).then((newArray) => {
+        setThumbnails((prevImgs) => [...newArray])
+      })
+  }, [data])
 
   return (
     <React.Fragment>
@@ -235,12 +250,11 @@ export default (props) => {
           <div className="img-gallery">
             <h2>New pictures</h2>
             {files?.map((item, i) => {
-              console.log(item)
               return (
                 <React.Fragment key={i}>
                   <div className="img-box">
                     <img src={URL.createObjectURL(item)} alt="" />
-                    <button onClick={() => handleDelete(item)}>
+                    <button onClick={(e) => handleDeleteNewFiles(e, data, i)}>
                       Delete
                     </button>
                   </div>
@@ -254,16 +268,24 @@ export default (props) => {
               // console.log(item)
               return (
                 <React.Fragment key={i}>
-                  <div className="img-box">
-                    <img src={item} alt="" />
-                    <button>Delete</button>
+                  <div
+                    className="img-box"
+                    style={
+                      item == undefined
+                        ? { display: 'none' }
+                        : { display: 'block' }
+                    }
+                  >
+                    <img src={item} alt="" className="thumbnail" />
+                    <button onClick={(e) => handleDelete(e, data, i)}>
+                      Delete
+                    </button>
                   </div>
                 </React.Fragment>
               )
             })}
           </div>
         </section>
-
         <input type="submit" value="Verify info" className="main-input-field" />
       </form>
     </React.Fragment>

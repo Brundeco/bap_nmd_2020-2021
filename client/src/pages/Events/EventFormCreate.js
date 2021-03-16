@@ -28,6 +28,7 @@ export default (props) => {
   }
 
   useEffect(() => {
+    console.log(data)
     setData((prev) => ({
       ...prev,
       dates: dates?.map((date) => new Date(date)),

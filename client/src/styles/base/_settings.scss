@@ -115,6 +115,10 @@ button {
   background-color: $theme-blue !important;
 }
 
+.DayPicker-Day--outside {
+  background-color: rgba($color: $base-white, $alpha: 1.0) !important;
+}
+
 .DayPicker-Day--today {
   color: $theme-blue !important;
 }
