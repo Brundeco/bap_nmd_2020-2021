@@ -38,7 +38,6 @@ export default ({ match }) => {
     // Get Firestore img Urls
     const promises = data?.images
       ?.map(async (el) => {
-        console.log(el)
         const img = await storageRef
           .child(data?.firebaseRef + '/' + el)
           .getDownloadURL()
@@ -53,7 +52,6 @@ export default ({ match }) => {
 
     let tmpDates = []
     data?.dates?.map((item) => {
-      console.log(item)
       tmpDates.push(new Date(item))
       setAvailableDates(tmpDates)
     })
@@ -64,10 +62,6 @@ export default ({ match }) => {
     }))
     setPropertyCreatedAt(ConvertDate(data?.createdAt))
   }, [data])
-
-  useEffect(() => {
-    // console.log(images)
-  }, [images])
 
   const handleDayClick = (day, modifiers = {}) => {
     if (modifiers.disabled) {

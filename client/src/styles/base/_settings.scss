@@ -1,5 +1,5 @@
 * {
-  font-family: "Montserrat", sans-serif !important;
+  font-family: 'Montserrat', sans-serif !important;
   // font-weight: 400;
 }
 
@@ -101,11 +101,31 @@ button {
   outline: none !important;
 }
 
-.DayPicker-NavButton--next, .DayPicker-NavButton--prev {
+.DayPicker-NavButton--next,
+.DayPicker-NavButton--prev {
   outline: none !important;
 }
 
 .small-img {
   width: 100px;
   height: 50px;
+}
+
+.DayPicker-Day--selected {
+  background-color: $theme-blue !important;
+}
+
+.DayPicker-Day--today {
+  color: $theme-blue !important;
+}
+
+.DayPicker-Day--selected.DayPicker-Day--today {
+  color: $base-white !important;
+}
+
+.DayPicker {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5vh;
 }

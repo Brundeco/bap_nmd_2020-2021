@@ -61,10 +61,6 @@ export default (props) => {
       .then((url) => setImage(url))
   }, [props.currentdata])
 
-  // useEffect(() => {
-  //   console.log(data)
-  // }, [data])
-
   return (
     <React.Fragment>
       <h1>Fill out the form below to create your event</h1>
@@ -78,7 +74,6 @@ export default (props) => {
           <h2>Event image</h2>
           <div className="file-upload-cta">
             <input type="file" onChange={handleFile} multiple />
-
             <button id="show-custom-file-btn">
               <span>
                 {data?.image ? 'Replace picture' : 'Event wallpaper'}{' '}
@@ -201,12 +196,12 @@ export default (props) => {
             </div>
             <div className="form-col-sm">
               <InputField
-                name="number"
+                name="houseNumber"
                 onChange={handleChange}
                 placeholder="No"
                 type="number"
                 className="main-input-field"
-                value={data?.number}
+                value={data?.houseNumber}
               />
             </div>
           </div>

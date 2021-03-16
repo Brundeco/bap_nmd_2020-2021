@@ -1,9 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 const eventSchema = mongoose.Schema({
   title: String,
   description: String,
   image: String,
+  price: Number,
 
   city: String,
   street: String,
@@ -23,8 +24,8 @@ const eventSchema = mongoose.Schema({
     type: Number,
     default: Date.now(),
   },
-});
+})
 
-const Event = mongoose.model("Event", eventSchema);
+const Event = mongoose.model('Event', eventSchema)
 
-export default Event;
+export default Event

@@ -107,7 +107,7 @@
 .loading-dots > div {
   width: 30px;
   height: 30px;
-  background-color: rgba(#85cfcb, 0.3);
+  background-color: rgba($theme-blue, 1);
   border-radius: 50%;
   animation: 1.5s bounce infinite cubic-bezier(0.2, 0.25, 0.925, 0.47) both;
 }

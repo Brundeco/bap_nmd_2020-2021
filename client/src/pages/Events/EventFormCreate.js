@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { InputField, Textarea } from '../../components'
-import SelectImage from './../../icons/selectimage.svg'
 import DayPicker from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
 import uuid from 'react-uuid'
@@ -55,10 +54,9 @@ export default (props) => {
           <h2>Event image</h2>
           <div className="file-upload-cta">
             <input type="file" onChange={handleFile} multiple />
-
             <button id="show-custom-file-btn">
               <span>
-                {data?.image ? 'Replace picture' : 'Event wallpaper'}{' '}
+                {data?.image ? 'Replace picture' : 'Event wallpaper'}
               </span>
             </button>
           </div>
@@ -170,7 +168,7 @@ export default (props) => {
             </div>
             <div className="form-col-sm">
               <InputField
-                name="number"
+                name="houseNumber"
                 onChange={handleChange}
                 placeholder="No"
                 type="number"

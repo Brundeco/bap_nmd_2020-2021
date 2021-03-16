@@ -43,24 +43,15 @@ export const createEvent = async (req, res) => {
 
 export const updateEvent = async (req, res) => {
   const { id } = req.params
-  const { title, description, author, datePublished, image, dates, price } = req.body
-
-  console.log(req.body)
+  const event = req.body
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`)
 
-  const updateEvent = {
-    title,
-    description,
-    author,
-    datePublished,
-    image,
-    dates,
-    _id: id,
-  }
+  const newEvent = new Event(event)
+  console.log('Lets update this record')
 
-  await Event.findByIdAndUpdate(id, updateEvent, { new: true })
+  await Event.findByIdAndUpdate(id, newEvent, { new: true })
 
   res.json(updateEvent)
 }
