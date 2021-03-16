@@ -90,12 +90,6 @@ button {
   width: 100%;
 }
 
-// .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
-//   background-color: $theme-green !important;
-//   color: black !important;
-//   font-weight: 200 !important;
-// }
-
 .DayPicker-Day,
 .DayPicker-wrapper {
   outline: none !important;
@@ -116,7 +110,7 @@ button {
 }
 
 .DayPicker-Day--outside {
-  background-color: rgba($color: $base-white, $alpha: 1.0) !important;
+  background-color: rgba($color: $base-white, $alpha: 1) !important;
 }
 
 .DayPicker-Day--today {

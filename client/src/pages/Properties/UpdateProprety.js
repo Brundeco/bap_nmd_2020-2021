@@ -9,11 +9,15 @@ export default ({ match, props }) => {
   const [data, setData] = useState()
   const [files, setFiles] = useState([])
   const [updatedImgs, setUpdatedImgs] = useState([])
+  const [fetchImgUrls, setFetchImgUrls] = useState([]);
 
   useEffect(() => {
     axios
       .get(`http://localhost:5000/properties/${match.params.id}`)
-      .then((res) => setCurrentProprety(res.data))
+      .then((res) => {
+        setCurrentProprety(res.data)
+        setFetchImgUrls(res.data?.images) 
+      })
   }, [])
 
   const handleData = (formData) => {

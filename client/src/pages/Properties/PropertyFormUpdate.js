@@ -48,14 +48,6 @@ export default (props) => {
     setDates(newArray)
   }, [props.currentdata])
 
-  const handleFiles = (e) => {
-    Array.from(e.target.files).map((file) => {
-      const newFile = file
-      newFile['id'] = uuid()
-      setFiles((prevState) => [...prevState, newFile])
-    })
-  }
-
   useEffect(() => {
     let tmpArr = data?.images
     files.forEach((element) => {
@@ -63,6 +55,27 @@ export default (props) => {
       setData((prev) => ({ ...prev, images: tmpArr }))
     })
   }, [files])
+
+  useEffect(() => {
+    let currentArr = []
+    data?.images?.map((el) => currentArr.push(el))
+    setNewImgArr(currentArr)
+
+    const promises = data?.images
+      ?.map(async (el) => {
+        const img = await storageRef
+          .child(data?.firebaseRef + '/' + el)
+          .getDownloadURL()
+          .catch((err) => console.log(err))
+        return img
+      })
+      .filter(Boolean)
+    const promisesArr = promises?.flat()
+    promisesArr &&
+      Promise.all(promisesArr).then((newArray) => {
+        setThumbnails((prevImgs) => [...newArray])
+      })
+  }, [data])
 
   const handleDelete = (e, data, i) => {
     e.preventDefault()
@@ -78,27 +91,13 @@ export default (props) => {
     setFiles(newImgArr)
   }
 
-  useEffect(() => {
-    let currentArr = []
-    data?.images?.map((el) => currentArr.push(el))
-    setNewImgArr(currentArr)
-
-    const promises = data?.images
-      ?.map(async (el) => {
-        const img = await storageRef
-          .child(data?.firebaseRef + '/' + el)
-          .getDownloadURL()
-          // .then(url => console.log( "Url was found" + url))
-          .catch((err) => console.log(err))
-        return img
-      })
-      .filter(Boolean)
-    const promisesArr = promises?.flat()
-    promisesArr &&
-      Promise.all(promisesArr).then((newArray) => {
-        setThumbnails((prevImgs) => [...newArray])
-      })
-  }, [data])
+  const handleFiles = (e) => {
+    Array.from(e.target.files).map((file) => {
+      const newFile = file
+      newFile['id'] = uuid()
+      setFiles((prevState) => [...prevState, newFile])
+    })
+  }
 
   return (
     <React.Fragment>
