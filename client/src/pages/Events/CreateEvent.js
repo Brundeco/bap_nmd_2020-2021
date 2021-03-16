@@ -3,6 +3,7 @@ import { CheckSession, PrevPage } from './../../components'
 import axios from 'axios'
 import { EventForm } from '..'
 import { app } from '../../base'
+import EventFormCreate from './EventFormCreate'
 
 export default () => {
   CheckSession(localStorage.getItem('jwt'))
@@ -40,8 +41,9 @@ export default () => {
   return (
     <div className="create-product-screen">
       <div className="page-wrapper">
+        <h1>Create event</h1>
         <PrevPage />
-        <EventForm
+        <EventFormCreate
           onSubmit={handleSubmit}
           formdata={handleData}
           file={handleFile}

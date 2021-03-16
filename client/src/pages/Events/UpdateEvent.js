@@ -1,52 +1,61 @@
-import React, { useState, useEffect } from "react";
-import { InputField, Textarea } from "./../../components";
-import FileBase from "react-file-base64";
-import axios from "axios";
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import { EventFormUpdate } from '..'
+import { app } from '../../base'
 
 export default ({ match }) => {
-  const [data, setData] = useState();
+  const [data, setData] = useState()
+  const [currentEvent, setCurrentEvent] = useState()
+  const [file, setFile] = useState()
+  const storageRef = app.storage()
 
   const handleChange = (name, value) => {
-    setData((prev) => ({ ...prev, [name]: value }));
-  };
+    setData((prev) => ({ ...prev, [name]: value }))
+  }
 
   useEffect(() => {
     axios
       .get(`http://localhost:5000/events/${match.params.id}`)
-      .then((res) => setData(res.data));
-  }, []);
+      .then((res) => setCurrentEvent(res.data))
+  }, [])
 
-  const updateEvent = (e) => {
-    e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    storageRef
+      .ref(`${data?.firebaseRef}/${file?.id}`)
+      .put(file)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+
     axios
       .put(`http://localhost:5000/events/${match.params.id}`, data)
       .then((res) => setData(res.data))
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
+
+  const handleData = (formdata) => {
+    setData(formdata)
+  }
+  const handleFile = (file) => {
+    setFile(file)
+  }
+
+  useEffect(() => {
+    console.log(data)
+  }, [data])
 
   return (
-    <form onSubmit={updateEvent}>
-      <InputField
-        name="title"
-        placeholder="Title"
-        type="text"
-        onChange={handleChange}
-        value={data?.title}
-      />
-      <Textarea
-        name="description"
-        placeholder="Description"
-        type="textarea"
-        onChange={handleChange}
-        value={data?.description}
-      />
-      <FileBase
-        type="file"
-        multiple={false}
-        onDone={({ base64 }) => setData({ ...data, image: base64 })}
-      />
-      <img src={data?.image} alt="" />
-      <input type="submit" value="Submit" />
-    </form>
-  );
-};
+    <div className="create-product-screen">
+      <div className="page-wrapper">
+        <h1>Update event</h1>
+        <EventFormUpdate
+          currentdata={currentEvent}
+          onSubmit={handleSubmit}
+          formdata={handleData}
+          file={handleFile}
+        />
+      </div>
+    </div>
+  )
+}
