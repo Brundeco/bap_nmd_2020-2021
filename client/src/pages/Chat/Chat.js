@@ -26,10 +26,6 @@ export default ({ match }) => {
       .catch((err) => console.log(err))
   }, [])
 
-  useEffect(() => {
-    console.log(messages)
-  }, [messages])
-
   const postMessage = () => {
     axios
       .post('http://localhost:5000/messages', {
@@ -43,6 +39,10 @@ export default ({ match }) => {
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
   }
+
+  useEffect(() => {
+    console.log(messages)
+  }, [messages])
 
   // const [author, setAuthor] = useState();
   // const [author_id, setAuthor_id] = useState();
@@ -67,15 +67,13 @@ export default ({ match }) => {
 
   return (
     <div>
-      <h1>Chat</h1>
+      <h1>Chat met {match.params.recepient} </h1>
       <section className="conversation-box">
         {messages?.map((message) => {
           return (
             <p
               className={
-                message.fromName == user.username
-                  ? ' float-left '
-                  : 'float-right'
+                message.fromName == user.username ? 'float-right' : 'float-left'
               }
             >
               {message.message}
@@ -90,9 +88,6 @@ export default ({ match }) => {
         placeholder="Message"
         type="textarea"
       />
-      {/* <Link to={{pathname: `/messages/602fc3b5c5e21edf10c3039e/6030156a280a2dfd10823c1c`}}>
-        <li>GET MESSAGES</li>
-      </Link> */}
       <button onClick={() => postMessage()}>Send</button>
     </div>
   )

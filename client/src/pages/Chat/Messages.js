@@ -36,6 +36,9 @@ export default ({ match }) => {
       <h1>Conversations</h1>
       {conversations &&
         Object.keys(conversations).map((key, i) => {
+          console.log(key)
+          const timestamp = new Date(conversations[key].slice(-1)[0].createdAt)
+          console.log(timestamp)
           return (
             <section
               key={i}
@@ -58,6 +61,12 @@ export default ({ match }) => {
                   : conversations[key].slice(-1)[0].fromName}
               </h4>
               <h2> {conversations[key].slice(-1)[0].message} </h2>
+              <span>
+                {timestamp.toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </span>
             </section>
           )
         })}
