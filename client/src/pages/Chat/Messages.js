@@ -7,7 +7,6 @@ export default ({ match }) => {
   const [timestamps, setTimestamps] = useState()
   const [messages, setMessages] = useState([])
   const [conversations, setConversations] = useState([])
-  const [groups, setGroups] = useState([])
   useEffect(() => {
     axios
       .get(`http://localhost:5000/messages/${user.id}`)
@@ -32,27 +31,31 @@ export default ({ match }) => {
     })
   }, [messages])
 
-  useEffect(() => {
-    Object.keys(conversations).forEach((key) => {
-      // console.log(key)
-      // console.log(conversations[key])
-    })
-  }, [conversations])
-
-  const handleClick = () => {}
-
   return (
     <div>
       <h1>Conversations</h1>
-      <h2>Waarom niet?</h2>
       {conversations &&
-        Object.keys(conversations).map((key) => {
+        Object.keys(conversations).map((key, i) => {
           return (
-            <section className="chat" onClick={handleClick}>
+            <section
+              key={i}
+              className="chat"
+              onClick={() =>
+                (window.location = `/chat/${
+                  conversations[key].slice(-1)[0].from == user.id
+                    ? conversations[key].slice(-1)[0].to
+                    : conversations[key].slice(-1)[0].from
+                }/${
+                  conversations[key].slice(-1)[0].fromName == user.username
+                    ? conversations[key].slice(-1)[0].toName
+                    : conversations[key].slice(-1)[0].fromName
+                }/${conversations[key][0].conversationId}`)
+              }
+            >
               <h4>
                 {conversations[key].slice(-1)[0].fromName == user.username
                   ? conversations[key].slice(-1)[0].toName
-                  : conversations[key].slice(-1)[0].fromName}{' '}
+                  : conversations[key].slice(-1)[0].fromName}
               </h4>
               <h2> {conversations[key].slice(-1)[0].message} </h2>
             </section>

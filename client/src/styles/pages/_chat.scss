@@ -1,6 +1,26 @@
 section.chat {
-    margin: 5vh 0;
-    background-color: rgb(227, 227, 227);
-    border-radius: 5px;
-    padding: 5%;
+  margin: 5vh 0;
+  background-color: rgb(227, 227, 227);
+  border-radius: 5px;
+  padding: 5%;
+}
+
+section.conversation-box {
+  //   width: 50vw;
+  background-color: rgb(227, 227, 227);
+  border-radius: 5px;
+  padding: 5%;
+  box-sizing: border-box;
+}
+
+section.conversation-box p {
+  margin: 2vh;
+}
+
+section.conversation-box p.float-right {
+  text-align: right;
+}
+
+section.conversation-box p.float-left {
+  text-align: left;
 }
