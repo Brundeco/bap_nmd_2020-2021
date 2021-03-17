@@ -1,3 +1,4 @@
+
 @mixin main-h2-title {
   font-size: 1.2em;
   font-weight: 500;
@@ -26,4 +27,17 @@
   width: 100%;
   margin-bottom: 25px;
   font-weight: 300;
+}
+
+$breakpoints: (
+  small: 35em,
+  medium: 65em,
+  large: 90em,
+);
+
+@mixin mq($key) {
+  $size: map.get($breakpoints, $key);
+  @media (min-width: $size) {
+    @content;
+  }
 }

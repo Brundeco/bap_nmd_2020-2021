@@ -28,9 +28,11 @@ const ImageSlider = (props) => {
 
   return (
     <section className="slider" index={props.index(current)}>
-      <button onClick={prevSlide} className="slide-arrow-homepage left">
-        <FontAwesome icon={faChevronLeft} className="left-arrow" />
-      </button>
+      {/* <button onClick={prevSlide} className="slide-arrow-homepage left"> */}
+      <FaArrowAltCircleLeft className="left-arrow" onClick={prevSlide} />
+      <FaArrowAltCircleRight className="right-arrow" onClick={nextSlide} />
+        {/* <FontAwesome icon={faChevronLeft} className="left-arrow" /> */}
+      {/* </button> */}
       {SliderData.map((slide, index) => {
         return (
           <div
@@ -43,9 +45,9 @@ const ImageSlider = (props) => {
           </div>
         )
       })}
-      <button onClick={nextSlide} className="slide-arrow-homepage right">
+      {/* <button onClick={nextSlide} className="slide-arrow-homepage right">
         <FontAwesome icon={faChevronRight} className="right-arrow" />
-      </button>
+      </button> */}
     </section>
   )
 }

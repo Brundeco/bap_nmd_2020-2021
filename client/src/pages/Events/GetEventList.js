@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { Preloader, CheckSession, PrevPage, Header } from './../../components'
+import { Preloader, CheckSession, Header } from './../../components'
 import { app } from '../../base'
 
 export default () => {

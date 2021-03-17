@@ -1,20 +1,22 @@
+@use 'sass:map';
+
 @import // Various
-  "./styles/abstracts/variables",
-  "./styles/mixins/mixins", "./styles/abstracts/animations",
+  './styles/abstracts/variables',
+  './styles/mixins/mixins', './styles/abstracts/animations',
   // Initial
-  "./styles/base/reset",
-  "./styles/base/settings",
+  './styles/base/reset',
+  './styles/base/settings',
   // Components
-  "./styles/components/menu",
-  "./styles/components/preloader", "./styles/components/session",
-  "./styles/components/prevPage", "./styles/components/header",
-  "./styles/components/footer", "./styles/components/slider",
+  './styles/components/menu',
+  './styles/components/preloader', './styles/components/session',
+  './styles/components/prevPage', './styles/components/header',
+  './styles/components/footer', './styles/components/slider',
   //Pages
-  "./styles/pages/home",
-  "./styles/pages/createProperty", "./styles/pages/createEvent",
-  "./styles/pages/chat", "./styles/pages/getProperty",
-  "./styles/pages/getPropertyList", "./styles/pages/getPropertyListAdmin",
-  "./styles/pages/getEventList", "./styles/pages/getEvent",
-  "./styles/pages/loginUser", "./styles/pages/dashboard",
-  "./styles/pages/favorites", "./styles/pages/registerUser",
-  "./styles/pages/noLocation";
+  './styles/pages/home',
+  './styles/pages/createProperty', './styles/pages/createEvent',
+  './styles/pages/chat', './styles/pages/getProperty',
+  './styles/pages/getPropertyList', './styles/pages/getPropertyListAdmin',
+  './styles/pages/getEventList', './styles/pages/getEvent',
+  './styles/pages/loginUser', './styles/pages/dashboard',
+  './styles/pages/favorites', './styles/pages/registerUser',
+  './styles/pages/noLocation';

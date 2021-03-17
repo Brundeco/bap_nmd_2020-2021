@@ -1,73 +1,73 @@
-import React, { useState, useEffect } from "react";
-import { Header, CheckSession, LocateUser } from "../../components";
-import Event4 from "./../../images/event-3.jpg";
-import { FontAwesome } from "./../../components";
+import React, { useState, useEffect } from 'react'
+import { Header, CheckSession, LocateUser } from '../../components'
+import Event4 from './../../images/event-3.jpg'
+import { FontAwesome } from './../../components'
 import {
   faChevronRight,
   faChevronLeft,
-} from "@fortawesome/free-solid-svg-icons";
-import { NoLocation } from "..";
-import ImageSlider from "../../components/ImageSlider";
-import axios from "axios";
+} from '@fortawesome/free-solid-svg-icons'
+import { GetEventList, NoLocation } from '..'
+import ImageSlider from '../../components/ImageSlider'
+import axios from 'axios'
 
 export default () => {
-  CheckSession(localStorage.getItem("jwt"));
-  const [data, setData] = useState();
-  const [coords, setCoords] = useState();
-  const [error, setError] = useState();
-  const [images, setImages] = useState([]);
-  const [titles, setTitles] = useState();
-  const [evtIndex, setEvtIndex] = useState(0);
+  CheckSession(localStorage.getItem('jwt'))
+  const [data, setData] = useState()
+  const [coords, setCoords] = useState()
+  const [error, setError] = useState()
+  const [images, setImages] = useState([])
+  const [titles, setTitles] = useState()
+  const [evtIndex, setEvtIndex] = useState(0)
 
   const handleCoords = (coords) => {
-    setCoords(coords);
-  };
+    setCoords(coords)
+  }
 
   useEffect(() => {
     if (coords != undefined) {
-      localStorage.setItem("userLat", coords?.coordinates?.lat);
-      localStorage.setItem("userLon", coords?.coordinates?.lng);
+      localStorage.setItem('userLat', coords?.coordinates?.lat)
+      localStorage.setItem('userLon', coords?.coordinates?.lng)
     }
-  }, [coords]);
+  }, [coords])
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/events")
+      .get('http://localhost:5000/events')
       .then((res) => {
-        setData(res.data.events);
+        setData(res.data.events)
       })
-      .catch((err) => console.log(err));
-  }, []);
+      .catch((err) => console.log(err))
+  }, [])
 
   useEffect(() => {
-    let tmpImgs = [];
-    let tmpTitles = [];
+    let tmpImgs = []
+    let tmpTitles = []
     data?.map((item, i) => {
-      tmpTitles.push({ title: item.title });
-      tmpImgs.push({ image: item.image });
-      setImages(tmpImgs);
-      setTitles(tmpTitles);
-    });
-  }, [data]);
+      tmpTitles.push({ title: item.title })
+      tmpImgs.push({ image: item.image })
+      setImages(tmpImgs)
+      setTitles(tmpTitles)
+    })
+  }, [data])
 
   const prevEvent = () => {
-    if (evtIndex > 0) setEvtIndex(evtIndex - 1);
-  };
+    if (evtIndex > 0) setEvtIndex(evtIndex - 1)
+  }
 
   const nextEvent = () => {
-    if (evtIndex < data?.length - 1) setEvtIndex(evtIndex + 1);
-  };
+    if (evtIndex < data?.length - 1) setEvtIndex(evtIndex + 1)
+  }
 
   return (
     <div>
       <Header />
       <LocateUser coords={handleCoords} err={setError} />
-      {error ? <NoLocation /> : ""}
+      {error ? <NoLocation /> : ''}
       <div className="home-screen">
         <section className="event-section">
           <h2>Events around you</h2>
           <div className="event-list">
-            {data?.map((item) => {
+            {/* {data?.map((item) => {
               return (
                 <div className="event-featured">
                   <img
@@ -81,12 +81,13 @@ export default () => {
                   </button>
                 </div>
               );
-            })}
+            })} */}
+            <GetEventList />
           </div>
         </section>
         <button
           className="main-btn"
-          onClick={() => (window.location = "/events")}
+          onClick={() => (window.location = '/events')}
         >
           Show all events
         </button>
@@ -101,7 +102,7 @@ export default () => {
         <img src={Event4} alt="Event 1" />
         <button
           className="main-btn"
-          onClick={() => (window.location = "/properties")}
+          onClick={() => (window.location = '/properties')}
         >
           Show available properties
         </button>
@@ -112,5 +113,5 @@ export default () => {
           </button>
         </section> */}
     </div>
-  );
-};
+  )
+}
