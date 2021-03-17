@@ -35,9 +35,11 @@ export default ({ match }) => {
   useEffect(() => {
     Object.keys(conversations).forEach((key) => {
       // console.log(key)
-      console.log(conversations[key])
+      // console.log(conversations[key])
     })
   }, [conversations])
+
+  const handleClick = () => {}
 
   return (
     <div>
@@ -46,17 +48,13 @@ export default ({ match }) => {
       {conversations &&
         Object.keys(conversations).map((key) => {
           return (
-            <section className="chat">
-              {conversations[key].map((message) => {
-                return (
-                  <div>
-                    <p> {message.message} </p>
-                    <h3>
-                      from : {message.fromName} to {message.toName}{' '}
-                    </h3>
-                  </div>
-                )
-              })}
+            <section className="chat" onClick={handleClick}>
+              <h4>
+                {conversations[key].slice(-1)[0].fromName == user.username
+                  ? conversations[key].slice(-1)[0].toName
+                  : conversations[key].slice(-1)[0].fromName}{' '}
+              </h4>
+              <h2> {conversations[key].slice(-1)[0].message} </h2>
             </section>
           )
         })}
