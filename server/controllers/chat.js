@@ -1,7 +1,6 @@
 import Messages from '../models/messages.js'
 
 export const getMessages = async (req, res) => {
-  console.log(req.params.user)
 
   try {
     const conversations = await Messages.find({
@@ -14,7 +13,6 @@ export const getMessages = async (req, res) => {
 }
 
 export const getMessageByConversationId = async (req, res) => {
-  console.log(req.params.conversation_id)
 
   try {
     const conversations = await Messages.find({
@@ -59,6 +57,7 @@ export const postMessage = async (req, res) => {
       toName: req.body.toName,
       message: req.body.message,
       conversationNameStr: req.body.conversationNameStr,
+      read: req.body.read
     })
     await message.save()
     res.status(201).json(message)

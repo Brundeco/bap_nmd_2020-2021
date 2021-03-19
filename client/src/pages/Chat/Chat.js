@@ -11,10 +11,33 @@ export default ({ match }) => {
   const user = JSON.parse(localStorage.getItem('user'))
   const sender = JSON.parse(localStorage.getItem('user'))
   const [messages, setMessages] = useState([])
+  const [ioMsg, setIoMsg] = useState([])
+  const [ioMsgs, setIoMsgs] = useState([])
+  const ENDPOINT = 'http://localhost:5000'
   const recepient = match.params
+
+  useEffect(() => {
+    const room = match.params.recepient_id
+    const name = match.params.recepient
+
+    socket = io(ENDPOINT)
+    socket.emit('join')
+
+  }, [ENDPOINT, match.params])
+
+
+  const sendMessage = (e) => {
+    e.preventDefault()
+    if (ioMsg) {
+      socket.emit('sendMessage', ioMsg, () => setIoMsg(''))
+    }
+  }
+
+  console.log(ioMsg, ioMsgs)
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }))
+    setIoMsg(value)
   }
 
   useEffect(() => {
@@ -34,44 +57,24 @@ export default ({ match }) => {
         fromName: sender.username,
         to: recepient.recepient_id,
         toName: recepient.recepient,
-        conversationNameStr: sender.username + '_' + recepient.author,
+        read: false,
       })
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
   }
 
   useEffect(() => {
-    console.log(messages)
+    // console.log(messages)
   }, [messages])
-
-  // const [author, setAuthor] = useState();
-  // const [author_id, setAuthor_id] = useState();
-  // const ENDPOINT = "http://localhost:5000";
-
-  // useEffect(() => {
-  //   const { author, author_id } = match.params;
-
-  //   socket = io(ENDPOINT);
-
-  //   setAuthor(author);
-  //   setAuthor_id(author_id);
-
-  //   socket.emit("join", { author, author_id });
-
-  //   return () => {
-  //     socket.emit("disconnect");
-
-  //     socket.off();
-  //   };
-  // }, [ENDPOINT, match.params]);
 
   return (
     <div>
       <h1>Chat met {match.params.recepient} </h1>
       <section className="conversation-box">
-        {messages?.map((message) => {
+        {messages?.map((message, i) => {
           return (
             <p
+              key={i}
               className={
                 message.fromName == user.username ? 'float-right' : 'float-left'
               }
@@ -88,7 +91,8 @@ export default ({ match }) => {
         placeholder="Message"
         type="textarea"
       />
-      <button onClick={() => postMessage()}>Send</button>
+      {/* <button onClick={() => postMessage()}>Send</button> */}
+      <button onClick={(e) => sendMessage(e)}>Send</button>
     </div>
   )
 }

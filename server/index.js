@@ -1,39 +1,47 @@
-import dotenv from "dotenv";
-import express from "express";
-import https from "https";
-import fs from "fs";
-import bodyParser from "body-parser";
-import mongoose from "mongoose";
-import cors from "cors";
+import dotenv from 'dotenv'
+import express from 'express'
+import http from 'http'
+import * as io from 'socket.io'
 
-import authRoutes from "./routes/auth.js";
-import eventRoutes from "./routes/events.js";
-import propertyRoutes from "./routes/properties.js";
-import userRoutes from "./routes/users.js";
+import bodyParser from 'body-parser'
+import mongoose from 'mongoose'
+import cors from 'cors'
 
-const key = fs.readFileSync("./certs/selfsigned.key");
-const cert = fs.readFileSync("./certs/selfsigned.crt");
-const options = {
-  key: key,
-  cert: cert,
-};
+import authRoutes from './routes/auth.js'
+import eventRoutes from './routes/events.js'
+import propertyRoutes from './routes/properties.js'
+import userRoutes from './routes/users.js'
+import chatRoutes from './routes/chat.js'
 
-const app = express();
-dotenv.config();
+const app = express()
+const router = express.Router()
+const server = http.createServer(app)
+const socketio = new io.Server(server)
 
-app.use(bodyParser.json({ limit: "30mb", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use(cors());
+router.get('/rooms/:roomId/users')
 
-app.use("/auth", authRoutes)
-app.use("/events", eventRoutes);
-app.use("/properties", propertyRoutes);
-app.use("/users", userRoutes);
+socketio.on('connection', (socket) => {
+  console.log(`${socket.id} connected`)
 
-const CONNECTION_URL = `mongodb+srv://Bruno:${process.env.MONGODB_PASSWORD}@cluster0.2gkzu.mongodb.net/<dbname>?retryWrites=true&w=majority`;
-const PORT = process.env.PORT || 5000;
+  socket.on('disconnect', () => {
+    console.log('User left')
+  })
+})
 
-// const server = https.createServer(options, app);
+dotenv.config()
+
+app.use(bodyParser.json({ limit: '30mb', extended: true }))
+app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
+app.use(cors())
+
+app.use('/auth', authRoutes)
+app.use('/events', eventRoutes)
+app.use('/properties', propertyRoutes)
+app.use('/users', userRoutes)
+app.use('/messages', chatRoutes)
+
+const CONNECTION_URL = `mongodb+srv://Bruno:${process.env.MONGODB_PASSWORD}@cluster0.2gkzu.mongodb.net/<dbname>?retryWrites=true&w=majority`
+const PORT = process.env.PORT || 5000
 
 mongoose
   .connect(CONNECTION_URL, {
@@ -43,12 +51,10 @@ mongoose
     autoIndex: true,
   })
   .then(() =>
-    app.listen(
-      PORT,
-      () => console.log(`Server Running on Port: http://localhost:${PORT}`)
-      // console.log("server starting on port : " + PORT)
+    server.listen(PORT, () =>
+      console.log(`Server Running on Port: http://localhost:${PORT}`)
     )
   )
-  .catch((error) => console.log(`${error} did not connect`));
+  .catch((error) => console.log(`${error} did not connect`))
 
-mongoose.set("useFindAndModify", false);
+mongoose.set('useFindAndModify', false)
