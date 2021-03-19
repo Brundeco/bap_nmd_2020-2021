@@ -16,6 +16,7 @@ export default ({ match }) => {
   }, [])
 
   useEffect(() => {
+    console.log(data)
     const timestamp = data?.createdAt
     if (timestamp) {
       console.log(timestamp.toString())

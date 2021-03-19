@@ -3,14 +3,21 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Preloader, CheckSession, Header } from './../../components'
 import { app } from '../../base'
+import Geocode from 'react-geocode'
+import { getPreciseDistance } from 'geolib'
 
 export default () => {
   CheckSession(localStorage.getItem('jwt'))
 
+  Geocode.setApiKey(process.env.REACT_APP_GEOCODING_API_KEY)
+  Geocode.enableDebug()
+
   const [data, setData] = useState()
   const storageRef = app.storage().ref()
   const [images, setImages] = useState([])
-  const user = JSON.parse(localStorage.getItem('user')).id
+  const [evtsFiltered, setEvtsFiltered] = useState([])
+  const [userLat, setUserLat] = useState(localStorage.getItem('userLat'))
+  const [userLon, setUserLon] = useState(localStorage.getItem('userLon'))
 
   useEffect(() => {
     axios
@@ -26,7 +33,32 @@ export default () => {
   }, [])
 
   useEffect(() => {
-    const promises = data
+    data?.forEach((el) => {
+      Geocode.fromAddress(
+        `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
+      )
+        .then((res) => {
+          let dis = getPreciseDistance(
+            {
+              latitude: parseFloat(res.results[0].geometry.location.lat),
+              longitude: parseFloat(res.results[0].geometry.location.lng),
+            },
+            {
+              latitude: parseFloat(userLat),
+              longitude: parseFloat(userLon),
+            }
+          )
+          if (dis / 1000 < 10) {
+            // console.log(el)
+            setEvtsFiltered((evtsFiltered) => [...evtsFiltered, el])
+          }
+        })
+        .catch((err) => console.log(err))
+    })
+  }, [data, userLon, userLat])
+
+  useEffect(() => {
+    const promises = evtsFiltered
       ?.map(async (el) => {
         const url = await storageRef
           .child(el?.firebaseRef + '/' + el?.image)
@@ -39,7 +71,7 @@ export default () => {
       Promise.all(promisesArr).then((newArray) => {
         setImages((prevPropsFiles) => [...prevPropsFiles, ...newArray])
       })
-  }, [data])
+  }, [evtsFiltered])
 
   if (data != undefined) {
     return (
@@ -47,8 +79,7 @@ export default () => {
         <Header />
         <div className="event-screen">
           <div className="wrapper">
-            {data?.map(function (item, i) {
-              console.log(item)
+            {evtsFiltered?.map(function (item, i) {
               return (
                 <div key={i} className="list-item">
                   <h2> {item.title} </h2>
