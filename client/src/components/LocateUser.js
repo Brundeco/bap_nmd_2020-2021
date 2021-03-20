@@ -1,48 +1,49 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 
 export default (props) => {
-  const [userLocation, setLocation] = useState({
-    coordinates: { lat: "", lng: "" },
-  });
-  const [response, setResponse] = useState();
+  const [completed, setCompleted] = useState(false)
+  const [userLocation, setUserLocation] = useState({
+    coordinates: { lat: '', lng: '' },
+  })
+  const [response, setResponse] = useState()
 
   const onSuccess = async (userLoc) => {
-    setResponse('')
-    setLocation({
-      coordinates: {
-        lat: userLoc.coords.latitude,
-        lng: userLoc.coords.longitude,
-      },
-    });
-  };
+    setResponse('Location sharing is enabled')
+    localStorage.setItem('userLat', userLoc.coords.latitude)
+    localStorage.setItem('userLon', userLoc.coords.longitude)
+    setCompleted(!completed)
+  }
 
   const onError = (error) => {
+    console.log('loc is disabled')
     setResponse('Location sharing is disabled')
-
-    setLocation({
+    setCompleted(false)
+    setUserLocation({
       error: {
         code: error.code,
         message: error.message,
       },
-    });
-  };
+    })
+  }
 
   const locateUser = () => {
-    if (!("geolocation" in navigator)) {
+    if (!('geolocation' in navigator)) {
       onError({
         code: 0,
-        message: "Geolocation not supported",
-      });
+        message: 'Geolocation not supported',
+      })
     }
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
-  };
+    navigator.geolocation.getCurrentPosition(onSuccess, onError)
+  }
 
   if (
     userLocation?.coordinates != undefined &&
-    typeof userLocation?.coordinates?.lat != "number"
+    typeof userLocation?.coordinates?.lat != 'number'
   ) {
-    locateUser();
+    locateUser()
   }
 
-  return <div data={props.coords(userLocation)} err={props.err(response)} ></div>;
-};
+  // return <div data={props.coords(userLocation)} err={props.err(response)}></div>
+
+  return <div err={props.err(response)} status={props.status(completed)} />
+}

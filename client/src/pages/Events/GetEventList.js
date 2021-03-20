@@ -6,7 +6,7 @@ import { app } from '../../base'
 import Geocode from 'react-geocode'
 import { getPreciseDistance } from 'geolib'
 
-export default () => {
+export default (props) => {
   CheckSession(localStorage.getItem('jwt'))
 
   Geocode.setApiKey(process.env.REACT_APP_GEOCODING_API_KEY)
@@ -16,8 +16,13 @@ export default () => {
   const storageRef = app.storage().ref()
   const [images, setImages] = useState([])
   const [evtsFiltered, setEvtsFiltered] = useState([])
-  const [userLat, setUserLat] = useState(localStorage.getItem('userLat'))
-  const [userLon, setUserLon] = useState(localStorage.getItem('userLon'))
+  const [userLat, setUserLat] = useState()
+  const [userLon, setUserLon] = useState()
+
+  useEffect(() => {
+    setUserLat(localStorage.getItem('userLat'))
+    setUserLon(localStorage.getItem('userLon'))
+  }, [props.status])
 
   useEffect(() => {
     axios
@@ -33,44 +38,43 @@ export default () => {
   }, [])
 
   useEffect(() => {
-    data?.forEach((el) => {
-      Geocode.fromAddress(
-        `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
-      )
-        .then((res) => {
-          let dis = getPreciseDistance(
-            {
-              latitude: parseFloat(res.results[0].geometry.location.lat),
-              longitude: parseFloat(res.results[0].geometry.location.lng),
-            },
-            {
-              latitude: parseFloat(userLat),
-              longitude: parseFloat(userLon),
+    console.log(userLat, userLon)
+    if (userLat && userLon) {
+      data?.forEach((el) => {
+        Geocode.fromAddress(
+          `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
+        )
+          .then((res) => {
+            let dis = getPreciseDistance(
+              {
+                latitude: parseFloat(res.results[0].geometry.location.lat),
+                longitude: parseFloat(res.results[0].geometry.location.lng),
+              },
+              {
+                latitude: parseFloat(userLat),
+                longitude: parseFloat(userLon),
+              }
+            )
+            if (dis / 1000 > 30) {
+              setEvtsFiltered((evtsFiltered) => [...evtsFiltered, el])
             }
-          )
-          if (dis / 1000 < 10) {
-            // console.log(el)
-            setEvtsFiltered((evtsFiltered) => [...evtsFiltered, el])
-          }
-        })
-        .catch((err) => console.log(err))
-    })
+          })
+          .catch((err) => console.log(err))
+      })
+    }
   }, [data, userLon, userLat])
 
   useEffect(() => {
-    const promises = evtsFiltered
-      ?.map(async (el) => {
-        const url = await storageRef
-          .child(el?.firebaseRef + '/' + el?.image)
-          .getDownloadURL()
-        return url
+    const arr = evtsFiltered.map((item) => {
+      return storageRef
+        .child(item?.firebaseRef + '/' + item?.image)
+        .getDownloadURL()
+    })
+    Promise.all(arr)
+      .then((urls) => {
+        setImages(urls)
       })
-      .filter(Boolean)
-    const promisesArr = promises?.flat()
-    promisesArr &&
-      Promise.all(promisesArr).then((newArray) => {
-        setImages((prevPropsFiles) => [...prevPropsFiles, ...newArray])
-      })
+      .catch((err) => console.log(err))
   }, [evtsFiltered])
 
   if (data != undefined) {
