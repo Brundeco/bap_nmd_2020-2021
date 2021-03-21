@@ -43,7 +43,5 @@ export default (props) => {
     locateUser()
   }
 
-  // return <div data={props.coords(userLocation)} err={props.err(response)}></div>
-
   return <div err={props.err(response)} status={props.status(completed)} />
 }

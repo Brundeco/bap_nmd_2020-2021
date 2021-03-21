@@ -8,11 +8,12 @@ export default () => {
   const [data, setData] = useState()
   const [status, setStatus] = useState()
   const [error, setError] = useState()
+  const [optionState, setOptionState] = useState()
 
   const handleStatus = (status) => {
     setStatus(status)
   }
-  
+
   useEffect(() => {
     axios
       .get('http://localhost:5000/events')
@@ -30,10 +31,21 @@ export default () => {
       <div className="home-screen">
         <section className="event-section">
           <h2>Events around you</h2>
+          <label for="cars">Select radius</label>
+
+          <select value={optionsState}>
+            <option value="5">5 km</option>
+            <option value="10">10 km</option>
+            <option value="15">15 km</option>
+            <option value="30">30 km</option>
+            <option value="50">50 km</option>
+          </select>
+          
           <div className="event-list">
             <GetEventList status={status} />
           </div>
         </section>
+
         <button
           className="main-btn"
           onClick={() => (window.location = '/events')}

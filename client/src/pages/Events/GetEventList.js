@@ -19,11 +19,16 @@ export default (props) => {
   const [userLat, setUserLat] = useState()
   const [userLon, setUserLon] = useState()
 
+  // Store user's latitude & longitude in state. Status received as prop from Home Component
   useEffect(() => {
-    setUserLat(localStorage.getItem('userLat'))
-    setUserLon(localStorage.getItem('userLon'))
+    // If statement to prevent useffect with Geocode to setState again and rerender events
+    if (userLat == undefined || userLon == undefined) {
+      setUserLat(localStorage.getItem('userLat'))
+      setUserLon(localStorage.getItem('userLon'))
+    }
   }, [props.status])
 
+  // Fetch all events and store in state(data)
   useEffect(() => {
     axios
       .get('http://localhost:5000/events')
@@ -37,33 +42,32 @@ export default (props) => {
       })
   }, [])
 
+  // Filter events based on accessibility (nearby the user), store filtered events in state
   useEffect(() => {
-    console.log(userLat, userLon)
-    if (userLat && userLon) {
-      data?.forEach((el) => {
-        Geocode.fromAddress(
-          `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
-        )
-          .then((res) => {
-            let dis = getPreciseDistance(
-              {
-                latitude: parseFloat(res.results[0].geometry.location.lat),
-                longitude: parseFloat(res.results[0].geometry.location.lng),
-              },
-              {
-                latitude: parseFloat(userLat),
-                longitude: parseFloat(userLon),
-              }
-            )
-            if (dis / 1000 > 30) {
-              setEvtsFiltered((evtsFiltered) => [...evtsFiltered, el])
+    data?.forEach((el) => {
+      Geocode.fromAddress(
+        `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
+      )
+        .then((res) => {
+          let dis = getPreciseDistance(
+            {
+              latitude: parseFloat(res.results[0].geometry.location.lat),
+              longitude: parseFloat(res.results[0].geometry.location.lng),
+            },
+            {
+              latitude: parseFloat(userLat),
+              longitude: parseFloat(userLon),
             }
-          })
-          .catch((err) => console.log(err))
-      })
-    }
+          )
+          if (dis / 1000 > 30) {
+            setEvtsFiltered((evtsFiltered) => [...evtsFiltered, el])
+          }
+        })
+        .catch((err) => console.log(err))
+    })
   }, [data, userLon, userLat])
 
+  // Fetch event images (Google's Firebase Firestore) and store in state
   useEffect(() => {
     const arr = evtsFiltered.map((item) => {
       return storageRef
