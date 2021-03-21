@@ -91,8 +91,8 @@ export default ({ match }) => {
         placeholder="Message"
         type="textarea"
       />
-      {/* <button onClick={() => postMessage()}>Send</button> */}
-      <button onClick={(e) => sendMessage(e)}>Send</button>
+      <button onClick={() => postMessage()}>Send</button>
+      {/* <button onClick={(e) => sendMessage(e)}>Send</button> */}
     </div>
   )
 }

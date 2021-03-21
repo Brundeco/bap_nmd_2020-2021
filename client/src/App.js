@@ -20,7 +20,6 @@ import {
   GetPropertyListAdmin,
   UpdateProperty,
 } from "./pages";
-import { ExpiredSession } from "./components";
 
 function App() {
   return (
@@ -31,7 +30,6 @@ function App() {
         <Route path="/register" component={CreateUser} />
         <Route path="/login" component={LoginUser} />
 
-        <Route path="/expired" component={ExpiredSession} />
         <Route path="/no-location" component={NoLocation} />
 
         <Route path="/dashboard" component={Dashboard} />

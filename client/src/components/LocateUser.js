@@ -2,20 +2,22 @@ import React, { useState } from 'react'
 
 export default (props) => {
   const [completed, setCompleted] = useState(false)
+  const [response, setResponse] = useState()
+  const [locationSharing, setLocationSharing] = useState()
   const [userLocation, setUserLocation] = useState({
     coordinates: { lat: '', lng: '' },
   })
-  const [response, setResponse] = useState()
 
   const onSuccess = async (userLoc) => {
+    if (locationSharing == undefined) setLocationSharing(true)
     setResponse('Location sharing is enabled')
     localStorage.setItem('userLat', userLoc.coords.latitude)
     localStorage.setItem('userLon', userLoc.coords.longitude)
-    setCompleted(!completed)
+    setCompleted(true)
   }
 
   const onError = (error) => {
-    console.log('loc is disabled')
+    if (locationSharing == undefined) setLocationSharing(false)
     setResponse('Location sharing is disabled')
     setCompleted(false)
     setUserLocation({
@@ -43,5 +45,11 @@ export default (props) => {
     locateUser()
   }
 
-  return <div err={props.err(response)} status={props.status(completed)} />
+  return (
+    <div
+      err={props.err(response)}
+      status={props.status(completed)}
+      locationsharing={props.locationsharing(locationSharing)}
+    />
+  )
 }

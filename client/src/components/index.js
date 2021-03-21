@@ -3,7 +3,6 @@ export { default as InputField } from "./InputField";
 export { default as Textarea } from "./Textarea";
 export { default as Preloader } from "./Preloader";
 export { default as CheckSession } from "./CheckSession";
-export { default as ExpiredSession } from "./ExpiredSession";
 export { default as UserToken } from "./UserToken";
 export { default as PrevPage } from "./PrevPage";
 export { default as FontAwesome } from "./FontAwesome";

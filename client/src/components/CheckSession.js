@@ -9,7 +9,7 @@ export default (jwt_token) => {
       jwt.verify(jwt_token, process.env.REACT_APP_TOKEN_SECRET);
       return true;
     } catch (error) {
-      window.location = "/expired";
+      window.location = "/login";
       return false;
     }
   }

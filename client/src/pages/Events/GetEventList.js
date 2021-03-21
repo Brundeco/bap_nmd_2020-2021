@@ -18,16 +18,16 @@ export default (props) => {
   const [evtsFiltered, setEvtsFiltered] = useState([])
   const [userLat, setUserLat] = useState()
   const [userLon, setUserLon] = useState()
-  const [radius, setRadius] = useState(localStorage.getItem('radius'))
+  const [locationSharing, setLocationSharing] = useState()
 
   // Store user's latitude & longitude in state. Status received as prop from Home Component
-  useEffect(() => {
-    // If statement to prevent useffect with Geocode to setState again and rerender events
-    if (userLat == undefined || userLon == undefined) {
-      setUserLat(localStorage.getItem('userLat'))
-      setUserLon(localStorage.getItem('userLon'))
-    }
-  }, [props.status])
+  // useEffect(() => {
+  //   // If statement to prevent useffect with Geocode to setState again and rerender events
+  //   if (userLat == undefined || userLon == undefined) {
+  //     setUserLat(localStorage.getItem('userLat'))
+  //     setUserLon(localStorage.getItem('userLon'))
+  //   }
+  // }, [props.status])
 
   // Fetch all events and store in state(data)
   useEffect(() => {
@@ -43,40 +43,48 @@ export default (props) => {
       })
   }, [])
 
+  useEffect(() => {
+    setLocationSharing(props.locationsharing)
+    if (userLat == undefined || userLon == undefined) {
+      setUserLat(localStorage.getItem('userLat'))
+      setUserLon(localStorage.getItem('userLon'))
+    }
+  }, [props.locationsharing])
+
   // Filter events based on accessibility (nearby the user), store filtered events in state
   useEffect(async () => {
-    const radius = localStorage.getItem('radius')
-    // console.log(radius)
     try {
-      const evts = await Promise.all(
-        data.map(async (el) => {
-          const res = await Geocode.fromAddress(
-            `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
-          )
-
-          let dis = getPreciseDistance(
-            {
-              latitude: parseFloat(res.results[0].geometry.location.lat),
-              longitude: parseFloat(res.results[0].geometry.location.lng),
-            },
-            {
-              latitude: parseFloat(userLat),
-              longitude: parseFloat(userLon),
-            }
-          )
-          return dis / 1000 <= props.radius ? el : []
-        })
-      )
-      // console.log(evts.flat())
-      setEvtsFiltered(evts.flat())
+      if (locationSharing) {
+        const evts = await Promise.all(
+          data.map(async (el) => {
+            const res = await Geocode.fromAddress(
+              `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
+            )
+            let dis = getPreciseDistance(
+              {
+                latitude: parseFloat(res.results[0].geometry.location.lat),
+                longitude: parseFloat(res.results[0].geometry.location.lng),
+              },
+              {
+                latitude: parseFloat(userLat),
+                longitude: parseFloat(userLon),
+              }
+            )
+            return dis / 1000 <= props.radius ? el : []
+          })
+        )
+        setEvtsFiltered(evts.flat())
+      } else {
+        setEvtsFiltered(data)
+      }
     } catch (err) {
-      console.log(err)
+      console.log('err')
     }
   }, [data, userLon, userLat, props.radius])
 
   // Fetch event images (Firebase Firestore) and store in state
   useEffect(() => {
-    const arr = evtsFiltered.map((item) => {
+    const arr = evtsFiltered?.map((item) => {
       return storageRef
         .child(item?.firebaseRef + '/' + item?.image)
         .getDownloadURL()
@@ -85,7 +93,7 @@ export default (props) => {
       .then((urls) => {
         setImages(urls)
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.log('err'))
   }, [evtsFiltered])
 
   if (data != undefined) {
