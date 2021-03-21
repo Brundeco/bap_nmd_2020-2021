@@ -8,20 +8,21 @@ export default () => {
   const [data, setData] = useState()
   const [status, setStatus] = useState()
   const [error, setError] = useState()
-  const [optionState, setOptionState] = useState()
+  const [optionsValue, setOptionsValue] = useState(
+    localStorage.getItem('radius') || 5
+  )
+
+  const [options, setOptions] = useState([
+    { label: '5 km', value: 5 },
+    { label: '10 km', value: 10 },
+    { label: '15 km', value: 15 },
+    { label: '30 km', value: 30 },
+    { label: '50 km', value: 50 },
+  ])
 
   const handleStatus = (status) => {
     setStatus(status)
   }
-
-  useEffect(() => {
-    axios
-      .get('http://localhost:5000/events')
-      .then((res) => {
-        setData(res.data.events)
-      })
-      .catch((err) => console.log(err))
-  }, [])
 
   return (
     <div>
@@ -31,18 +32,24 @@ export default () => {
       <div className="home-screen">
         <section className="event-section">
           <h2>Events around you</h2>
-          <label for="cars">Select radius</label>
 
-          <select value={optionsState}>
-            <option value="5">5 km</option>
-            <option value="10">10 km</option>
-            <option value="15">15 km</option>
-            <option value="30">30 km</option>
-            <option value="50">50 km</option>
+          <label>Select radius</label>
+          <select
+            value={optionsValue}
+            onChange={(e) => {
+              setOptionsValue(e.currentTarget.value)
+              localStorage.setItem('radius', e.currentTarget.value)
+            }}
+          >
+            {options.map(({ label, value }) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
           </select>
-          
+
           <div className="event-list">
-            <GetEventList status={status} />
+            <GetEventList status={status} radius={optionsValue} />
           </div>
         </section>
 

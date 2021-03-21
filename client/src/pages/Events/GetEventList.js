@@ -18,6 +18,7 @@ export default (props) => {
   const [evtsFiltered, setEvtsFiltered] = useState([])
   const [userLat, setUserLat] = useState()
   const [userLon, setUserLon] = useState()
+  const [radius, setRadius] = useState(localStorage.getItem('radius'))
 
   // Store user's latitude & longitude in state. Status received as prop from Home Component
   useEffect(() => {
@@ -43,12 +44,16 @@ export default (props) => {
   }, [])
 
   // Filter events based on accessibility (nearby the user), store filtered events in state
-  useEffect(() => {
-    data?.forEach((el) => {
-      Geocode.fromAddress(
-        `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
-      )
-        .then((res) => {
+  useEffect(async () => {
+    const radius = localStorage.getItem('radius')
+    // console.log(radius)
+    try {
+      const evts = await Promise.all(
+        data.map(async (el) => {
+          const res = await Geocode.fromAddress(
+            `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
+          )
+
           let dis = getPreciseDistance(
             {
               latitude: parseFloat(res.results[0].geometry.location.lat),
@@ -59,15 +64,17 @@ export default (props) => {
               longitude: parseFloat(userLon),
             }
           )
-          if (dis / 1000 > 30) {
-            setEvtsFiltered((evtsFiltered) => [...evtsFiltered, el])
-          }
+          return dis / 1000 <= props.radius ? el : []
         })
-        .catch((err) => console.log(err))
-    })
-  }, [data, userLon, userLat])
+      )
+      // console.log(evts.flat())
+      setEvtsFiltered(evts.flat())
+    } catch (err) {
+      console.log(err)
+    }
+  }, [data, userLon, userLat, props.radius])
 
-  // Fetch event images (Google's Firebase Firestore) and store in state
+  // Fetch event images (Firebase Firestore) and store in state
   useEffect(() => {
     const arr = evtsFiltered.map((item) => {
       return storageRef
