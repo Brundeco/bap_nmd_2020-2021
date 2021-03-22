@@ -39,7 +39,6 @@
   font-size: 0.9em;
 }
 
-
 .event-screen h3 {
   @include main-h2-title;
   margin-bottom: 8px;
@@ -49,4 +48,12 @@
 .event-screen button {
   @include main-btn;
   background: $theme-green;
+}
+
+.liked-event {
+  background-color: rgb(34, 83, 228) !important;
+}
+
+.not-liked-event {
+  background-color: rgb(182, 18, 18) !important;
 }

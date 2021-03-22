@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 
+// const requestLocation = localStorage.getItem('askLocation')
+// console.log(requestLocation)
+
 export default (props) => {
   const [completed, setCompleted] = useState(false)
   const [response, setResponse] = useState()
@@ -14,6 +17,7 @@ export default (props) => {
     localStorage.setItem('userLat', userLoc.coords.latitude)
     localStorage.setItem('userLon', userLoc.coords.longitude)
     setCompleted(true)
+    localStorage.setItem('askLocation', false)
   }
 
   const onError = (error) => {
@@ -38,12 +42,15 @@ export default (props) => {
     navigator.geolocation.getCurrentPosition(onSuccess, onError)
   }
 
-  if (
-    userLocation?.coordinates != undefined &&
-    typeof userLocation?.coordinates?.lat != 'number'
-  ) {
+  // if (
+  //   userLocation?.coordinates != undefined &&
+  //   typeof userLocation?.coordinates?.lat != 'number'
+  // ) {
+  // }
+
+  // if (requestLocation) {
     locateUser()
-  }
+  // }
 
   return (
     <div

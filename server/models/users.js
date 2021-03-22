@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 
 const userSchema = mongoose.Schema(
   {
+    favEvents: Array,
+    favProperties: Array,
     username: {
       type: String,
       required: true,

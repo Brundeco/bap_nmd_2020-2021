@@ -5,9 +5,13 @@ import { app } from '../../base'
 
 export default ({ match }) => {
   CheckSession(localStorage.getItem('jwt'))
+  const user = JSON.parse(localStorage.getItem('user'))
   const [data, setData] = useState()
   const storageRef = app.storage().ref()
   const [image, setImage] = useState()
+  const [timestamp, setTimestamp] = useState('Loading...')
+  const [favorites, setFavorites] = useState([])
+  const [liked, setLiked] = useState(false)
 
   useEffect(() => {
     axios
@@ -19,16 +23,51 @@ export default ({ match }) => {
     console.log(data)
     const timestamp = data?.createdAt
     if (timestamp) {
-      console.log(timestamp.toString())
       const timestampToString = Date(timestamp).toString()
-      console.log(timestampToString)
+      setTimestamp(timestampToString)
     }
 
-    storageRef
-      .child(data?.firebaseRef + '/' + data?.image)
-      .getDownloadURL()
-      .then((url) => setImage(url))
+    if (data?.firebaseRef !== undefined && data?.image !== undefined)
+      storageRef
+        .child(data?.firebaseRef + '/' + data?.image)
+        .getDownloadURL()
+        .then((url) => setImage(url))
+        .catch((err) => console.log(err))
+
+    axios
+      .get(`http://localhost:5000/users/${user.id}`)
+      .then((res) => {
+        setFavorites(res.data.favEvents)
+      })
+      .catch((err) => console.log(err))
   }, [data])
+
+  const handleClick = async (e) => {
+    e.preventDefault()
+
+    // console.log(favorites)
+    let arr = [...favorites]
+    // console.log(arr)
+    // console.log(match.params.id)
+    let indexItem = arr.indexOf(match.params.id)
+    // console.log(indexItem)
+    indexItem === -1 ? arr.push(match.params.id) : arr.splice(indexItem, 1)
+    // console.log(arr)
+
+    axios
+      .put(`http://localhost:5000/users/like/${user.id}`, {
+        favEvents: arr,
+      })
+      .then((res) => {
+        const favs = res.data.favEvents
+        setData((prev) => ({ ...prev, favEvents: favs }))
+      })
+      .catch((err) => console.log(err))
+  }
+
+  useEffect(() => {
+    favorites.includes(match.params.id) ? setLiked(true) : setLiked(false)
+  }, [favorites])
 
   if (data != undefined) {
     return (
@@ -40,13 +79,20 @@ export default ({ match }) => {
           <div className="wrapper">
             <PrevPage />
             <h1>{data?.title}</h1>
-            <h2>By Leda Lenskens | created on 16 feb, 2021</h2>
+            <h2>By Leda Lenskens | {timestamp} </h2>
             <p> {data?.description}</p>
             <div>
               <h3>Practical</h3>
             </div>
             <section className="cta-section">
-              <button className="main-btn">Button</button>
+              <button
+                className={
+                  liked ? 'main-btn liked-event' : 'main-btn not-liked-event'
+                }
+                onClick={(e) => handleClick(e)}
+              >
+                Add to favorites
+              </button>
             </section>
           </div>
         </div>

@@ -20,15 +20,6 @@ export default (props) => {
   const [userLon, setUserLon] = useState()
   const [locationSharing, setLocationSharing] = useState()
 
-  // Store user's latitude & longitude in state. Status received as prop from Home Component
-  // useEffect(() => {
-  //   // If statement to prevent useffect with Geocode to setState again and rerender events
-  //   if (userLat == undefined || userLon == undefined) {
-  //     setUserLat(localStorage.getItem('userLat'))
-  //     setUserLon(localStorage.getItem('userLon'))
-  //   }
-  // }, [props.status])
-
   // Fetch all events and store in state(data)
   useEffect(() => {
     axios
@@ -54,7 +45,7 @@ export default (props) => {
   // Filter events based on accessibility (nearby the user), store filtered events in state
   useEffect(async () => {
     try {
-      if (locationSharing) {
+      // if (locationSharing) {
         const evts = await Promise.all(
           data.map(async (el) => {
             const res = await Geocode.fromAddress(
@@ -74,9 +65,9 @@ export default (props) => {
           })
         )
         setEvtsFiltered(evts.flat())
-      } else {
-        setEvtsFiltered(data)
-      }
+      // } else {
+      //   setEvtsFiltered(data)
+      // }
     } catch (err) {
       console.log('err')
     }
@@ -99,7 +90,6 @@ export default (props) => {
   if (data != undefined) {
     return (
       <React.Fragment>
-        <Header />
         <div className="event-screen">
           <div className="wrapper">
             {evtsFiltered?.map(function (item, i) {

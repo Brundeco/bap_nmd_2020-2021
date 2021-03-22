@@ -23,8 +23,9 @@ export default () => {
     setStatus(status)
   }
 
-  const handleLocationSharing = (userLoc) => {
-    setLocationSharing(userLoc)
+  const handleLocationSharing = (share) => {
+    console.log(share)
+    setLocationSharing(share)
   }
 
   return (
