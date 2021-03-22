@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { Preloader, CheckSession, Header } from './../../components'
+import { Preloader, CheckSession, Map } from './../../components'
 import { app } from '../../base'
 import Geocode from 'react-geocode'
 import { getPreciseDistance } from 'geolib'
@@ -45,7 +45,7 @@ export default (props) => {
   // Filter events based on accessibility (nearby the user), store filtered events in state
   useEffect(async () => {
     try {
-      // if (locationSharing) {
+      if (locationSharing) {
         const evts = await Promise.all(
           data.map(async (el) => {
             const res = await Geocode.fromAddress(
@@ -65,9 +65,9 @@ export default (props) => {
           })
         )
         setEvtsFiltered(evts.flat())
-      // } else {
-      //   setEvtsFiltered(data)
-      // }
+      } else {
+        setEvtsFiltered(data)
+      }
     } catch (err) {
       console.log('err')
     }
@@ -90,8 +90,11 @@ export default (props) => {
   if (data != undefined) {
     return (
       <React.Fragment>
+        {/* <Map lat={userLat} lon={userLon} /> */}
         <div className="event-screen">
           <div className="wrapper">
+            <h3>Map</h3>
+            <Map lat={userLat} lon={userLon} />
             {evtsFiltered?.map(function (item, i) {
               return (
                 <div key={i} className="list-item">

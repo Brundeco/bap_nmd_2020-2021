@@ -51,9 +51,16 @@
 }
 
 .liked-event {
-  background-color: rgb(34, 83, 228) !important;
+  background-color: white !important;
+  border: 2px solid rgb(34, 83, 228) !important;
+  font-weight: 700 !important;
+  color: $base-white !important;
+  color: rgb(34, 83, 228) !important;
 }
 
 .not-liked-event {
-  background-color: rgb(182, 18, 18) !important;
+  background-color: rgb(34, 83, 228) !important;
+  border: 2px solid rgb(34, 83, 228) !important;
+  font-weight: 700 !important;
+  color: $base-white !important;
 }

@@ -11,3 +11,5 @@ export { default as DeleteUser } from "./DeleteUser";
 export { default as Footer } from "./Footer";
 export { default as LocateUser } from "./LocateUser";
 export { default as ConvertDate } from "./ConvertDate";
+export { default as Map } from "./Map";
+

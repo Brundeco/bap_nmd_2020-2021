@@ -24,7 +24,7 @@ export default () => {
   }
 
   const handleLocationSharing = (share) => {
-    console.log(share)
+    // console.log(share)
     setLocationSharing(share)
   }
 

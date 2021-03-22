@@ -66,7 +66,7 @@ export default ({ match }) => {
   }
 
   useEffect(() => {
-    favorites.includes(match.params.id) ? setLiked(true) : setLiked(false)
+    favorites.includes(match.params.id) ? setLiked(false) : setLiked(true)
   }, [favorites])
 
   if (data != undefined) {
@@ -91,7 +91,7 @@ export default ({ match }) => {
                 }
                 onClick={(e) => handleClick(e)}
               >
-                Add to favorites
+                {liked ? 'Like' : 'Unlike'}
               </button>
             </section>
           </div>
