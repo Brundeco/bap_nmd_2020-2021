@@ -1,33 +1,43 @@
-import React, { useRef, useEffect, useState } from 'react'
-import ReactMapGL from 'react-map-gl'
+import React, { useEffect, useState } from 'react'
+import ReactMapboxGl, { Marker } from 'react-mapbox-gl'
+import markerIcon from './../icons/mapMarker.svg'
+
+const Map = ReactMapboxGl({
+  accessToken: process.env.REACT_APP_MAPBOX_API_KEY,
+})
 
 export default (props) => {
-  const [lon, setLon] = useState()
-  const [lat, setLat] = useState()
-  const [viewport, setViewport] = useState({
-    latitude: 50.8503,
-    longitude: 4.3517,
-    zoom: 12,
-  })
+  const [lon, setLon] = useState(4.3517)
+  const [lat, setLat] = useState(50.8503)
 
   useEffect(() => {
     if (props.lat != undefined && props.lon != undefined) {
       console.log(props.lat, props.lon)
-      setViewport({
-        zoom: 12,
-        latitude: parseFloat(props.lat),
-        longitude: parseFloat(props.lon),
-      })
+      setLat(parseFloat(props.lat))
+      setLon(parseFloat(props.lon))
     }
   }, [props.lat, props.lon])
 
   return (
-    <ReactMapGL
-      {...viewport}
-      mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API_KEY}
-      width="100vw"
-      height="50vh"
-      onViewportChange={(viewport) => setViewport(viewport)}
-    />
+    <Map
+      style="mapbox://styles/mapbox/streets-v9"
+      containerStyle={{
+        height: '100vh',
+        width: '100vw',
+      }}
+      center={[lon, lat]}
+      zoom={[13]}
+    >
+      {props.coords.map((el) => {
+        return (
+          <Marker
+            coordinates={[el[0], el[1]]}
+            onClick={() => (window.location = el[2])}
+          >
+            <img src={markerIcon} />
+          </Marker>
+        )
+      })}
+    </Map>
   )
 }

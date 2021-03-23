@@ -19,6 +19,7 @@ export default (props) => {
   const [userLat, setUserLat] = useState()
   const [userLon, setUserLon] = useState()
   const [locationSharing, setLocationSharing] = useState()
+  const [coords, setCoords] = useState([])
 
   // Fetch all events and store in state(data)
   useEffect(() => {
@@ -48,9 +49,17 @@ export default (props) => {
       if (locationSharing) {
         const evts = await Promise.all(
           data.map(async (el) => {
+            console.log(el)
             const res = await Geocode.fromAddress(
               `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
             )
+            const coord = [
+              res.results[0].geometry.location.lng,
+              res.results[0].geometry.location.lat,
+              `/event/${el._id}`,
+            ]
+            // const anchor = el.
+            setCoords((prev) => [...prev, coord])
             let dis = getPreciseDistance(
               {
                 latitude: parseFloat(res.results[0].geometry.location.lat),
@@ -69,7 +78,7 @@ export default (props) => {
         setEvtsFiltered(data)
       }
     } catch (err) {
-      console.log('err')
+      console.log(err)
     }
   }, [data, userLon, userLat, props.radius])
 
@@ -84,7 +93,7 @@ export default (props) => {
       .then((urls) => {
         setImages(urls)
       })
-      .catch((err) => console.log('err'))
+      .catch((err) => console.log(err))
   }, [evtsFiltered])
 
   if (data != undefined) {
@@ -94,7 +103,7 @@ export default (props) => {
         <div className="event-screen">
           <div className="wrapper">
             <h3>Map</h3>
-            <Map lat={userLat} lon={userLon} />
+            <Map lat={userLat} lon={userLon} coords={coords} />
             {evtsFiltered?.map(function (item, i) {
               return (
                 <div key={i} className="list-item">
