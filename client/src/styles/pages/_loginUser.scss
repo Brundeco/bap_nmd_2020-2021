@@ -31,9 +31,9 @@
   width: 100%;
 }
 
-.login-screen input[type="email"],
-.login-screen input[type="text"],
-.login-screen input[type="password"] {
+.login-screen input[type='email'],
+.login-screen input[type='text'],
+.login-screen input[type='password'] {
   @include main-input-field;
   margin-bottom: 25px;
 }
@@ -49,5 +49,18 @@
 }
 
 .file-button {
+  display: none !important;
+}
+
+.login-screen h5 {
+  margin-top: 10vh;
+  position: absolute;
+  bottom: 22vh;
+  padding: 3% 10%;
+  border-radius: 3px;
+  font-weight: 300;
+}
+
+.login-screen h5:empty {
   display: none !important;
 }

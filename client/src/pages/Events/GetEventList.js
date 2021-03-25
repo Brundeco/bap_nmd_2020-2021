@@ -49,7 +49,7 @@ export default (props) => {
       if (locationSharing) {
         const evts = await Promise.all(
           data.map(async (el) => {
-            console.log(el)
+            // console.log(el)
             const res = await Geocode.fromAddress(
               `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
             )
@@ -59,7 +59,10 @@ export default (props) => {
               `/event/${el._id}`,
             ]
             // const anchor = el.
-            setCoords((prev) => [...prev, coord])
+            // if ((coords.length = 0)) setCoords((prev) => [...prev, coord])
+            // console.log(data.length)
+            if (coords.length !== data.length)
+              setCoords((prev) => [...prev, coord])
             let dis = getPreciseDistance(
               {
                 latitude: parseFloat(res.results[0].geometry.location.lat),
