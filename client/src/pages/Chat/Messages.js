@@ -32,7 +32,7 @@ export default ({ match }) => {
   }, [messages])
 
   return (
-    <div>
+    <div className="conversations" >
       <h1>Conversations</h1>
       {conversations &&
         Object.keys(conversations).map((key, i) => {
@@ -55,18 +55,25 @@ export default ({ match }) => {
                 }/${conversations[key][0].conversationId}`)
               }
             >
-              <h4>
-                {conversations[key].slice(-1)[0].fromName == user.username
-                  ? conversations[key].slice(-1)[0].toName
-                  : conversations[key].slice(-1)[0].fromName}
-              </h4>
-              <h2> {conversations[key].slice(-1)[0].message} </h2>
-              <span>
-                {timestamp.toLocaleTimeString([], {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
-              </span>
+              <div className="left">
+                <p>BD</p>
+              </div>
+              <div className="center">
+                <h4>
+                  {conversations[key].slice(-1)[0].fromName == user.username
+                    ? conversations[key].slice(-1)[0].toName
+                    : conversations[key].slice(-1)[0].fromName}
+                </h4>
+                <p> {conversations[key].slice(-1)[0].message} </p>
+              </div>
+              <div className="right">
+                <span>
+                  {timestamp.toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                </span>
+              </div>
             </section>
           )
         })}

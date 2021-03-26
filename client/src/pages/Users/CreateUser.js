@@ -80,6 +80,11 @@ export default () => {
             onChange={handleChange}
             required
           />
+          <h6>
+            {data?.image
+              ? 'Click again to replace your image'
+              : 'Choose your image (not required)'}
+          </h6>
           <div className="file-upload-cta">
             <FileBase
               className="hide-std-file-btn"
@@ -108,22 +113,8 @@ export default () => {
                 // </div>
                 ''
               )}
-              {/* <span>
-                {data?.image ? 'Replace picture' : 'Choose your profile image'}
-              </span> */}
             </button>
           </div>
-          {/* <div>
-            {data?.image ? (
-              <img
-                src={data?.image}
-                className={data?.image ? 'userphoto-register' : ''}
-                alt=""
-              />
-            ) : (
-              ''
-            )}
-          </div> */}
           <input
             className="main-btn register-btn"
             type="submit"

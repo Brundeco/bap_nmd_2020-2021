@@ -1,26 +1,39 @@
-section.chat {
-  margin: 5vh 0;
-  background-color: rgb(249, 249, 249);
+.chat-screen .chat-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.chat-screen .chat-top img:first-child {
+  font-size: 2em;
+}
+
+.chat-screen .chat-top h1 {
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+.chat-screen .chat-top img:last-child {
+  width: 15vw;
+  height: 15vw;
   border-radius: 5px;
+}
+
+.chat-screen .conversation-box p {
+  font-weight: 200;
+  font-size: 0.85em;
+  width: 100%;
+  margin: 2vh 0;
   padding: 5%;
+  border-radius: 15px;
 }
 
-section.conversation-box {
-  //   width: 50vw;
-  background-color: rgb(227, 227, 227);
-  border-radius: 5px;
-  padding: 5%;
-  box-sizing: border-box;
-}
-
-section.conversation-box p {
-  margin: 2vh;
-}
-
-section.conversation-box p.float-right {
+.chat-screen .conversation-box p.float-right {
   text-align: right;
+  // margin-right: 30%;
 }
 
-section.conversation-box p.float-left {
+.chat-screen .conversation-box p.float-left {
   text-align: left;
+  background-color: $soft-grey;
+  // margin-left: 30%;
 }

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import io from 'socket.io-client'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { Textarea } from '../../components'
+import { Textarea, Header, FontAwesome } from '../../components'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import profileImg from './../../images/event-4.jpg'
 
 let socket
 
@@ -22,9 +23,7 @@ export default ({ match }) => {
 
     socket = io(ENDPOINT)
     socket.emit('join')
-
   }, [ENDPOINT, match.params])
-
 
   const sendMessage = (e) => {
     e.preventDefault()
@@ -68,31 +67,40 @@ export default ({ match }) => {
   }, [messages])
 
   return (
-    <div>
-      <h1>Chat met {match.params.recepient} </h1>
-      <section className="conversation-box">
-        {messages?.map((message, i) => {
-          return (
-            <p
-              key={i}
-              className={
-                message.fromName == user.username ? 'float-right' : 'float-left'
-              }
-            >
-              {message.message}
-            </p>
-          )
-        })}
-      </section>
+    <div className="dashboard-screen ">
+      <Header />
+      <div className="chat-screen page-wrapper">
+        <div className="chat-top">
+          <FontAwesome icon={faChevronLeft} />
+          <h1>{match.params.recepient}</h1>
+          <img src={profileImg} alt="profile" />
+        </div>
+        <section className="conversation-box">
+          {messages?.map((message, i) => {
+            return (
+              <p
+                key={i}
+                className={
+                  message.fromName == user.username
+                    ? 'float-right'
+                    : 'float-left'
+                }
+              >
+                {message.message}
+              </p>
+            )
+          })}
+        </section>
 
-      <Textarea
-        name="message"
-        onChange={handleChange}
-        placeholder="Message"
-        type="textarea"
-      />
-      <button onClick={() => postMessage()}>Send</button>
-      {/* <button onClick={(e) => sendMessage(e)}>Send</button> */}
+        <Textarea
+          name="message"
+          onChange={handleChange}
+          placeholder="Message"
+          type="textarea"
+        />
+        <button onClick={() => postMessage()}>Send</button>
+        {/* <button onClick={(e) => sendMessage(e)}>Send</button> */}
+      </div>
     </div>
   )
 }
