@@ -1,45 +1,50 @@
-import React, { useState, useEffect } from "react";
-import { InputField } from "./../../components";
-import FileBase from "react-file-base64";
-import axios from "axios";
-import TextLogo from "./../../icons/text_logo.svg";
-import SelectImage from "./../../icons/selectimage.svg";
+import React, { useState, useEffect } from 'react'
+import { InputField, PreloaderSpinningWheel } from './../../components'
+import FileBase from 'react-file-base64'
+import axios from 'axios'
+import TextLogo from './../../icons/text_logo.svg'
+import SelectImage from './../../icons/add-img.svg'
+import replaceImage from './../../icons/reload.svg'
 
 export default () => {
-  const [data, setData] = React.useState({});
-  const [status, setStatus] = useState();
+  const [data, setData] = React.useState({})
+  const [status, setStatus] = useState()
+  const [progress, setProgress] = useState(false)
 
   const handleChange = (name, value) => {
-    setData((prev) => ({ ...prev, [name]: value }));
-  };
+    setData((prev) => ({ ...prev, [name]: value }))
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (data.password !== data.passwordRepeat)
-      setStatus("Passwords do not match");
-    else {
+    e.preventDefault()
+    setProgress(true)
+    if (data.password !== data.passwordRepeat) {
+      setStatus('Passwords do not match')
+    } else {
       axios
-        .post("http://localhost:5000/users/register", data)
+        .post('http://localhost:5000/users/register', data)
         .then((res) => {
-          setStatus(res.data.message);
-          window.location = "/login?email=" + res.data.user.email;
+          setProgress(false)
+          setStatus(res.data.message)
+          window.location = '/login?email=' + res.data.user.email
         })
-        .catch((err) => setStatus(err.response.data.message));
+        .catch((err) => {
+          setProgress(false)
+          setStatus(err.response.data.message)
+        })
     }
-  };
+  }
 
   return (
-    <div className="login-screen">
+    <div className="login-screen padding-correction">
+      <div className={progress ? 'await-result show' : 'await-result hide'}>
+        {progress ? <PreloaderSpinningWheel text="Registering account" /> : ''}
+      </div>
       <div className="wrapper">
-        <img src={TextLogo} alt="Suitswap logo" className="logo" />
+        {/* <img src={TextLogo} alt="Suitswap logo" className="logo" /> */}
+        <h1>Create account</h1>
         <form action="" onSubmit={handleSubmit}>
-          <div>
-            <img
-              src={data?.image}
-              className={data?.image ? "userphoto-register" : ""}
-              alt=""
-            />
-          </div>
+          <div></div>
           <InputField
             name="username"
             placeholder="Username"
@@ -63,7 +68,7 @@ export default () => {
           />
           <InputField
             name="password"
-            placeholder="password"
+            placeholder="Password"
             type="password"
             onChange={handleChange}
             required
@@ -82,24 +87,54 @@ export default () => {
               multiple={false}
               onDone={({ base64 }) => setData({ ...data, image: base64 })}
             />
-            <button id="show-custom-file-btn">
-              <img src={SelectImage} alt="" />
-              <span>
-                {data?.image ? "Replace picture" : "Choose your profile image"}
-              </span>
+            <button
+              id="show-custom-file-btn"
+              className={data?.image ? 'without-border' : ''}
+            >
+              {!data?.image ? (
+                <img src={SelectImage} className="upload-icons" alt="" />
+              ) : (
+                <img src={replaceImage} alt="" className="upload-icons" />
+              )}
+              {/* <img src={SelectImage} alt="" /> */}
+              {data?.image ? (
+                // <div>
+                <img
+                  src={data?.image}
+                  className={data?.image ? 'userphoto-register' : ''}
+                  alt=""
+                />
+              ) : (
+                // </div>
+                ''
+              )}
+              {/* <span>
+                {data?.image ? 'Replace picture' : 'Choose your profile image'}
+              </span> */}
             </button>
           </div>
+          {/* <div>
+            {data?.image ? (
+              <img
+                src={data?.image}
+                className={data?.image ? 'userphoto-register' : ''}
+                alt=""
+              />
+            ) : (
+              ''
+            )}
+          </div> */}
           <input
             className="main-btn register-btn"
             type="submit"
             value="Register"
           />
         </form>
-        <button onClick={() => (window.location = "/login")}>
+        <button onClick={() => (window.location = '/login')}>
           Already a member? / Login here
         </button>
         <h5> {status} </h5>
       </div>
     </div>
-  );
-};
+  )
+}

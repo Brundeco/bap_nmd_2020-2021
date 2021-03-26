@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+  <g id="Group_104" data-name="Group 104" transform="translate(-264 -567)">
+    <g id="profile_1_comp" transform="translate(264 567)" fill="#414dfc" stroke="#414dfb" stroke-width="1">
+      <rect width="28" height="28" rx="14" stroke="none"/>
+      <rect x="0.5" y="0.5" width="27" height="27" rx="13.5" fill="none"/>
+    </g>
+    <g id="reload" transform="translate(242.39 575.081)">
+      <g id="Group_103" data-name="Group 103" transform="translate(29.805)">
+        <path id="Path_81" data-name="Path 81" d="M41.6,5.951a5.9,5.9,0,1,0-11.8,0,.35.35,0,1,0,.7,0A5.2,5.2,0,1,1,35.7,11.2H35.1l.868-.98a.355.355,0,0,0-.028-.5.348.348,0,0,0-.494.028l-1.241,1.4a.607.607,0,0,0,0,.8l1.241,1.4a.348.348,0,0,0,.494.028.355.355,0,0,0,.028-.5L35.1,11.9H35.7A5.932,5.932,0,0,0,41.6,5.951Z" transform="translate(-29.805)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

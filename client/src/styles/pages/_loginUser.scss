@@ -3,10 +3,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 15vh 5%;
+  padding: 10vh 5%;
   box-sizing: border-box;
   width: 100vw;
 }
+
+// .login-screen.padding-correction {
+//   padding-top: 10vh;
+// }
 
 .login-screen.full-screen {
   height: 100vh;
@@ -25,9 +29,15 @@
   margin-bottom: 3vh;
 }
 
+.login-screen h1 {
+  margin-bottom: 5vh;
+  font-size: 1.2em;
+}
+
 .login-screen form {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
 }
 
@@ -35,17 +45,25 @@
 .login-screen input[type='text'],
 .login-screen input[type='password'] {
   @include main-input-field;
-  margin-bottom: 25px;
+  transition: $base-transition;
+}
+
+.login-screen input[type='email']:focus,
+.login-screen input[type='text']:focus,
+.login-screen input[type='password']:focus {
+  border-bottom: 1px solid $base-black !important;
+  transition: $base-transition;
 }
 
 .login-screen input.main-btn {
   @include main-btn;
-  background-color: $theme-green;
-  // margin-top: 10vh;
+  margin-top: 4vh;
 }
 
 .login-screen button {
   text-decoration: underline;
+  font-size: 0.8em;
+  margin-top: 2vh;
 }
 
 .file-button {
@@ -55,10 +73,11 @@
 .login-screen h5 {
   margin-top: 10vh;
   position: absolute;
-  bottom: 22vh;
+  bottom: 15vh;
   padding: 3% 10%;
   border-radius: 3px;
   font-weight: 300;
+  color: rgb(176, 34, 34);
 }
 
 .login-screen h5:empty {

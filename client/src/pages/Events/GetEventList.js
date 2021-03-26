@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { Preloader, CheckSession, Map } from './../../components'
+import { Preloader, CheckSession, Map, ConvertDate } from './../../components'
 import { app } from '../../base'
 import Geocode from 'react-geocode'
 import { getPreciseDistance } from 'geolib'
+import likeIcon from './../../icons/heart-full-blue.svg'
 
 export default (props) => {
   CheckSession(localStorage.getItem('jwt'))
@@ -29,9 +30,10 @@ export default (props) => {
         setData(res.data.events)
       })
       .catch((err) => {
-        err.response.status === 401
-          ? console.log(err.response.data.message)
-          : console.log(err)
+        console.log(err)
+        // err.response.status === 401
+        //   ? console.log(err.response.data.message)
+        //   : console.log(err)
       })
   }, [])
 
@@ -73,6 +75,7 @@ export default (props) => {
                 longitude: parseFloat(userLon),
               }
             )
+            console.log(`${parseFloat(dis / 1000).toFixed(1)} km`)
             return dis / 1000 <= props.radius ? el : []
           })
         )
@@ -87,6 +90,7 @@ export default (props) => {
 
   // Fetch event images (Firebase Firestore) and store in state
   useEffect(() => {
+    console.log(evtsFiltered)
     const arr = evtsFiltered?.map((item) => {
       return storageRef
         .child(item?.firebaseRef + '/' + item?.image)
@@ -102,24 +106,37 @@ export default (props) => {
   if (data != undefined) {
     return (
       <React.Fragment>
-        {/* <Map lat={userLat} lon={userLon} /> */}
         <div className="event-screen">
-          <div className="wrapper">
-            <h3>Map</h3>
-            <Map lat={userLat} lon={userLon} coords={coords} />
+          <h3>Map</h3>
+          {/* <Map lat={userLat} lon={userLon} coords={coords} /> */}
+          <div className="event-list">
             {evtsFiltered?.map(function (item, i) {
               return (
-                <div key={i} className="list-item">
-                  <h2> {item.title} </h2>
+                <div key={i} className="event-featured">
                   <div className="image">
                     <img src={images[i]} alt="" />
                   </div>
-                  <Link to={{ pathname: `/event/${item._id}` }}>
-                    <li>DETAIL</li>
-                  </Link>
-                  <Link to={{ pathname: `/update-event/${item._id}` }}>
-                    <li>UPDATE</li>
-                  </Link>
+                  <div className="info">
+                    <div className="left">
+                      <h3> {item.title} </h3>
+                      <h4>
+                        {`${item.city} ${new Date(
+                          item.dates[0]
+                        ).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: '2-digit',
+                          day: '2-digit',
+                        })} `}
+                      </h4>
+                    </div>
+                    <div className="right">
+                      <div className="round-like-btn">
+                        <img src={likeIcon} alt="" />
+                      </div>
+                    </div>
+                  </div>
+                  {/* <a href={`/event/${item._id}`}>Detail</a>
+                  <a href={`/update-event/${item._id}`}>Update</a> */}
                 </div>
               )
             })}

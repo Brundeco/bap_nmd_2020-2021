@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import {
   InputField,
   CheckSession,
-  Preloader,
   PreloaderSpinningWheel,
 } from '../../components'
 import axios from 'axios'
@@ -28,6 +27,7 @@ export default () => {
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }))
+    console.log(data)
   }
 
   const handleSubmit = (e) => {
@@ -56,7 +56,8 @@ export default () => {
         {progress ? <PreloaderSpinningWheel text="Logging in" /> : ''}
       </div>
       <div className="wrapper">
-        <img src={TextLogo} alt="Suitswap logo" className="logo" />
+        {/* <img src={TextLogo} alt="Suitswap logo" className="logo" /> */}
+        <h1>Sign in to suitswap</h1>
         <form action="" onSubmit={handleSubmit}>
           <InputField
             name="email"
@@ -64,13 +65,13 @@ export default () => {
             type="email"
             onChange={handleChange}
             className="main-input-field"
-            value={email}
+            value={email || data.email}
             required
           />
 
           <InputField
             name="password"
-            placeholder="password"
+            placeholder="Password"
             type="password"
             onChange={handleChange}
             className="main-input-field"

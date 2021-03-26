@@ -1,32 +1,53 @@
-
 @mixin main-h2-title {
   font-size: 1.2em;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 3vh;
 }
 
 @mixin main-input-field {
-  background-color: $soft-grey;
-  border: 0px;
-  padding: 4vw;
+  border-bottom: 1px solid #cccccc;
+  padding: 2vw 3vw 2vw 0;
   box-sizing: border-box;
   outline: none;
-  border-radius: 5px;
   width: 100%;
   font-weight: 300;
   font-size: 0.8em;
+  margin-bottom: 50px;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
 }
 
 @mixin main-btn {
-  background-color: $soft-grey;
-  border: 0px;
-  padding: 5%;
+  background-color: $theme-blue;
+  border: 1px solid $theme-blue;
+  color: $base-white;
+  padding: 2% 3%;
   box-sizing: border-box;
   outline: none;
-  border-radius: 5px;
-  width: 100%;
+  border-radius: 50px;
+  width: 80%;
   margin-bottom: 25px;
   font-weight: 300;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin main-btn-outline {
+  background-color: $base-white;
+  border: 1px solid $theme-blue;
+  color: $theme-blue;
+  padding: 2% 3%;
+  box-sizing: border-box;
+  outline: none;
+  border-radius: 50px;
+  width: 80%;
+  margin-bottom: 25px;
+  font-weight: 300;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 $breakpoints: (

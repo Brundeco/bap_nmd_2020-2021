@@ -38,7 +38,12 @@ export default () => {
       />
       <div className="home-screen">
         <section className="event-section">
-          <h2>Events around you</h2>
+          <div className="cta-top">
+            <h2>Events around you</h2>
+            <button onClick={() => (window.location = '/events')}>
+              Show all events
+            </button>
+          </div>
           {locationSharing ? (
             <React.Fragment>
               <label>Select radius</label>
@@ -59,29 +64,13 @@ export default () => {
           ) : (
             <h3>Location sharing is disabled</h3>
           )}
-
-          <div className="event-list">
-            <GetEventList
-              status={status}
-              radius={optionsValue}
-              error={error}
-              locationsharing={locationSharing}
-            />
-          </div>
+          <GetEventList
+            status={status}
+            radius={optionsValue}
+            error={error}
+            locationsharing={locationSharing}
+          />
         </section>
-
-        <button
-          className="main-btn"
-          onClick={() => (window.location = '/events')}
-        >
-          Show all events
-        </button>
-        <button
-          className="main-btn"
-          onClick={() => (window.location = '/properties')}
-        >
-          Show available properties
-        </button>
       </div>
     </div>
   )
