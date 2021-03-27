@@ -1,71 +1,203 @@
-.property-screen .subject-image {
+.property-detail-screen .subject-image {
   height: 30vh;
   width: 100%;
 }
 
-.property-screen .subject-image img {
-  width: 100%;
-  height: 100%;
+.property-detail-screen .subject-image img {
+  width: 100% !important;
+  height: 100% !important;
   object-fit: cover;
 }
 
-.property-screen .wrapper {
+.property-detail-screen .wrapper {
   padding: 5%;
   padding-bottom: 5vh;
-  margin-top: 15vh;
 }
 
-.property-screen h1 {
-  font-size: 1.2em;
-  font-weight: 900;
+.property-detail-screen .cta-section-top {
+  display: flex;
+  height: 10vh;
+  width: 100%;
+}
+
+.property-detail-screen .cta-section-top .left {
+  width: 70%;
+  display: flex;
+  align-items: center;
+}
+
+.property-detail-screen .cta-section-top .left img {
+  width: 10vw;
+  height: 10vw;
+  object-fit: cover;
+  border-radius: 50px;
+  margin-right: 5vw;
+}
+
+.property-detail-screen .cta-section-top .right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 30%;
+}
+
+.property-detail-screen .cta-section-top .right button {
+  @include main-btn;
+  padding: 10% 3%;
+  &:hover {
+    @include main-btn-outline;
+    padding: 10% 3%;
+  }
+}
+
+.property-detail-screen h3 {
+  font-weight: 400;
+  font-size: 0.9em;
+  font-style: italic;
   margin: 3vh 0;
 }
 
-.property-screen h2 {
-  font-size: 0.9em;
-  font-weight: 300;
-  margin-bottom: 3vh;
-  font-style: italic;
-}
-
-.property-screen p {
-  font-weight: 100;
-  line-height: 22px;
+.property-detail-screen p.description {
+  line-height: 2em;
   font-size: 0.9em;
 }
 
-.property-screen .grid {
+.property-detail-screen .general-info {
+  margin-top: 5vh;
+}
+
+.property-detail-screen .general-info .general-info-title {
+  font-weight: 500;
+  color: $med-grey;
+  font-size: 0.9em;
+  margin: 7vh 0 5vh;
+}
+
+.property-detail-screen .general-info .item {
+  margin: 3vh 0;
+  height: 10vw;
+  display: flex;
+}
+
+.property-detail-screen .general-info .item .left {
+  height: 10vw;
+  width: 10vw;
+  background: #efefef;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 3vw;
+}
+
+.property-detail-screen .general-info .item .left img {
+  width: 60%;
+}
+
+.property-detail-screen .general-info .item .center {
+  width: 55%;
   display: flex;
   flex-direction: column;
-  margin: 5vh 0;
+  justify-content: space-between;
 }
 
-.property-screen .row {
+.property-detail-screen .general-info .item .center h4 {
+  font-weight: 600;
+}
+
+.property-detail-screen .general-info .item .center p {
+  font-size: 0.85em;
+}
+
+.property-detail-screen .general-info .item .right {
+  width: 30%;
   display: flex;
-  flex-direction: row;
-  margin: 2vh 0;
+  justify-content: flex-end;
 }
 
-.property-screen .col {
+.property-detail-screen .general-info .item .right p {
+  font-weight: 600;
+}
+
+.property-detail-screen .general-info .item:last-child .right p {
+  color: $theme-blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.property-detail-screen .calendar-show {
+  display: flex;
+}
+
+.property-detail-screen .calendar-hide {
+  display: none;
+}
+
+.property-detail-screen .cta-bottom-section {
+  width: 100%;
+  margin: 3vh 0;
+  display: flex;
+  justify-content: center;
+}
+
+.property-detail-screen .cta-bottom-section button {
+  margin: 3vh 3vw;
+  font-size: 0.9em;
+}
+
+.property-detail-screen .cta-bottom-section button:first-child {
+  @include main-btn;
+  &:hover {
+    @include main-btn-outline;
+  }
+}
+
+.property-detail-screen .cta-bottom-section button:last-child {
+  @include main-btn-outline;
+  &:hover {
+    @include main-btn;
+  }
+}
+
+.property-detail-screen .extra-info {
+  margin: 10vh 0 5vh;
+}
+
+.property-detail-screen .extra-info > div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 5vh 0;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.1em;
+  line-height: 1.8em;
+}
+
+.property-detail-screen .extra-info .contact {
+  padding: 10%;
+  background-color: $soft-grey;
+  border-radius: 5px;
+}
+
+.property-detail-screen .extra-info .img-box {
+  width: 8vh;
+  height: 8vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background-color: $soft-grey;
+  margin-bottom: 2.5vh;
+}
+
+.property-detail-screen .extra-info .address-icon {
   width: 50%;
 }
 
-.property-screen h3 {
-  @include main-h2-title;
-  margin-bottom: 8px;
-  font-size: 0.9em;
-}
-
-.property-screen button {
-  @include main-btn;
-  background: $theme-green;
-}
-
-.property-screen button:nth-of-type(2) {
-  @include main-btn;
-  background: $theme-blue;
-}
-
-.property-screen .slide-arrow-homepage {
-  width: 50px !important;
+.property-detail-screen .extra-info .contact-icon {
+  width: 9%;
+  margin-bottom: 2.5vh;
 }

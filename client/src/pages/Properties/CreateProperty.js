@@ -37,11 +37,11 @@ export default (props) => {
   }
 
   useEffect(() => {
-    console.log(data)
+    // console.log(data)
   }, [data])
 
   useEffect(() => {
-    console.log(files)
+    // console.log(files)
   }, [files])
 
   return (

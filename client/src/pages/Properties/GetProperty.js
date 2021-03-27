@@ -6,6 +6,14 @@ import ImageSlider from '../../components/ImageSlider'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
 import { app } from '../../base'
+import LikeIconWhite from './../../icons/heart-full-white.svg'
+import LikeIconBlue from './../../icons/heart-full-blue.svg'
+import PriceIcon from './../../icons/property-detail/price.svg'
+import SurfaceIcon from './../../icons/property-detail/surface.svg'
+import CalenderIcon from './../../icons/property-detail/calendar.svg'
+import ContactIcon from './../../icons/property-detail/contact.svg'
+import AddressIcon from './../../icons/property-detail/address.svg'
+import LightIcon from './../../icons/property-detail/light.svg'
 
 export default ({ match }) => {
   const user = JSON.parse(localStorage.getItem('user'))
@@ -16,6 +24,8 @@ export default ({ match }) => {
   const [selectedDates, setSelectedDates] = useState([])
   const [dates, setDates] = useState([])
   const storageRef = app.storage().ref()
+  const [hoverState, setHoverState] = useState(false)
+  const [showCalendar, setShowCalendar] = useState(false)
   const [booking, setBooking] = useState({
     client: user.username,
     client_id: user.id,
@@ -35,6 +45,7 @@ export default ({ match }) => {
   }, [])
 
   useEffect(() => {
+    console.log(data)
     // Get Firestore img Urls
     const promises = data?.images
       ?.map(async (el) => {
@@ -95,76 +106,135 @@ export default ({ match }) => {
 
   if (data != undefined) {
     return (
-      <div className="property-screen">
+      <div className="property-detail-screen">
         <div className="subject-image">
           <ImageSlider slides={images} index={handleIndex} />
         </div>
-        <DayPicker
-          selectedDays={selectedDates}
-          onDayClick={handleDayClick}
-          disabledDays={isDayDisabled}
-        />
-
         <div className="wrapper">
           <PrevPage />
-          <h1>
-            {data?.street +
-              ' ' +
-              data?.houseNumber +
-              ', ' +
-              data?.zip +
-              ' ' +
-              data?.city}
-          </h1>
-          <h2>
-            By {data?.author} | created on {propertyCreatedAt}
-          </h2>
-          <p>{data?.description}</p>
-          <div className="grid">
-            <div className="row">
-              <div className="col">
-                <h3>Dayprice</h3>
-                <p>€ {data?.price} </p>
-              </div>
-              <div className="col">
-                <h3>Sq Meter</h3>
-                <p>{data?.surface} m2</p>
-              </div>
+          <h2>{`${data?.street} ${data?.houseNumber},  ${data?.zip} ${data?.city}`}</h2>
+
+          <div className="cta-section-top">
+            <div className="left">
+              <img src={user.image} alt="" />
+              <p>Tamara Bellis</p>
             </div>
-            <div className="row">
-              <div className="col">
-                <h3>Natural light</h3>
-                <p>{data?.light}</p>
-              </div>
-              <div className="col">
-                <h3>Address</h3>
-                <p>
-                  {data?.street + ' ' + data?.houseNumber + ', '} <br />
-                  {data?.zip + ' ' + data?.city}
-                </p>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col">
-                <h3>Available data</h3>
-                <p> {data?.date} </p>
-              </div>
-              <div className="col">
-                <h3>Contact info</h3>
-                <p>
-                  {data?.firstname + ' ' + data?.lastname} <br /> {data?.email}
-                  <br />
-                  {data?.phone}
-                </p>
-              </div>
+            <div className="right">
+              <button
+                onMouseEnter={() => setHoverState(!hoverState)}
+                onMouseLeave={() => setHoverState(!hoverState)}
+              >
+                <img src={hoverState ? LikeIconBlue : LikeIconWhite} alt="" />
+              </button>
             </div>
           </div>
-          <section className="cta-section">
-            <Link to={{ pathname: `/chat/${data?.author_id}/${data?.author}` }}>
-              <li>Contact owner</li>
-            </Link>
+          <h3>
+            By {data?.author} | created on {propertyCreatedAt}
+          </h3>
+          <p className="description"> {data?.description}</p>
+
+          <section className="general-info">
+            <h2 className="general-info-title" >General info</h2>
+            <div className="item">
+              <div className="left">
+                <img src={PriceIcon} alt="" />
+              </div>
+              <div className="center">
+                <h4>Price</h4>
+                <p>Daily</p>
+              </div>
+              <div className="right">
+                <p>€ {data?.price} </p>
+              </div>
+            </div>
+
+            <div className="item">
+              <div className="left">
+                <img src={SurfaceIcon} alt="" />
+              </div>
+              <div className="center">
+                <h4>Available space</h4>
+                <p>Square meter</p>
+              </div>
+              <div className="right">
+                <p>{data?.surface} m2 </p>
+              </div>
+            </div>
+
+            <div className="item">
+              <div className="left">
+                <img src={LightIcon} alt="" />
+              </div>
+              <div className="center">
+                <h4>Light</h4>
+                <p>Natural light</p>
+              </div>
+              <div className="right">
+                <p> {data?.light} </p>
+              </div>
+            </div>
+
+            <div className="item">
+              <div className="left">
+                <img src={CalenderIcon} alt="" />
+              </div>
+              <div className="center">
+                <h4>Calendar</h4>
+                <p>Available data</p>
+              </div>
+              <div className="right">
+                <p onClick={() => setShowCalendar(!showCalendar)}>
+                  {showCalendar ? 'Close' : 'Open'}
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <div className={showCalendar ? 'calendar-show' : 'calendar-hide'}>
+            <DayPicker
+              selectedDays={selectedDates}
+              onDayClick={handleDayClick}
+              disabledDays={isDayDisabled}
+            />
+          </div>
+
+          <section className="extra-info">
+            <div className="address">
+              <div className="img-box">
+                <img
+                  src={AddressIcon}
+                  alt="address-icon"
+                  className="address-icon"
+                />
+              </div>
+              <p>
+                {`${data?.street} ${data?.houseNumber},`} <br />{' '}
+                {`${data?.zip} ${data?.city} `}
+              </p>
+            </div>
+            <div className="contact">
+              <img
+                src={ContactIcon}
+                alt="contact-icon"
+                className="contact-icon"
+              />
+              <p>
+                {`${data?.firstname} ${data?.lastname}`} <br />
+                {`${data?.email}`} <br />
+                {`${data?.phone}`}
+              </p>
+            </div>
+          </section>
+          <section className="cta-bottom-section">
             <button className="main-btn" onClick={(e) => handleReservation(e)}>
               Make reservation
+            </button>
+            <button
+              onClick={() =>
+                (window.location = `/chat/${data?.author_id}/${data?.author}`)
+              }
+            >
+              Chat with owner
             </button>
           </section>
         </div>
@@ -178,24 +248,3 @@ export default ({ match }) => {
     )
   }
 }
-
-// return (
-//   <div className="property-list">
-//     <div className="property-item">
-//       <h2> {data?.title}</h2>
-//       <h4> Author: {data?.author} </h4>
-//       <h4> Author ID: {data?.author_id} </h4>
-//       <div className="property-images">
-//         {data?.images.map(function (image, i) {
-//           return <img src={image} alt="" />;
-//         })}
-//       </div>
-//       <ul>
-//         <Link to={{ pathname: `/chat/${data?.author_id}/${data?.author}` }}>
-//           <li>Contact owner</li>
-//         </Link>
-//       </ul>
-//     </div>
-//   </div>
-// );
-// };

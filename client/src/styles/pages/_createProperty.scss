@@ -1,7 +1,6 @@
 .img-gallery {
   display: flex;
   flex-wrap: wrap;
-  background-color: $soft-grey;
   padding: 0 0 3vh 0;
 }
 
@@ -13,8 +12,8 @@
 }
 
 .img-gallery .img-box {
-  width: 40vw;
-  height: 10vh;
+  width: 100vw;
+  height: 20vh;
   display: flex;
   flex-direction: column;
   margin: 2vh 1vh;

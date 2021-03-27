@@ -101,16 +101,13 @@ export default () => {
               ) : (
                 <img src={replaceImage} alt="" className="upload-icons" />
               )}
-              {/* <img src={SelectImage} alt="" /> */}
               {data?.image ? (
-                // <div>
                 <img
                   src={data?.image}
                   className={data?.image ? 'userphoto-register' : ''}
                   alt=""
                 />
               ) : (
-                // </div>
                 ''
               )}
             </button>

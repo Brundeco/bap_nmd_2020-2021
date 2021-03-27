@@ -1,62 +1,73 @@
-import React, { useState, useEffect } from "react";
-import { InputField, Textarea } from "../../components";
-import SelectImage from "./../../icons/selectimage.svg";
-import DayPicker from "react-day-picker";
-import "react-day-picker/lib/style.css";
-import uuid from "react-uuid";
+import React, { useState, useEffect } from 'react'
+import { InputField, Textarea } from '../../components'
+import DayPicker from 'react-day-picker'
+import 'react-day-picker/lib/style.css'
+import uuid from 'react-uuid'
+import SelectImage from './../../icons/add-img.svg'
+import replaceImage from './../../icons/reload.svg'
 
 export default (props) => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  const [files, setFiles] = useState([]);
-  const [dates, setDates] = useState([]);
+  const user = JSON.parse(localStorage.getItem('user'))
+  const [files, setFiles] = useState([])
+  const [dates, setDates] = useState([])
   const [data, setData] = React.useState({
     author: user.username,
     author_id: user.id,
     images: [],
     firebaseRef: uuid(),
-  });
+  })
 
   const handleChange = (name, value) => {
-    setData((prev) => ({ ...prev, [name]: value }));
-  };
+    setData((prev) => ({ ...prev, [name]: value }))
+  }
 
   const handleFiles = (e) => {
     Array.from(e.target.files).map((file) => {
-      const newFile = file;
-      newFile["id"] = uuid();
-      setFiles((prevState) => [...prevState, newFile]);
-    });
-  };
+      const newFile = file
+      newFile['id'] = uuid()
+      setFiles((prevState) => [...prevState, newFile])
+    })
+  }
 
   useEffect(() => {
-    let tmpArr = [];
+    let tmpArr = []
     files.forEach((element) => {
-      tmpArr.push(element.id);
-      setData((prev) => ({ ...prev, images: tmpArr }));
-    });
-  }, [files]);
+      tmpArr.push(element.id)
+      setData((prev) => ({ ...prev, images: tmpArr }))
+    })
+  }, [files])
 
   const handleDayClick = (day) => {
-    let currentDay = new Date(day).getTime();
-    let newArray = [...dates];
-    let indexItem = newArray.indexOf(currentDay);
+    let currentDay = new Date(day).getTime()
+    let newArray = [...dates]
+    let indexItem = newArray.indexOf(currentDay)
 
-    indexItem === -1
-      ? newArray.push(currentDay)
-      : newArray.splice(indexItem, 1);
-    setDates(newArray);
-  };
+    indexItem === -1 ? newArray.push(currentDay) : newArray.splice(indexItem, 1)
+    setDates(newArray)
+  }
 
   useEffect(() => {
     setData((prev) => ({
       ...prev,
       dates: dates?.map((date) => new Date(date)),
-    }));
-  }, [dates]);
+    }))
+  }, [dates])
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    // console.log(data)
+  }, [data])
+
+  const handleDeleteNewFiles = (e,data, i) => {
+    e.preventDefault()
+    console.log(data)
+    console.log(i)
+    let newImgArr = []
+    files.map((file) => newImgArr.push(file))
+    // console.log(newImgArr)
+    newImgArr.splice(i, 1)
+    // console.log(newImgArr)
+    setFiles(newImgArr)
+  }
 
   return (
     <React.Fragment>
@@ -188,10 +199,7 @@ export default (props) => {
             <input type="file" onChange={handleFiles} multiple />
 
             <button id="show-custom-file-btn">
-              <img src={SelectImage} alt="" />
-              <span>
-                {data?.image ? "Replace picture" : "Property pictures"}{" "}
-              </span>
+              <img src={SelectImage} className="upload-icons" alt="" />
             </button>
           </div>
           <div className="img-gallery">
@@ -200,10 +208,12 @@ export default (props) => {
                 <React.Fragment key={i}>
                   <div className="img-box">
                     <img src={URL.createObjectURL(item)} alt="" />
-                    <button>Delete</button>
+                    <button onClick={(e) => handleDeleteNewFiles(e, data, i)}>
+                      Delete
+                    </button>
                   </div>
                 </React.Fragment>
-              );
+              )
             })}
           </div>
         </section>
@@ -211,5 +221,5 @@ export default (props) => {
         <input type="submit" value="Verify info" className="main-input-field" />
       </form>
     </React.Fragment>
-  );
-};
+  )
+}
