@@ -1,7 +1,6 @@
 import Messages from '../models/messages.js'
 
 export const getMessages = async (req, res) => {
-
   try {
     const conversations = await Messages.find({
       conversationId: { $regex: req.params.user, $options: 'i' },
@@ -13,7 +12,6 @@ export const getMessages = async (req, res) => {
 }
 
 export const getMessageByConversationId = async (req, res) => {
-
   try {
     const conversations = await Messages.find({
       conversationId: {
@@ -57,10 +55,41 @@ export const postMessage = async (req, res) => {
       toName: req.body.toName,
       message: req.body.message,
       conversationNameStr: req.body.conversationNameStr,
-      read: req.body.read
+      read: req.body.read,
     })
     await message.save()
     res.status(201).json(message)
+  } catch (error) {
+    console.log(error)
+    res.status(409).json({ message: error.message })
+  }
+}
+
+export const createConversationId = async (req, res) => {
+  console.log('We can start creating a conversation id now!')
+  const fromTo = `${req.body.from}_${req.body.to}`
+  const toFrom = `${req.body.to}_${req.body.from}`
+  let newConversationId = fromTo
+  console.log(newConversationId)
+
+  try {
+    await Messages.findOne({
+      conversationId: fromTo,
+    })
+      .then((res) =>
+        res == null ? null : (newConversationId = res.conversationId)
+      )
+      .catch((err) => console.log(err))
+
+    await Messages.findOne({
+      conversationId: toFrom,
+    })
+      .then((res) =>
+        res == null ? null : (newConversationId = res.conversationId)
+      )
+      .catch((err) => console.log(err))
+
+    res.status(201).json(newConversationId)
   } catch (error) {
     console.log(error)
     res.status(409).json({ message: error.message })

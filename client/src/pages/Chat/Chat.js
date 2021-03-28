@@ -71,9 +71,9 @@ export default ({ match }) => {
       <Header />
       <div className="chat-screen page-wrapper">
         <div className="chat-top">
-          <FontAwesome icon={faChevronLeft} />
-          <h1>{match.params.recepient}</h1>
-          <img src={profileImg} alt="profile" />
+          {/* <FontAwesome icon={faChevronLeft} /> */}
+          <h1> Gesprek met {match.params.recepient}</h1>
+          {/* <img src={profileImg} alt="profile" /> */}
         </div>
         <section className="conversation-box">
           {messages?.map((message, i) => {

@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Header, CheckSession, LocateUser } from '../../components'
 import { GetEventList } from '..'
-import axios from 'axios'
 
 export default () => {
   CheckSession(localStorage.getItem('jwt'))
-  const [status, setStatus] = useState()
   const [error, setError] = useState()
   const [locationSharing, setLocationSharing] = useState()
   const [optionsValue, setOptionsValue] = useState(
@@ -19,10 +17,6 @@ export default () => {
     { label: 'everywhere', value: 100000 },
   ]
 
-  const handleStatus = (status) => {
-    setStatus(status)
-  }
-
   const handleLocationSharing = (share) => {
     // console.log(share)
     setLocationSharing(share)
@@ -31,11 +25,7 @@ export default () => {
   return (
     <div>
       <Header />
-      <LocateUser
-        err={setError}
-        status={handleStatus}
-        locationsharing={handleLocationSharing}
-      />
+      <LocateUser err={setError} locationsharing={handleLocationSharing} />
       <div className="home-screen">
         <section className="event-section">
           <div className="cta-top">
@@ -65,7 +55,6 @@ export default () => {
             <h3>Location sharing is disabled</h3>
           )}
           <GetEventList
-            status={status}
             radius={optionsValue}
             error={error}
             locationsharing={locationSharing}

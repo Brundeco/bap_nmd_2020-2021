@@ -45,6 +45,7 @@ function App() {
         <Route path="/properties-admin" component={GetPropertyListAdmin} />
 
         <Route path="/chat/:recepient_id/:recepient/:conversation_id" component={Chat} />
+        {/* <Route path="/chat/:recepient_id/:recepient" component={Chat} /> */}
         <Route path="/messages/:user" component={Messages} />
       </div>
     </Router>

@@ -28,6 +28,7 @@ export default (props) => {
       .get('http://localhost:5000/events')
       .then((res) => {
         setData(res.data.events)
+        console.log(props.locationsharing)
       })
       .catch((err) => {
         console.log(err)
@@ -86,7 +87,7 @@ export default (props) => {
     } catch (err) {
       console.log(err)
     }
-  }, [data, userLon, userLat, props.radius])
+  }, [data, userLon, userLat, props.radius, locationSharing])
 
   // Fetch event images (Firebase Firestore) and store in state
   useEffect(() => {

@@ -26,6 +26,7 @@ export default ({ match }) => {
   const storageRef = app.storage().ref()
   const [hoverState, setHoverState] = useState(false)
   const [showCalendar, setShowCalendar] = useState(false)
+  const [conversationId, setConversationId] = useState()
   const [booking, setBooking] = useState({
     client: user.username,
     client_id: user.id,
@@ -104,6 +105,16 @@ export default ({ match }) => {
       .then((res) => setData(res.data))
   }
 
+  useEffect(() => {
+    axios
+      .post('http://localhost:5000/messages/conversation_id', {
+        from: user.id,
+        to: data?.author_id,
+      })
+      .then((res) => setConversationId(res.data))
+      .catch((err) => console.log(err))
+  }, [data])
+
   if (data != undefined) {
     return (
       <div className="property-detail-screen">
@@ -117,7 +128,7 @@ export default ({ match }) => {
           <div className="cta-section-top">
             <div className="left">
               <img src={user.image} alt="" />
-              <p>Tamara Bellis</p>
+              <p> {`${data?.firstname} ${data?.lastname} `} </p>
             </div>
             <div className="right">
               <button
@@ -128,13 +139,11 @@ export default ({ match }) => {
               </button>
             </div>
           </div>
-          <h3>
-            By {data?.author} | created on {propertyCreatedAt}
-          </h3>
+          <h3>Added on {propertyCreatedAt}</h3>
           <p className="description"> {data?.description}</p>
 
           <section className="general-info">
-            <h2 className="general-info-title" >General info</h2>
+            <h2 className="general-info-title">General info</h2>
             <div className="item">
               <div className="left">
                 <img src={PriceIcon} alt="" />
@@ -231,7 +240,7 @@ export default ({ match }) => {
             </button>
             <button
               onClick={() =>
-                (window.location = `/chat/${data?.author_id}/${data?.author}`)
+                (window.location = `/chat/${data?.author_id}/${data?.author}/${conversationId}`)
               }
             >
               Chat with owner

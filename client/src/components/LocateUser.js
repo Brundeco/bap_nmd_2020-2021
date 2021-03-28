@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 // console.log(requestLocation)
 
 export default (props) => {
-  const [completed, setCompleted] = useState(false)
   const [response, setResponse] = useState()
   const [locationSharing, setLocationSharing] = useState()
   const [userLocation, setUserLocation] = useState({
@@ -12,24 +11,28 @@ export default (props) => {
   })
 
   const onSuccess = async (userLoc) => {
-    if (locationSharing == undefined) setLocationSharing(true)
-    setResponse('Location sharing is enabled')
-    localStorage.setItem('userLat', userLoc.coords.latitude)
-    localStorage.setItem('userLon', userLoc.coords.longitude)
-    setCompleted(true)
-    localStorage.setItem('askLocation', false)
+    // console.log('Location sharing is TRUE')
+    if (locationSharing == undefined) {
+      setLocationSharing(true)
+      setResponse('Location sharing is enabled')
+      localStorage.setItem('userLat', userLoc.coords.latitude)
+      localStorage.setItem('userLon', userLoc.coords.longitude)
+      localStorage.setItem('askLocation', false)
+    }
   }
 
   const onError = (error) => {
-    if (locationSharing == undefined) setLocationSharing(false)
-    setResponse('Location sharing is disabled')
-    setCompleted(false)
-    setUserLocation({
-      error: {
-        code: error.code,
-        message: error.message,
-      },
-    })
+    // console.log('Location sharing is FALSE')
+    if (locationSharing == undefined) {
+      setLocationSharing(false)
+      setResponse('Location sharing is disabled')
+      setUserLocation({
+        error: {
+          code: error.code,
+          message: error.message,
+        },
+      })
+    }
   }
 
   const locateUser = () => {
@@ -49,13 +52,12 @@ export default (props) => {
   // }
 
   // if (requestLocation) {
-    locateUser()
+  locateUser()
   // }
 
   return (
     <div
       err={props.err(response)}
-      status={props.status(completed)}
       locationsharing={props.locationsharing(locationSharing)}
     />
   )
