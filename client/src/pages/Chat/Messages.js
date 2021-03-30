@@ -32,11 +32,11 @@ export default ({ match }) => {
   }, [messages])
 
   return (
-    <div className="conversations" >
+    <div className="conversations">
       <h1>Conversations</h1>
       {conversations &&
         Object.keys(conversations).map((key, i) => {
-          console.log(key)
+          console.log(conversations[key].slice(-1)[0].from)
           const timestamp = new Date(conversations[key].slice(-1)[0].createdAt)
           console.log(timestamp)
           return (

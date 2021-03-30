@@ -112,13 +112,19 @@ export default () => {
               )}
             </button>
           </div>
-          <input
+          <button className="main-btn" onClick={handleSubmit}>
+            Register
+          </button>
+          {/* <input
             className="main-btn register-btn"
             type="submit"
             value="Register"
-          />
+          /> */}
         </form>
-        <button onClick={() => (window.location = '/login')}>
+        <button
+          className="secondary-btn"
+          onClick={() => (window.location = '/login')}
+        >
           Already a member? / Login here
         </button>
         <h5> {status} </h5>

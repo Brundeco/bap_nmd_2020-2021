@@ -22,3 +22,15 @@
 .file-upload-cta.fit {
   margin-bottom: 0 !important;
 }
+
+.property-preview-screen .cta-bottom-section {
+  width: 100%;
+  margin: 3vh 0;
+  display: flex;
+  justify-content: center;
+}
+
+.property-preview-screen .cta-bottom-section button {
+  margin: 3vh 3vw;
+  font-size: 0.9em;
+}

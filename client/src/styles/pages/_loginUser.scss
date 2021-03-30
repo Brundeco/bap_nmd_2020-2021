@@ -22,6 +22,7 @@
   justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
+  margin-top: 5vh;
 }
 
 .login-screen .logo {
@@ -55,12 +56,12 @@
   transition: $base-transition;
 }
 
-.login-screen input.main-btn {
+.login-screen button.main-btn {
   @include main-btn;
   margin-top: 4vh;
 }
 
-.login-screen button {
+.login-screen button.secondary-btn {
   text-decoration: underline;
   font-size: 0.8em;
   margin-top: 2vh;
@@ -70,14 +71,28 @@
   display: none !important;
 }
 
-.login-screen h5 {
-  margin-top: 10vh;
-  position: absolute;
-  bottom: 15vh;
-  padding: 3% 10%;
-  border-radius: 3px;
-  font-weight: 300;
-  color: rgb(176, 34, 34);
+// .login-screen h5 {
+//   margin-top: 10vh;
+//   position: absolute;
+//   bottom: 15vh;
+//   padding: 3% 10%;
+//   border-radius: 3px;
+//   font-weight: 300;
+//   color: rgb(176, 34, 34);
+// }
+
+h6.success {
+  font-weight: 500;
+  font-size: 0.9em;
+  color: green;
+  margin-top: 2vh;
+}
+
+h6.failure {
+  font-weight: 500;
+  font-size: 0.9em;
+  color: red;
+  margin-top: 2vh;
 }
 
 .login-screen h5:empty {

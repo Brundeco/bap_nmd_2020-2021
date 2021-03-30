@@ -99,10 +99,16 @@ export default (props) => {
     })
   }
 
+  const today = new Date()
+
   return (
     <React.Fragment>
       <h1>Fill out the form below to start hosting your property</h1>
-      <DayPicker selectedDays={data?.dates} onDayClick={handleDayClick} />
+      <DayPicker
+        selectedDays={data?.dates}
+        onDayClick={handleDayClick}
+        disabledDays={{ before: today }}
+      />
       <form
         onSubmit={props.onSubmit}
         formdata={props.formdata(data)}

@@ -3,7 +3,8 @@ import io from 'socket.io-client'
 import axios from 'axios'
 import { Textarea, Header, FontAwesome } from '../../components'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import profileImg from './../../images/event-4.jpg'
+import PaperplaneIcon from './../../icons/send-paperplane.svg'
+import ScrollToBottom from 'react-scroll-to-bottom'
 
 let socket
 
@@ -16,23 +17,6 @@ export default ({ match }) => {
   const [ioMsgs, setIoMsgs] = useState([])
   const ENDPOINT = 'http://localhost:5000'
   const recepient = match.params
-
-  useEffect(() => {
-    const room = match.params.recepient_id
-    const name = match.params.recepient
-
-    socket = io(ENDPOINT)
-    socket.emit('join')
-  }, [ENDPOINT, match.params])
-
-  const sendMessage = (e) => {
-    e.preventDefault()
-    if (ioMsg) {
-      socket.emit('sendMessage', ioMsg, () => setIoMsg(''))
-    }
-  }
-
-  console.log(ioMsg, ioMsgs)
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }))
@@ -49,6 +33,11 @@ export default ({ match }) => {
   }, [])
 
   const postMessage = () => {
+    // socket.emit('new-message', {
+    //   id: match.params.recepient_id,
+    //   message: data.message,
+    // })
+
     axios
       .post('http://localhost:5000/messages', {
         message: data.message,
@@ -75,31 +64,38 @@ export default ({ match }) => {
           <h1> Gesprek met {match.params.recepient}</h1>
           {/* <img src={profileImg} alt="profile" /> */}
         </div>
-        <section className="conversation-box">
-          {messages?.map((message, i) => {
-            return (
-              <p
-                key={i}
-                className={
-                  message.fromName == user.username
-                    ? 'float-right'
-                    : 'float-left'
-                }
-              >
-                {message.message}
-              </p>
-            )
-          })}
-        </section>
 
-        <Textarea
-          name="message"
-          onChange={handleChange}
-          placeholder="Message"
-          type="textarea"
-        />
-        <button onClick={() => postMessage()}>Send</button>
-        {/* <button onClick={(e) => sendMessage(e)}>Send</button> */}
+        <ScrollToBottom>
+          <section className="conversation-box">
+            {messages?.map((message, i) => {
+              return (
+                <p
+                  key={i}
+                  className={
+                    message.fromName == user.username
+                      ? 'float-right'
+                      : 'float-left'
+                  }
+                >
+                  {message.message}
+                </p>
+              )
+            })}
+          </section>
+        </ScrollToBottom>
+
+        <div className="chat-bottom">
+          <Textarea
+            name="message"
+            onChange={handleChange}
+            placeholder="Message"
+            type="textarea"
+            className="send-message"
+          />
+          <button className="send-message-btn" onClick={() => postMessage()}>
+            <img src={PaperplaneIcon} alt="" />
+          </button>
+        </div>
       </div>
     </div>
   )

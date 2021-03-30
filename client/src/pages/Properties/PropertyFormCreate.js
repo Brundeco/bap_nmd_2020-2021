@@ -10,6 +10,8 @@ export default (props) => {
   const user = JSON.parse(localStorage.getItem('user'))
   const [files, setFiles] = useState([])
   const [dates, setDates] = useState([])
+  const [formValid, setFormValid] = useState(false)
+  const [preview, setPreview] = useState(false)
   const [data, setData] = React.useState({
     author: user.username,
     author_id: user.id,
@@ -54,10 +56,29 @@ export default (props) => {
   }, [dates])
 
   useEffect(() => {
-    // console.log(data)
-  }, [data])
+    if (
+      data.firstname &&
+      data.lastname &&
+      data.phone &&
+      data.email &&
+      data.street &&
+      data.houseNumber &&
+      data.zip &&
+      data.city &&
+      data.description &&
+      data.price &&
+      data.surface &&
+      data.light &&
+      data.dates.length !== 0 &&
+      files?.length !== 0
+    ) {
+      setFormValid(true)
+    } else {
+      setFormValid(false)
+    }
+  }, [data, files])
 
-  const handleDeleteNewFiles = (e,data, i) => {
+  const handleDeleteNewFiles = (e, data, i) => {
     e.preventDefault()
     console.log(data)
     console.log(i)
@@ -69,14 +90,25 @@ export default (props) => {
     setFiles(newImgArr)
   }
 
+  const today = new Date()
+
   return (
     <React.Fragment>
       <h1>Fill out the form below to start hosting your property</h1>
-      <DayPicker selectedDays={data.dates} onDayClick={handleDayClick} />
+
+      <section>
+        <h2>Available dates</h2>
+        <DayPicker
+          selectedDays={data.dates}
+          onDayClick={handleDayClick}
+          disabledDays={{ before: today }}
+        />
+      </section>
       <form
         onSubmit={props.onSubmit}
         formdata={props.formdata(data)}
         files={props.files(files)}
+        preview={props.preview(preview)}
       >
         <section>
           <h2>General information</h2>
@@ -86,6 +118,7 @@ export default (props) => {
             type="textarea"
             onChange={handleChange}
             className="main-input-field"
+            required
           />
           <div className="form-row">
             <div className="form-col-md">
@@ -95,6 +128,7 @@ export default (props) => {
                 type="number"
                 onChange={handleChange}
                 className="main-input-field"
+                required
               />
             </div>
             <div className="form-col-md">
@@ -104,6 +138,7 @@ export default (props) => {
                 placeholder="Square meters"
                 type="number"
                 className="main-input-field"
+                required
               />
             </div>
           </div>
@@ -113,6 +148,7 @@ export default (props) => {
             type="text"
             onChange={handleChange}
             className="main-input-field"
+            required
           />
         </section>
 
@@ -126,6 +162,7 @@ export default (props) => {
                 placeholder="Street"
                 type="text"
                 className="main-input-field"
+                required
               />
             </div>
             <div className="form-col-sm">
@@ -135,6 +172,7 @@ export default (props) => {
                 placeholder="No"
                 type="number"
                 className="main-input-field"
+                required
               />
             </div>
           </div>
@@ -146,6 +184,7 @@ export default (props) => {
                 placeholder="Zip"
                 type="number"
                 className="main-input-field"
+                required
               />
             </div>
             <div className="form-col-lg">
@@ -155,6 +194,7 @@ export default (props) => {
                 placeholder="City"
                 type="text"
                 className="main-input-field"
+                required
               />
             </div>
           </div>
@@ -208,7 +248,10 @@ export default (props) => {
                 <React.Fragment key={i}>
                   <div className="img-box">
                     <img src={URL.createObjectURL(item)} alt="" />
-                    <button onClick={(e) => handleDeleteNewFiles(e, data, i)}>
+                    <button
+                      className="delete-item"
+                      onClick={(e) => handleDeleteNewFiles(e, data, i)}
+                    >
                       Delete
                     </button>
                   </div>
@@ -217,9 +260,12 @@ export default (props) => {
             })}
           </div>
         </section>
-
-        <input type="submit" value="Verify info" className="main-input-field" />
       </form>
+      {formValid ? (
+        <button onClick={() => setPreview(!preview)}>Review info</button>
+      ) : (
+        ''
+      )}
     </React.Fragment>
   )
 }

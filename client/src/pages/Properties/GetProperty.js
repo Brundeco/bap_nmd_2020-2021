@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { Link, Route } from 'react-router-dom'
 import axios from 'axios'
 import { Preloader, PrevPage, ConvertDate } from '../../components'
 import ImageSlider from '../../components/ImageSlider'
@@ -46,7 +45,7 @@ export default ({ match }) => {
   }, [])
 
   useEffect(() => {
-    console.log(data)
+    // console.log(data)
     // Get Firestore img Urls
     const promises = data?.images
       ?.map(async (el) => {
@@ -74,6 +73,10 @@ export default ({ match }) => {
     }))
     setPropertyCreatedAt(ConvertDate(data?.createdAt))
   }, [data])
+
+  useEffect(() => {
+    console.log(images)
+  }, [images])
 
   const handleDayClick = (day, modifiers = {}) => {
     if (modifiers.disabled) {
@@ -128,7 +131,7 @@ export default ({ match }) => {
           <div className="cta-section-top">
             <div className="left">
               <img src={user.image} alt="" />
-              <p> {`${data?.firstname} ${data?.lastname} `} </p>
+              <p> {`${data?.firstname} ${data?.lastname}`} </p>
             </div>
             <div className="right">
               <button

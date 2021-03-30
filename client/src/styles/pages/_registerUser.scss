@@ -1,7 +1,7 @@
 .file-upload-cta {
   position: relative;
   height: 8vh;
-  height: 15vh;
+  height: auto;
 }
 
 .file-upload-cta img {
@@ -14,7 +14,7 @@
 
 .file-upload-cta input[type='file'] {
   width: 30vw;
-  height: 100%;
+  height: 30vw;
   border-radius: 25px;
   outline: none;
 }
@@ -72,9 +72,4 @@
   margin-top: 0;
   padding: 0;
   border: 0px solid !important;
-}
-
-.login-screen input.register-btn {
-  @include main-btn;
-  margin-top: 4vh;
 }

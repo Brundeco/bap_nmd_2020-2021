@@ -42,10 +42,16 @@ export default (props) => {
     setData((prev) => ({ ...prev, image: newFile.id }))
   }
 
+  const today = new Date()
+
   return (
     <React.Fragment>
       <h1>Fill out the form below to create your event</h1>
-      <DayPicker selectedDays={data.dates} onDayClick={handleDayClick} />
+      <DayPicker
+        selectedDays={data.dates}
+        onDayClick={handleDayClick}
+        disabledDays={{ before: today }}
+      />
       <form
         onSubmit={props.onSubmit}
         formdata={props.formdata(data)}
@@ -56,9 +62,7 @@ export default (props) => {
           <div className="file-upload-cta">
             <input type="file" onChange={handleFile} multiple />
             <button id="show-custom-file-btn">
-              <span>
-                {data?.image ? 'Replace picture' : 'Event wallpaper'}
-              </span>
+              <span>{data?.image ? 'Replace picture' : 'Event wallpaper'}</span>
             </button>
           </div>
           <div>

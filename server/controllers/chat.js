@@ -66,11 +66,9 @@ export const postMessage = async (req, res) => {
 }
 
 export const createConversationId = async (req, res) => {
-  console.log('We can start creating a conversation id now!')
   const fromTo = `${req.body.from}_${req.body.to}`
   const toFrom = `${req.body.to}_${req.body.from}`
   let newConversationId = fromTo
-  console.log(newConversationId)
 
   try {
     await Messages.findOne({

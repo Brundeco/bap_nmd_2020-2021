@@ -15,6 +15,7 @@ export { default as GetProperty } from './Properties/GetProperty'
 export { default as UpdateProperty } from './Properties/UpdateProprety'
 export { default as PropertyFormCreate } from './Properties/PropertyFormCreate'
 export { default as PropertyFormUpdate } from './Properties/PropertyFormUpdate'
+export { default as PropertyPreview } from './Properties/PropertyPreview'
 export { default as GetPropertyListAdmin } from './Properties/GetPropertyListAdmin'
 
 export { default as New } from './New/New'

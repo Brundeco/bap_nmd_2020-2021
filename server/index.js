@@ -21,7 +21,12 @@ const socketio = new io.Server(server)
 router.get('/rooms/:roomId/users')
 
 socketio.on('connection', (socket) => {
-  console.log(`${socket.id} connected`)
+  console.log(socket)
+  // console.log(`${socket.id} connected`)
+
+  socketio.on('new-message', (socket) => {
+    console.log(socket)
+  })
 
   socket.on('disconnect', () => {
     console.log('User left')

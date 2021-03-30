@@ -77,12 +77,23 @@ export default () => {
             className="main-input-field"
             required
           />
-          <input className="main-btn" type="submit" value="Login" />
+          <button className="main-btn" onClick={handleSubmit}>
+            Login
+          </button>
         </form>
-        <button onClick={() => (window.location = '/register')}>
+        <button
+          className="secondary-btn"
+          onClick={() => (window.location = '/register')}
+        >
           Not a member yet? / Sign up here
         </button>
-        <h5> {status} </h5>
+        <h5>
+          {status == 'Login successfull' ? (
+            <h6 className="success" > {status} </h6>
+          ) : (
+            <h6 className="failure"> {status} </h6>
+          )}
+        </h5>
       </div>
     </div>
   )
