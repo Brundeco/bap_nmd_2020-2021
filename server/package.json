@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "12.x",
+    "npm": "7.5.1"
+  },
   "type": "module",
   "scripts": {
-    "start": "nodemon --experimental-modules index.js"
+    "start": "node index.js",
+    "dev": "nodemon --experimental-modules index.js"
   },
   "keywords": [],
   "author": "",
