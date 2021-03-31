@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { CheckSession, PrevPage } from './../../components'
 import axios from 'axios'
-import { EventForm, EventPreview } from '..'
 import { app } from '../../base'
 import EventFormCreate from './EventFormCreate'
+import EventReview from './EventReview'
 
 export default () => {
   CheckSession(localStorage.getItem('jwt'))
@@ -65,7 +65,7 @@ export default () => {
           file={handleFile}
           preview={handlePreview}
         />
-        <EventPreview
+        <EventReview
           files={file}
           data={data}
           preview={preview}

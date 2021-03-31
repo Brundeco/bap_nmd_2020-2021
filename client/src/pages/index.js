@@ -10,7 +10,7 @@ export { default as GetEventList } from './Events/GetEventList'
 export { default as UpdateEvent } from './Events/UpdateEvent'
 export { default as EventFormCreate } from './Events/EventFormCreate'
 export { default as EventFormUpdate } from './Events/EventFormUpdate'
-export { default as EventPreview } from './Events/EventPreview'
+export { default as EventReview } from './Events/EventReview'
 
 
 export { default as CreateProperty } from './Properties/CreateProperty'
@@ -19,7 +19,7 @@ export { default as GetProperty } from './Properties/GetProperty'
 export { default as UpdateProperty } from './Properties/UpdateProprety'
 export { default as PropertyFormCreate } from './Properties/PropertyFormCreate'
 export { default as PropertyFormUpdate } from './Properties/PropertyFormUpdate'
-export { default as PropertyPreview } from './Properties/PropertyPreview'
+export { default as PropertyReview } from './Properties/PropertyReview'
 export { default as GetPropertyListAdmin } from './Properties/GetPropertyListAdmin'
 
 export { default as New } from './New/New'

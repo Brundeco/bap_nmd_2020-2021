@@ -8,12 +8,11 @@ import 'react-day-picker/lib/style.css'
 export default (props) => {
   const user = JSON.parse(localStorage.getItem('user'))
   const [data, setData] = useState()
-  const [image, setImage] = useState()
+  const [images, setImages] = useState([])
   const [preview, setPreview] = useState(false)
 
   useEffect(() => {
     setPreview(props.preview)
-    console.log(props.preview)
   }, [props.preview])
 
   useEffect(() => {
@@ -21,32 +20,40 @@ export default (props) => {
   }, [props.data])
 
   useEffect(() => {
-    setImage(props.files)
+    setImages(props.files)
   }, [props.files])
 
   useEffect(() => {
-    console.log(image)
-  }, [image])
+    images.forEach((img) => {
+      console.log(URL.createObjectURL(img))
+    })
+  }, [images])
 
   return (
     <React.Fragment>
       <div
         className={
           preview
-            ? 'property-preview-screen show'
-            : 'property-preview-screen hide'
+            ? 'review-screen show'
+            : 'review-screen hide'
         }
         // className="property-preview-screen show"
         newpreview={props.newpreview(preview)}
       >
         <div className="page-wrapper">
-          <h1>Please review your event information below</h1>
+          <h1>Please review your property information below</h1>
 
           <div className="review-files">
-            <h2>Event wallpaper</h2>
-            <div className="img-box">
-              <img src={image && URL.createObjectURL(image)} alt="" />
-            </div>
+            <h2>Images</h2>
+            {images?.map(function (item, i) {
+              return (
+                <React.Fragment key={i}>
+                  <div className="img-box">
+                    <img src={URL.createObjectURL(item)} alt="" />
+                  </div>
+                </React.Fragment>
+              )
+            })}
           </div>
 
           <h2>Available dates</h2>
@@ -58,20 +65,24 @@ export default (props) => {
           <div className="content">
             <div className="general-info">
               <h2>General info</h2>
-              <p>{data?.title}</p>
               <p>{data?.description}</p>
+              <p>{data?.price}</p>
+              <p>{data?.surface}</p>
+              <p>{data?.light}</p>
             </div>
             <div className="address">
-              <h2>Event location</h2>
+              <h2>Property location</h2>
               <p>{data?.street}</p>
               <p>{data?.houseNumber}</p>
               <p>{data?.zip}</p>
               <p>{data?.city}</p>
             </div>
             <div className="contact-info">
-              <h2>Practical</h2>
-              <p> {`Event starts at ${data?.startHrs}  ${data?.startMins}`} </p>
-              <p> {`Event ends at ${data?.endHrs}  ${data?.endMins}`} </p>
+              <h2>Your contact info</h2>
+              <p>{data?.email}</p>
+              <p>{data?.phone}</p>
+              <p>{data?.firstname}</p>
+              <p>{data?.lastname}</p>
             </div>
             <p></p>
           </div>

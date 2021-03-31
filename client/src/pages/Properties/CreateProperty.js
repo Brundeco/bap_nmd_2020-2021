@@ -5,7 +5,7 @@ import {
   PrevPage,
 } from './../../components'
 import axios from 'axios'
-import { PropertyFormCreate, PropertyPreview } from '..'
+import { PropertyFormCreate, PropertyReview } from '..'
 import { app } from '../../base'
 
 export default (props) => {
@@ -80,7 +80,7 @@ export default (props) => {
           files={handleFiles}
           preview={handlePreview}
         />
-        <PropertyPreview
+        <PropertyReview
           files={files}
           data={data}
           preview={preview}

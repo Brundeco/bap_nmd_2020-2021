@@ -1,4 +1,4 @@
-.property-preview-screen {
+.review-screen {
   height: 100vh;
   width: 100%;
   display: flex;
@@ -10,36 +10,36 @@
   padding: 5vh 0;
 }
 
-.property-preview-screen .page-wrapper {
+.review-screen .page-wrapper {
   height: 100vh;
   overflow: scroll;
 }
 
-.property-preview-screen.hide {
+.review-screen.hide {
   display: none;
 }
 
-.property-preview-screen.show {
+.review-screen.show {
   display: flex;
 }
 
-.property-preview-screen .content {
+.review-screen .content {
   padding: 5vh 0;
 }
 
-.property-preview-screen .content > div {
+.review-screen .content > div {
   margin: 0vh 0 5vh;
 }
 
-.property-preview-screen button {
+.review-screen button {
   @include main-btn;
 }
 
-.property-preview-screen h2 {
+.review-screen h2 {
   font-weight: 400;
 }
 
-.property-preview-screen button:nth-of-type(2) {
+.review-screen button:nth-of-type(2) {
   @include main-btn-outline;
 }
 
@@ -50,7 +50,7 @@
   position: relative;
 }
 
-.property-preview-screen .img-box img {
+.review-screen .img-box img {
   object-fit: cover;
   width: 100%;
   height: 100%;
