@@ -46,7 +46,7 @@ export default () => {
       })
       .catch((err) => {
         setProgress(false)
-        setStatus(err.response.data.message)
+        setStatus(err.response?.data?.message)
       })
   }
 
@@ -65,7 +65,7 @@ export default () => {
             type="email"
             onChange={handleChange}
             className="main-input-field"
-            value={email || data.email}
+            value={email || data?.email}
             required
           />
 
@@ -87,13 +87,13 @@ export default () => {
         >
           Not a member yet? / Sign up here
         </button>
-        <h5>
-          {status == 'Login successfull' ? (
-            <h6 className="success" > {status} </h6>
-          ) : (
-            <h6 className="failure"> {status} </h6>
-          )}
-        </h5>
+        {/* <h5> */}
+        {status == 'Login successfull' ? (
+          <h6 className="success"> {status} </h6>
+        ) : (
+          <h6 className="failure"> {status} </h6>
+        )}
+        {/* </h5> */}
       </div>
     </div>
   )

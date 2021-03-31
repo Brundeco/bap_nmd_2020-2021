@@ -20,12 +20,21 @@ const socketio = new io.Server(server)
 
 router.get('/rooms/:roomId/users')
 
-socketio.on('connection', (socket) => {
-  console.log(socket)
-  // console.log(`${socket.id} connected`)
+let userList = []
 
-  socketio.on('new-message', (socket) => {
-    console.log(socket)
+socketio.on('connection', (socket) => {
+  // console.log(socket)
+
+  socket.on('registration', (id) => {
+    userList.push({ sid: socket.id, id: id })
+    console.log(userList)
+  })
+
+  socketio.on('new-message', (data) => {
+    let obj = userList.find((o) => o.id === parseInt(data.id))
+
+    console.log(obj)
+    socketio.to(obj.sid).emit('receive-message', data.message)
   })
 
   socket.on('disconnect', () => {

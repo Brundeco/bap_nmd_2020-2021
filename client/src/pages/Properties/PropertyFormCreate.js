@@ -40,6 +40,7 @@ export default (props) => {
   }, [files])
 
   const handleDayClick = (day) => {
+    console.log(day)
     let currentDay = new Date(day).getTime()
     let newArray = [...dates]
     let indexItem = newArray.indexOf(currentDay)
@@ -80,17 +81,11 @@ export default (props) => {
 
   const handleDeleteNewFiles = (e, data, i) => {
     e.preventDefault()
-    console.log(data)
-    console.log(i)
     let newImgArr = []
     files.map((file) => newImgArr.push(file))
-    // console.log(newImgArr)
     newImgArr.splice(i, 1)
-    // console.log(newImgArr)
     setFiles(newImgArr)
   }
-
-  const today = new Date()
 
   return (
     <React.Fragment>
@@ -101,7 +96,7 @@ export default (props) => {
         <DayPicker
           selectedDays={data.dates}
           onDayClick={handleDayClick}
-          disabledDays={{ before: today }}
+          disabledDays={{ before: new Date() }}
         />
       </section>
       <form
@@ -243,6 +238,8 @@ export default (props) => {
             </button>
           </div>
           <div className="img-gallery">
+            {files.length !== 0 ? <h4>Click on an image to delete</h4> : ''}
+
             {files?.map(function (item, i) {
               return (
                 <React.Fragment key={i}>
@@ -251,9 +248,7 @@ export default (props) => {
                     <button
                       className="delete-item"
                       onClick={(e) => handleDeleteNewFiles(e, data, i)}
-                    >
-                      Delete
-                    </button>
+                    ></button>
                   </div>
                 </React.Fragment>
               )

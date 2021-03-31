@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import {
   Home,
-  Dashboard,
+  Activity,
   CreateEvent,
   GetEvent,
   UpdateEvent,
@@ -32,7 +32,7 @@ function App() {
 
         <Route path="/no-location" component={NoLocation} />
 
-        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/dashboard" component={Activity} />
         <Route path="/events" component={GetEventList} />
         <Route path="/event/:id" component={GetEvent} />
         <Route path="/update-event/:id" component={UpdateEvent} />

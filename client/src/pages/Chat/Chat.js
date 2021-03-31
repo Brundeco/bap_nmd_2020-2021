@@ -6,7 +6,8 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import PaperplaneIcon from './../../icons/send-paperplane.svg'
 import ScrollToBottom from 'react-scroll-to-bottom'
 
-let socket
+const ENDPOINT = 'http://localhost:5000'
+const socket = io.connect(ENDPOINT)
 
 export default ({ match }) => {
   const [data, setData] = useState()
@@ -15,7 +16,6 @@ export default ({ match }) => {
   const [messages, setMessages] = useState([])
   const [ioMsg, setIoMsg] = useState([])
   const [ioMsgs, setIoMsgs] = useState([])
-  const ENDPOINT = 'http://localhost:5000'
   const recepient = match.params
 
   const handleChange = (name, value) => {
@@ -24,6 +24,12 @@ export default ({ match }) => {
   }
 
   useEffect(() => {
+    socket.on('connect', () => {
+      socket.emit('registration', user.id)
+      socket.on('receive-message', (message) => {
+        console.log(message)
+      })
+    })
     axios
       .get(
         `http://localhost:5000/messages/filter/${match.params.conversation_id}`
@@ -33,10 +39,10 @@ export default ({ match }) => {
   }, [])
 
   const postMessage = () => {
-    // socket.emit('new-message', {
-    //   id: match.params.recepient_id,
-    //   message: data.message,
-    // })
+    socket.emit('new-message', {
+      id: match.params.recepient_id,
+      message: data.message,
+    })
 
     axios
       .post('http://localhost:5000/messages', {

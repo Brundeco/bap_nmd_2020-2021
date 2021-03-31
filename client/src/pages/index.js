@@ -1,6 +1,8 @@
 export { default as Home } from './Home/Home'
 
-export { default as Dashboard } from './Dashboard/Dashboard'
+export { default as Activity } from './Dashboard/Activity/Activity'
+export { default as MyProperties } from './Dashboard/Activity/MyProperties'
+export { default as MyEvents } from './Dashboard/Activity/MyEvents'
 
 export { default as GetEvent } from './Events/GetEvent'
 export { default as CreateEvent } from './Events/CreateEvent'
@@ -8,6 +10,8 @@ export { default as GetEventList } from './Events/GetEventList'
 export { default as UpdateEvent } from './Events/UpdateEvent'
 export { default as EventFormCreate } from './Events/EventFormCreate'
 export { default as EventFormUpdate } from './Events/EventFormUpdate'
+export { default as EventPreview } from './Events/EventPreview'
+
 
 export { default as CreateProperty } from './Properties/CreateProperty'
 export { default as GetPropertyList } from './Properties/GetPropertyList'

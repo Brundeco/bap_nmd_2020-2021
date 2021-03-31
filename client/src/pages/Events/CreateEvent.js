@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { CheckSession, PrevPage } from './../../components'
 import axios from 'axios'
-import { EventForm } from '..'
+import { EventForm, EventPreview } from '..'
 import { app } from '../../base'
 import EventFormCreate from './EventFormCreate'
 
@@ -11,9 +11,19 @@ export default () => {
   const [data, setData] = React.useState()
   const [file, setFile] = useState()
   const storageRef = app.storage()
+  const [preview, setPreview] = useState(false)
+  const [newPreview, setNewPreview] = useState(false)
 
   const handleData = (formData) => {
     setData(formData)
+  }
+
+  const handlePreview = (preview) => {
+    setPreview(preview)
+  }
+
+  const handleNewPreview = (preview) => {
+    setNewPreview(preview)
   }
 
   const handleSubmit = (e) => {
@@ -39,14 +49,28 @@ export default () => {
     setFile(file)
   }
   return (
-    <div className="create-product-screen">
+    <div
+      // className="create-product-screen"
+      className={
+        !preview || !newPreview
+          ? 'create-product-screen'
+          : 'create-product-screen no-scroll'
+      }
+    >
       <div className="page-wrapper">
-        <h1>Create event</h1>
         <PrevPage />
         <EventFormCreate
           onSubmit={handleSubmit}
           formdata={handleData}
           file={handleFile}
+          preview={handlePreview}
+        />
+        <EventPreview
+          files={file}
+          data={data}
+          preview={preview}
+          newpreview={handleNewPreview}
+          handleSubmit={(e) => handleSubmit(e)}
         />
       </div>
     </div>

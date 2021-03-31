@@ -18,6 +18,10 @@ export default (props) => {
   const [newPreview, setNewPreview] = useState(false)
   const [progress, setProgress] = useState(false)
 
+  useEffect(() => {
+    console.log(data)
+  }, [data])
+
   const handleData = (formData) => {
     setData(formData)
   }
@@ -34,27 +38,16 @@ export default (props) => {
     setNewPreview(preview)
   }
 
-  useEffect(() => {
-    // console.log(`'PREVIEW' ${preview}`)
-  }, [preview])
-
-  useEffect(() => {
-    // console.log(`'NEW PREVIEW' ${newPreview}`)
-    console.log(newPreview)
-  }, [newPreview])
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     setProgress(true)
-    files.forEach((file) => {
-      console.log(file.id)
-      storageRef
-        .ref(`${data.firebaseRef}/${file.id}`)
-        .put(file)
-        .then((res) => {
-          setProgress(false)
-          console.log(res)
-        })
+
+    Promise.all(
+      files.map((file) =>
+        storageRef.ref(`${data.firebaseRef}/${file.id}`).put(file)
+      )
+    ).then(() => {
+      setProgress(true)
     })
 
     axios
@@ -62,14 +55,6 @@ export default (props) => {
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
   }
-
-  useEffect(() => {
-    // console.log(data)
-  }, [data])
-
-  useEffect(() => {
-    // console.log(files)
-  }, [files])
 
   return (
     <div

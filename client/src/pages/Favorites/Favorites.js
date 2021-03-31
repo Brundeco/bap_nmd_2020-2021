@@ -9,20 +9,6 @@ export default () => {
 
   return (
     <div>
-      <div>
-        <div className="main-list-item">
-          <div className="list-part">
-            <FontAwesomeIcon icon={faHeart} />
-          </div>
-          <div className="list-part">
-            <img src={Event1} alt="" />
-          </div>
-          <div className="list-part">
-            <h3>Moderat meets friends</h3>
-            <p>16 feb 2021 | 9000 Gent</p>
-          </div>
-        </div>
-      </div>
       <Footer />
     </div>
   );

@@ -74,10 +74,6 @@ export default ({ match }) => {
     setPropertyCreatedAt(ConvertDate(data?.createdAt))
   }, [data])
 
-  useEffect(() => {
-    console.log(images)
-  }, [images])
-
   const handleDayClick = (day, modifiers = {}) => {
     if (modifiers.disabled) {
       return

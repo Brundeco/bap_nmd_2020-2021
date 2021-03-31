@@ -8,6 +8,8 @@ export default (props) => {
   const user = JSON.parse(localStorage.getItem('user'))
   const [file, setFile] = useState()
   const [dates, setDates] = useState([])
+  const [formValid, setFormValid] = useState(false)
+  const [preview, setPreview] = useState(false)
   const [data, setData] = React.useState({
     author: user.username,
     author_id: user.id,
@@ -28,7 +30,7 @@ export default (props) => {
   }
 
   useEffect(() => {
-    console.log(data)
+    // console.log(data)
     setData((prev) => ({
       ...prev,
       dates: dates?.map((date) => new Date(date)),
@@ -42,7 +44,31 @@ export default (props) => {
     setData((prev) => ({ ...prev, image: newFile.id }))
   }
 
-  const today = new Date()
+  useEffect(() => {
+    // console.log(preview)
+  }, [preview])
+
+  useEffect(() => {
+    if (
+      data.street &&
+      data.houseNumber &&
+      data.zip &&
+      data.city &&
+      data.description &&
+      data.title &&
+      data.startHrs &&
+      data.startMins &&
+      data.endHrs &&
+      data.endMins &&
+      data.price &&
+      data.dates.length !== 0 &&
+      file !== undefined
+    ) {
+      setFormValid(true)
+    } else {
+      setFormValid(false)
+    }
+  }, [data, file])
 
   return (
     <React.Fragment>
@@ -50,12 +76,13 @@ export default (props) => {
       <DayPicker
         selectedDays={data.dates}
         onDayClick={handleDayClick}
-        disabledDays={{ before: today }}
+        disabledDays={{ before: new Date() }}
       />
       <form
         onSubmit={props.onSubmit}
         formdata={props.formdata(data)}
         file={props.file(file)}
+        preview={props.preview(preview)}
       >
         <section>
           <h2>Event image</h2>
@@ -203,8 +230,13 @@ export default (props) => {
           </div>
         </section>
 
-        <input type="submit" value="Submit" className="main-input-field" />
+        {/* <input type="submit" value="Submit" className="main-input-field" /> */}
       </form>
+      {formValid ? (
+        <button onClick={() => setPreview(!preview)}>Review info</button>
+      ) : (
+        ''
+      )}
     </React.Fragment>
   )
 }
