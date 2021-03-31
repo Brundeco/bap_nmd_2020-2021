@@ -9,7 +9,7 @@
   },
   "type": "module",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node index.js",
     "dev": "nodemon --experimental-modules index.js"
   },
   "keywords": [],
