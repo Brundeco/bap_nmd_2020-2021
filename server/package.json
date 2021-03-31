@@ -9,7 +9,9 @@
   },
   "type": "module",
   "scripts": {
-    "start": "node index.js"  },
+    "start": "node ./bin/www",
+    "dev": "nodemon --experimental-modules index.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
