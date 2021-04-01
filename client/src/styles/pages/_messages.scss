@@ -1,12 +1,14 @@
-.conversations .chat {
+.conversations-screen {
+  padding-top: 15vh;
+}
+
+.conversations-screen .chat {
   margin: 5vh 0;
-  // background-color: rgb(249, 249, 249);
   border-radius: 5px;
-  // padding: 5%;
   display: flex;
 }
 
-.conversations .left {
+.conversations-screen .left {
   width: 15vw;
   height: 15vw;
   display: flex;
@@ -16,10 +18,10 @@
   border-radius: 5px;
 }
 
-.conversations .left p {
+.conversations-screen .left p {
 }
 
-.conversations .center {
+.conversations-screen .center {
   margin-left: 5vw;
   width: 55%;
   display: flex;
@@ -27,13 +29,13 @@
   justify-content: space-between;
 }
 
-.conversations .center h4 {
+.conversations-screen .center h4 {
   margin: 0;
   font-weight: 500;
   font-size: 1em;
 }
 
-.conversations .center p {
+.conversations-screen .center p {
   margin: 0;
   font-weight: 100;
   font-size: 0.75em;
@@ -42,14 +44,14 @@
   white-space: nowrap;
 }
 
-.conversations .right {
+.conversations-screen .right {
   width: 25%;
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
 }
 
-.conversations .right span {
+.conversations-screen .right span {
   font-weight: 100;
   font-size: 0.75em;
 }

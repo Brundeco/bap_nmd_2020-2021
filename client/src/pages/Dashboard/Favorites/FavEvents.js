@@ -22,7 +22,7 @@ export default () => {
         <Header />
         <div className="property-screen">
           <div className="wrapper">
-            <h2>My Properties !</h2>
+            <h2>My events !</h2>
           </div>
         </div>
       </React.Fragment>
@@ -30,7 +30,7 @@ export default () => {
   } else {
     return (
       <React.Fragment>
-        <h1>You don't have properties yet</h1>
+        <h1>You don't have FAVORITE events yet</h1>
       </React.Fragment>
     )
   }

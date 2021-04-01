@@ -45,7 +45,7 @@ export default ({ match }) => {
   }, [])
 
   useEffect(() => {
-    // console.log(data)
+    console.log(data)
     // Get Firestore img Urls
     const promises = data?.images
       ?.map(async (el) => {

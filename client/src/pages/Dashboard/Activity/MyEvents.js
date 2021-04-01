@@ -30,7 +30,7 @@ export default () => {
   } else {
     return (
       <React.Fragment>
-        <Preloader text={'events'} />
+        <h1>You don't have events yet</h1>
       </React.Fragment>
     )
   }

@@ -30,7 +30,7 @@ export default () => {
   } else {
     return (
       <React.Fragment>
-        <h1>You don't have properties yet</h1>
+        <h1>You don't have FAVORITE properties yet</h1>
       </React.Fragment>
     )
   }

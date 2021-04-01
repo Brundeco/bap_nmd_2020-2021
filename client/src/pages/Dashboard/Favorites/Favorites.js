@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Header } from '../../../components'
-import LogoutUser from '../../Users/LogoutUser'
-import MyProperties from './MyProperties'
-import MyEvents from './MyEvents'
+import FavProperties from './FavProperties'
+import FavEvents from './FavEvents'
 
 export default () => {
   const [currentComponent, setCurrentComponent] = useState('favorites')
@@ -30,7 +29,7 @@ export default () => {
     <div className="dashboard-screen ">
       <Header />
       <div className="page-wrapper">
-        <h2>Activity</h2>
+        <h2>Favorites</h2>
         <nav>
           {dashboardBtns.map((button, index) => {
             return (
@@ -50,7 +49,11 @@ export default () => {
           })}
         </nav>
         <div className="comps-to-render">
-          {currentComponent === 'properties' ? <MyProperties /> : <MyEvents />}
+          {currentComponent === 'properties' ? (
+            <FavProperties />
+          ) : (
+            <FavEvents />
+          )}
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
-import "./App.scss";
-import "./components/Nav";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import './App.scss'
+import './components/Nav'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import {
   Home,
@@ -19,7 +19,8 @@ import {
   NoLocation,
   GetPropertyListAdmin,
   UpdateProperty,
-} from "./pages";
+  Favorites,
+} from './pages'
 
 function App() {
   return (
@@ -32,7 +33,9 @@ function App() {
 
         <Route path="/no-location" component={NoLocation} />
 
-        <Route path="/dashboard" component={Activity} />
+        <Route path="/activity" component={Activity} />
+        <Route path="/favorites" component={Favorites} />
+
         <Route path="/events" component={GetEventList} />
         <Route path="/event/:id" component={GetEvent} />
         <Route path="/update-event/:id" component={UpdateEvent} />
@@ -44,12 +47,14 @@ function App() {
         <Route path="/property/:id/:author_id" component={GetProperty} />
         <Route path="/properties-admin" component={GetPropertyListAdmin} />
 
-        <Route path="/chat/:recepient_id/:recepient/:conversation_id" component={Chat} />
-        {/* <Route path="/chat/:recepient_id/:recepient" component={Chat} /> */}
-        <Route path="/messages/:user" component={Messages} />
+        <Route
+          path="/chat/:recepient_id/:recepient/:conversation_id"
+          component={Chat}
+        />
+        <Route path="/messages/" component={Messages} />
       </div>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
