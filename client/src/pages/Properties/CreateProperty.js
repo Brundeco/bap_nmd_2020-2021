@@ -47,11 +47,11 @@ export default (props) => {
         storageRef.ref(`${data.firebaseRef}/${file.id}`).put(file)
       )
     ).then(() => {
-      setProgress(true)
+      setProgress(false)
     })
 
     axios
-      .post('http://localhost:5000/properties', data)
+      .post(`${process.env.REACT_APP_API_URL}/properties`, data)
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
   }

@@ -36,7 +36,7 @@ export default () => {
       .then((res) => console.log(res))
 
     axios
-      .post('http://localhost:5000/events', data)
+      .post(`${process.env.REACT_APP_API_URL}/events`, data)
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
   }

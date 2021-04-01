@@ -10,11 +10,11 @@ export default () => {
   const [images, setImages] = useState([])
   const [properties, setProperties] = useState([])
 
-  //   useEffect(() => {
-  //     axios
-  //       .get('http://localhost:5000/properties')
-  //       .then((res) => setData(res.data))
-  //   }, [])
+  // useEffect(() => {
+  //   axios
+  //     .get(`${process.env.REACT_APP_API_URL}/events`)
+  //     .then((res) => setData(res.data))
+  // }, [])
 
   if (data != undefined) {
     return (

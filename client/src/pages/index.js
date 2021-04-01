@@ -20,7 +20,6 @@ export { default as UpdateProperty } from './Properties/UpdateProprety'
 export { default as PropertyFormCreate } from './Properties/PropertyFormCreate'
 export { default as PropertyFormUpdate } from './Properties/PropertyFormUpdate'
 export { default as PropertyReview } from './Properties/PropertyReview'
-export { default as GetPropertyListAdmin } from './Properties/GetPropertyListAdmin'
 
 export { default as New } from './New/New'
 

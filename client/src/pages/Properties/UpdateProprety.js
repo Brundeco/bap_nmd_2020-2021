@@ -13,7 +13,7 @@ export default ({ match, props }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/properties/${match.params.id}`)
+      .get(`${process.env.REACT_APP_API_URL}/properties/${match.params.id}`)
       .then((res) => {
         setCurrentProprety(res.data)
         setFetchImgUrls(res.data?.images) 
@@ -37,7 +37,7 @@ export default ({ match, props }) => {
         .then((res) => console.log(res))
     })
     axios
-      .put(`http://localhost:5000/properties/${match.params.id}`, data)
+      .put(`${process.env.REACT_APP_API_URL}/properties/${match.params.id}`, data)
       .then((res) => setData(res.data))
       .catch((err) => console.log(err))
   }

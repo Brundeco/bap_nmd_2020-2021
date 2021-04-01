@@ -40,7 +40,7 @@ export default ({ match }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/properties/${match.params.id}`)
+      .get(`${process.env.REACT_APP_API_URL}/properties/${match.params.id}`)
       .then((res) => setData(res.data))
   }, [])
 
@@ -98,7 +98,7 @@ export default ({ match }) => {
     e.preventDefault()
     axios
       .put(
-        `http://localhost:5000/properties/book/${match.params.id}`,
+        `${process.env.REACT_APP_API_URL}/properties/book/${match.params.id}`,
         booking.dates
       )
       .then((res) => setData(res.data))
@@ -106,7 +106,7 @@ export default ({ match }) => {
 
   useEffect(() => {
     axios
-      .post('http://localhost:5000/messages/conversation_id', {
+      .post(`${process.env.REACT_APP_API_URL}/messages/conversation_id`, {
         from: user.id,
         to: data?.author_id,
       })

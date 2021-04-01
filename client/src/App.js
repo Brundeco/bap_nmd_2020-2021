@@ -17,7 +17,6 @@ import {
   Messages,
   GetProperty,
   NoLocation,
-  GetPropertyListAdmin,
   UpdateProperty,
   Favorites,
 } from './pages'
@@ -45,7 +44,6 @@ function App() {
         <Route path="/create-property" component={CreateProperty} />
         <Route path="/update-property/:id" component={UpdateProperty} />
         <Route path="/property/:id/:author_id" component={GetProperty} />
-        <Route path="/properties-admin" component={GetPropertyListAdmin} />
 
         <Route
           path="/chat/:recepient_id/:recepient/:conversation_id"

@@ -15,7 +15,7 @@ export default ({ match }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/events/${match.params.id}`)
+      .get(`${process.env.REACT_APP_API_URL}/events/${match.params.id}`)
       .then((res) => setCurrentEvent(res.data))
   }, [])
 
@@ -29,7 +29,7 @@ export default ({ match }) => {
       .catch((err) => console.log(err))
 
     axios
-      .put(`http://localhost:5000/events/${match.params.id}`, data)
+      .put(`${process.env.REACT_APP_API_URL}/events/${match.params.id}`, data)
       .then((res) => setData(res.data))
       .catch((err) => console.log(err))
   }

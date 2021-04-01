@@ -6,7 +6,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import PaperplaneIcon from './../../icons/send-paperplane.svg'
 import ScrollToBottom from 'react-scroll-to-bottom'
 
-const ENDPOINT = 'http://localhost:5000'
+const ENDPOINT = `${process.env.REACT_APP_API_URL}`
 const socket = io.connect(ENDPOINT)
 
 export default ({ match }) => {
@@ -32,7 +32,7 @@ export default ({ match }) => {
     })
     axios
       .get(
-        `http://localhost:5000/messages/filter/${match.params.conversation_id}`
+        `${process.env.REACT_APP_API_URL}/messages/filter/${match.params.conversation_id}`
       )
       .then((res) => setMessages(res.data))
       .catch((err) => console.log(err))
@@ -45,7 +45,7 @@ export default ({ match }) => {
     })
 
     axios
-      .post('http://localhost:5000/messages', {
+      .post(`${process.env.REACT_APP_API_URL}/messages`, {
         message: data.message,
         from: sender.id,
         fromName: sender.username,

@@ -55,3 +55,16 @@ export const updateEvent = async (req, res) => {
 
   res.json(updateEvent)
 }
+
+export const getEventsAdmin = async (req, res) => {
+  console.log(req.body)
+  try {
+    const user = req.body
+    const events = await Event.find({ author_id: user.id })
+    console.log(events)
+    res.status(200).json(events)
+  } catch (error) {
+    console.log(error)
+    res.status(404).json({ message: error.message })
+  }
+}

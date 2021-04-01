@@ -22,7 +22,7 @@ export default () => {
       setStatus('Passwords do not match')
     } else {
       axios
-        .post('http://localhost:5000/users/register', data)
+        .post(`${process.env.REACT_APP_API_URL}/users/register`, data)
         .then((res) => {
           setProgress(false)
           setStatus(res.data.message)

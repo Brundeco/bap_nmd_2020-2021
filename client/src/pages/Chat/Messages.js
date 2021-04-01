@@ -9,7 +9,7 @@ export default ({ match }) => {
   const [conversations, setConversations] = useState([])
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/messages/${user.id}`)
+      .get(`${process.env.REACT_APP_API_URL}/messages/${user.id}`)
       .then((res) => setMessages(res.data))
       .catch(console.log('NO DATA'))
   }, [])

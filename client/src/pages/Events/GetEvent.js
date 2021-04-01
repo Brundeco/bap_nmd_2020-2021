@@ -15,7 +15,7 @@ export default ({ match }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/events/${match.params.id}`)
+      .get(`${process.env.REACT_APP_API_URL}/events/${match.params.id}`)
       .then((res) => setData(res.data))
   }, [])
 
@@ -35,7 +35,7 @@ export default ({ match }) => {
         .catch((err) => console.log(err))
 
     axios
-      .get(`http://localhost:5000/users/${user.id}`)
+      .get(`${process.env.REACT_APP_API_URL}/users/${user.id}`)
       .then((res) => {
         setFavorites(res.data.favEvents)
       })
@@ -55,7 +55,7 @@ export default ({ match }) => {
     // console.log(arr)
 
     axios
-      .put(`http://localhost:5000/users/like/${user.id}`, {
+      .put(`${process.env.REACT_APP_API_URL}/users/like/${user.id}`, {
         favEvents: arr,
       })
       .then((res) => {

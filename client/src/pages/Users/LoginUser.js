@@ -36,7 +36,7 @@ export default () => {
     e.preventDefault()
     axios
       // .post('http://localhost:5000/users/login', data)
-      .post('https://bap-nmd-2020-2021.herokuapp.com/users/login', data)
+      .post(`${process.env.REACT_APP_API_URL}/users/login`, data)
       .then((res) => {
         setProgress(false)
         setStatus(res.data.message)

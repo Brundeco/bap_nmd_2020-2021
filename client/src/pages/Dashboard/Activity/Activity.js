@@ -6,22 +6,21 @@ import MyEvents from './MyEvents'
 
 export default () => {
   const [currentComponent, setCurrentComponent] = useState('favorites')
-  const dashboardTab = localStorage.getItem('dashboard')
-  const [isActive, setisActive] = useState('favorites')
-  const dashboardBtns = ['properties', 'events']
+  const dashboardTab = localStorage.getItem('activity')
+  const [isActive, setisActive] = useState('My properties')
+  const dashboardBtns = ['My properties', 'My events']
 
   useEffect(() => {
     if (dashboardTab) {
       setCurrentComponent(dashboardTab)
       setisActive(dashboardTab)
     } else {
-      setisActive('favorites')
+      setisActive('My properties')
     }
   }, [])
 
   const handleClick = (component) => {
-    console.log(component)
-    localStorage.setItem('dashboard', component.value)
+    localStorage.setItem('activity', component.value)
     setCurrentComponent(component.value)
     setisActive(component.value)
   }
@@ -50,7 +49,11 @@ export default () => {
           })}
         </nav>
         <div className="comps-to-render">
-          {currentComponent === 'properties' ? <MyProperties /> : <MyEvents />}
+          {currentComponent === 'My properties' ? (
+            <MyProperties />
+          ) : (
+            <MyEvents />
+          )}
         </div>
       </div>
     </div>

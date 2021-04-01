@@ -25,7 +25,7 @@ export default (props) => {
   // Fetch all events and store in state(data)
   useEffect(() => {
     axios
-      .get('http://localhost:5000/events')
+      .get(`${process.env.REACT_APP_API_URL}/events`)
       .then((res) => {
         setData(res.data.events)
         console.log(props.locationsharing)

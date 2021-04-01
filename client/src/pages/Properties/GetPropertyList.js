@@ -12,7 +12,7 @@ export default () => {
   const [properties, setProperties] = useState([])
   useEffect(() => {
     axios
-      .get('http://localhost:5000/properties')
+      .get(`${process.env.REACT_APP_API_URL}/properties`)
       .then((res) => setData(res.data))
   }, [])
 

@@ -2,21 +2,22 @@
 $base-black: #000;
 $base-white: #fff;
 
-$theme-blue: #414DFB;
-$theme-green: #E0E4DF;
-$theme-red: #EDC6B1;
+$theme-blue: #414dfb;
+$theme-green: #e0e4df;
+$theme-red: #edc6b1;
 
-$dark-green: #5B7860;
+$soft-green: #e0e4df;
+$dark-green: #5b7860;
 
-$soft-grey: #F5F5F5;
-$med-grey: #B1B1B1;
+$soft-grey: #f5f5f5;
+$med-grey: #b1b1b1;
 $text-grey: #969696;
 
-$color-none: rgba(0,0,0,0);
+$color-none: rgba(0, 0, 0, 0);
 
 /* Transitions */
-$base-transition: all .5s;
-$fast-transition: all .2s;
+$base-transition: all 0.5s;
+$fast-transition: all 0.2s;
 $slow-transition: all 2s;
 $smooth-transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
-$bezier-transition: all .2s cubic-bezier(0.200, 0.250, 0.925, 0.470);
+$bezier-transition: all 0.2s cubic-bezier(0.2, 0.25, 0.925, 0.47);
