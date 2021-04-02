@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Header } from '../../../components'
+import { CheckSession, Header } from '../../../components'
 import LogoutUser from '../../Users/LogoutUser'
 import MyProperties from './MyProperties'
 import MyEvents from './MyEvents'
 
 export default () => {
+  CheckSession(localStorage.getItem('jwt'))
   const [currentComponent, setCurrentComponent] = useState('favorites')
   const dashboardTab = localStorage.getItem('activity')
   const [isActive, setisActive] = useState('My properties')

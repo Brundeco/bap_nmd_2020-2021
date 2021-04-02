@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { Preloader, PrevPage, ConvertDate } from '../../components'
-import ImageSlider from '../../components/ImageSlider'
-import DayPicker, { DateUtils } from 'react-day-picker'
+import { CheckSession } from '../../components'
+import DayPicker from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
 
 export default (props) => {
+  CheckSession(localStorage.getItem('jwt'))
+
   const user = JSON.parse(localStorage.getItem('user'))
   const [data, setData] = useState()
   const [images, setImages] = useState([])
@@ -32,11 +32,7 @@ export default (props) => {
   return (
     <React.Fragment>
       <div
-        className={
-          preview
-            ? 'review-screen show'
-            : 'review-screen hide'
-        }
+        className={preview ? 'review-screen show' : 'review-screen hide'}
         // className="property-preview-screen show"
         newpreview={props.newpreview(preview)}
       >

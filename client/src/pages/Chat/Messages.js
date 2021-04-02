@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { ConvertDate, Header } from '../../components'
+import { CheckSession, ConvertDate, Header } from '../../components'
 import axios from 'axios'
 
 export default ({ match }) => {
+  CheckSession(localStorage.getItem('jwt'))
   const user = JSON.parse(localStorage.getItem('user'))
   const [timestamps, setTimestamps] = useState()
   const [messages, setMessages] = useState([])

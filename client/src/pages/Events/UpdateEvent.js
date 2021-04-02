@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { EventFormUpdate } from '..'
 import { app } from '../../base'
+import { CheckSession } from '../../components'
 
 export default ({ match }) => {
+  CheckSession(localStorage.getItem('jwt'))
+
   const [data, setData] = useState()
   const [currentEvent, setCurrentEvent] = useState()
   const [file, setFile] = useState()

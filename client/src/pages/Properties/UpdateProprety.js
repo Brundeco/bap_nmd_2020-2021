@@ -2,21 +2,24 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import PropertyFormUpdate from './PropertyFormUpdate'
 import { app } from '../../base'
+import { CheckSession } from '../../components'
 
 export default ({ match, props }) => {
+  CheckSession(localStorage.getItem('jwt'))
+
   const [currentProprety, setCurrentProprety] = useState()
   const storageRef = app.storage()
   const [data, setData] = useState()
   const [files, setFiles] = useState([])
   const [updatedImgs, setUpdatedImgs] = useState([])
-  const [fetchImgUrls, setFetchImgUrls] = useState([]);
+  const [fetchImgUrls, setFetchImgUrls] = useState([])
 
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/properties/${match.params.id}`)
       .then((res) => {
         setCurrentProprety(res.data)
-        setFetchImgUrls(res.data?.images) 
+        setFetchImgUrls(res.data?.images)
       })
   }, [])
 
@@ -37,7 +40,10 @@ export default ({ match, props }) => {
         .then((res) => console.log(res))
     })
     axios
-      .put(`${process.env.REACT_APP_API_URL}/properties/${match.params.id}`, data)
+      .put(
+        `${process.env.REACT_APP_API_URL}/properties/${match.params.id}`,
+        data
+      )
       .then((res) => setData(res.data))
       .catch((err) => console.log(err))
   }

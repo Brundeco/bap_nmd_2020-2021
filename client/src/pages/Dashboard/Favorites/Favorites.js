@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Header } from '../../../components'
+import { CheckSession, Header } from '../../../components'
 import FavProperties from './FavProperties'
 import FavEvents from './FavEvents'
 
 export default () => {
+  CheckSession(localStorage.getItem('jwt'))
   const [currentComponent, setCurrentComponent] = useState('favorites')
   const dashboardTab = localStorage.getItem('dashboard')
   const [isActive, setisActive] = useState('favorites')

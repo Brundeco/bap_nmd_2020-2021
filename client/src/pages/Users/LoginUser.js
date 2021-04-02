@@ -35,7 +35,6 @@ export default () => {
     setProgress(true)
     e.preventDefault()
     axios
-      // .post('http://localhost:5000/users/login', data)
       .post(`${process.env.REACT_APP_API_URL}/users/login`, data)
       .then((res) => {
         setProgress(false)

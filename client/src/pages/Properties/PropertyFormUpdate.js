@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { InputField, Textarea } from '../../components'
+import { CheckSession, InputField, Textarea } from '../../components'
 import SelectImage from './../../icons/selectimage.svg'
 import DayPicker from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
@@ -7,6 +7,8 @@ import uuid from 'react-uuid'
 import { app } from '../../base'
 
 export default (props) => {
+  CheckSession(localStorage.getItem('jwt'))
+
   const user = JSON.parse(localStorage.getItem('user'))
   const [files, setFiles] = useState([])
   const [thumbnails, setThumbnails] = useState([])

@@ -19,7 +19,7 @@ const server = http.createServer(app)
 const socketio = new io.Server(server)
 
 app.get('/', (req, res) => {
-  res.send('Hello from Express!')
+  res.send('New deployment successfull 🚀')
 })
 
 // router.get('/rooms/:roomId/users')

@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Preloader, PrevPage, ConvertDate } from '../../components'
+import {
+  Preloader,
+  PrevPage,
+  ConvertDate,
+  CheckSession,
+} from '../../components'
 import ImageSlider from '../../components/ImageSlider'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
@@ -15,6 +20,8 @@ import AddressIcon from './../../icons/property-detail/address.svg'
 import LightIcon from './../../icons/property-detail/light.svg'
 
 export default ({ match }) => {
+  CheckSession(localStorage.getItem('jwt'))
+
   const user = JSON.parse(localStorage.getItem('user'))
   const [propertyCreatedAt, setPropertyCreatedAt] = useState()
   const [data, setData] = useState()

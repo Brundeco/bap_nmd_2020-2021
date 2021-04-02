@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import io from 'socket.io-client'
 import axios from 'axios'
-import { Textarea, Header, FontAwesome } from '../../components'
+import { Textarea, Header, FontAwesome, CheckSession } from '../../components'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import PaperplaneIcon from './../../icons/send-paperplane.svg'
 import ScrollToBottom from 'react-scroll-to-bottom'
@@ -10,6 +10,7 @@ const ENDPOINT = `${process.env.REACT_APP_API_URL}`
 const socket = io.connect(ENDPOINT)
 
 export default ({ match }) => {
+  CheckSession(localStorage.getItem('jwt'))
   const [data, setData] = useState()
   const user = JSON.parse(localStorage.getItem('user'))
   const sender = JSON.parse(localStorage.getItem('user'))

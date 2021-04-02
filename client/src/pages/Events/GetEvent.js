@@ -5,6 +5,7 @@ import { app } from '../../base'
 
 export default ({ match }) => {
   CheckSession(localStorage.getItem('jwt'))
+  
   const user = JSON.parse(localStorage.getItem('user'))
   const [data, setData] = useState()
   const storageRef = app.storage().ref()
