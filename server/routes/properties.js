@@ -7,6 +7,7 @@ import {
   updateProperty,
   bookProperty,
   getPropertiesAdmin,
+  makePayment,
 } from '../controllers/properties.js'
 
 const router = express.Router()
@@ -17,5 +18,6 @@ router.get('/:id', getProperty)
 router.post('/', createProperty)
 router.put('/:id', updateProperty)
 router.put('/book/:id', bookProperty)
+router.post('/stripe', makePayment)
 
 export default router

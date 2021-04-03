@@ -5,7 +5,6 @@ import {
   PreloaderSpinningWheel,
 } from '../../components'
 import axios from 'axios'
-import TextLogo from './../../icons/text_logo.svg'
 import queryString from 'query-string'
 import { useLocation } from 'react-router'
 
@@ -65,7 +64,7 @@ export default () => {
             type="email"
             onChange={handleChange}
             className="main-input-field"
-            value={email || data?.email}
+            value={data?.email ? data?.email : email}
             required
           />
 

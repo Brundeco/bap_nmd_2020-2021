@@ -5,6 +5,7 @@ import {
   PrevPage,
   ConvertDate,
   CheckSession,
+  InputField,
 } from '../../components'
 import ImageSlider from '../../components/ImageSlider'
 import DayPicker, { DateUtils } from 'react-day-picker'
@@ -18,6 +19,8 @@ import CalenderIcon from './../../icons/property-detail/calendar.svg'
 import ContactIcon from './../../icons/property-detail/contact.svg'
 import AddressIcon from './../../icons/property-detail/address.svg'
 import LightIcon from './../../icons/property-detail/light.svg'
+
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 
 export default ({ match }) => {
   CheckSession(localStorage.getItem('jwt'))
@@ -33,11 +36,20 @@ export default ({ match }) => {
   const [hoverState, setHoverState] = useState(false)
   const [showCalendar, setShowCalendar] = useState(false)
   const [conversationId, setConversationId] = useState()
+  const [formData, setFormData] = useState()
+  const [show, setShow] = useState(false)
+  const [processing, setProcessing] = useState(false)
   const [booking, setBooking] = useState({
     client: user.username,
     client_id: user.id,
   })
+  const stripe = useStripe()
+  const elements = useElements()
   const handleIndex = () => {}
+
+  const handleChange = (name, value) => {
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
 
   const isDayDisabled = (day) => {
     return !availableDates.some((disabledDay) =>
@@ -101,14 +113,67 @@ export default ({ match }) => {
     setBooking((prev) => ({ ...prev, dates: selectedDates }))
   }, [selectedDates])
 
-  const handleReservation = (e) => {
+  const cardElementOptions = {
+    hidePostalCode: true,
+  }
+
+  const handleReservation = async (e) => {
     e.preventDefault()
-    axios
-      .put(
-        `${process.env.REACT_APP_API_URL}/properties/book/${match.params.id}`,
-        booking.dates
-      )
-      .then((res) => setData(res.data))
+    setProcessing(true)
+
+    const billingDetails = {
+      name: formData?.name,
+      email: formData?.email,
+      address: {
+        city: formData?.city,
+        line1: formData?.address,
+        state: 'empty',
+        postal_code: formData?.zip,
+      },
+    }
+
+    const { data: clientSecret } = await axios.post(
+      `${process.env.REACT_APP_API_URL}/properties/stripe`,
+      {
+        amount: dates.length * data.price * 100,
+      }
+    )
+    const cardElement = elements.getElement(CardElement)
+    const paymentMethodReq = await stripe.createPaymentMethod({
+      type: 'card',
+      card: cardElement,
+      billing_details: billingDetails,
+    })
+
+    try {
+      await stripe
+        .confirmCardPayment(clientSecret, {
+          payment_method: paymentMethodReq.paymentMethod.id,
+        })
+        .then((res) => {
+          setProcessing(false)
+          if (res.error) {
+            console.log(res.error)
+            console.log('Error !! payment not successful')
+          } else if (
+            res.paymentIntent &&
+            res.paymentIntent.status === 'succeeded'
+          ) {
+            console.log('Payment was successful')
+            console.log(res)
+          }
+        })
+    } catch (error) {
+      setProcessing(false)
+      console.log(error)
+    }
+
+    // axios
+    //   .put(
+    //     `${process.env.REACT_APP_API_URL}/properties/book/${match.params.id}`,
+    //     booking.dates
+    //   )
+    //   .then((res) => console.log(res.data))
   }
 
   useEffect(() => {
@@ -240,8 +305,12 @@ export default ({ match }) => {
               </p>
             </div>
           </section>
+
           <section className="cta-bottom-section">
-            <button className="main-btn" onClick={(e) => handleReservation(e)}>
+            <button
+              className={dates.length !== 0 ? 'main-btn' : 'main-btn disabled'}
+              onClick={() => setShow(!show)}
+            >
               Make reservation
             </button>
             <button
@@ -251,6 +320,55 @@ export default ({ match }) => {
             >
               Chat with owner
             </button>
+          </section>
+          <section className={show ? 'booking show' : 'booking hide'}>
+            <h2>Complete your booking</h2>
+            <form>
+              <InputField
+                name="name"
+                onChange={handleChange}
+                placeholder="Your complete name"
+                type="text"
+                className="main-input-field"
+              />
+              <InputField
+                name="email"
+                onChange={handleChange}
+                placeholder="Your email"
+                type="email"
+                className="main-input-field"
+                value={formData?.email ? formData?.email : user?.email}
+              />
+              <InputField
+                name="city"
+                onChange={handleChange}
+                placeholder="City"
+                type="text"
+                className="main-input-field"
+              />
+              <InputField
+                name="address"
+                onChange={handleChange}
+                placeholder="Street + housenumber"
+                type="text"
+                className="main-input-field"
+              />
+              <InputField
+                name="zip"
+                onChange={handleChange}
+                placeholder="Postal code"
+                type="number"
+                className="main-input-field"
+              />
+              <CardElement options={cardElementOptions} />
+              <button
+                className="main-btn"
+                onClick={(e) => handleReservation(e)}
+              >
+                {processing ? 'Processing' : '€' + dates?.length * data?.price}
+              </button>
+              <button className="secondary-btn">Review booking</button>
+            </form>
           </section>
         </div>
       </div>

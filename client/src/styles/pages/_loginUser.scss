@@ -42,20 +42,6 @@
   width: 100%;
 }
 
-.login-screen input[type='email'],
-.login-screen input[type='text'],
-.login-screen input[type='password'] {
-  @include main-input-field;
-  transition: $base-transition;
-}
-
-.login-screen input[type='email']:focus,
-.login-screen input[type='text']:focus,
-.login-screen input[type='password']:focus {
-  border-bottom: 1px solid $base-black !important;
-  transition: $base-transition;
-}
-
 .login-screen button.main-btn {
   @include main-btn;
   margin-top: 4vh;
