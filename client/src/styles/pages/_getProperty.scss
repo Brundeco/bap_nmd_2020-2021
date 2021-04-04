@@ -129,6 +129,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.property-detail-screen .calendar-show .calendar-alert-title {
+  margin-bottom: 3vh;
 }
 
 .property-detail-screen .calendar-hide {

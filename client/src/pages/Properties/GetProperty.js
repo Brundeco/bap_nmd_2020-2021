@@ -39,6 +39,7 @@ export default ({ match }) => {
   const [formData, setFormData] = useState()
   const [show, setShow] = useState(false)
   const [processing, setProcessing] = useState(false)
+  const [paymentStatus, setPaymentStatus] = useState()
   const [booking, setBooking] = useState({
     client: user.username,
     client_id: user.id,
@@ -91,6 +92,14 @@ export default ({ match }) => {
       owner: data?.author,
     }))
     setPropertyCreatedAt(ConvertDate(data?.createdAt))
+
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/messages/conversation_id`, {
+        from: user.id,
+        to: data?.author_id,
+      })
+      .then((res) => setConversationId(res.data))
+      .catch((err) => console.log(err))
   }, [data])
 
   const handleDayClick = (day, modifiers = {}) => {
@@ -127,7 +136,7 @@ export default ({ match }) => {
       address: {
         city: formData?.city,
         line1: formData?.address,
-        state: 'empty',
+        state: '',
         postal_code: formData?.zip,
       },
     }
@@ -152,39 +161,40 @@ export default ({ match }) => {
         })
         .then((res) => {
           setProcessing(false)
-          if (res.error) {
-            console.log(res.error)
-            console.log('Error !! payment not successful')
-          } else if (
-            res.paymentIntent &&
-            res.paymentIntent.status === 'succeeded'
-          ) {
-            console.log('Payment was successful')
-            console.log(res)
-          }
+          setPaymentStatus('Payment successful!')
+          console.log(res)
+
+          axios
+            .post(`${process.env.REACT_APP_API_URL}/reservations`, {
+              dates,
+              price: dates.length * data.price,
+              property_owner_id: data.author_id,
+              property_owner_firstname: data.firstname,
+              property_owner_lastname: data.lastname,
+              property_owner_email: data.email,
+              property_owner_phone: data.phone,
+              property_id: data._id,
+              property_address: `${data.street} ${data.houseNumber}, ${data.zip} ${data.city}`,
+              client_id: user.id,
+            })
+            .then((res) => {
+              console.log(res.data)
+              axios
+                .put(
+                  `${process.env.REACT_APP_API_URL}/properties/book/${match.params.id}`,
+                  booking.dates
+                )
+                .then((window.location = `/reservations/${user.id}`))
+                .catch((err) => console.log(err))
+            })
+            .catch((err) => console.log(err))
         })
     } catch (error) {
       setProcessing(false)
+      setPaymentStatus('Invalid card number or your card has expired')
       console.log(error)
     }
-
-    // axios
-    //   .put(
-    //     `${process.env.REACT_APP_API_URL}/properties/book/${match.params.id}`,
-    //     booking.dates
-    //   )
-    //   .then((res) => console.log(res.data))
   }
-
-  useEffect(() => {
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/messages/conversation_id`, {
-        from: user.id,
-        to: data?.author_id,
-      })
-      .then((res) => setConversationId(res.data))
-      .catch((err) => console.log(err))
-  }, [data])
 
   if (data != undefined) {
     return (
@@ -271,6 +281,13 @@ export default ({ match }) => {
           </section>
 
           <div className={showCalendar ? 'calendar-show' : 'calendar-hide'}>
+            {dates.length === 0 ? (
+              <p className="calendar-alert-title">
+                Select at least one day to make a booking
+              </p>
+            ) : (
+              ''
+            )}
             <DayPicker
               selectedDays={selectedDates}
               onDayClick={handleDayClick}
@@ -361,11 +378,14 @@ export default ({ match }) => {
                 className="main-input-field"
               />
               <CardElement options={cardElementOptions} />
+              <h3>{paymentStatus}</h3>
               <button
                 className="main-btn"
                 onClick={(e) => handleReservation(e)}
               >
-                {processing ? 'Processing' : '€' + dates?.length * data?.price}
+                {processing
+                  ? 'Processing'
+                  : 'Pay €' + dates?.length * data?.price}
               </button>
               <button className="secondary-btn">Review booking</button>
             </form>

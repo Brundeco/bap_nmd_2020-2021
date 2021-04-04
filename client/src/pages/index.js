@@ -21,6 +21,8 @@ export { default as PropertyFormCreate } from './Properties/PropertyFormCreate'
 export { default as PropertyFormUpdate } from './Properties/PropertyFormUpdate'
 export { default as PropertyReview } from './Properties/PropertyReview'
 
+export { default as GetReservationList } from './Reservations/GetReservationList'
+
 export { default as Chat } from './Chat/Chat'
 export { default as Messages } from './Chat/Messages'
 

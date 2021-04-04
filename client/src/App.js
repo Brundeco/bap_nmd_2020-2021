@@ -22,6 +22,7 @@ import {
   NoLocation,
   UpdateProperty,
   Favorites,
+  GetReservationList,
 } from './pages'
 
 function App() {
@@ -50,6 +51,8 @@ function App() {
           <Route path="/create-property" component={CreateProperty} />
           <Route path="/update-property/:id" component={UpdateProperty} />
           <Route path="/property/:id/:author_id" component={GetProperty} />
+
+          <Route path="/reservations" component={GetReservationList} />
 
           <Route
             path="/chat/:recepient_id/:recepient/:conversation_id"
