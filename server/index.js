@@ -25,6 +25,12 @@ app.get('/', (req, res) => {
 
 router.get('/rooms/:roomId/users')
 
+dotenv.config()
+
+app.use(bodyParser.json({ limit: '30mb', extended: true }))
+app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
+app.use(cors())
+
 let userList = []
 
 socketio.on('connection', (socket) => {
@@ -46,12 +52,6 @@ socketio.on('connection', (socket) => {
     console.log('User left')
   })
 })
-
-dotenv.config()
-
-app.use(bodyParser.json({ limit: '30mb', extended: true }))
-app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
-app.use(cors())
 
 app.use('/auth', authRoutes)
 app.use('/events', eventRoutes)
