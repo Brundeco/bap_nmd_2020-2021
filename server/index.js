@@ -1,7 +1,8 @@
 import dotenv from 'dotenv'
 import express from 'express'
 import http from 'http'
-import * as io from 'socket.io'
+// import * as io from 'socket.io'
+// import Server from 'socket.io'
 
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
@@ -16,7 +17,8 @@ import reservationRoutes from './routes/reservations.js'
 
 const app = express()
 const server = http.createServer(app)
-const socketio = new io.Server(server)
+// const socketio = new io.Server(server)
+// const socketio = new Server(server)
 
 app.get('/', (req, res) => {
   res.send('Index.js was restructured')
