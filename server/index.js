@@ -15,15 +15,12 @@ import chatRoutes from './routes/chat.js'
 import reservationRoutes from './routes/reservations.js'
 
 const app = express()
-const router = express.Router()
 const server = http.createServer(app)
 const socketio = new io.Server(server)
 
 app.get('/', (req, res) => {
-  res.send('New heroku deployment ! ! ! ! ! ')
+  res.send('Index.js was restructured')
 })
-
-router.get('/rooms/:roomId/users')
 
 dotenv.config()
 
@@ -31,7 +28,7 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors())
 
-let userList = []
+// let userList = []
 
 // socketio.on('connection', (socket) => {
 //   // console.log(socket)
