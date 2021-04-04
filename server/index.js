@@ -19,20 +19,8 @@ const router = express.Router()
 const server = http.createServer(app)
 const socketio = new io.Server(server)
 
-// const socketio = new io.Server(server, {
-//   handlePreflightRequest: (req, res) => {
-//     const headers = {
-//       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-//       'Access-Control-Allow-Origin': req.headers.origin, //or the specific origin you want to give access to,
-//       'Access-Control-Allow-Credentials': true,
-//     }
-//     res.writeHead(200, headers)
-//     res.end()
-//   },
-// })
-
 app.get('/', (req, res) => {
-  res.send('index.js was restructured')
+  res.send('New heroku deployment ! ! ! ! ! ')
 })
 
 router.get('/rooms/:roomId/users')
@@ -45,25 +33,25 @@ app.use(cors())
 
 let userList = []
 
-socketio.on('connection', (socket) => {
-  // console.log(socket)
+// socketio.on('connection', (socket) => {
+//   // console.log(socket)
 
-  socket.on('registration', (id) => {
-    userList.push({ sid: socket.id, id: id })
-    console.log(userList)
-  })
+//   socket.on('registration', (id) => {
+//     userList.push({ sid: socket.id, id: id })
+//     console.log(userList)
+//   })
 
-  socketio.on('new-message', (data) => {
-    let obj = userList.find((o) => o.id === parseInt(data.id))
+//   socketio.on('new-message', (data) => {
+//     let obj = userList.find((o) => o.id === parseInt(data.id))
 
-    console.log(obj)
-    socketio.to(obj.sid).emit('receive-message', data.message)
-  })
+//     console.log(obj)
+//     socketio.to(obj.sid).emit('receive-message', data.message)
+//   })
 
-  socket.on('disconnect', () => {
-    console.log('User left')
-  })
-})
+//   socket.on('disconnect', () => {
+//     console.log('User left')
+//   })
+// })
 
 app.use('/auth', authRoutes)
 app.use('/events', eventRoutes)
