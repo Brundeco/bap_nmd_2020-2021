@@ -130,7 +130,6 @@ export const makePayment = async (req, res) => {
   if (req.method === 'POST') {
     try {
       const { amount } = req.body
-      console.log(amount)
       // Psst. For production-ready applications we recommend not using the
       // amount directly from the client without verifying it first. This is to
       // prevent bad actors from changing the total amount on the client before
@@ -142,8 +141,6 @@ export const makePayment = async (req, res) => {
         amount,
         currency: 'eur',
       })
-
-      console.log(paymentIntent)
 
       res.status(200).send(paymentIntent.client_secret)
     } catch (err) {

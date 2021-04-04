@@ -20,32 +20,32 @@ const server = http.createServer(app)
 const socketio = new io.Server(server)
 
 app.get('/', (req, res) => {
-  res.send('New deployment successfull 🚀')
+  res.send('Latest heroku version live (reservation feature added) 🚀')
 })
 
-// router.get('/rooms/:roomId/users')
+router.get('/rooms/:roomId/users')
 
-// let userList = []
+let userList = []
 
-// socketio.on('connection', (socket) => {
-//   // console.log(socket)
+socketio.on('connection', (socket) => {
+  // console.log(socket)
 
-//   socket.on('registration', (id) => {
-//     userList.push({ sid: socket.id, id: id })
-//     console.log(userList)
-//   })
+  socket.on('registration', (id) => {
+    userList.push({ sid: socket.id, id: id })
+    console.log(userList)
+  })
 
-//   socketio.on('new-message', (data) => {
-//     let obj = userList.find((o) => o.id === parseInt(data.id))
+  socketio.on('new-message', (data) => {
+    let obj = userList.find((o) => o.id === parseInt(data.id))
 
-//     console.log(obj)
-//     socketio.to(obj.sid).emit('receive-message', data.message)
-//   })
+    console.log(obj)
+    socketio.to(obj.sid).emit('receive-message', data.message)
+  })
 
-//   socket.on('disconnect', () => {
-//     console.log('User left')
-//   })
-// })
+  socket.on('disconnect', () => {
+    console.log('User left')
+  })
+})
 
 dotenv.config()
 
