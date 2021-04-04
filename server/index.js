@@ -20,7 +20,7 @@ const server = http.createServer(app)
 const socketio = new io.Server(server)
 
 app.get('/', (req, res) => {
-  res.send('Latest heroku version live (reservation feature added) 🚀')
+  res.send('index.js was restructured')
 })
 
 router.get('/rooms/:roomId/users')
