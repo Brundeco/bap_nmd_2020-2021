@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 import express from 'express'
 import http from 'http'
 // import * as io from 'socket.io'
-// import Server from 'socket.io'
+import Server from 'socket.io'
 
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
@@ -15,42 +15,44 @@ import userRoutes from './routes/users.js'
 import chatRoutes from './routes/chat.js'
 import reservationRoutes from './routes/reservations.js'
 
+
 const app = express()
+app.use(cors())
+dotenv.config()
+
 const server = http.createServer(app)
 // const socketio = new io.Server(server)
-// const socketio = new Server(server)
+const socketio = new Server(server)
 
 app.get('/', (req, res) => {
   res.send('Index.js was restructured')
 })
 
-dotenv.config()
 
 app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
-app.use(cors())
 
-// let userList = []
+let userList = []
 
-// socketio.on('connection', (socket) => {
-//   // console.log(socket)
+socketio.on('connection', (socket) => {
+  // console.log(socket)
 
-//   socket.on('registration', (id) => {
-//     userList.push({ sid: socket.id, id: id })
-//     console.log(userList)
-//   })
+  socket.on('registration', (id) => {
+    userList.push({ sid: socket.id, id: id })
+    console.log(userList)
+  })
 
-//   socketio.on('new-message', (data) => {
-//     let obj = userList.find((o) => o.id === parseInt(data.id))
+  socketio.on('new-message', (data) => {
+    let obj = userList.find((o) => o.id === parseInt(data.id))
 
-//     console.log(obj)
-//     socketio.to(obj.sid).emit('receive-message', data.message)
-//   })
+    console.log(obj)
+    socketio.to(obj.sid).emit('receive-message', data.message)
+  })
 
-//   socket.on('disconnect', () => {
-//     console.log('User left')
-//   })
-// })
+  socket.on('disconnect', () => {
+    console.log('User left')
+  })
+})
 
 app.use('/auth', authRoutes)
 app.use('/events', eventRoutes)
