@@ -109,9 +109,10 @@ export default (props) => {
       <React.Fragment>
         <div className="event-screen">
           <h3>Map</h3>
-          {/* <Map lat={userLat} lon={userLon} coords={coords} /> */}
+          <Map lat={userLat} lon={userLon} coords={coords} />
           <div className="event-list">
             {evtsFiltered?.map(function (item, i) {
+              console.log(item)
               return (
                 <div key={i} className="event-featured">
                   <div className="image">

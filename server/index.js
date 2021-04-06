@@ -1,7 +1,6 @@
 import dotenv from 'dotenv'
 import express from 'express'
 import http from 'http'
-// import * as io from 'socket.io'
 import Server from 'socket.io'
 
 import bodyParser from 'body-parser'
@@ -21,7 +20,6 @@ app.use(cors())
 dotenv.config()
 
 const server = http.createServer(app)
-// const socketio = new io.Server(server)
 const socketio = new Server(server)
 
 app.get('/', (req, res) => {
@@ -34,16 +32,17 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 let userList = []
 
 socketio.on('connection', (socket) => {
+  console.log(socket.id)
   socket.on('registration', (id) => {
+    console.log(id)
     userList.push({ sid: socket.id, id: id })
     // console.log(userList)
   })
 
-  socketio.on('new-message', (data) => {
+  socket.on('new-message', (data) => {
+    console.log(data)
     let obj = userList.find((o) => o.id === parseInt(data.id))
-
-    // console.log(obj)
-    socketio.to(obj.sid).emit('receive-message', data.message)
+    if (obj) socketio.to(obj.sid).emit('receive-message', data.message)
   })
 
   socket.on('disconnect', () => {

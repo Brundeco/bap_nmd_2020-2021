@@ -330,8 +330,9 @@ export default ({ match }) => {
                 />
               </div>
               <p>
-                {`${data?.street} ${data?.houseNumber},`} <br />{' '}
-                {`${data?.zip} ${data?.city} `}
+                {`${data?.street} ${data?.houseNumber},`} <br />
+                {`${data?.zip} ${data?.city} `} <br />
+                {`${data?.province} ${data?.country} `}
               </p>
             </div>
             <div className="contact">
@@ -426,6 +427,3 @@ export default ({ match }) => {
     )
   }
 }
-
-
-

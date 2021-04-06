@@ -29,7 +29,7 @@ export default (props) => {
   // console.log(props.coords)
 
   useEffect(() => {
-    console.log(showPopup)
+    // console.log(showPopup)
   }, [showPopup])
 
   return (
@@ -61,9 +61,9 @@ export default (props) => {
             </Marker>
 
             {/* {showPopup && ( */}
-            <Popup className={showPopup} coordinates={[el[0], el[1]]}>
+            {/* <Popup className={showPopup} coordinates={[el[0], el[1]]}>
               <h1> popup </h1>
-            </Popup>
+            </Popup> */}
             {/* )} */}
             {/* </Feature> */}
           </React.Fragment>

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 const propertySchema = mongoose.Schema({
   description: String,
@@ -9,8 +9,10 @@ const propertySchema = mongoose.Schema({
 
   city: String,
   street: String,
-  houseNumber: Number,
+  houseNumber: String,
   zip: Number,
+  province: String,
+  country: String,
 
   email: String,
   phone: Number,
@@ -25,8 +27,8 @@ const propertySchema = mongoose.Schema({
     type: Number,
     default: Date.now(),
   },
-});
+})
 
-const Property = mongoose.model("Property", propertySchema);
+const Property = mongoose.model('Property', propertySchema)
 
-export default Property;
+export default Property

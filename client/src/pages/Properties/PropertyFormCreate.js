@@ -68,6 +68,8 @@ export default (props) => {
       data.houseNumber &&
       data.zip &&
       data.city &&
+      data.province &&
+      data.country &&
       data.description &&
       data.price &&
       data.surface &&
@@ -167,7 +169,7 @@ export default (props) => {
                 name="houseNumber"
                 onChange={handleChange}
                 placeholder="No"
-                type="number"
+                type="text"
                 className="main-input-field"
                 required
               />
@@ -189,6 +191,28 @@ export default (props) => {
                 name="city"
                 onChange={handleChange}
                 placeholder="City"
+                type="text"
+                className="main-input-field"
+                required
+              />
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-col-med">
+              <InputField
+                name="province"
+                onChange={handleChange}
+                placeholder="Province"
+                type="text"
+                className="main-input-field"
+                required
+              />
+            </div>
+            <div className="form-col-med">
+              <InputField
+                name="country"
+                onChange={handleChange}
+                placeholder="Country"
                 type="text"
                 className="main-input-field"
                 required

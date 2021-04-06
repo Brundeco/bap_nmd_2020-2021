@@ -6,9 +6,6 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import PaperplaneIcon from './../../icons/send-paperplane.svg'
 import ScrollToBottom from 'react-scroll-to-bottom'
 
-const ENDPOINT = `${process.env.REACT_APP_API_URL}`
-const socket = io.connect(ENDPOINT)
-
 export default ({ match }) => {
   CheckSession(localStorage.getItem('jwt'))
   const [data, setData] = useState()
@@ -25,28 +22,31 @@ export default ({ match }) => {
   }
 
   useEffect(() => {
-    socket.on('connect', () => {
-      socket.emit('registration', user.id)
-      socket.on('receive-message', (message) => {
-        console.log(message)
+    try {
+      const ENDPOINT = `${process.env.REACT_APP_API_URL}`
+      const socket = io(ENDPOINT)
+
+      socket.on('connect', () => {
+        console.log(socket)
+        socket.emit('registration', user.id)
+        socket.on('receive-message', (message) => {
+          console.log(message)
+        })
       })
-    })
-    axios
-      .get(
-        `${process.env.REACT_APP_API_URL}/messages/filter/${match.params.conversation_id}`
-      )
-      .then((res) => setMessages(res.data))
-      .catch((err) => console.log(err))
+      axios
+        .get(
+          `${process.env.REACT_APP_API_URL}/messages/filter/${match.params.conversation_id}`
+        )
+        .then((res) => setMessages(res.data))
+        .catch((err) => console.log(err))
+    } catch (error) {
+      console.log(error)
+    }
   }, [])
 
   console.log('Latest deploy for chat testing!')
 
   const postMessage = () => {
-    socket.emit('new-message', {
-      id: match.params.recepient_id,
-      message: data.message,
-    })
-
     axios
       .post(`${process.env.REACT_APP_API_URL}/messages`, {
         message: data.message,
@@ -56,12 +56,22 @@ export default ({ match }) => {
         toName: recepient.recepient,
         read: false,
       })
-      .then((res) => console.log(res))
+      .then((res) => {
+        const ENDPOINT = `${process.env.REACT_APP_API_URL}`
+        const socket = io(ENDPOINT)
+
+        socket.emit('new-message', {
+          id: match.params.recepient_id,
+          message: res.data.message,
+        })
+
+        messages.push(res.data)
+      })
       .catch((err) => console.log(err))
   }
 
   useEffect(() => {
-    // console.log(messages)
+    console.log(messages)
   }, [messages])
 
   return (
