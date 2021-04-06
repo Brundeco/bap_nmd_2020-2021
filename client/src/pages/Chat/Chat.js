@@ -25,12 +25,12 @@ export default ({ match }) => {
   }
 
   useEffect(() => {
-    // socket.on('connect', () => {
-    //   socket.emit('registration', user.id)
-    //   socket.on('receive-message', (message) => {
-    //     console.log(message)
-    //   })
-    // })
+    socket.on('connect', () => {
+      socket.emit('registration', user.id)
+      socket.on('receive-message', (message) => {
+        console.log(message)
+      })
+    })
     axios
       .get(
         `${process.env.REACT_APP_API_URL}/messages/filter/${match.params.conversation_id}`
@@ -39,11 +39,13 @@ export default ({ match }) => {
       .catch((err) => console.log(err))
   }, [])
 
+  console.log('Latest deploy for chat testing!')
+
   const postMessage = () => {
-    // socket.emit('new-message', {
-    //   id: match.params.recepient_id,
-    //   message: data.message,
-    // })
+    socket.emit('new-message', {
+      id: match.params.recepient_id,
+      message: data.message,
+    })
 
     axios
       .post(`${process.env.REACT_APP_API_URL}/messages`, {

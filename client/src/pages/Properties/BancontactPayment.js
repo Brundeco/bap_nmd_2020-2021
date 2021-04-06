@@ -156,10 +156,17 @@ export default ({ match }) => {
 
     try {
       await stripe
-        .confirmCardPayment(clientSecret, {
-          payment_method: paymentMethodReq.paymentMethod.id,
+        .confirmBancontactPayment(clientSecret, {
+          payment_method: {
+            billing_details: {
+              name: 'Bruno De Coene',
+            },
+          },
+          return_url: `https://localhost:3000/property/6069d16a05e93300154644d1/6069cdc3ba7f9c00153865ae`,
         })
-        .then(() => {
+        .then((res) => {
+          console.log(res)
+
           setProcessing(false)
           setPaymentStatus('Payment successful!')
 
@@ -214,6 +221,7 @@ export default ({ match }) => {
             })
             .catch((err) => console.log(err))
         })
+        .catch((e) => console.log(e))
     } catch (error) {
       setProcessing(false)
       setPaymentStatus('Invalid card number or your card has expired')
@@ -426,6 +434,3 @@ export default ({ match }) => {
     )
   }
 }
-
-
-

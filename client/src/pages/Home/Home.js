@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Header, CheckSession, LocateUser } from '../../components'
 import { GetEventList } from '..'
+import axios from 'axios'
 
 export default () => {
   CheckSession(localStorage.getItem('jwt'))
