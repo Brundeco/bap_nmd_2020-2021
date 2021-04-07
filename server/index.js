@@ -29,20 +29,26 @@ app.get('/', (req, res) => {
 app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 
-let userList = []
+let participants = []
 
 socketio.on('connection', (socket) => {
-  console.log(socket.id)
+  // console.log(socket.id)
   socket.on('registration', (id) => {
+    console.log('ID !! ')
     console.log(id)
-    userList.push({ sid: socket.id, id: id })
-    // console.log(userList)
+    participants.push({ socketId: socket.id, id: id })
+    console.log('All participants !!')
+    console.log(participants)
   })
 
   socket.on('new-message', (data) => {
+    console.log('data')
     console.log(data)
-    let obj = userList.find((o) => o.id === parseInt(data.id))
-    if (obj) socketio.to(obj.sid).emit('receive-message', data.message)
+    console.log('data')
+    let obj = participants.find((object) => object.id === parseInt(data.id))
+    console.log(obj)
+    // if (obj) console.log('Object true')
+    if (obj) socketio.to(obj.socketId).emit('receive-message', data.message)
   })
 
   socket.on('disconnect', () => {

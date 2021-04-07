@@ -55,7 +55,6 @@ export default () => {
         {progress ? <PreloaderSpinningWheel text="Logging in" /> : ''}
       </div>
       <div className="wrapper">
-        {/* <img src={TextLogo} alt="Suitswap logo" className="logo" /> */}
         <h1>Sign in to suitswap</h1>
         <form action="" onSubmit={handleSubmit}>
           <InputField
@@ -86,13 +85,11 @@ export default () => {
         >
           Not a member yet? / Sign up here
         </button>
-        {/* <h5> */}
         {status == 'Login successfull' ? (
           <h6 className="success"> {status} </h6>
         ) : (
           <h6 className="failure"> {status} </h6>
         )}
-        {/* </h5> */}
       </div>
     </div>
   )

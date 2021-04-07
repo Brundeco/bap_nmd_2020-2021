@@ -30,7 +30,7 @@ export default () => {
         })
         .catch((err) => {
           setProgress(false)
-          setStatus(err.response.data.message)
+          // setStatus(err.response.data.message)
         })
     }
   }

@@ -8,29 +8,26 @@ import ScrollToBottom from 'react-scroll-to-bottom'
 
 export default ({ match }) => {
   CheckSession(localStorage.getItem('jwt'))
-  const [data, setData] = useState()
+  const [data, setData] = useState('')
   const user = JSON.parse(localStorage.getItem('user'))
   const sender = JSON.parse(localStorage.getItem('user'))
   const [messages, setMessages] = useState([])
-  const [ioMsg, setIoMsg] = useState([])
-  const [ioMsgs, setIoMsgs] = useState([])
   const recepient = match.params
+  const ENDPOINT = `${process.env.REACT_APP_API_URL}`
+  const socket = io(ENDPOINT)
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }))
-    setIoMsg(value)
   }
+
+  console.log('New chat version')
 
   useEffect(() => {
     try {
-      const ENDPOINT = `${process.env.REACT_APP_API_URL}`
-      const socket = io(ENDPOINT)
-
       socket.on('connect', () => {
-        console.log(socket)
         socket.emit('registration', user.id)
         socket.on('receive-message', (message) => {
-          console.log(message)
+          messages.push(message)
         })
       })
       axios
@@ -44,8 +41,6 @@ export default ({ match }) => {
     }
   }, [])
 
-  console.log('Latest deploy for chat testing!')
-
   const postMessage = () => {
     axios
       .post(`${process.env.REACT_APP_API_URL}/messages`, {
@@ -57,34 +52,30 @@ export default ({ match }) => {
         read: false,
       })
       .then((res) => {
-        const ENDPOINT = `${process.env.REACT_APP_API_URL}`
-        const socket = io(ENDPOINT)
-
+        let arr = messages
+        arr.push(res.data)
+        setMessages([...arr])
         socket.emit('new-message', {
           id: match.params.recepient_id,
           message: res.data.message,
         })
-
-        messages.push(res.data)
+        setData((prev) => ({
+          ...prev,
+          message: '',
+        }))
       })
       .catch((err) => console.log(err))
   }
-
-  useEffect(() => {
-    console.log(messages)
-  }, [messages])
 
   return (
     <div className="dashboard-screen ">
       <Header />
       <div className="chat-screen page-wrapper">
         <div className="chat-top">
-          {/* <FontAwesome icon={faChevronLeft} /> */}
           <h1> Gesprek met {match.params.recepient}</h1>
-          {/* <img src={profileImg} alt="profile" /> */}
         </div>
 
-        <ScrollToBottom>
+        <ScrollToBottom debsug={false}>
           <section className="conversation-box">
             {messages?.map((message, i) => {
               return (
@@ -104,12 +95,13 @@ export default ({ match }) => {
         </ScrollToBottom>
 
         <div className="chat-bottom">
-          <Textarea
-            name="message"
-            onChange={handleChange}
-            placeholder="Message"
-            type="textarea"
+          <textarea
             className="send-message"
+            placeholder="message"
+            name="message"
+            onChange={(e) => handleChange('message', e.target.value)}
+            value={data.message}
+            required="required"
           />
           <button className="send-message-btn" onClick={() => postMessage()}>
             <img src={PaperplaneIcon} alt="" />
