@@ -21,6 +21,7 @@ export default (props) => {
 
   // Fetch all events and store in state(data)
   useEffect(() => {
+    setCoords([])
     axios
       .get(`${process.env.REACT_APP_API_URL}/events`)
       .then((res) => {
@@ -34,6 +35,7 @@ export default (props) => {
   // }, [props.locationsharing])
 
   // Filter events based on accessibility (nearby the user), store filtered events in state
+
   useEffect(async () => {
     try {
       if (props.locationsharing) {
@@ -69,6 +71,18 @@ export default (props) => {
         }
       } else {
         setEvtsFiltered(data)
+        data.map(async (el) => {
+          const res = await Geocode.fromAddress(
+            `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
+          )
+          const coord = [
+            res.results[0].geometry.location.lng,
+            res.results[0].geometry.location.lat,
+            `/event/${el._id}`,
+          ]
+          if (coords.length !== data.length)
+            setCoords((prev) => [...prev, coord])
+        })
       }
     } catch (err) {
       console.log(err)
@@ -77,16 +91,18 @@ export default (props) => {
 
   // Fetch event images (Firebase Firestore) and store in state
   useEffect(() => {
-    const arr = evtsFiltered?.map((item) => {
-      return storageRef
-        .child(item?.firebaseRef + '/' + item?.image)
-        .getDownloadURL()
-    })
-    Promise.all(arr)
-      .then((urls) => {
-        setImages(urls)
+    if (evtsFiltered) {
+      const arr = evtsFiltered?.map((item) => {
+        return storageRef
+          .child(item?.firebaseRef + '/' + item?.image)
+          .getDownloadURL()
       })
-      .catch((err) => console.log(err))
+      Promise.all(arr)
+        .then((urls) => {
+          setImages(urls)
+        })
+        .catch((err) => console.log(err))
+    }
   }, [evtsFiltered])
 
   if (data != undefined) {
@@ -94,17 +110,11 @@ export default (props) => {
       <React.Fragment>
         <div
           className="event-screen"
-          // markers={
-          //   !window.location.href.includes('events')
-          //     ? props.markers(coords)
-          //     : ''
-          // }
-          // lat={
-          //   !window.location.href.includes('events') ? props.lat(userLat) : ''
-          // }
-          // lon={
-          //   !window.location.href.includes('events') ? props.lon(userLon) : ''
-          // }
+          markers={
+            !window.location.href.includes('events')
+              ? props.markers(coords)
+              : ''
+          }
         >
           <h3>Map</h3>
           {/* <Map lat={userLat} lon={userLon} coords={coords} /> */}

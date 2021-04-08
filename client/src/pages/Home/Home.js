@@ -5,7 +5,6 @@ import { GetEventList } from '..'
 export default () => {
   CheckSession(localStorage.getItem('jwt'))
   const location = LocateUser()
-  const [error, setError] = useState()
   const [locationSharing, setLocationSharing] = useState(true)
   const [markers, setMarkers] = useState([])
   const [userLat, setUserLat] = useState()
@@ -22,27 +21,18 @@ export default () => {
   ]
 
   useEffect(() => {
+    if (location.error == 'User denied Geolocation') setLocationSharing(false)
     setUserLat(location?.coordinates?.lat)
     setUserLon(location?.coordinates?.lng)
-    // console.log(location.error)
-    if (location.error == 'User denied Geolocation') {
-      setLocationSharing(false)
-    }
   }, [location.loaded])
 
-  useEffect(() => {
-    // console.log(location.error)
-  }, [location])
-
-  useEffect(() => {
-    // console.log(userLat)
-    // console.log(userLon)
-  }, [userLon, userLat])
+  // useEffect(() => {
+  //   console.log(markers)
+  // }, [markers])
 
   return (
     <div>
       <Header />
-      {/* <LocateUser err={setError} locationsharing={handleLocationSharing} /> */}
       <div className="home-screen">
         <section className="event-section">
           <div className="cta-top">
@@ -51,15 +41,7 @@ export default () => {
               Show all events
             </button>
           </div>
-          {location.loaded
-            ? JSON.stringify(location)
-            : 'Location data not available yet'}
-          {/* 
-          {location.loaded
-            ? JSON.stringify(location)
-            : 'Location data not available yet'} */}
-
-          {location.loaded ? (
+          {locationSharing ? (
             <React.Fragment>
               <label>Select radius</label>
               <select
@@ -77,12 +59,15 @@ export default () => {
               </select>
             </React.Fragment>
           ) : (
-            <h3>Location sharing is not available yet</h3>
+            <h3>Enable geolocation for better use of the app</h3>
           )}
-          {/* <Map lat={userLat} lon={userLon} coords={markers} /> */}
+          {userLat && userLon ? (
+            <Map lat={userLat} lon={userLon} coords={markers} />
+          ) : (
+            <Map lat={50.8503} lon={4.3517} coords={markers} />
+          )}
           <GetEventList
             radius={optionsValue}
-            error={error}
             locationsharing={locationSharing}
             markers={(coords) => setMarkers(coords)}
             lat={userLat}

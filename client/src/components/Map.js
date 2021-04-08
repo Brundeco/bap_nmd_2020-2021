@@ -22,10 +22,8 @@ export default (props) => {
 
   useEffect(() => {
     // Update lat & lon based on user position, if user has loc sharing enabled
-    if (props.lat != undefined && props.lon != undefined) {
-      setLat(parseFloat(props.lat))
-      setLon(parseFloat(props.lon))
-    }
+    setLat(parseFloat(props.lat))
+    setLon(parseFloat(props.lon))
   }, [props.lat, props.lon])
 
   useEffect(() => {
@@ -45,6 +43,7 @@ export default (props) => {
       zoom={[9]}
     >
       {props.coords.map((el, key) => {
+        // console.log(el)
         return (
           <Link
             key={key}
@@ -53,10 +52,7 @@ export default (props) => {
               state: { from: 'root' },
             }}
           >
-            <Marker
-              coordinates={[el[0], el[1]]}
-              onZoomEnd={() => console.log('Marker was clicked')}
-            >
+            <Marker coordinates={[el[0], el[1]]}>
               <img src={markerIcon} />
             </Marker>
           </Link>

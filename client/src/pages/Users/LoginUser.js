@@ -40,7 +40,6 @@ export default () => {
         setStatus(res.data.message)
         localStorage.setItem('user', JSON.stringify(res.data.user))
         localStorage.setItem('jwt', res.data.token)
-        localStorage.setItem('askLocation', true)
         if (CheckSession(res.data.token)) window.location = '/'
       })
       .catch((err) => {
