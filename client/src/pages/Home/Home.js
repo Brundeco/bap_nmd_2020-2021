@@ -4,8 +4,9 @@ import { GetEventList } from '..'
 
 export default () => {
   CheckSession(localStorage.getItem('jwt'))
+  const location = LocateUser()
   const [error, setError] = useState()
-  const [locationSharing, setLocationSharing] = useState()
+  const [locationSharing, setLocationSharing] = useState(true)
   const [markers, setMarkers] = useState([])
   const [userLat, setUserLat] = useState()
   const [userLon, setUserLon] = useState()
@@ -20,27 +21,28 @@ export default () => {
     { label: 'everywhere', value: 100000 },
   ]
 
-  const handleLocationSharing = (share) => {
-    // console.log(share)
-    setLocationSharing(share)
-  }
-
   useEffect(() => {
-    console.log(locationSharing)
-    if (userLat == undefined || userLon == undefined) {
-      setUserLat(localStorage.getItem('userLat'))
-      setUserLon(localStorage.getItem('userLon'))
+    setUserLat(location?.coordinates?.lat)
+    setUserLon(location?.coordinates?.lng)
+    // console.log(location.error)
+    if (location.error == 'User denied Geolocation') {
+      setLocationSharing(false)
     }
-  }, [locationSharing])
+  }, [location.loaded])
 
   useEffect(() => {
-    console.log(markers)
-  }, [markers])
+    // console.log(location.error)
+  }, [location])
+
+  useEffect(() => {
+    // console.log(userLat)
+    // console.log(userLon)
+  }, [userLon, userLat])
 
   return (
     <div>
       <Header />
-      <LocateUser err={setError} locationsharing={handleLocationSharing} />
+      {/* <LocateUser err={setError} locationsharing={handleLocationSharing} /> */}
       <div className="home-screen">
         <section className="event-section">
           <div className="cta-top">
@@ -49,7 +51,15 @@ export default () => {
               Show all events
             </button>
           </div>
-          {locationSharing ? (
+          {location.loaded
+            ? JSON.stringify(location)
+            : 'Location data not available yet'}
+          {/* 
+          {location.loaded
+            ? JSON.stringify(location)
+            : 'Location data not available yet'} */}
+
+          {location.loaded ? (
             <React.Fragment>
               <label>Select radius</label>
               <select
@@ -67,16 +77,16 @@ export default () => {
               </select>
             </React.Fragment>
           ) : (
-            <h3>Location sharing is disabled</h3>
+            <h3>Location sharing is not available yet</h3>
           )}
-          <Map lat={userLat} lon={userLon} coords={markers} />
+          {/* <Map lat={userLat} lon={userLon} coords={markers} /> */}
           <GetEventList
             radius={optionsValue}
             error={error}
             locationsharing={locationSharing}
             markers={(coords) => setMarkers(coords)}
-            lat={(lat) => setUserLat(lat)}
-            lon={(lon) => setUserLon(lon)}
+            lat={userLat}
+            lng={userLon}
           />
         </section>
       </div>

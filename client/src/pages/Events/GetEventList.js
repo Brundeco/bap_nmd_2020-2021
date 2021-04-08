@@ -17,9 +17,6 @@ export default (props) => {
   const storageRef = app.storage().ref()
   const [images, setImages] = useState([])
   const [evtsFiltered, setEvtsFiltered] = useState([])
-  const [userLat, setUserLat] = useState()
-  const [userLon, setUserLon] = useState()
-  const [locationSharing, setLocationSharing] = useState()
   const [coords, setCoords] = useState([])
 
   // Fetch all events and store in state(data)
@@ -32,18 +29,14 @@ export default (props) => {
       .catch((err) => console.log(err))
   }, [])
 
-  useEffect(() => {
-    setLocationSharing(props.locationsharing)
-    if (userLat == undefined || userLon == undefined) {
-      setUserLat(localStorage.getItem('userLat'))
-      setUserLon(localStorage.getItem('userLon'))
-    }
-  }, [props.locationsharing])
+  // useEffect(() => {
+  //   console.log(props.locationsharing)
+  // }, [props.locationsharing])
 
   // Filter events based on accessibility (nearby the user), store filtered events in state
   useEffect(async () => {
     try {
-      if (locationSharing) {
+      if (props.locationsharing) {
         if (data && data.length > 1) {
           const evts = await Promise.all(
             data.map(async (el) => {
@@ -64,8 +57,8 @@ export default (props) => {
                   longitude: parseFloat(res.results[0].geometry.location.lng),
                 },
                 {
-                  latitude: parseFloat(userLat),
-                  longitude: parseFloat(userLon),
+                  latitude: parseFloat(props.lat),
+                  longitude: parseFloat(props.lng),
                 }
               )
               console.log(`${parseFloat(dis / 1000).toFixed(1)} km`)
@@ -80,23 +73,20 @@ export default (props) => {
     } catch (err) {
       console.log(err)
     }
-  }, [data, userLon, userLat, props.radius, locationSharing])
+  }, [data, props.lat, props.lng, props.radius])
 
   // Fetch event images (Firebase Firestore) and store in state
   useEffect(() => {
-    // console.log(evtsFiltered)
-    if (evtsFiltered?.length > 1) {
-      const arr = evtsFiltered?.map((item) => {
-        return storageRef
-          .child(item?.firebaseRef + '/' + item?.image)
-          .getDownloadURL()
+    const arr = evtsFiltered?.map((item) => {
+      return storageRef
+        .child(item?.firebaseRef + '/' + item?.image)
+        .getDownloadURL()
+    })
+    Promise.all(arr)
+      .then((urls) => {
+        setImages(urls)
       })
-      Promise.all(arr)
-        .then((urls) => {
-          setImages(urls)
-        })
-        .catch((err) => console.log(err))
-    }
+      .catch((err) => console.log(err))
   }, [evtsFiltered])
 
   if (data != undefined) {
@@ -104,21 +94,22 @@ export default (props) => {
       <React.Fragment>
         <div
           className="event-screen"
-          markers={
-            !window.location.href.includes('events') ? props.markers(coords) : ''
-          }
-          lat={
-            !window.location.href.includes('events') ? props.lat(userLat) : ''
-          }
-          lon={
-            !window.location.href.includes('events') ? props.lon(userLon) : ''
-          }
+          // markers={
+          //   !window.location.href.includes('events')
+          //     ? props.markers(coords)
+          //     : ''
+          // }
+          // lat={
+          //   !window.location.href.includes('events') ? props.lat(userLat) : ''
+          // }
+          // lon={
+          //   !window.location.href.includes('events') ? props.lon(userLon) : ''
+          // }
         >
           <h3>Map</h3>
           {/* <Map lat={userLat} lon={userLon} coords={coords} /> */}
           <div className="event-list">
             {evtsFiltered?.map(function (item, i) {
-              // console.log(item)
               return (
                 <div key={i} className="event-featured">
                   <div className="image">
@@ -143,8 +134,6 @@ export default (props) => {
                       </div>
                     </div>
                   </div>
-                  {/* <a href={`/event/${item._id}`}>Detail</a>
-                  <a href={`/update-event/${item._id}`}>Update</a> */}
                 </div>
               )
             })}
@@ -155,11 +144,6 @@ export default (props) => {
   } else {
     return (
       <React.Fragment>
-        {/* <div
-          markers={props.markers(coords)}
-          lat={props.lat(userLat)}
-          lon={props.lon(userLon)}
-        ></div> */}
         <Preloader text="events" />
       </React.Fragment>
     )

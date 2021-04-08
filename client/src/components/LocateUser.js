@@ -1,50 +1,47 @@
-import React, { useState } from 'react'
-
-// const requestLocation = localStorage.getItem('askLocation')
-// console.log(requestLocation)
+import React, { useState, useEffect } from 'react'
 
 export default (props) => {
   const [response, setResponse] = useState()
-  const [locationSharing, setLocationSharing] = useState()
-  // const [userLocation, setUserLocation] = useState({
-  //   coordinates: { lat: '', lng: '' },
-  // })
+  const [loaded, setLoaded] = useState(false)
+
+  const [location, setLocation] = useState({
+    loaded: false,
+    coordinates: { lat: '', lng: '' },
+    error: '',
+  })
 
   const onSuccess = async (userLoc) => {
-    console.log('Location sharing is TRUE')
-    if (locationSharing == undefined) {
-      setLocationSharing(true)
-      setResponse('Location sharing is enabled')
-      localStorage.setItem('userLat', userLoc.coords.latitude)
-      localStorage.setItem('userLon', userLoc.coords.longitude)
-      localStorage.setItem('askLocation', false)
-    }
+    setLocation({
+      loaded: true,
+      coordinates: {
+        lat: userLoc.coords.latitude,
+        lng: userLoc.coords.longitude,
+      },
+    })
   }
 
   const onError = (error) => {
-    console.log('Location sharing is FALSE')
-    if (locationSharing == undefined) {
-      setLocationSharing(false)
-      setResponse('Location sharing is disabled')
-    }
+    setLoaded(true)
+    console.log(error.message)
+    setLocation({
+      loaded: true,
+      error: error.message,
+    })
   }
 
-  const locateUser = () => {
+  useEffect(() => {
     if (!('geolocation' in navigator)) {
-      onError({
-        code: 0,
-        message: 'Geolocation not supported',
-      })
+      setLocation((prev) => ({
+        ...prev,
+        loaded: true,
+        error: {
+          code: 0,
+          message: 'Geolocation not supported',
+        },
+      }))
     }
     navigator.geolocation.getCurrentPosition(onSuccess, onError)
-  }
+  }, [])
 
-  locateUser()
-
-  return (
-    <div
-      err={props.err(response)}
-      locationsharing={props.locationsharing(locationSharing)}
-    />
-  )
+  return location
 }

@@ -45,7 +45,6 @@ export default (props) => {
       zoom={[9]}
     >
       {props.coords.map((el, key) => {
-        console.log(key)
         return (
           <Link
             key={key}
