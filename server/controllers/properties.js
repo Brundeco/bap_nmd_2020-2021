@@ -4,7 +4,7 @@ import Stripe from 'stripe'
 import dotenv from 'dotenv'
 
 dotenv.config()
-const stripe = new Stripe(process.env.STRIPE_SECRET_TEST)
+const stripe = new Stripe(process.env.NEW_STRIPE_SECRET_TEST)
 
 export const getProperties = async (req, res) => {
   try {

@@ -6,12 +6,12 @@ import React, { useState } from 'react'
 export default (props) => {
   const [response, setResponse] = useState()
   const [locationSharing, setLocationSharing] = useState()
-  const [userLocation, setUserLocation] = useState({
-    coordinates: { lat: '', lng: '' },
-  })
+  // const [userLocation, setUserLocation] = useState({
+  //   coordinates: { lat: '', lng: '' },
+  // })
 
   const onSuccess = async (userLoc) => {
-    // console.log('Location sharing is TRUE')
+    console.log('Location sharing is TRUE')
     if (locationSharing == undefined) {
       setLocationSharing(true)
       setResponse('Location sharing is enabled')
@@ -22,16 +22,10 @@ export default (props) => {
   }
 
   const onError = (error) => {
-    // console.log('Location sharing is FALSE')
+    console.log('Location sharing is FALSE')
     if (locationSharing == undefined) {
       setLocationSharing(false)
       setResponse('Location sharing is disabled')
-      setUserLocation({
-        error: {
-          code: error.code,
-          message: error.message,
-        },
-      })
     }
   }
 
@@ -45,15 +39,7 @@ export default (props) => {
     navigator.geolocation.getCurrentPosition(onSuccess, onError)
   }
 
-  // if (
-  //   userLocation?.coordinates != undefined &&
-  //   typeof userLocation?.coordinates?.lat != 'number'
-  // ) {
-  // }
-
-  // if (requestLocation) {
   locateUser()
-  // }
 
   return (
     <div

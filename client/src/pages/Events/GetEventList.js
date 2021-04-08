@@ -28,14 +28,8 @@ export default (props) => {
       .get(`${process.env.REACT_APP_API_URL}/events`)
       .then((res) => {
         setData(res.data.events)
-        console.log(props.locationsharing)
       })
-      .catch((err) => {
-        console.log(err)
-        // err.response.status === 401
-        //   ? console.log(err.response.data.message)
-        //   : console.log(err)
-      })
+      .catch((err) => console.log(err))
   }, [])
 
   useEffect(() => {
@@ -50,37 +44,36 @@ export default (props) => {
   useEffect(async () => {
     try {
       if (locationSharing) {
-        const evts = await Promise.all(
-          data.map(async (el) => {
-            // console.log(el)
-            const res = await Geocode.fromAddress(
-              `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
-            )
-            const coord = [
-              res.results[0].geometry.location.lng,
-              res.results[0].geometry.location.lat,
-              `/event/${el._id}`,
-            ]
-            // const anchor = el.
-            // if ((coords.length = 0)) setCoords((prev) => [...prev, coord])
-            // console.log(data.length)
-            if (coords.length !== data.length)
-              setCoords((prev) => [...prev, coord])
-            let dis = getPreciseDistance(
-              {
-                latitude: parseFloat(res.results[0].geometry.location.lat),
-                longitude: parseFloat(res.results[0].geometry.location.lng),
-              },
-              {
-                latitude: parseFloat(userLat),
-                longitude: parseFloat(userLon),
-              }
-            )
-            console.log(`${parseFloat(dis / 1000).toFixed(1)} km`)
-            return dis / 1000 <= props.radius ? el : []
-          })
-        )
-        setEvtsFiltered(evts.flat())
+        if (data && data.length > 1) {
+          const evts = await Promise.all(
+            data.map(async (el) => {
+              // console.log(el)
+              const res = await Geocode.fromAddress(
+                `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
+              )
+              const coord = [
+                res.results[0].geometry.location.lng,
+                res.results[0].geometry.location.lat,
+                `/event/${el._id}`,
+              ]
+              if (coords.length !== data.length)
+                setCoords((prev) => [...prev, coord])
+              let dis = getPreciseDistance(
+                {
+                  latitude: parseFloat(res.results[0].geometry.location.lat),
+                  longitude: parseFloat(res.results[0].geometry.location.lng),
+                },
+                {
+                  latitude: parseFloat(userLat),
+                  longitude: parseFloat(userLon),
+                }
+              )
+              console.log(`${parseFloat(dis / 1000).toFixed(1)} km`)
+              return dis / 1000 <= props.radius ? el : []
+            })
+          )
+          setEvtsFiltered(evts.flat())
+        }
       } else {
         setEvtsFiltered(data)
       }
@@ -91,28 +84,41 @@ export default (props) => {
 
   // Fetch event images (Firebase Firestore) and store in state
   useEffect(() => {
-    console.log(evtsFiltered)
-    const arr = evtsFiltered?.map((item) => {
-      return storageRef
-        .child(item?.firebaseRef + '/' + item?.image)
-        .getDownloadURL()
-    })
-    Promise.all(arr)
-      .then((urls) => {
-        setImages(urls)
+    // console.log(evtsFiltered)
+    if (evtsFiltered?.length > 1) {
+      const arr = evtsFiltered?.map((item) => {
+        return storageRef
+          .child(item?.firebaseRef + '/' + item?.image)
+          .getDownloadURL()
       })
-      .catch((err) => console.log(err))
+      Promise.all(arr)
+        .then((urls) => {
+          setImages(urls)
+        })
+        .catch((err) => console.log(err))
+    }
   }, [evtsFiltered])
 
   if (data != undefined) {
     return (
       <React.Fragment>
-        <div className="event-screen">
+        <div
+          className="event-screen"
+          markers={
+            !window.location.href.includes('events') ? props.markers(coords) : ''
+          }
+          lat={
+            !window.location.href.includes('events') ? props.lat(userLat) : ''
+          }
+          lon={
+            !window.location.href.includes('events') ? props.lon(userLon) : ''
+          }
+        >
           <h3>Map</h3>
-          <Map lat={userLat} lon={userLon} coords={coords} />
+          {/* <Map lat={userLat} lon={userLon} coords={coords} /> */}
           <div className="event-list">
             {evtsFiltered?.map(function (item, i) {
-              console.log(item)
+              // console.log(item)
               return (
                 <div key={i} className="event-featured">
                   <div className="image">
@@ -149,6 +155,11 @@ export default (props) => {
   } else {
     return (
       <React.Fragment>
+        {/* <div
+          markers={props.markers(coords)}
+          lat={props.lat(userLat)}
+          lon={props.lon(userLon)}
+        ></div> */}
         <Preloader text="events" />
       </React.Fragment>
     )

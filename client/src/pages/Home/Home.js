@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Header, CheckSession, LocateUser } from '../../components'
+import { Header, CheckSession, LocateUser, Map } from '../../components'
 import { GetEventList } from '..'
-import axios from 'axios'
 
 export default () => {
   CheckSession(localStorage.getItem('jwt'))
   const [error, setError] = useState()
   const [locationSharing, setLocationSharing] = useState()
+  const [markers, setMarkers] = useState([])
+  const [userLat, setUserLat] = useState()
+  const [userLon, setUserLon] = useState()
   const [optionsValue, setOptionsValue] = useState(
     localStorage.getItem('radius') || 5
   )
@@ -22,6 +24,18 @@ export default () => {
     // console.log(share)
     setLocationSharing(share)
   }
+
+  useEffect(() => {
+    console.log(locationSharing)
+    if (userLat == undefined || userLon == undefined) {
+      setUserLat(localStorage.getItem('userLat'))
+      setUserLon(localStorage.getItem('userLon'))
+    }
+  }, [locationSharing])
+
+  useEffect(() => {
+    console.log(markers)
+  }, [markers])
 
   return (
     <div>
@@ -55,10 +69,14 @@ export default () => {
           ) : (
             <h3>Location sharing is disabled</h3>
           )}
+          <Map lat={userLat} lon={userLon} coords={markers} />
           <GetEventList
             radius={optionsValue}
             error={error}
             locationsharing={locationSharing}
+            markers={(coords) => setMarkers(coords)}
+            lat={(lat) => setUserLat(lat)}
+            lon={(lon) => setUserLon(lon)}
           />
         </section>
       </div>
