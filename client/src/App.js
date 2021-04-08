@@ -27,6 +27,7 @@ import {
 
 function App() {
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_TEST)
+  console.log(process.env.REACT_APP_STRIPE_PUBLISHABLE_TEST)
 
   return (
     <Router>

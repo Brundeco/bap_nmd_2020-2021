@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import PropertyFormUpdate from './PropertyFormUpdate'
 import { app } from '../../base'
-import { CheckSession } from '../../components'
+import { CheckSession, PrevPage } from '../../components'
 
 export default ({ match, props }) => {
   CheckSession(localStorage.getItem('jwt'))
@@ -51,6 +51,7 @@ export default ({ match, props }) => {
   return (
     <div className="create-product-screen">
       <div className="page-wrapper">
+        <PrevPage />
         <PropertyFormUpdate
           onSubmit={handleSubmit}
           formdata={handleData}

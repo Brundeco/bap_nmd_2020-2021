@@ -1,13 +1,13 @@
 {
-  "short_name": "Local trading app",
+  "short_name": "Bachelorproef 2020-2021",
   "name": "Shop local PWA",
   "icons": [
-      {
-          "src": "/images/logo.png",
-          "type": "image/png",
-          "sizes": "1024x1024",
-          "purpose": "maskable"
-      }
+    {
+      "src": "https://dummyimage.com/144x144.png/96d60d/fff&text=bap",
+      "type": "image/png",
+      "sizes": "144x144",
+      "purpose": "any"
+    }
   ],
   "start_url": ".",
   "display": "standalone",

@@ -12,7 +12,7 @@ export default () => {
       <div className="user-img">
         <Link
           className="link-to-dashboard"
-          to={{ pathname: '/dashboard', state: { from: 'root' } }}
+          to={{ pathname: '/activity', state: { from: 'root' } }}
         >
           <img src={userImage} alt="" />
         </Link>

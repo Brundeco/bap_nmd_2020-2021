@@ -127,7 +127,7 @@ export default () => {
         >
           Already a member? / Login here
         </button>
-        <h5> {status} </h5>
+        <span> {status} </span>
       </div>
     </div>
   )

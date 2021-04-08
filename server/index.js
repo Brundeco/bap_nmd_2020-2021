@@ -31,30 +31,34 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 
 let participants = []
 
-socketio.on('connection', (socket) => {
-  // console.log(socket.id)
-  socket.on('registration', (id) => {
-    console.log('ID !! ')
-    console.log(id)
-    participants.push({ socketId: socket.id, id: id })
-    console.log('All participants !!')
-    console.log(participants)
-  })
+try {
+  socketio.on('connection', (socket) => {
+    // console.log(socket.id)
+    socket.on('registration', (id) => {
+      console.log('ID !! ')
+      console.log(id)
+      participants.push({ socketId: socket.id, id: id })
+      console.log('All participants !!')
+      console.log(participants)
+    })
 
-  socket.on('new-message', (data) => {
-    console.log('data')
-    console.log(data)
-    console.log('data')
-    let obj = participants.find((object) => object.id === parseInt(data.id))
-    console.log(obj)
-    // if (obj) console.log('Object true')
-    if (obj) socketio.to(obj.socketId).emit('receive-message', data.message)
-  })
+    socket.on('new-message', (data) => {
+      console.log('data')
+      console.log(data)
+      console.log('data')
+      let obj = participants.find((object) => object.id === parseInt(data.id))
+      console.log(obj)
+      // if (obj) console.log('Object true')
+      if (obj) socketio.to(obj.socketId).emit('receive-message', data.message)
+    })
 
-  socket.on('disconnect', () => {
-    // console.log('User left')
+    socket.on('disconnect', () => {
+      // console.log('User left')
+    })
   })
-})
+} catch (error) {
+  console.log(error)
+}
 
 app.use('/auth', authRoutes)
 app.use('/events', eventRoutes)

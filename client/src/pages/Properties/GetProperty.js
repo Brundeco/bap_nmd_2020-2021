@@ -229,7 +229,7 @@ export default ({ match }) => {
         </div>
         <div className="wrapper">
           <PrevPage />
-          <h2>{`${data?.street} ${data?.houseNumber},  ${data?.zip} ${data?.city}`}</h2>
+          <h2>{`${data?.street} ${data?.houseNumber}, ${data?.zip} ${data?.city}`}</h2>
 
           <div className="cta-section-top">
             <div className="left">
@@ -413,8 +413,10 @@ export default ({ match }) => {
                   ? 'Processing'
                   : 'Pay €' + dates?.length * data?.price}
               </button>
-              <button className="secondary-btn">Review booking</button>
             </form>
+            <button className="secondary-btn" onClick={() => setShow(!show)}>
+              Review booking
+            </button>
           </section>
         </div>
       </div>

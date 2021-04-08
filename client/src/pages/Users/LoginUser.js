@@ -86,9 +86,9 @@ export default () => {
           Not a member yet? / Sign up here
         </button>
         {status == 'Login successfull' ? (
-          <h6 className="success"> {status} </h6>
+          <span className="success"> {status} </span>
         ) : (
-          <h6 className="failure"> {status} </h6>
+          <span className="failure"> {status} </span>
         )}
       </div>
     </div>

@@ -198,7 +198,7 @@ export default (props) => {
             </div>
           </div>
           <div className="form-row">
-            <div className="form-col-med">
+            <div className="form-col-md">
               <InputField
                 name="province"
                 onChange={handleChange}
@@ -208,7 +208,7 @@ export default (props) => {
                 required
               />
             </div>
-            <div className="form-col-med">
+            <div className="form-col-md">
               <InputField
                 name="country"
                 onChange={handleChange}
