@@ -43,49 +43,14 @@ export const createProperty = async (req, res) => {
 
 export const updateProperty = async (req, res) => {
   const { id } = req.params
-  const {
-    images,
-    dates,
-    description,
-    price,
-    surface,
-    light,
-    street,
-    zip,
-    city,
-    email,
-    firstname,
-    lastname,
-    houseNumber,
-    phone,
-  } = req.body
+  const property = req.body
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`)
 
   try {
-    const updateProperty = {
-      images,
-      dates,
-      description,
-      price,
-      surface,
-      light,
-      street,
-      zip,
-      city,
-      country,
-      province,
-      email,
-      firstname,
-      lastname,
-      houseNumber,
-      phone,
-    }
-
-    await Property.findByIdAndUpdate(id, updateProperty, { new: true })
-
-    res.json(updateProperty)
+    await Property.findByIdAndUpdate(id, property, { new: true })
+    res.json(property)
   } catch (error) {
     console.log(error)
     res.status(404).json({ message: error.message })

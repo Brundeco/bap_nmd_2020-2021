@@ -66,6 +66,8 @@ export default () => {
           ) : (
             <Map lat={50.8503} lon={4.3517} coords={markers} />
           )}
+
+          {/* <Map /> */}
           <GetEventList
             radius={optionsValue}
             locationsharing={locationSharing}

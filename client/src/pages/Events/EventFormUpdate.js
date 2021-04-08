@@ -207,7 +207,7 @@ export default (props) => {
                 name="houseNumber"
                 onChange={handleChange}
                 placeholder="No"
-                type="number"
+                type="text"
                 className="main-input-field"
                 value={data?.houseNumber}
               />

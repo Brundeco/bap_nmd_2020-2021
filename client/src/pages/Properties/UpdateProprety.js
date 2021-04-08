@@ -53,7 +53,7 @@ export default ({ match, props }) => {
       <div className="page-wrapper">
         <PrevPage />
         <PropertyFormUpdate
-          onSubmit={handleSubmit}
+          formsubmit={handleSubmit}
           formdata={handleData}
           currentdata={currentProprety}
           files={handleFiles}

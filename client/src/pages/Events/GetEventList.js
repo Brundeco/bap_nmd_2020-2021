@@ -21,7 +21,6 @@ export default (props) => {
 
   // Fetch all events and store in state(data)
   useEffect(() => {
-    setCoords([])
     axios
       .get(`${process.env.REACT_APP_API_URL}/events`)
       .then((res) => {
@@ -50,6 +49,8 @@ export default (props) => {
                 res.results[0].geometry.location.lng,
                 res.results[0].geometry.location.lat,
                 `/event/${el._id}`,
+                el.title,
+                `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`,
               ]
               if (coords.length !== data.length)
                 setCoords((prev) => [...prev, coord])
@@ -79,6 +80,8 @@ export default (props) => {
             res.results[0].geometry.location.lng,
             res.results[0].geometry.location.lat,
             `/event/${el._id}`,
+            el.title,
+            `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`,
           ]
           if (coords.length !== data.length)
             setCoords((prev) => [...prev, coord])

@@ -197,28 +197,6 @@ export default (props) => {
               />
             </div>
           </div>
-          <div className="form-row">
-            <div className="form-col-md">
-              <InputField
-                name="province"
-                onChange={handleChange}
-                placeholder="Province"
-                type="text"
-                className="main-input-field"
-                required
-              />
-            </div>
-            <div className="form-col-md">
-              <InputField
-                name="country"
-                onChange={handleChange}
-                placeholder="Country"
-                type="text"
-                className="main-input-field"
-                required
-              />
-            </div>
-          </div>
         </section>
 
         <section>

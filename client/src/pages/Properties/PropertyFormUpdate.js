@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { CheckSession, InputField, Textarea } from '../../components'
-import SelectImage from './../../icons/selectimage.svg'
+import SelectImage from './../../icons/add-img.svg'
 import DayPicker from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
 import uuid from 'react-uuid'
@@ -52,6 +52,7 @@ export default (props) => {
 
   useEffect(() => {
     let tmpArr = data?.images
+    console.log(tmpArr)
     files.forEach((element) => {
       if (tmpArr.indexOf(element.id) == -1) tmpArr.push(element.id)
       setData((prev) => ({ ...prev, images: tmpArr }))
@@ -59,24 +60,30 @@ export default (props) => {
   }, [files])
 
   useEffect(() => {
+    console.log(data)
     let currentArr = []
     data?.images?.map((el) => currentArr.push(el))
     setNewImgArr(currentArr)
 
-    const promises = data?.images
-      ?.map(async (el) => {
-        const img = await storageRef
-          .child(data?.firebaseRef + '/' + el)
-          .getDownloadURL()
-          .catch((err) => console.log(err))
-        return img
-      })
-      .filter(Boolean)
-    const promisesArr = promises?.flat()
-    promisesArr &&
-      Promise.all(promisesArr).then((newArray) => {
-        setThumbnails((prevImgs) => [...newArray])
-      })
+    try {
+      const promises = data?.images
+        ?.map(async (el) => {
+          // console.log(storageRef.child(data?.firebaseRef + '/' + el))
+          const img = await storageRef
+            .child(data?.firebaseRef + '/' + el)
+            .getDownloadURL()
+            .catch((err) => console.log(err))
+          return img
+        })
+        .filter(Boolean)
+      const promisesArr = promises?.flat()
+      promisesArr &&
+        Promise.all(promisesArr).then((newArray) => {
+          setThumbnails((prevImgs) => [...newArray])
+        })
+    } catch (error) {
+      console.log(error)
+    }
   }, [data])
 
   const handleDelete = (e, data, i) => {
@@ -95,8 +102,10 @@ export default (props) => {
 
   const handleFiles = (e) => {
     Array.from(e.target.files).map((file) => {
+      // console.log(file)
       const newFile = file
       newFile['id'] = uuid()
+      // console.log(files)
       setFiles((prevState) => [...prevState, newFile])
     })
   }
@@ -104,7 +113,7 @@ export default (props) => {
   const today = new Date()
 
   return (
-    <React.Fragment>
+    <div className="create-product-screen">
       <h1>Fill out the form below to start hosting your property</h1>
       <DayPicker
         selectedDays={data?.dates}
@@ -176,7 +185,7 @@ export default (props) => {
                 name="houseNumber"
                 onChange={handleChange}
                 placeholder="No"
-                type="number"
+                type="text"
                 className="main-input-field"
                 value={data?.houseNumber}
               />
@@ -249,30 +258,23 @@ export default (props) => {
             <input type="file" onChange={handleFiles} multiple />
             <button id="show-custom-file-btn">
               <img src={SelectImage} alt="" />
-              <span>
-                {data?.image ? 'Replace picture' : 'Property pictures'}{' '}
-              </span>
             </button>
           </div>
           <div className="img-gallery">
-            <h2>New pictures</h2>
             {files?.map((item, i) => {
               return (
                 <React.Fragment key={i}>
                   <div className="img-box">
                     <img src={URL.createObjectURL(item)} alt="" />
-                    <button onClick={(e) => handleDeleteNewFiles(e, data, i)}>
-                      Delete
-                    </button>
+                    <button
+                      className="delete-item"
+                      onClick={(e) => handleDeleteNewFiles(e, data, i)}
+                    ></button>
                   </div>
                 </React.Fragment>
               )
             })}
-          </div>
-          <div className="img-gallery">
-            <h2>Previous pictures</h2>
             {thumbnails?.map((item, i) => {
-              // console.log(item)
               return (
                 <React.Fragment key={i}>
                   <div
@@ -280,21 +282,24 @@ export default (props) => {
                     style={
                       item == undefined
                         ? { display: 'none' }
-                        : { display: 'block' }
+                        : { display: 'flex' }
                     }
                   >
                     <img src={item} alt="" className="thumbnail" />
-                    <button onClick={(e) => handleDelete(e, data, i)}>
-                      Delete
-                    </button>
+                    <button
+                      className="delete-item"
+                      onClick={(e) => handleDelete(e, data, i)}
+                    ></button>
                   </div>
                 </React.Fragment>
               )
             })}
           </div>
         </section>
-        <input type="submit" value="Verify info" className="main-input-field" />
+        <button className="main-btn" onClick={props.formsubmit}>
+          Update property
+        </button>
       </form>
-    </React.Fragment>
+    </div>
   )
 }

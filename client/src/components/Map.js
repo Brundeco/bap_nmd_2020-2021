@@ -1,63 +1,53 @@
-import React, { useEffect, useState } from 'react'
-import ReactMapboxGl, {
-  Marker,
-  Popup,
-  Layer,
-  Feature,
-  MapContext,
-} from 'react-mapbox-gl'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import GoogleMapReact from 'google-map-react'
 import markerIcon from './../icons/mapMarker.svg'
 
-const Map = ReactMapboxGl({
-  accessToken: process.env.REACT_APP_MAPBOX_API_KEY,
-})
+const Marker = ({ title, address }) => (
+  <div
+    className="map-marker"
+    onMouseEnter={() => console.log('I was hovered')}
+    onMouseLeave={() => console.log('Hover was ended')}
+  >
+    <img src={markerIcon} />
+    <div className="map-marker-info">
+      <h4> {title} </h4>
+      <p> {address} </p>
+    </div>
+  </div>
+)
 
 export default (props) => {
   // Initialize map on Brussels Center if location is not shared
-  const [lon, setLon] = useState(4.3517)
-  const [lat, setLat] = useState(50.8503)
-  const [showPopup, setShowPopup] = useState(false)
-  // const [showPopup, setShowPopup] = useState('hide-popup')
+  const [zoom, setZoom] = useState(11)
+  const [centerMap, setCenterMap] = useState({})
 
   useEffect(() => {
     // Update lat & lon based on user position, if user has loc sharing enabled
-    setLat(parseFloat(props.lat))
-    setLon(parseFloat(props.lon))
+    setCenterMap({
+      lat: parseFloat(props.lat),
+      lng: parseFloat(props.lon),
+    })
   }, [props.lat, props.lon])
 
-  useEffect(() => {
-    // console.log(showPopup)
-  }, [showPopup])
-
   return (
-    <Map
-      style="mapbox://styles/mapbox/streets-v9"
-      containerStyle={{
-        height: '50vh',
-        width: '80vw',
-      }}
-      bearing={[20]}
-      pitch={[40]}
-      center={[lon, lat]}
-      zoom={[9]}
-    >
-      {props.coords.map((el, key) => {
-        // console.log(el)
-        return (
-          <Link
-            key={key}
-            to={{
-              pathname: `${el[2]}`,
-              state: { from: 'root' },
-            }}
-          >
-            <Marker coordinates={[el[0], el[1]]}>
-              <img src={markerIcon} />
-            </Marker>
-          </Link>
-        )
-      })}
-    </Map>
+    <div style={{ height: '60vh', width: '100%' }}>
+      <GoogleMapReact
+        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
+        center={centerMap}
+        defaultZoom={zoom}
+      >
+        {props.coords.map((el) => {
+          console.log(el)
+          return (
+            <Marker
+              lat={parseFloat(el[1])}
+              lng={parseFloat(el[0])}
+              title={el[3]}
+              address={el[4]}
+            />
+          )
+        })}
+      </GoogleMapReact>
+    </div>
   )
 }

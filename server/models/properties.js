@@ -11,8 +11,6 @@ const propertySchema = mongoose.Schema({
   street: String,
   houseNumber: String,
   zip: Number,
-  province: String,
-  country: String,
 
   email: String,
   phone: Number,
