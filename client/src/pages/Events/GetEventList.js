@@ -18,6 +18,7 @@ export default (props) => {
   const [images, setImages] = useState([])
   const [evtsFiltered, setEvtsFiltered] = useState([])
   const [coords, setCoords] = useState([])
+  const [locationSharing, setLocationSharing] = useState()
 
   // Fetch all events and store in state(data)
   useEffect(() => {
@@ -29,15 +30,15 @@ export default (props) => {
       .catch((err) => console.log(err))
   }, [])
 
-  // useEffect(() => {
-  //   console.log(props.locationsharing)
-  // }, [props.locationsharing])
+  useEffect(() => {
+    console.log(props.locationsharing)
+    setLocationSharing(props.locationsharing)
+  }, [props.locationsharing])
 
   // Filter events based on accessibility (nearby the user), store filtered events in state
-
   useEffect(async () => {
     try {
-      if (props.locationsharing) {
+      if (locationSharing == true) {
         if (data && data.length > 1) {
           const evts = await Promise.all(
             data.map(async (el) => {

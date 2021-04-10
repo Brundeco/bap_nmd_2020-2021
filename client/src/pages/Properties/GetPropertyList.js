@@ -1,22 +1,88 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-
 import axios from 'axios'
 import { CheckSession, Header, Preloader } from '../../components'
 import { app } from '../../base'
+import Geocode from 'react-geocode'
+import { getPreciseDistance } from 'geolib'
 
-export default () => {
+export default (props) => {
   CheckSession(localStorage.getItem('jwt'))
 
   const [data, setData] = useState()
   const storageRef = app.storage().ref()
   const [images, setImages] = useState([])
-  const [properties, setProperties] = useState([])
+  const [locationSharing, setLocationSharing] = useState()
+  const [coords, setCoords] = useState([])
+  const [propertiesFiltered, setPropertiesFiltered] = useState([])
   useEffect(() => {
+    console.log(props.locationsharing)
     axios
       .get(`${process.env.REACT_APP_API_URL}/properties`)
       .then((res) => setData(res.data))
   }, [])
+
+  useEffect(() => {
+    console.log(props.locationsharing)
+    setLocationSharing(props.locationsharing)
+  }, [props.locationsharing])
+
+  useEffect(async () => {
+    try {
+      if (locationSharing == true) {
+        if (data && data.length > 1) {
+          const evts = await Promise.all(
+            data.map(async (el) => {
+              // console.log(el)
+              const res = await Geocode.fromAddress(
+                `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
+              )
+              const coord = [
+                res.results[0].geometry.location.lng,
+                res.results[0].geometry.location.lat,
+                `/event/${el._id}`,
+                el.title,
+                `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`,
+              ]
+              if (coords.length !== data.length)
+                setCoords((prev) => [...prev, coord])
+              let dis = getPreciseDistance(
+                {
+                  latitude: parseFloat(res.results[0].geometry.location.lat),
+                  longitude: parseFloat(res.results[0].geometry.location.lng),
+                },
+                {
+                  latitude: parseFloat(props.lat),
+                  longitude: parseFloat(props.lng),
+                }
+              )
+              // console.log(`${parseFloat(dis / 1000).toFixed(1)} km`)
+              return dis / 1000 <= props.radius ? el : []
+            })
+          )
+          setPropertiesFiltered(evts.flat())
+        }
+      } else {
+        setPropertiesFiltered(data)
+        data.map(async (el) => {
+          const res = await Geocode.fromAddress(
+            `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
+          )
+          const coord = [
+            res.results[0].geometry.location.lng,
+            res.results[0].geometry.location.lat,
+            `/event/${el._id}`,
+            el.title,
+            `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`,
+          ]
+          if (coords.length !== data.length)
+            setCoords((prev) => [...prev, coord])
+        })
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }, [data, props.lat, props.lng, props.radius])
 
   useEffect(() => {
     console.log(data)
@@ -40,11 +106,13 @@ export default () => {
   }, [data])
 
   if (data != undefined) {
+    console.log('Waar zijn we ?????? !!!!!!')
     return (
       <React.Fragment>
         <div className="property-screen">
           <div className="wrapper">
-            {data?.map(function (item, i) {
+            {propertiesFiltered?.map(function (item, i) {
+              console.log(item)
               return (
                 <div key={i} className="list-item">
                   <h2> {item.description}</h2>

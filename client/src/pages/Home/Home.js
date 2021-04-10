@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Header, CheckSession, LocateUser, Map, Menu } from '../../components'
-import { GetEventList } from '..'
+import { GetEventList, GetPropertyList } from '..'
 
 export default (props) => {
   CheckSession(localStorage.getItem('jwt'))
@@ -10,22 +10,34 @@ export default (props) => {
   const [userLon, setUserLon] = useState()
   const [radius, setRadius] = useState()
 
-  useEffect(() => {
+  useEffect(async () => {
     if (location.error == 'User denied Geolocation') {
       setLocationSharing(false)
       localStorage.setItem('locationsharing', false)
+      localStorage.removeItem('userlat')
+      localStorage.removeItem('userlng')
     } else {
       setUserLat(location?.coordinates?.lat)
       setUserLon(location?.coordinates?.lng)
-      localStorage.setItem('locationsharing', true)
-      localStorage.setItem('userlat', location?.coordinates?.lat)
-      localStorage.setItem('userlng', location?.coordinates?.lng)
+      if (
+        !localStorage.getItem('userlat') ||
+        !localStorage.getItem('userlng') ||
+        !localStorage.getItem('locationsharing')
+      ) {
+        localStorage.setItem('locationsharing', true)
+        localStorage.setItem('userlat', location?.coordinates?.lat)
+        localStorage.setItem('userlng', location?.coordinates?.lng)
+      }
     }
   }, [location.loaded])
 
   const handleRadius = (radius) => {
     setRadius(radius)
   }
+
+  useEffect(() => {
+    // console.log(locationSharing)
+  }, [locationSharing])
 
   return (
     <div>
@@ -39,6 +51,13 @@ export default (props) => {
             </button>
           </div>
           <GetEventList
+            radius={radius}
+            locationsharing={locationSharing}
+            markers={() => {}}
+            lat={userLat}
+            lng={userLon}
+          />
+          <GetPropertyList
             radius={radius}
             locationsharing={locationSharing}
             markers={() => {}}

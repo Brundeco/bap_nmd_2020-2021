@@ -8,8 +8,8 @@ import RadiusIcon from './../icons/radius.svg'
 export default (props) => {
   const location = useLocation()
   const history = useHistory()
+  const currentPath = location.pathname
   const [showOptions, setShowOptions] = useState(false)
-  let currentPath = location.pathname
   const [optionsValue, setOptionsValue] = useState(
     localStorage.getItem('radius') || 5
   )
@@ -26,19 +26,15 @@ export default (props) => {
     history.goBack()
   }
 
-  if (
-    currentPath === '/' ||
-    currentPath.includes('events') ||
-    currentPath.includes('properties')
-  )
+  if (currentPath === '/')
     return (
       <div
         className="menu-actions-homepage"
         radius={props.radius(optionsValue)}
       >
-        <div className="search">
+        {/* <div className="search">
           <img src={SearchIcon} />
-        </div>
+        </div> */}
         <div className="radius" onClick={() => setShowOptions(!showOptions)}>
           <img src={RadiusIcon} />
         </div>
@@ -66,8 +62,15 @@ export default (props) => {
     )
 
   return (
-    <div className="prev-page-component" onClick={handleClick}>
+    <div
+      className="prev-page-component"
+      radius={props.radius(optionsValue)}
+      onClick={handleClick}
+    >
       <FontAwesome icon={faChevronLeft} />
+       {/* <div className="search">
+          <img src={SearchIcon} />
+        </div> */}
     </div>
   )
 }

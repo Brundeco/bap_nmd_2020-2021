@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { GetEventList } from '..'
 import { CheckSession, Header, LocateUser, Map } from '../../components'
 
-export default () => {
+export default (props) => {
   CheckSession(localStorage.getItem('jwt'))
   const [locationSharing, setLocationSharing] = useState()
   const [markers, setMarkers] = useState([])
@@ -15,6 +15,7 @@ export default () => {
   }, [markers])
 
   useEffect(() => {
+    // console.log(props.locationsharing)
     setUserLat(localStorage.getItem('userlat'))
     setUserLon(localStorage.getItem('userlng'))
     setLocationSharing(localStorage.getItem('locationsharing'))
