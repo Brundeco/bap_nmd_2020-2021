@@ -23,10 +23,14 @@ import {
   UpdateProperty,
   Favorites,
   GetReservationList,
+  Events,
+  Properties,
 } from './pages'
 
 function App() {
-  const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_TEST_NEW)
+  const stripePromise = loadStripe(
+    process.env.REACT_APP_STRIPE_PUBLISHABLE_TEST_NEW
+  )
 
   return (
     <Router>
@@ -42,12 +46,12 @@ function App() {
           <Route path="/activity" component={Activity} />
           <Route path="/favorites" component={Favorites} />
 
-          <Route path="/events" component={GetEventList} />
+          <Route path="/events" component={Events} />
           <Route path="/event/:id" component={GetEvent} />
           <Route path="/update-event/:id" component={UpdateEvent} />
           <Route path="/create-event" component={CreateEvent} />
 
-          <Route path="/properties" component={GetPropertyList} />
+          <Route path="/properties" component={Properties} />
           <Route path="/create-property" component={CreateProperty} />
           <Route path="/update-property/:id" component={UpdateProperty} />
           <Route path="/property/:id/:author_id" component={GetProperty} />

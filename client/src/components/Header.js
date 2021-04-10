@@ -1,21 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { PrevPage } from '.'
-import profileIcon from './../icons/profile.svg'
+import { Menu, PrevPage } from '.'
 
-export default () => {
-  const user = JSON.parse(localStorage.getItem('user'))
-  const userImage = user != null ? user.image : profileIcon
+export default (props) => {
+  const [status, setStatus] = useState(false)
+  const [radius, setRadius] = useState()
+
+  const handleChildStatus = (s) => {
+    setStatus(s)
+  }
+
+  const handleRadius = (radius) => {
+    setRadius(radius)
+  }
+
   return (
-    <header className="header">
-      <PrevPage />
-      <div className="user-img">
-        <Link
-          className="link-to-dashboard"
-          to={{ pathname: '/activity', state: { from: 'root' } }}
-        >
-          <img src={userImage} alt="" />
-        </Link>
+    <header className="header" radius={props.radius(radius)}>
+      <PrevPage locationsharing={props.locationsharing} radius={handleRadius} />
+      <Menu
+        childstatus={handleChildStatus}
+        status={status}
+        className={status ? 'menu-wrapper show-menu' : 'menu-wrapper hide-menu'}
+      />
+      <div className="open-menu" onClick={() => setStatus(true)}>
+        <div className="line" />
+        <div className="line" />
       </div>
     </header>
   )

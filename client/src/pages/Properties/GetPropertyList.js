@@ -42,7 +42,6 @@ export default () => {
   if (data != undefined) {
     return (
       <React.Fragment>
-        <Header />
         <div className="property-screen">
           <div className="wrapper">
             {data?.map(function (item, i) {

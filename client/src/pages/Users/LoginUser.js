@@ -12,7 +12,7 @@ export default () => {
   localStorage.clear()
   const location = useLocation()
   const email = queryString.parse(location.search).email
-  const [data, setData] = React.useState({})
+  const [data, setData] = React.useState({ email: '', password: '' })
   const [status, setStatus] = useState()
   const [progress, setProgress] = useState(false)
 
@@ -26,7 +26,6 @@ export default () => {
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }))
-    console.log(data)
   }
 
   const handleSubmit = (e) => {

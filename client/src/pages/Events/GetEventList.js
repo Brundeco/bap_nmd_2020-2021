@@ -64,7 +64,7 @@ export default (props) => {
                   longitude: parseFloat(props.lng),
                 }
               )
-              console.log(`${parseFloat(dis / 1000).toFixed(1)} km`)
+              // console.log(`${parseFloat(dis / 1000).toFixed(1)} km`)
               return dis / 1000 <= props.radius ? el : []
             })
           )
@@ -111,43 +111,43 @@ export default (props) => {
   if (data != undefined) {
     return (
       <React.Fragment>
-        <div
-          className="event-screen"
-          markers={
-            !window.location.href.includes('events')
-              ? props.markers(coords)
-              : ''
-          }
-        >
-          <h3>Map</h3>
-          {/* <Map lat={userLat} lon={userLon} coords={coords} /> */}
+        <div className="event-screen" markers={props.markers(coords)}>
           <div className="event-list">
             {evtsFiltered?.map(function (item, i) {
               return (
-                <div key={i} className="event-featured">
-                  <div className="image">
-                    <img src={images[i]} alt="" />
-                  </div>
-                  <div className="info">
-                    <div className="left">
-                      <h3> {item.title} </h3>
-                      <h4>
-                        {`${item.city} ${new Date(
-                          item.dates[0]
-                        ).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                        })} `}
-                      </h4>
+                <Link
+                  className="event-featured"
+                  key={i}
+                  to={{
+                    pathname: `/event/${item._id}`,
+                    state: { from: 'root' },
+                  }}
+                >
+                  <div>
+                    <div className="image">
+                      <img src={images[i]} alt="" />
                     </div>
-                    <div className="right">
-                      <div className="round-like-btn">
-                        <img src={likeIcon} alt="" />
+                    <div className="info">
+                      <div className="left">
+                        <h3> {item.title} </h3>
+                        <h4>
+                          {`${item.city} ${new Date(
+                            item.dates[0]
+                          ).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                          })} `}
+                        </h4>
+                      </div>
+                      <div className="right">
+                        <div className="round-like-btn">
+                          <img src={likeIcon} alt="" />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               )
             })}
           </div>

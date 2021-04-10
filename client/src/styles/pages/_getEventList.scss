@@ -1,10 +1,20 @@
 .event-screen .event-list {
-  overflow: auto;
-  white-space: nowrap;
-  height: auto;
-  // background-color: yellow;
+  // overflow: auto;
+  // white-space: nowrap;
+  // height: auto;
   margin-top: 5vh;
 }
+
+// .event-screen .event-featured {
+//   display: flex;
+//   flex-direction: column;
+//   display: flex;
+//   margin-right: 5vw;
+//   margin-bottom: 10vh !important;
+//   width: 75vw;
+//   min-height: 75vw;
+//   display: inline-block;
+// }
 
 .event-screen .event-featured {
   display: flex;
@@ -12,19 +22,18 @@
   display: flex;
   margin-right: 5vw;
   margin-bottom: 10vh !important;
-  width: 75vw;
-  min-height: 75vw;
+  width: 35vw;
+  height: auto;
   display: inline-block;
 }
 
-// .event-screen .list-item {
-//   height: auto;
+// .event-screen .image {
+//   min-height: 70%;
 //   width: 100%;
-//   margin: 5vh 0;
 // }
 
 .event-screen .image {
-  min-height: 70%;
+  height: 100%;
   width: 100%;
 }
 
@@ -79,4 +88,3 @@
   justify-content: center;
   align-items: center;
 }
-

@@ -1,0 +1,145 @@
+.menu-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(#000, 0.7);
+  z-index: 51;
+
+  .menu {
+    width: 70vw;
+    height: 100vh;
+    background-color: #eeefef;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 52;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .menu-top {
+      margin: 3vh 0 6vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    .user-img {
+      width: auto;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      a {
+        width: 10vw;
+        height: 10vw;
+        font-weight: 500;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 7px;
+        }
+      }
+      h3 {
+        font-size: 0.9em;
+        margin-top: 2vh;
+        font-weight: 500;
+      }
+    }
+
+    .menu-link-component {
+      margin: 0 0 3vh;
+      width: 80%;
+      padding-bottom: 3vh;
+      border-bottom: 0.5px solid #e3e3e3;
+
+      h3 {
+        font-size: 0.9em;
+        color: $theme-blue !important;
+        margin-bottom: 1vh;
+      }
+
+      .menu-link-wrapper {
+        position: relative;
+        display: flex;
+        margin: 1vh 0;
+
+        img {
+          opacity: 0;
+          transition: $base-transition;
+        }
+
+        &:hover img {
+          animation: fadeIn 1s 0.1s;
+          margin-right: 2vw;
+          transition: $base-transition;
+        }
+
+        a {
+          position: absolute;
+          padding-left: 0;
+          transition: $base-transition;
+
+          li {
+            font-weight: 500;
+            font-size: 0.9em;
+          }
+        }
+
+        &:hover a {
+          padding-left: 5vw;
+          transition: $base-transition;
+        }
+      }
+    }
+  }
+
+  .close-menu {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .cross-box {
+      min-width: 6vw;
+      padding: 5%;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.hide-menu {
+  opacity: 0;
+  display: none;
+  transition: $base-transition;
+}
+
+.show-menu {
+  display: flex;
+  opacity: 1;
+  transition: $base-transition;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

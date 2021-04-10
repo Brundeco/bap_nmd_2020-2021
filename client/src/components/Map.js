@@ -30,24 +30,41 @@ export default (props) => {
   }, [props.lat, props.lon])
 
   return (
-    <div style={{ height: '60vh', width: '100%' }}>
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
-        center={centerMap}
-        defaultZoom={zoom}
+    <div
+      style={{
+        height: '30vh',
+        width: '100vw',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '0 5%',
+      }}
+    >
+      <div
+        style={{
+          height: '100%',
+          width: '100%',
+          borderRadius: '10px',
+        }}
       >
-        {props.coords.map((el) => {
-          console.log(el)
-          return (
-            <Marker
-              lat={parseFloat(el[1])}
-              lng={parseFloat(el[0])}
-              title={el[3]}
-              address={el[4]}
-            />
-          )
-        })}
-      </GoogleMapReact>
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
+          center={centerMap}
+          defaultZoom={zoom}
+        >
+          {props.coords.map((el) => {
+            // console.log(el)
+            return (
+              <Marker
+                lat={parseFloat(el[1])}
+                lng={parseFloat(el[0])}
+                title={el[3]}
+                address={el[4]}
+              />
+            )
+          })}
+        </GoogleMapReact>
+      </div>
     </div>
   )
 }
