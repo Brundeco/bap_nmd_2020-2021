@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { Header, CheckSession, LocateUser, Map, Menu } from '../../components'
 import { GetEventList, GetPropertyList } from '..'
 
@@ -46,9 +47,13 @@ export default (props) => {
         <section className="event-section">
           <div className="cta-top">
             <h2>Events around you</h2>
-            <button onClick={() => (window.location = '/events')}>
-              Show all events
-            </button>
+            <Link
+              to={{
+                pathname: '/events',
+              }}
+            >
+              <li>Show all events</li>
+            </Link>
           </div>
           <GetEventList
             radius={radius}
@@ -57,6 +62,16 @@ export default (props) => {
             lat={userLat}
             lng={userLon}
           />
+          <div className="cta-top">
+            <h2>Properties around you</h2>
+            <Link
+              to={{
+                pathname: '/properties',
+              }}
+            >
+              <li>Show all properties</li>
+            </Link>
+          </div>
           <GetPropertyList
             radius={radius}
             locationsharing={locationSharing}

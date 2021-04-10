@@ -69,7 +69,7 @@ export default ({ match }) => {
 
   return (
     <div className="dashboard-screen ">
-      <Header />
+      {/* <Header /> */}
       <div className="chat-screen page-wrapper">
         <div className="chat-top">
           <h1> Gesprek met {match.params.recepient}</h1>

@@ -15,11 +15,11 @@
 }
 
 .menu-actions-homepage {
-//   width: 30vw;
+  //   width: 30vw;
   height: 10vh;
   display: flex;
   align-items: center;
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
 .menu-actions-homepage .search,
@@ -38,12 +38,10 @@
   height: 30%;
 }
 
-
 .menu-actions-homepage .search {
   background-color: #f5f5f5;
 }
 
 .menu-actions-homepage .radius {
-  background-color: #e4e4dc;
-  margin-left: 10px;
+  background-color: $soft-green;
 }

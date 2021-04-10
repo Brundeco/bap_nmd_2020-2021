@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Preloader, CheckSession, PrevPage } from './../../components'
+import { Preloader, CheckSession } from './../../components'
 import { app } from '../../base'
 
 export default ({ match }) => {
   CheckSession(localStorage.getItem('jwt'))
-  
+
   const user = JSON.parse(localStorage.getItem('user'))
   const [data, setData] = useState()
   const storageRef = app.storage().ref()
@@ -78,7 +78,6 @@ export default ({ match }) => {
             <img src={image} alt="" />
           </div>
           <div className="wrapper">
-            <PrevPage />
             <h1>{data?.title}</h1>
             <h2>By Leda Lenskens | {timestamp} </h2>
             <p> {data?.description}</p>

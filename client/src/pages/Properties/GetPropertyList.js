@@ -15,6 +15,7 @@ export default (props) => {
   const [locationSharing, setLocationSharing] = useState()
   const [coords, setCoords] = useState([])
   const [propertiesFiltered, setPropertiesFiltered] = useState([])
+  const [distance, setDistance] = useState([])
   useEffect(() => {
     console.log(props.locationsharing)
     axios
@@ -23,7 +24,6 @@ export default (props) => {
   }, [])
 
   useEffect(() => {
-    console.log(props.locationsharing)
     setLocationSharing(props.locationsharing)
   }, [props.locationsharing])
 
@@ -33,7 +33,6 @@ export default (props) => {
         if (data && data.length > 1) {
           const evts = await Promise.all(
             data.map(async (el) => {
-              // console.log(el)
               const res = await Geocode.fromAddress(
                 `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
               )
@@ -56,7 +55,12 @@ export default (props) => {
                   longitude: parseFloat(props.lng),
                 }
               )
-              // console.log(`${parseFloat(dis / 1000).toFixed(1)} km`)
+              let distance = `${parseFloat(dis / 1000).toFixed(1)}`
+              if (distance !== NaN)
+                setDistance((prev) => [
+                  ...prev,
+                  `${parseFloat(dis / 1000).toFixed(1)}`,
+                ])
               return dis / 1000 <= props.radius ? el : []
             })
           )
@@ -85,10 +89,12 @@ export default (props) => {
   }, [data, props.lat, props.lng, props.radius])
 
   useEffect(() => {
-    console.log(data)
+    console.log(distance)
+  }, [distance])
+
+  useEffect(() => {
     const promises = data
       ?.map((element) => {
-        console.log(element)
         return element?.images?.map(async (el) => {
           const url = await storageRef
             .child(element.firebaseRef + '/' + el)
@@ -112,7 +118,6 @@ export default (props) => {
         <div className="property-screen">
           <div className="wrapper">
             {propertiesFiltered?.map(function (item, i) {
-              console.log(item)
               return (
                 <div key={i} className="list-item">
                   <h2> {item.description}</h2>

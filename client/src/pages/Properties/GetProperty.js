@@ -228,9 +228,7 @@ export default ({ match }) => {
           <ImageSlider slides={images} index={handleIndex} />
         </div>
         <div className="wrapper">
-          <PrevPage />
           <h2>{`${data?.street} ${data?.houseNumber}, ${data?.zip} ${data?.city}`}</h2>
-
           <div className="cta-section-top">
             <div className="left">
               <img src={user.image} alt="" />

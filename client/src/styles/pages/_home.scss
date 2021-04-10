@@ -19,7 +19,7 @@
   align-items: center;
 }
 
-.home-screen .cta-top button {
+.home-screen .cta-top a {
   @include main-btn-outline;
   width: auto;
   padding: 1.5% 3%;

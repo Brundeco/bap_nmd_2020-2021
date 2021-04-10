@@ -15,7 +15,6 @@ export default (props) => {
   }, [markers])
 
   useEffect(() => {
-    // console.log(props.locationsharing)
     setUserLat(localStorage.getItem('userlat'))
     setUserLon(localStorage.getItem('userlng'))
     setLocationSharing(localStorage.getItem('locationsharing'))

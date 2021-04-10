@@ -31,9 +31,12 @@ export default (props) => {
   }, [])
 
   useEffect(() => {
-    console.log(props.locationsharing)
     setLocationSharing(props.locationsharing)
   }, [props.locationsharing])
+
+  // useEffect(() => {
+  //   console.log(evtsFiltered)
+  // }, [evtsFiltered])
 
   // Filter events based on accessibility (nearby the user), store filtered events in state
   useEffect(async () => {
@@ -109,57 +112,52 @@ export default (props) => {
     }
   }, [evtsFiltered])
 
-  if (data != undefined) {
+  if (data == undefined || data.length <= 1) {
+    console.log('empty shit')
+    return <Preloader text="events" />
+  } else {
     return (
-      <React.Fragment>
-        <div className="event-screen" markers={props.markers(coords)}>
-          <div className="event-list">
-            {evtsFiltered?.map(function (item, i) {
-              return (
-                <Link
-                  className="event-featured"
-                  key={i}
-                  to={{
-                    pathname: `/event/${item._id}`,
-                    state: { from: 'root' },
-                  }}
-                >
-                  <div>
-                    <div className="image">
-                      <img src={images[i]} alt="" />
+      <div className="event-screen" markers={props.markers(coords)}>
+        <div className="event-list">
+          {evtsFiltered?.map(function (item, i) {
+            return (
+              <Link
+                className="event-featured"
+                key={i}
+                to={{
+                  pathname: `/event/${item._id}`,
+                  state: { from: 'root' },
+                }}
+              >
+                <div>
+                  <div className="image">
+                    <img src={images[i]} alt="" />
+                  </div>
+                  <div className="info">
+                    <div className="left">
+                      <h3> {item.title} </h3>
+                      <h4>
+                        {`${item.city} ${new Date(
+                          item.dates[0]
+                        ).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: '2-digit',
+                          day: '2-digit',
+                        })} `}
+                      </h4>
                     </div>
-                    <div className="info">
-                      <div className="left">
-                        <h3> {item.title} </h3>
-                        <h4>
-                          {`${item.city} ${new Date(
-                            item.dates[0]
-                          ).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit',
-                          })} `}
-                        </h4>
-                      </div>
-                      <div className="right">
-                        <div className="round-like-btn">
-                          <img src={likeIcon} alt="" />
-                        </div>
+                    <div className="right">
+                      <div className="round-like-btn">
+                        <img src={likeIcon} alt="" />
                       </div>
                     </div>
                   </div>
-                </Link>
-              )
-            })}
-          </div>
+                </div>
+              </Link>
+            )
+          })}
         </div>
-      </React.Fragment>
-    )
-  } else {
-    return (
-      <React.Fragment>
-        <Preloader text="events" />
-      </React.Fragment>
+      </div>
     )
   }
 }

@@ -34,7 +34,7 @@ export default ({ match }) => {
 
   return (
     <div className="conversations-screen">
-      <Header />
+      {/* <Header radius={'6'} /> */}
       <div className="page-wrapper">
         <h2>Conversations</h2>
         {conversations &&

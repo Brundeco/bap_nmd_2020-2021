@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 export default ({
   icon,
@@ -14,27 +14,32 @@ export default ({
       <h3>{title} </h3>
       <div className="menu-link-wrapper">
         <img src={icon} alt="icon" />
-        <Link
-          className="menu-link"
+        <NavLink
           to={{
             pathname: firstlinkref,
             state: { from: 'root' },
           }}
+          activeStyle={{
+            fontWeight: '600',
+          }}
         >
-          <li>{firstlink}</li>
-        </Link>
+          {firstlink}
+        </NavLink>
       </div>
       <div className="menu-link-wrapper">
         <img src={icon} alt="icon" />
-        <Link
+        <NavLink
           className="menu-link"
           to={{
             pathname: secondlinkref,
             state: { from: 'root' },
           }}
+          activeStyle={{
+            fontWeight: '600',
+          }}
         >
-          <li>{secondlink}</li>
-        </Link>
+          {secondlink}
+        </NavLink>
       </div>
     </div>
   )
