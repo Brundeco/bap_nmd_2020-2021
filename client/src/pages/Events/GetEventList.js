@@ -40,9 +40,9 @@ export default (props) => {
 
   // Filter events based on accessibility (nearby the user), store filtered events in state
   useEffect(async () => {
-    try {
-      if (locationSharing == true) {
-        if (data && data.length > 1) {
+    if (locationSharing == true) {
+      if (data?.length > 1) {
+        try {
           const evts = await Promise.all(
             data.map(async (el) => {
               // console.log(el)
@@ -73,26 +73,32 @@ export default (props) => {
             })
           )
           setEvtsFiltered(evts.flat())
+        } catch (error) {
+          console.log(error)
         }
-      } else {
-        setEvtsFiltered(data)
-        data.map(async (el) => {
-          const res = await Geocode.fromAddress(
-            `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
-          )
-          const coord = [
-            res.results[0].geometry.location.lng,
-            res.results[0].geometry.location.lat,
-            `/event/${el._id}`,
-            el.title,
-            `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`,
-          ]
-          if (coords.length !== data.length)
-            setCoords((prev) => [...prev, coord])
-        })
       }
-    } catch (err) {
-      console.log(err)
+    } else {
+      if (data?.length > 1) {
+        try {
+          setEvtsFiltered(data)
+          data.map(async (el) => {
+            const res = await Geocode.fromAddress(
+              `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
+            )
+            const coord = [
+              res.results[0].geometry.location.lng,
+              res.results[0].geometry.location.lat,
+              `/event/${el._id}`,
+              el.title,
+              `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`,
+            ]
+            if (coords.length !== data.length)
+              setCoords((prev) => [...prev, coord])
+          })
+        } catch (error) {
+          console.log(error)
+        }
+      }
     }
   }, [data, props.lat, props.lng, props.radius])
 

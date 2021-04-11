@@ -9,6 +9,9 @@ import { getPreciseDistance } from 'geolib'
 export default (props) => {
   CheckSession(localStorage.getItem('jwt'))
 
+  Geocode.setApiKey(process.env.REACT_APP_GEOCODING_API_KEY)
+  Geocode.enableDebug()
+
   const [data, setData] = useState()
   const storageRef = app.storage().ref()
   const [images, setImages] = useState([])
@@ -28,9 +31,9 @@ export default (props) => {
   }, [props.locationsharing])
 
   useEffect(async () => {
-    try {
-      if (locationSharing == true) {
-        if (data && data.length > 1) {
+    if (locationSharing == true) {
+      if (data?.length > 1) {
+        try {
           const evts = await Promise.all(
             data.map(async (el) => {
               const res = await Geocode.fromAddress(
@@ -65,26 +68,32 @@ export default (props) => {
             })
           )
           setPropertiesFiltered(evts.flat())
+        } catch (error) {
+          console.log(error)
         }
-      } else {
-        setPropertiesFiltered(data)
-        data.map(async (el) => {
-          const res = await Geocode.fromAddress(
-            `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
-          )
-          const coord = [
-            res.results[0].geometry.location.lng,
-            res.results[0].geometry.location.lat,
-            `/event/${el._id}`,
-            el.title,
-            `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`,
-          ]
-          if (coords.length !== data.length)
-            setCoords((prev) => [...prev, coord])
-        })
       }
-    } catch (err) {
-      console.log(err)
+    } else {
+      if (data?.length > 1) {
+        try {
+          setPropertiesFiltered(data)
+          data.map(async (el) => {
+            const res = await Geocode.fromAddress(
+              `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
+            )
+            const coord = [
+              res.results[0].geometry.location.lng,
+              res.results[0].geometry.location.lat,
+              `/event/${el._id}`,
+              el.title,
+              `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`,
+            ]
+            if (coords.length !== data.length)
+              setCoords((prev) => [...prev, coord])
+          })
+        } catch (error) {
+          console.log(error)
+        }
+      }
     }
   }, [data, props.lat, props.lng, props.radius])
 
@@ -112,37 +121,34 @@ export default (props) => {
   }, [data])
 
   if (data != undefined) {
-    console.log('Waar zijn we ?????? !!!!!!')
     return (
-      <React.Fragment>
-        <div className="property-screen">
-          <div className="wrapper">
-            {propertiesFiltered?.map(function (item, i) {
-              return (
-                <div key={i} className="list-item">
-                  <h2> {item.description}</h2>
-                  <div className="image">
-                    {images?.map(function (image, i) {
-                      if (image?.includes(item.images[0])) {
-                        return <img src={image} alt="" />
-                      }
-                    })}
-                  </div>
-                  <ul>
-                    <Link
-                      to={{
-                        pathname: `/property/${item._id}/${item.author_id}`,
-                      }}
-                    >
-                      <li>DETAIL</li>
-                    </Link>
-                  </ul>
+      <div className="property-screen">
+        <div className="wrapper">
+          {propertiesFiltered?.map(function (item, i) {
+            return (
+              <div key={i} className="list-item">
+                <h2> {item.description}</h2>
+                <div className="image">
+                  {images?.map(function (image, i) {
+                    if (image?.includes(item.images[0])) {
+                      return <img key={i} src={image} alt="" />
+                    }
+                  })}
                 </div>
-              )
-            })}
-          </div>
+                <ul>
+                  <Link
+                    to={{
+                      pathname: `/property/${item._id}/${item.author_id}`,
+                    }}
+                  >
+                    <li>DETAIL</li>
+                  </Link>
+                </ul>
+              </div>
+            )
+          })}
         </div>
-      </React.Fragment>
+      </div>
     )
   } else {
     return (

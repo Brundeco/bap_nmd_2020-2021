@@ -52,10 +52,11 @@ export default (props) => {
           center={centerMap}
           defaultZoom={zoom}
         >
-          {props.coords.map((el) => {
+          {props.coords.map((el, key) => {
             // console.log(el)
             return (
               <Marker
+                key={key}
                 lat={parseFloat(el[1])}
                 lng={parseFloat(el[0])}
                 title={el[3]}
