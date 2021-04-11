@@ -1,36 +1,77 @@
-import React, { useState, useEffect, Profiler } from 'react'
-
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Header, Preloader } from '../../../components'
+import { Link } from 'react-router-dom'
 import { app } from '../../../base'
 
 export default () => {
-  const [data, setData] = useState()
-  const storageRef = app.storage().ref()
+  const user = JSON.parse(localStorage.getItem('user'))
+  const [favorites, setFavorites] = useState([])
   const [images, setImages] = useState([])
-  const [properties, setProperties] = useState([])
+  const storageRef = app.storage().ref()
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${process.env.REACT_APP_API_URL}/events`)
-  //     .then((res) => setData(res.data))
-  // }, [])
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/users/${user.id}`)
+      .then(async (res) => {
+        await res.data.favProperties?.map((el) => {
+          axios
+            .get(`${process.env.REACT_APP_API_URL}/events/${el}`)
+            .then((r) => {
+              if (r.data) {
+                setFavorites((prev) => [...prev, r.data])
+                storageRef
+                  .child(r.data.firebaseRef + '/' + r.data.image)
+                  .getDownloadURL()
+                  .then((url) => {
+                    // console.log(url)
+                    setImages((prev) => [...prev, url])
+                  })
+                  .catch((err) => console.log(err))
+              }
+            })
+        })
+      })
+  }, [])
 
-  if (data != undefined) {
+  useEffect(() => {
+    // console.log(favorites)
+  }, [favorites])
+
+  if (favorites?.length > 0) {
     return (
-      <React.Fragment>
-        <Header />
-        <div className="property-screen">
-          <div className="wrapper">
-            <h2>My events !</h2>
-          </div>
+      <div className="property-screen">
+        <div className="wrapper">
+          {favorites.map((el, key) => {
+            if (el) {
+              console.log(el)
+              return (
+                <div key={key}>
+                  <h2>{}</h2>
+                  <p>{el.city} </p>
+                  <img
+                    src={images[key]}
+                    alt=""
+                    style={{ width: '30vw', height: '5vh' }}
+                  />
+                  <Link
+                    className="main-btn"
+                    to={{
+                      pathname: `/property/${el._id}/${el.author_id}`,
+                    }}
+                  >
+                    Visit
+                  </Link>
+                </div>
+              )
+            }
+          })}
         </div>
-      </React.Fragment>
+      </div>
     )
   } else {
     return (
       <React.Fragment>
-        <h1>You don't have FAVORITE events yet</h1>
+        <h1>Looking for favorite events</h1>
       </React.Fragment>
     )
   }

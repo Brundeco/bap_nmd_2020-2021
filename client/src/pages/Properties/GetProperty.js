@@ -40,6 +40,9 @@ export default ({ match }) => {
   const [show, setShow] = useState(false)
   const [processing, setProcessing] = useState(false)
   const [paymentStatus, setPaymentStatus] = useState()
+  const [favorites, setFavorites] = useState([])
+  const [liked, setLiked] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [booking, setBooking] = useState({
     client: user.username,
     client_id: user.id,
@@ -62,6 +65,12 @@ export default ({ match }) => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/properties/${match.params.id}`)
       .then((res) => setData(res.data))
+
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/users/${user.id}`)
+      .then((res) => {
+        setFavorites(res.data.favEvents)
+      })
   }, [])
 
   useEffect(() => {
@@ -121,6 +130,31 @@ export default ({ match }) => {
   useEffect(() => {
     setBooking((prev) => ({ ...prev, dates: selectedDates }))
   }, [selectedDates])
+
+  const handleLike = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+
+    let arr = [...favorites]
+    let indexItem = arr.indexOf(match.params.id)
+    indexItem === -1 ? arr.push(match.params.id) : arr.splice(indexItem, 1)
+
+    axios
+      .put(`${process.env.REACT_APP_API_URL}/users/like-property/${user.id}`, {
+        favProperties: arr,
+      })
+      .then((res) => {
+        const favs = res
+        console.log(favs)
+        setData((prev) => ({ ...prev, favProperties: favs }))
+        setLoading(false)
+      })
+      .catch((err) => console.log(err))
+  }
+
+  useEffect(() => {
+    favorites?.includes(match.params.id) ? setLiked(false) : setLiked(true)
+  }, [favorites])
 
   const cardElementOptions = {
     hidePostalCode: true,
@@ -235,12 +269,22 @@ export default ({ match }) => {
               <p> {`${data?.firstname} ${data?.lastname}`} </p>
             </div>
             <div className="right">
-              <button
+              {/* <section className="cta-section"> */}
+                <button
+                  className={
+                    liked ? 'main-btn liked-event' : 'main-btn not-liked-event'
+                  }
+                  onClick={(e) => handleLike(e)}
+                >
+                  {liked ? 'Like' : 'Unlike'}
+                </button>
+              {/* </section> */}
+              {/* <button
                 onMouseEnter={() => setHoverState(!hoverState)}
                 onMouseLeave={() => setHoverState(!hoverState)}
               >
                 <img src={hoverState ? LikeIconBlue : LikeIconWhite} alt="" />
-              </button>
+              </button> */}
             </div>
           </div>
           <h3>Added on {propertyCreatedAt}</h3>

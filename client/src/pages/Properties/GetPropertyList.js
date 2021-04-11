@@ -115,7 +115,7 @@ export default (props) => {
     const promisesArr = promises?.flat()
     promisesArr &&
       Promise.all(promisesArr).then((newArray) => {
-        console.log(newArray)
+        // console.log(newArray)
         setImages((prevPropsFiles) => [...prevPropsFiles, ...newArray])
       })
   }, [data])

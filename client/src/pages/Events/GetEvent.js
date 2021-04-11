@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Preloader, CheckSession } from './../../components'
+import {
+  Preloader,
+  CheckSession,
+  ConvertDate,
+  PreloaderSpinningWheel,
+} from './../../components'
 import { app } from '../../base'
 
 export default ({ match }) => {
@@ -10,9 +15,9 @@ export default ({ match }) => {
   const [data, setData] = useState()
   const storageRef = app.storage().ref()
   const [image, setImage] = useState()
-  const [timestamp, setTimestamp] = useState('Loading...')
   const [favorites, setFavorites] = useState([])
   const [liked, setLiked] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     axios
@@ -21,12 +26,13 @@ export default ({ match }) => {
   }, [])
 
   useEffect(() => {
-    console.log(data)
-    const timestamp = data?.createdAt
-    if (timestamp) {
-      const timestampToString = Date(timestamp).toString()
-      setTimestamp(timestampToString)
-    }
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/users/${user.id}`)
+      .then((res) => {
+        console.log(res)
+        setFavorites(res.data.favEvents)
+      })
+      .catch((err) => console.log(err))
 
     if (data?.firebaseRef !== undefined && data?.image !== undefined)
       storageRef
@@ -34,52 +40,44 @@ export default ({ match }) => {
         .getDownloadURL()
         .then((url) => setImage(url))
         .catch((err) => console.log(err))
-
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/users/${user.id}`)
-      .then((res) => {
-        setFavorites(res.data.favEvents)
-      })
-      .catch((err) => console.log(err))
   }, [data])
 
-  const handleClick = async (e) => {
+  const handleLike = async (e) => {
     e.preventDefault()
+    setLoading(true)
 
-    // console.log(favorites)
     let arr = [...favorites]
-    // console.log(arr)
-    // console.log(match.params.id)
     let indexItem = arr.indexOf(match.params.id)
-    // console.log(indexItem)
     indexItem === -1 ? arr.push(match.params.id) : arr.splice(indexItem, 1)
-    // console.log(arr)
 
     axios
-      .put(`${process.env.REACT_APP_API_URL}/users/like/${user.id}`, {
+      .put(`${process.env.REACT_APP_API_URL}/users/like-event/${user.id}`, {
         favEvents: arr,
       })
       .then((res) => {
-        const favs = res.data.favEvents
+        const favs = res
+        console.log(favs)
         setData((prev) => ({ ...prev, favEvents: favs }))
+        setLoading(false)
       })
       .catch((err) => console.log(err))
   }
 
   useEffect(() => {
-    favorites.includes(match.params.id) ? setLiked(false) : setLiked(true)
+    favorites?.includes(match.params.id) ? setLiked(false) : setLiked(true)
   }, [favorites])
 
   if (data != undefined) {
     return (
       <div>
         <div className="event-screen">
+          {loading ? <Preloader text="Just a second please" /> : ''}
           <div className="subject-image">
             <img src={image} alt="" />
           </div>
           <div className="wrapper">
             <h1>{data?.title}</h1>
-            <h2>By Leda Lenskens | {timestamp} </h2>
+            <h2>By Leda Lenskens | {ConvertDate(data?.createdAt)}</h2>
             <p> {data?.description}</p>
             <div>
               <h3>Practical</h3>
@@ -89,7 +87,7 @@ export default ({ match }) => {
                 className={
                   liked ? 'main-btn liked-event' : 'main-btn not-liked-event'
                 }
-                onClick={(e) => handleClick(e)}
+                onClick={(e) => handleLike(e)}
               >
                 {liked ? 'Like' : 'Unlike'}
               </button>

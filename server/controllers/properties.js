@@ -93,6 +93,21 @@ export const getPropertiesAdmin = async (req, res) => {
   }
 }
 
+export const getLikes = async (req, res) => {
+  console.log(req.body)
+
+  try {
+    const likedProps = await Property.find({ _id: { $in: req.body.likes } })
+
+    console.log(likedProps)
+
+    res.status(200).json(likedProps)
+  } catch (error) {
+    console.log(error)
+    res.status(404).json({ message: error.message })
+  }
+}
+
 export const makePayment = async (req, res) => {
   if (req.method === 'POST') {
     try {

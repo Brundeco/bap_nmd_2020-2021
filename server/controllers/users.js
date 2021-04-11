@@ -82,11 +82,11 @@ export const login = async (req, res) => {
 
 export const getUser = async (req, res) => {
   const { id } = req.params
-
+  
   try {
     const user = await User.findById(id)
 
-    res.status(200).json({ favEvents: user.favEvents })
+    res.status(200).json(user)
   } catch (error) {
     res.status(404).json({ message: error.message })
   }
@@ -96,14 +96,33 @@ export const likeEvent = async (req, res) => {
   const { id } = req.params
   const { favEvents } = req.body
 
-  console.log(favEvents)
-
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`)
 
   try {
     const updateUser = {
       favEvents,
+    }
+
+    await User.findByIdAndUpdate(id, updateUser, { new: true })
+
+    res.json(updateUser)
+  } catch (error) {
+    console.log(error)
+    res.status(404).json({ message: error.message })
+  }
+}
+
+export const likeProperty = async (req, res) => {
+  const { id } = req.params
+  const { favProperties } = req.body
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No post with id: ${id}`)
+
+  try {
+    const updateUser = {
+      favProperties,
     }
 
     await User.findByIdAndUpdate(id, updateUser, { new: true })
