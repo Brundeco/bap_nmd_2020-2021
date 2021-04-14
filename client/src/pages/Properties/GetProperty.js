@@ -69,7 +69,7 @@ export default ({ match }) => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/users/${user.id}`)
       .then((res) => {
-        setFavorites(res.data.favEvents)
+        setFavorites(res.data.favProperties)
       })
   }, [])
 
@@ -153,6 +153,8 @@ export default ({ match }) => {
   }
 
   useEffect(() => {
+    console.log(favorites)
+
     favorites?.includes(match.params.id) ? setLiked(false) : setLiked(true)
   }, [favorites])
 
@@ -270,14 +272,14 @@ export default ({ match }) => {
             </div>
             <div className="right">
               {/* <section className="cta-section"> */}
-                <button
-                  className={
-                    liked ? 'main-btn liked-event' : 'main-btn not-liked-event'
-                  }
-                  onClick={(e) => handleLike(e)}
-                >
-                  {liked ? 'Like' : 'Unlike'}
-                </button>
+              <button
+                className={
+                  liked ? 'main-btn liked-event' : 'main-btn not-liked-event'
+                }
+                onClick={(e) => handleLike(e)}
+              >
+                {liked ? 'Like' : 'Unlike'}
+              </button>
               {/* </section> */}
               {/* <button
                 onMouseEnter={() => setHoverState(!hoverState)}

@@ -1,9 +1,9 @@
 {
-  "short_name": "Bachelorproef 2020-2021",
-  "name": "Shop local PWA",
+  "short_name": "Popapp",
+  "name": "Popapp",
   "icons": [
     {
-      "src": "https://dummyimage.com/144x144.png/96d60d/fff&text=bap",
+      "src": "./images/fav.png",
       "type": "image/png",
       "sizes": "144x144",
       "purpose": "any"

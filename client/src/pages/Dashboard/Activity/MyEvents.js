@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 import { app } from '../../../base'
 
 export default () => {
   const user = JSON.parse(localStorage.getItem('user')).id
   const [data, setData] = useState()
-  const [propFiles, setPropFiles] = useState([])
+  const [images, setImages] = useState([])
   const storageRef = app.storage().ref()
 
   useEffect(() => {
@@ -15,43 +16,37 @@ export default () => {
   }, [])
 
   useEffect(() => {
-    const promises = data
-      ?.map((element) => {
-        return element?.images?.map(async (el) => {
-          const url = await storageRef
-            .child(element.firebaseRef + '/' + el)
-            .getDownloadURL()
-          return url
+    if (data) {
+      const arr = data?.map((item) => {
+        return storageRef
+          .child(item?.firebaseRef + '/' + item?.image)
+          .getDownloadURL()
+      })
+      Promise.all(arr)
+        .then((urls) => {
+          setImages(urls)
         })
-      })
-      .filter(Boolean)
-    const promisesArr = promises?.flat()
-    promisesArr &&
-      Promise.all(promisesArr).then((newArray) => {
-        setPropFiles((prevPropsFiles) => [...prevPropsFiles, ...newArray])
-      })
+        .catch((err) => console.log(err))
+    }
   }, [data])
 
   if (data != undefined) {
     return (
       <React.Fragment>
-        {/* <div className="properties-admin-screen page-wrapper"> */}
         {data?.map((item, i) => {
           return (
             <div className="main-list-item" key={i}>
               <div className="list-part">
-                <button
-                  onClick={() => (window.location = 'update-event/' + item._id)}
+                <Link
+                  to={{
+                    pathname: `/update-event/${item._id}`,
+                  }}
                 >
-                  Update
-                </button>
+                  <li>Update</li>
+                </Link>
               </div>
               <div className="list-part">
-                {propFiles?.map(function (image, i) {
-                  if (image?.includes(item.images[0])) {
-                    return <img src={image} alt="" />
-                  }
-                })}
+                <img src={images[i]} alt="event-image" />
               </div>
               <div className="list-part">
                 <h3> {item?.zip + ', ' + item?.city} </h3>
@@ -59,7 +54,6 @@ export default () => {
             </div>
           )
         })}
-        {/* </div> */}
       </React.Fragment>
     )
   } else {

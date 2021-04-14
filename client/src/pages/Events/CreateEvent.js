@@ -58,7 +58,9 @@ export default () => {
       }
     >
       <div className="page-wrapper">
-        <PrevPage />
+        <PrevPage locationsharing={() => {}} radius={() => {}} />
+        {/* <Header locationsharing={() => {}} radius={() => {}} /> */}
+
         <EventFormCreate
           onSubmit={handleSubmit}
           formdata={handleData}

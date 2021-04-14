@@ -73,7 +73,7 @@ export default (props) => {
         )}
       </div>
       <div className="page-wrapper">
-        <PrevPage />
+        <PrevPage locationsharing={() => {}} radius={() => {}} />
         <PropertyFormCreate
           onSubmit={handleSubmit}
           formdata={handleData}

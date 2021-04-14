@@ -28,7 +28,7 @@ export default () => {
 
   return (
     <div className="dashboard-screen ">
-      {/* <Header /> */}
+      <Header locationsharing={() => {}} radius={() => {}} />
       <div className="page-wrapper">
         <h2>Favorites</h2>
         <nav>

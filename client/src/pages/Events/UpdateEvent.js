@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { EventFormUpdate } from '..'
 import { app } from '../../base'
-import { CheckSession } from '../../components'
+import { CheckSession, Header } from '../../components'
 
 export default ({ match }) => {
   CheckSession(localStorage.getItem('jwt'))
@@ -51,6 +51,7 @@ export default ({ match }) => {
   return (
     <div className="create-product-screen">
       <div className="page-wrapper">
+        <Header locationsharing={() => {}} radius={() => {}} />
         <h1>Update event</h1>
         <EventFormUpdate
           currentdata={currentEvent}

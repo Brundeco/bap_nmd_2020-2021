@@ -22,9 +22,10 @@ export default () => {
           .post(`${process.env.REACT_APP_API_URL}/properties/likes`, {
             likes: likes,
           })
-          .then((res) =>
+          .then((res) => {
+            console.log(res.data)
             res.data.map((el) => setProperties((prev) => [...prev, el]))
-          )
+          })
       })
   }, [])
 
@@ -42,37 +43,11 @@ export default () => {
     })
   }, [properties])
 
-  useEffect(() => {
-    console.log(images)
-  }, [images])
-
   // useEffect(() => {
-  //   axios
-  //     .get(`${process.env.REACT_APP_API_URL}/users/${user.id}`)
-  //     .then((res) => {
-  //       console.log(res)
-  //       res.data.favProperties?.map(async (el) => {
-  //         setFavorites((prev) => [...prev, el])
-  //         console.log(el)
-  //         await axios
-  //           .get(`${process.env.REACT_APP_API_URL}/properties/${el}`)
-  //           .then((r) => {
-  //             if (r.data) {
-  //               console.log(r.data)
-  //               setFavorites((prev) => [...prev, r.data])
-  //               storageRef
-  //                 .child(r.data.firebaseRef + '/' + r.data.images[0])
-  //                 .getDownloadURL()
-  //                 .then((url) => {
-  //                   console.log(url)
-  //                   setImages((prev) => [...prev, url])
-  //                 })
-  //                 .catch((err) => console.log(err))
-  //             }
-  //           })
-  //       })
-  //     })
-  // }, [])
+  //   console.log(images)
+  //   let unique = [...new Set(images)]
+  //   console.log(unique)
+  // }, [images])
 
   if (favorites?.length > 0) {
     return (

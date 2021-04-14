@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 import { app } from '../../../base'
 
 export default () => {
@@ -41,13 +42,13 @@ export default () => {
             <div className="main-list-item" key={i}>
               {console.log(i)}
               <div className="list-part">
-                <button
-                  onClick={() =>
-                    (window.location = 'update-property/' + item._id)
-                  }
+                <Link
+                  to={{
+                    pathname: `/update-property/${item._id}`,
+                  }}
                 >
-                  Update
-                </button>
+                  <li>Update</li>
+                </Link>
               </div>
               <div className="list-part">
                 {propFiles?.map(function (image, i) {

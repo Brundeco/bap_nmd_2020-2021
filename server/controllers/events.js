@@ -27,6 +27,21 @@ export const getEvent = async (req, res) => {
   }
 }
 
+export const getLikes = async (req, res) => {
+  console.log(req.body)
+
+  try {
+    const likedEvents = await Event.find({ _id: { $in: req.body.likes } })
+
+    console.log(likedEvents)
+
+    res.status(200).json(likedEvents)
+  } catch (error) {
+    console.log(error)
+    res.status(404).json({ message: error.message })
+  }
+}
+
 export const createEvent = async (req, res) => {
   const event = req.body
 

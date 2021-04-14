@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import PropertyFormUpdate from './PropertyFormUpdate'
 import { app } from '../../base'
-import { CheckSession, PrevPage } from '../../components'
+import { CheckSession, Header } from '../../components'
 
 export default ({ match, props }) => {
   CheckSession(localStorage.getItem('jwt'))
@@ -51,7 +51,7 @@ export default ({ match, props }) => {
   return (
     <div className="create-product-screen">
       <div className="page-wrapper">
-        <PrevPage />
+        <Header locationsharing={() => {}} radius={() => {}} />
         <PropertyFormUpdate
           formsubmit={handleSubmit}
           formdata={handleData}

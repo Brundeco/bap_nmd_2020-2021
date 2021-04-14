@@ -6,35 +6,46 @@ import { app } from '../../../base'
 export default () => {
   const user = JSON.parse(localStorage.getItem('user'))
   const [favorites, setFavorites] = useState([])
+  const [events, setEvents] = useState([])
+
   const [images, setImages] = useState([])
   const storageRef = app.storage().ref()
 
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/users/${user.id}`)
-      .then(async (res) => {
-        await res.data.favProperties?.map((el) => {
-          axios
-            .get(`${process.env.REACT_APP_API_URL}/events/${el}`)
-            .then((r) => {
-              if (r.data) {
-                setFavorites((prev) => [...prev, r.data])
-                storageRef
-                  .child(r.data.firebaseRef + '/' + r.data.image)
-                  .getDownloadURL()
-                  .then((url) => {
-                    // console.log(url)
-                    setImages((prev) => [...prev, url])
-                  })
-                  .catch((err) => console.log(err))
-              }
-            })
+      .then((res) => {
+        res.data.favEvents?.map(async (el) => {
+          setFavorites((prev) => [...prev, el])
         })
+        const likes = res.data.favEvents
+        axios
+          .post(`${process.env.REACT_APP_API_URL}/events/likes`, {
+            likes: likes,
+          })
+          .then((res) => {
+            console.log(res.data)
+            res.data.map((el) => setEvents((prev) => [...prev, el]))
+          })
       })
   }, [])
 
   useEffect(() => {
-    // console.log(favorites)
+    events?.map((item) => {
+      if (item) {
+        storageRef
+          .child(item.firebaseRef + '/' + item.image)
+          .getDownloadURL()
+          .then((url) => {
+            setImages((prev) => [...prev, url])
+          })
+          .catch((err) => console.log(err))
+      }
+    })
+  }, [events])
+
+  useEffect(() => {
+    console.log(favorites)
   }, [favorites])
 
   if (favorites?.length > 0) {
@@ -43,7 +54,7 @@ export default () => {
         <div className="wrapper">
           {favorites.map((el, key) => {
             if (el) {
-              console.log(el)
+              // console.log(el)
               return (
                 <div key={key}>
                   <h2>{}</h2>
