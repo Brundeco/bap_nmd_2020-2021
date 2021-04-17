@@ -14,6 +14,7 @@ import {
   filterLessRecent,
   filterMostRecent,
   filterPriceRange,
+  filterSurface,
 } from '../controllers/properties.js'
 
 const router = express.Router()
@@ -29,8 +30,9 @@ router.post('/likes', getLikes)
 
 router.get('/filter/price-asc', filterPriceAsc)
 router.get('/filter/price-desc', filterPriceDesc)
-router.post('/filter/price-range', filterPriceRange)
 router.get('/filter/most-recent', filterLessRecent)
 router.get('/filter/less-recent', filterMostRecent)
+router.post('/filter/price-range', filterPriceRange)
+router.post('/filter/surface', filterSurface)
 
 export default router

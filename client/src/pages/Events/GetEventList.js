@@ -118,7 +118,7 @@ export default (props) => {
   }, [evtsFiltered])
 
   const handleFilters = (data) => {
-    console.log(data)
+    // console.log(data)
     setEvtsFiltered(data)
   }
 

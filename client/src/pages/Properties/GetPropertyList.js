@@ -121,7 +121,7 @@ export default (props) => {
   }, [data])
 
   const handleFilters = (data) => {
-    console.log(data)
+    // console.log(data)
     setPropertiesFiltered(data)
   }
 

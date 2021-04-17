@@ -199,3 +199,18 @@ export const filterPriceRange = async (req, res) => {
     res.status(404).json({ message: error.message })
   }
 }
+
+export const filterSurface = async (req, res) => {
+  const surface = req.body.surface
+  // console.log(surface)
+
+  try {
+    const properties = await Property.find({
+      surface: { $lte: surface },
+    }).sort({ surface: 1 })
+
+    res.status(200).json(properties)
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}

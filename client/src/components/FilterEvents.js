@@ -10,80 +10,86 @@ import {
 
 export default (props) => {
   const [filterMode, setFilterMode] = useState('newest')
-  const [priceRange, setPriceRange] = useState()
-  const [toggleDateRange, setToggleDateRange] = useState(false)
+  const [dateRange, setDateRange] = useState()
   const [eventsFiltered, setEventsFiltered] = useState([])
+  const [showDateFields, setShowDateFields] = useState(false)
+  const [isActive, setisActive] = useState('newest')
 
   const handleChange = (name, value) => {
-    setPriceRange((prev) => ({ ...prev, [name]: value }))
+    setDateRange((prev) => ({ ...prev, [name]: value }))
   }
 
   useEffect(
     async (e) => {
-      // if (filterMode === 'priceasc') {
-      //   const propsFiltered = await filterPriceAsc()
-      //   setEventsFiltered(propsFiltered)
-      // }
-      // if (filterMode === 'pricedesc') {
-      //   const propsFiltered = await filterPriceDesc()
-      //   setEventsFiltered(propsFiltered)
-      // }
-      if (filterMode === 'daterange') {
-        // console.log(priceRange)
-        const propsFiltered = await filterDateRange(priceRange)
-        setEventsFiltered(propsFiltered)
-      }
       if (filterMode === 'newest') {
-        const propsFiltered = await filterMostRecent()
-        setEventsFiltered(propsFiltered)
+        setisActive('newest')
+        const eventsFiltered = await filterMostRecent()
+        setEventsFiltered(eventsFiltered)
       }
       if (filterMode === 'oldest') {
-        const propsFiltered = await filterLessRecent()
-        setEventsFiltered(propsFiltered)
+        setisActive('oldest')
+        const eventsFiltered = await filterLessRecent()
+        console.log(eventsFiltered)
+        setEventsFiltered(eventsFiltered)
+      }
+      if (filterMode === 'daterange') {
+        setisActive('daterange')
+        setShowDateFields(true)
       }
     },
-    [filterMode, toggleDateRange]
+    [filterMode]
   )
 
-  // Create seperate function for range filtering because form behaviour needs be changed to preventDefault()
-  // Create a rangeToggle state to be able to call function multiple times (since setFilterMode's value will not change)
-  const filterByDateRange = (e) => {
+  useEffect(async () => {
+    if (dateRange?.startDate && dateRange?.endDate) {
+      const eventsFiltered = await filterDateRange(dateRange)
+      console.log(eventsFiltered)
+      setEventsFiltered(() => eventsFiltered)
+      // setEventsFiltered(eventsFiltered)
+    }
+  }, [dateRange])
+
+  const closeForm = (e) => {
     e.preventDefault()
-    setToggleDateRange(!toggleDateRange)
-    setFilterMode('daterange')
+    setShowDateFields(false)
   }
 
   return (
     <div filtereddata={props.filtereddata(eventsFiltered)}>
-      <button onClick={() => setFilterMode('newest')}>Newest</button>
-      <button onClick={() => setFilterMode('oldest')}>Oldest</button>
-      <button onClick={() => setFilterMode('priceasc')}>Price Ascending</button>
-      <button onClick={() => setFilterMode('pricedesc')}>
-        Price Descending
+      <button
+        className={isActive === 'newest' ? 'active' : ''}
+        onClick={() => setFilterMode('newest')}
+      >
+        Newest
       </button>
-      <form>
+      <button
+        className={isActive === 'oldest' ? 'active' : ''}
+        onClick={() => setFilterMode('oldest')}
+      >
+        Oldest
+      </button>
+      <button
+        className={isActive === 'daterange' ? 'active' : ''}
+        onClick={() => setFilterMode('daterange')}
+      >
+        Date range
+      </button>
+      <form className={showDateFields ? 'show' : 'hide'}>
         <InputField
           name="startDate"
-          placeholder="Start date"
+          placeholder="Minimum price"
           type="date"
           onChange={handleChange}
           className="main-input-field"
-          required
         />
         <InputField
           name="endDate"
-          placeholder="End date"
+          placeholder="Maximum price"
           type="date"
           onChange={handleChange}
           className="main-input-field"
-          required
         />
-
-        <button onClick={(e) => filterByDateRange(e)}>
-          Filter by date range
-        </button>
-        <br />
-        <br />
+        <button onClick={(e) => closeForm(e)}>Close filter</button>
       </form>
     </div>
   )

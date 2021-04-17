@@ -7,7 +7,7 @@ import {
   updateEvent,
   getEventsAdmin,
   getLikes,
-  filterDateRange,
+  // filterDateRange,
   filterLessRecent,
   filterMostRecent,
 } from '../controllers/events.js'
@@ -21,7 +21,7 @@ router.post('/', createEvent)
 router.put('/:id', updateEvent)
 router.post('/likes', getLikes)
 
-router.post('/filter/date-range', filterDateRange)
+// router.post('/filter/date-range', filterDateRange)
 router.get('/filter/most-recent', filterMostRecent)
 router.get('/filter/less-recent', filterLessRecent)
 // router.get('/filter/price-asc', filterPriceAsc)

@@ -10,9 +10,9 @@ export default (props) => {
   const [userLon, setUserLon] = useState()
   const [radius, setRadius] = useState()
 
-  useEffect(() => {
-    console.log(markers)
-  }, [markers])
+  // useEffect(() => {
+  //   console.log(markers)
+  // }, [markers])
 
   useEffect(() => {
     setUserLat(localStorage.getItem('userlat'))

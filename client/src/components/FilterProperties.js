@@ -6,51 +6,68 @@ import {
   filterPriceRange,
   filterMostRecent,
   filterLessRecent,
+  filterSurface,
 } from './../functions/PropertyFilters'
 
 export default (props) => {
   const [filterMode, setFilterMode] = useState('newest')
   const [priceRange, setPriceRange] = useState()
-  const [togglePriceRange, setTogglePriceRange] = useState(false)
   const [propertiesFiltered, setPropertiesFiltered] = useState([])
   const [isActive, setisActive] = useState('newest')
-  const [formValid, setFormValid] = useState(false)
   const [showPriceFields, setShowPriceFields] = useState(false)
+
+  const [showOptions, setShowOptions] = useState(false)
+  const [optionsValue, setOptionsValue] = useState()
+  const options = [
+    { label: 'Select', value: 2000 },
+    { label: '50 m2', value: 50 },
+    { label: '100 m2', value: 100 },
+    { label: '200 m2', value: 200 },
+    { label: '1000 m2', value: 1000 },
+  ]
 
   const handleChange = (name, value) => {
     setPriceRange((prev) => ({ ...prev, [name]: value }))
   }
 
+  useEffect(() => {
+    console.log(optionsValue)
+  }, [optionsValue])
+
   useEffect(
     async (e) => {
       if (filterMode === 'newest') {
+        setisActive('newest')
         const propsFiltered = await filterMostRecent()
         setPropertiesFiltered(propsFiltered)
-        setisActive('newest')
       }
       if (filterMode === 'oldest') {
+        setisActive('oldest')
         const propsFiltered = await filterLessRecent()
         setPropertiesFiltered(propsFiltered)
-        setisActive('oldest')
       }
       if (filterMode === 'priceasc') {
+        setisActive('priceasc')
         const propsFiltered = await filterPriceAsc()
         setPropertiesFiltered(propsFiltered)
-        setisActive('priceasc')
       }
       if (filterMode === 'pricedesc') {
+        setisActive('pricedesc')
         const propsFiltered = await filterPriceDesc()
         setPropertiesFiltered(propsFiltered)
-        setisActive('pricedesc')
       }
       if (filterMode === 'pricerange') {
-        // const propsFiltered = await filterPriceRange(priceRange)
-        // setPropertiesFiltered(propsFiltered)
-        setShowPriceFields(true)
         setisActive('pricerange')
+        setShowPriceFields(true)
+      }
+      if (filterMode === 'surface') {
+        setisActive('surface')
+        setShowOptions(true)
+        const propsFiltered = await filterSurface(optionsValue)
+        setPropertiesFiltered(propsFiltered)
       }
     },
-    [filterMode, togglePriceRange]
+    [filterMode, priceRange, optionsValue]
   )
 
   useEffect(async () => {
@@ -60,13 +77,29 @@ export default (props) => {
     }
   }, [priceRange])
 
-  // Create seperate function for range filtering because form behaviour needs be changed to preventDefault()
-  // Create a rangeToggle state to be able to call function multiple times (since setFilterMode's value will not change)
-  //   const filterByPriceRange = (e) => {
-  //     e.preventDefault()
-  //     setTogglePriceRange(!togglePriceRange)
-  //     setFilterMode('pricerange')
-  //   }
+  const closeForm = (e) => {
+    e.preventDefault()
+    setShowPriceFields(false)
+  }
+
+  const closeSelect = (e) => {
+    e.preventDefault()
+    setShowOptions(false)
+  }
+
+  useEffect(() => {
+    if (isActive === 'pricerange') setShowOptions(false)
+    if (isActive === 'surface') setShowPriceFields(false)
+    if (
+      isActive === 'newest' ||
+      isActive === 'oldest' ||
+      isActive === 'priceasc' ||
+      isActive === 'pricedesc'
+    ) {
+      setShowPriceFields(false)
+      setShowOptions(false)
+    }
+  }, [isActive])
 
   return (
     <div filtereddata={props.filtereddata(propertiesFiltered)}>
@@ -100,6 +133,12 @@ export default (props) => {
       >
         Price range
       </button>
+      <button
+        className={isActive === 'surface' ? 'active' : ''}
+        onClick={() => setFilterMode('surface')}
+      >
+        Surface
+      </button>
       <form className={showPriceFields ? 'show' : 'hide'}>
         <InputField
           name="minVal"
@@ -115,8 +154,27 @@ export default (props) => {
           onChange={handleChange}
           className="main-input-field"
         />
-        <p onClick={() => setShowPriceFields(false)}>Close filter</p>
+        <button onClick={(e) => closeForm(e)}>Close filter</button>
       </form>
+      {showOptions ? (
+        <div>
+          <select
+            value={optionsValue}
+            onChange={(e) => {
+              setOptionsValue(e.currentTarget.value)
+            }}
+          >
+            {options.map(({ label, value }) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </select>
+          <button onClick={(e) => closeSelect(e)}>Close filter</button>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   )
 }

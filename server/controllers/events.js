@@ -103,13 +103,25 @@ export const filterLessRecent = async (req, res) => {
   }
 }
 
-export const filterDateRange = async (req, res) => {
-  const dateRange = req.body.dateRange
-  console.log(dateRange)
+// export const filterDateRange = async (req, res) => {
+//   const dateRange = req.body.dateRange
+//   console.log(dateRange)
 
+//   try {
+//     const events = await Event.find({
+//       dates: { $gte: dateRange.startdata, $lte: dateRange.endDate },
+//     }).sort({ price: 1 })
+
+//     res.status(200).json(events)
+//   } catch (error) {
+//     res.status(404).json({ message: error.message })
+//   }
+// }
+
+export const filterFree = async (req, res) => {
   try {
     const events = await Event.find({
-      dates: { $gte: dateRange.startdata, $lte: dateRange.endDate },
+      price: { $gte: priceRange.minVal, $lte: priceRange.maxVal },
     }).sort({ price: 1 })
 
     res.status(200).json(events)
@@ -117,21 +129,3 @@ export const filterDateRange = async (req, res) => {
     res.status(404).json({ message: error.message })
   }
 }
-
-// export const filterPriceAsc = async (req, res) => {
-//   try {
-//     const events = await Event.find().sort({ price: 1 })
-//     res.status(200).json(events)
-//   } catch (error) {
-//     res.status(404).json({ message: error.message })
-//   }
-// }
-
-// export const filterPriceDesc = async (req, res) => {
-//   try {
-//     const events = await Event.find().sort({ price: -1 })
-//     res.status(200).json(events)
-//   } catch (error) {
-//     res.status(404).json({ message: error.message })
-//   }
-// }

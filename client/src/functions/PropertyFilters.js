@@ -66,3 +66,17 @@ export const filterLessRecent = async () => {
       return err
     })
 }
+
+export const filterSurface = async (surface) => {
+  return axios
+    .post(`${process.env.REACT_APP_API_URL}/properties/filter/surface`, {
+      surface,
+    })
+    .then(async (res) => {
+      const data = res.data
+      return data
+    })
+    .catch((err) => {
+      return err
+    })
+}
