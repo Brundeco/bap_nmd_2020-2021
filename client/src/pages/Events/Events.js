@@ -40,6 +40,7 @@ export default (props) => {
             markers={(coords) => setMarkers(coords)}
             lat={userLat}
             lng={userLon}
+            showfilters={true}
           />
         </div>
       </div>

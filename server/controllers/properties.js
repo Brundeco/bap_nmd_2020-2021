@@ -112,13 +112,6 @@ export const makePayment = async (req, res) => {
   if (req.method === 'POST') {
     try {
       const { amount } = req.body
-      // Psst. For production-ready applications we recommend not using the
-      // amount directly from the client without verifying it first. This is to
-      // prevent bad actors from changing the total amount on the client before
-      // it gets sent to the server. A good approach is to send the quantity of
-      // a uniquely identifiable product and calculate the total price server-side.
-      // Then, you would only fulfill orders using the quantity you charged for.
-
       const paymentIntent = await stripe.paymentIntents.create({
         amount,
         currency: 'eur',
@@ -127,7 +120,7 @@ export const makePayment = async (req, res) => {
       res.status(200).send(paymentIntent.client_secret)
     } catch (err) {
       console.log(err.message)
-      // res.status(500).json({ statusCode: 500, message: err.message })
+      res.status(500).json({ statusCode: 500, message: err.message })
     }
   } else {
     res.setHeader('Allow', 'POST')
@@ -174,8 +167,9 @@ export const filterPriceDesc = async (req, res) => {
 }
 
 export const filterMostRecent = async (req, res) => {
+  console.log('yeet')
   try {
-    const properties = await Property.find().sort({ date: 1 })
+    const properties = await Property.find().sort({ _id: 1 })
     res.status(200).json(properties)
   } catch (error) {
     res.status(404).json({ message: error.message })
@@ -184,7 +178,7 @@ export const filterMostRecent = async (req, res) => {
 
 export const filterLessRecent = async (req, res) => {
   try {
-    const properties = await Property.find().sort({ date: -1 })
+    const properties = await Property.find().sort({ _id: -1 })
     res.status(200).json(properties)
   } catch (error) {
     res.status(404).json({ message: error.message })
@@ -193,9 +187,11 @@ export const filterLessRecent = async (req, res) => {
 
 export const filterPriceRange = async (req, res) => {
   const priceRange = req.body.priceRange
+
+  console.log(priceRange)
   try {
     const properties = await Property.find({
-      price: { $gt: priceRange.minVal, $lt: priceRange.maxVal },
+      price: { $gte: priceRange.minVal, $lte: priceRange.maxVal },
     }).sort({ price: 1 })
 
     res.status(200).json(properties)

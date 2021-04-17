@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { CheckSession, InputField, Preloader } from '../../components'
+import { CheckSession, FilterProperties, Preloader } from '../../components'
 import { app } from '../../base'
 import Geocode from 'react-geocode'
 import { getPreciseDistance } from 'geolib'
-import {
-  filterPriceDesc,
-  filterPriceAsc,
-  filterDistance,
-  filterRecent,
-  filterPriceRange,
-} from './FilterProperties'
 
 export default (props) => {
   CheckSession(localStorage.getItem('jwt'))
@@ -26,9 +19,6 @@ export default (props) => {
   const [coords, setCoords] = useState([])
   const [propertiesFiltered, setPropertiesFiltered] = useState([])
   const [distance, setDistance] = useState([])
-  const [filterMode, setFilterMode] = useState('recent')
-  const [priceRange, setPriceRange] = useState()
-  const [togglePriceRange, setTogglePriceRange] = useState(false)
 
   useEffect(() => {
     axios
@@ -39,45 +29,6 @@ export default (props) => {
   useEffect(() => {
     setLocationSharing(props.locationsharing)
   }, [props.locationsharing])
-
-  const handleChange = (name, value) => {
-    setPriceRange((prev) => ({ ...prev, [name]: value }))
-  }
-
-  useEffect(
-    async (e) => {
-      if (filterMode === 'priceasc') {
-        const propsFiltered = await filterPriceAsc()
-        setPropertiesFiltered(propsFiltered)
-      }
-      if (filterMode === 'pricedesc') {
-        const propsFiltered = await filterPriceDesc()
-        setPropertiesFiltered(propsFiltered)
-      }
-
-      if (filterMode === 'newest') {
-        const propsFiltered = await filterPriceDesc()
-        setPropertiesFiltered(propsFiltered)
-      }
-      if (filterMode === 'oldest') {
-        const propsFiltered = await filterPriceAsc()
-        setPropertiesFiltered(propsFiltered)
-      }
-      if (filterMode === 'pricerange') {
-        const propsFiltered = await filterPriceRange(priceRange)
-        // setPropertiesFiltered(propsFiltered)
-      }
-    },
-    [filterMode, togglePriceRange]
-  )
-
-  // Create seperate function for range filtering because form behaviour needs be changed to preventDefault()
-  // Create a rangeToggle state to be able to call function multiple times (since setFilterMode's value will not change)
-  const filterByPriceRange = (e) => {
-    e.preventDefault()
-    setTogglePriceRange(!togglePriceRange)
-    setFilterMode('pricerange')
-  }
 
   useEffect(async () => {
     if (locationSharing == true) {
@@ -169,39 +120,21 @@ export default (props) => {
       })
   }, [data])
 
+  const handleFilters = (data) => {
+    console.log(data)
+    setPropertiesFiltered(data)
+  }
+
+  console.log()
+
   if (data != undefined) {
     return (
       <div className="property-screen">
-        <button onClick={() => setFilterMode('newest')}>Newest</button>
-        <button onClick={() => setFilterMode('oldest')}>Oldest</button>
-        <button onClick={() => setFilterMode('priceasc')}>
-          Price Ascending
-        </button>
-        <button onClick={() => setFilterMode('pricedesc')}>
-          Price Descending
-        </button>
-        <form>
-          <InputField
-            name="minVal"
-            placeholder="Minimum price"
-            type="number"
-            onChange={handleChange}
-            className="main-input-field"
-            required
-          />
-          <InputField
-            name="maxVal"
-            placeholder="Maximum price"
-            type="number"
-            onChange={handleChange}
-            className="main-input-field"
-            required
-          />
-
-          <button onClick={(e) => filterByPriceRange(e)}>
-            Filter by price range
-          </button>
-        </form>
+        {props.showfilters ? (
+          <FilterProperties filtereddata={handleFilters} />
+        ) : (
+          ''
+        )}
         <div className="wrapper">
           {propertiesFiltered?.map(function (item, i) {
             return (
@@ -209,13 +142,13 @@ export default (props) => {
                 <h2> {item.description}</h2>
                 <h4>PRICE: {item.price} </h4>
                 <h4> Date: {new Date(item.createdAt).toDateString()} </h4>
-                {/* <div className="image">
+                <div className="image">
                   {images?.map(function (image, i) {
                     if (image?.includes(item.images[0])) {
                       return <img key={i} src={image} alt="" />
                     }
                   })}
-                </div> */}
+                </div>
                 <ul>
                   <Link
                     to={{

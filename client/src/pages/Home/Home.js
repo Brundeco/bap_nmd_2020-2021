@@ -61,6 +61,7 @@ export default (props) => {
             markers={() => {}}
             lat={userLat}
             lng={userLon}
+            showfilters={false}
           />
           <div className="cta-top">
             <h2>Properties around you</h2>
@@ -78,6 +79,7 @@ export default (props) => {
             markers={() => {}}
             lat={userLat}
             lng={userLon}
+            showfilters={false}
           />
         </section>
       </div>

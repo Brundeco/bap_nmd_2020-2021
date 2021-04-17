@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { Preloader, CheckSession } from './../../components'
+import { Preloader, CheckSession, FilterEvents } from './../../components'
 import { app } from '../../base'
 import Geocode from 'react-geocode'
 import { getPreciseDistance } from 'geolib'
@@ -20,7 +20,6 @@ export default (props) => {
   const [evtsFiltered, setEvtsFiltered] = useState([])
   const [coords, setCoords] = useState([])
   const [locationSharing, setLocationSharing] = useState()
-  const [filterMode, setFilterMode] = useState('recent')
 
   // Fetch all events and store in state(data)
   useEffect(() => {
@@ -35,23 +34,6 @@ export default (props) => {
   useEffect(() => {
     setLocationSharing(props.locationsharing)
   }, [props.locationsharing])
-
-  // useEffect(() => {
-  //   console.log(filterMode)
-
-  //   if (filterMode === 'recent') {
-  //     const evts = filterRecent()
-  //     console.log(evts)
-  //   }
-  //   if (filterMode === 'price') {
-  //     const evts = filterPrice()
-  //     console.log(evts)
-  //   }
-  //   if (filterMode === 'distance') {
-  //     const evts = filterDistance()
-  //     console.log(evts)
-  //   }
-  // }, [filterMode])
 
   // Filter events based on accessibility (nearby the user), store filtered events in state
   useEffect(async () => {
@@ -135,15 +117,22 @@ export default (props) => {
     }
   }, [evtsFiltered])
 
+  const handleFilters = (data) => {
+    console.log(data)
+    setEvtsFiltered(data)
+  }
+
   if (data == undefined || data.length <= 1) {
     return <Preloader text="events" />
   } else {
     return (
       <div className="event-screen" markers={props.markers(coords)}>
         <div className="event-list">
-          <button onClick={() => setFilterMode('recent')}>Recent</button>
-          <button onClick={() => setFilterMode('distance')}>Distance</button>
-          <button onClick={() => setFilterMode('price')}>Price</button>
+          {props.showfilters ? (
+            <FilterEvents filtereddata={handleFilters} />
+          ) : (
+            ''
+          )}
           {evtsFiltered?.map(function (item, i) {
             return (
               <Link
@@ -155,13 +144,15 @@ export default (props) => {
                 }}
               >
                 <div>
-                  <div className="image">
+                  <h4> Date: {new Date(item.createdAt).toDateString()} </h4>
+
+                  {/* <div className="image">
                     <img src={images[i]} alt="" />
-                  </div>
+                  </div> */}
                   <div className="info">
                     <div className="left">
                       <h3> {item.title} </h3>
-                      <h4>
+                      {/* <h4>
                         {`${item.city} ${new Date(
                           item.dates[0]
                         ).toLocaleDateString('en-US', {
@@ -169,7 +160,7 @@ export default (props) => {
                           month: '2-digit',
                           day: '2-digit',
                         })} `}
-                      </h4>
+                      </h4> */}
                     </div>
                     <div className="right">
                       <div className="round-like-btn">

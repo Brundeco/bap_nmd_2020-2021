@@ -25,6 +25,7 @@ export const filterPriceDesc = async () => {
 }
 
 export const filterPriceRange = async (priceRange) => {
+  console.log(priceRange)
   return axios
     .post(`${process.env.REACT_APP_API_URL}/properties/filter/price-range`, {
       priceRange,
@@ -40,14 +41,12 @@ export const filterPriceRange = async (priceRange) => {
 }
 
 export const filterMostRecent = async () => {
+  console.log('Most recent')
   return axios
     .get(`${process.env.REACT_APP_API_URL}/properties/filter/most-recent`)
     .then((res) => {
-      res.data.map((el) =>
-        console.log(new Date(el.createdAt).toLocaleTimeString())
-      )
-      console.log(res.data)
-      return res
+      const data = res.data
+      return data
     })
     .catch((err) => {
       return err
@@ -55,14 +54,13 @@ export const filterMostRecent = async () => {
 }
 
 export const filterLessRecent = async () => {
+  console.log('Less recent')
+
   return axios
     .get(`${process.env.REACT_APP_API_URL}/properties/filter/less-recent`)
     .then((res) => {
-      res.data.map((el) =>
-        console.log(new Date(el.createdAt).toLocaleTimeString())
-      )
-      console.log(res.data)
-      return res
+      const data = res.data
+      return data
     })
     .catch((err) => {
       return err
