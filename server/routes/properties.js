@@ -8,7 +8,12 @@ import {
   bookProperty,
   getPropertiesAdmin,
   makePayment,
-  getLikes
+  getLikes,
+  filterPriceAsc,
+  filterPriceDesc,
+  filterLessRecent,
+  filterMostRecent,
+  filterPriceRange,
 } from '../controllers/properties.js'
 
 const router = express.Router()
@@ -21,5 +26,11 @@ router.put('/:id', updateProperty)
 router.put('/book/:id', bookProperty)
 router.post('/stripe', makePayment)
 router.post('/likes', getLikes)
+
+router.get('/filter/price-asc', filterPriceAsc)
+router.get('/filter/price-desc', filterPriceDesc)
+router.post('/filter/price-range', filterPriceRange)
+router.get('/filter/most-recent', filterLessRecent)
+router.get('/filter/less-recent', filterMostRecent)
 
 export default router

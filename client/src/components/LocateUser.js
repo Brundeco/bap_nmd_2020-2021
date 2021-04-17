@@ -11,6 +11,7 @@ export default (props) => {
   })
 
   const onSuccess = async (userLoc) => {
+    console.log(userLoc)
     setLocation({
       loaded: true,
       coordinates: {
@@ -21,6 +22,7 @@ export default (props) => {
   }
 
   const onError = (error) => {
+    console.log(error)
     setLoaded(true)
     console.log(error.message)
     setLocation({

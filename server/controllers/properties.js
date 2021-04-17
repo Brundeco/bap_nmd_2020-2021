@@ -154,3 +154,52 @@ export const makePayment = async (req, res) => {
 //     res.status(405).end('Method Not Allowed')
 //   }
 // }
+
+export const filterPriceAsc = async (req, res) => {
+  try {
+    const properties = await Property.find().sort({ price: 1 })
+    res.status(200).json(properties)
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}
+
+export const filterPriceDesc = async (req, res) => {
+  try {
+    const properties = await Property.find().sort({ price: -1 })
+    res.status(200).json(properties)
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}
+
+export const filterMostRecent = async (req, res) => {
+  try {
+    const properties = await Property.find().sort({ date: 1 })
+    res.status(200).json(properties)
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}
+
+export const filterLessRecent = async (req, res) => {
+  try {
+    const properties = await Property.find().sort({ date: -1 })
+    res.status(200).json(properties)
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}
+
+export const filterPriceRange = async (req, res) => {
+  const priceRange = req.body.priceRange
+  try {
+    const properties = await Property.find({
+      price: { $gt: priceRange.minVal, $lt: priceRange.maxVal },
+    }).sort({ price: 1 })
+
+    res.status(200).json(properties)
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}

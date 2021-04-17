@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Header, CheckSession, LocateUser, Map, Menu } from '../../components'
+import { Header, CheckSession, LocateUser } from '../../components'
 import { GetEventList, GetPropertyList } from '..'
 
 export default (props) => {

@@ -3,6 +3,11 @@
   font-weight: 300;
 }
 
+html::-webkit-scrollbar {
+  width: 0;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
 body {
   position: relative;
   width: 100%;

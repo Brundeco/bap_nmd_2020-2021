@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { Preloader, CheckSession, Map, ConvertDate } from './../../components'
+import { Preloader, CheckSession } from './../../components'
 import { app } from '../../base'
 import Geocode from 'react-geocode'
 import { getPreciseDistance } from 'geolib'
 import likeIcon from './../../icons/heart-full-blue.svg'
+// import { filterPrice, filterDistance, filterRecent } from './FilterEvents'
 
 export default (props) => {
   CheckSession(localStorage.getItem('jwt'))
@@ -19,6 +20,7 @@ export default (props) => {
   const [evtsFiltered, setEvtsFiltered] = useState([])
   const [coords, setCoords] = useState([])
   const [locationSharing, setLocationSharing] = useState()
+  const [filterMode, setFilterMode] = useState('recent')
 
   // Fetch all events and store in state(data)
   useEffect(() => {
@@ -35,12 +37,26 @@ export default (props) => {
   }, [props.locationsharing])
 
   // useEffect(() => {
-  //   console.log(evtsFiltered)
-  // }, [evtsFiltered])
+  //   console.log(filterMode)
+
+  //   if (filterMode === 'recent') {
+  //     const evts = filterRecent()
+  //     console.log(evts)
+  //   }
+  //   if (filterMode === 'price') {
+  //     const evts = filterPrice()
+  //     console.log(evts)
+  //   }
+  //   if (filterMode === 'distance') {
+  //     const evts = filterDistance()
+  //     console.log(evts)
+  //   }
+  // }, [filterMode])
 
   // Filter events based on accessibility (nearby the user), store filtered events in state
   useEffect(async () => {
     if (locationSharing == true) {
+      console.log('App is fully operational')
       if (data?.length > 1) {
         try {
           const evts = await Promise.all(
@@ -78,6 +94,7 @@ export default (props) => {
         }
       }
     } else {
+      console.log('App breaks because loc sharing is turned off ! !')
       if (data?.length > 1) {
         try {
           setEvtsFiltered(data)
@@ -119,12 +136,14 @@ export default (props) => {
   }, [evtsFiltered])
 
   if (data == undefined || data.length <= 1) {
-    console.log('empty shit')
     return <Preloader text="events" />
   } else {
     return (
       <div className="event-screen" markers={props.markers(coords)}>
         <div className="event-list">
+          <button onClick={() => setFilterMode('recent')}>Recent</button>
+          <button onClick={() => setFilterMode('distance')}>Distance</button>
+          <button onClick={() => setFilterMode('price')}>Price</button>
           {evtsFiltered?.map(function (item, i) {
             return (
               <Link

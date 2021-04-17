@@ -10,10 +10,11 @@ export default (props, { parentCallback }) => {
   const user = JSON.parse(localStorage.getItem('user'))
   const userImage = user != null ? user.image : ProfileIcon
 
-//   const logout = () => {
-//     localStorage.clear()
-//     window.location = '/login'
-//   }
+  const logout = (e) => {
+    e.preventDefault()
+    localStorage.clear()
+    window.location = '/login'
+  }
 
   return (
     <div className={props.className}>
@@ -57,7 +58,7 @@ export default (props, { parentCallback }) => {
           secondlinkref="/favorites"
         />
 
-        {/* <button onClick={logout}>Logout</button> */}
+        <button onClick={(e) => logout(e)}>Logout</button>
       </nav>
       <div className="close-menu">
         <div className="cross-box" onClick={() => props.childstatus(false)}>
