@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { Preloader, CheckSession, FilterEvents } from './../../components'
 import { app } from '../../base'
 import Geocode from 'react-geocode'
 import { getPreciseDistance } from 'geolib'
-import likeIcon from './../../icons/heart-full-blue.svg'
-// import { filterPrice, filterDistance, filterRecent } from './FilterEvents'
+import { EventCard } from '..'
 
 export default (props) => {
   CheckSession(localStorage.getItem('jwt'))
@@ -20,6 +18,7 @@ export default (props) => {
   const [evtsFiltered, setEvtsFiltered] = useState([])
   const [coords, setCoords] = useState([])
   const [locationSharing, setLocationSharing] = useState()
+  const [distance, setDistance] = useState([])
 
   // Fetch all events and store in state(data)
   useEffect(() => {
@@ -38,12 +37,11 @@ export default (props) => {
   // Filter events based on accessibility (nearby the user), store filtered events in state
   useEffect(async () => {
     if (locationSharing == true) {
-      console.log('App is fully operational')
+      console.log('Location sharing TRUE')
       if (data?.length > 1) {
         try {
           const evts = await Promise.all(
             data.map(async (el) => {
-              // console.log(el)
               const res = await Geocode.fromAddress(
                 `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`
               )
@@ -66,7 +64,13 @@ export default (props) => {
                   longitude: parseFloat(props.lng),
                 }
               )
-              // console.log(`${parseFloat(dis / 1000).toFixed(1)} km`)
+              setDistance((prev) => [
+                ...prev,
+                {
+                  item: el._id,
+                  distance: parseFloat(dis / 1000).toFixed(1),
+                },
+              ])
               return dis / 1000 <= props.radius ? el : []
             })
           )
@@ -76,7 +80,7 @@ export default (props) => {
         }
       }
     } else {
-      console.log('App breaks because loc sharing is turned off ! !')
+      console.log('Location sharing FALSE')
       if (data?.length > 1) {
         try {
           setEvtsFiltered(data)
@@ -118,7 +122,6 @@ export default (props) => {
   }, [evtsFiltered])
 
   const handleFilters = (data) => {
-    // console.log(data)
     setEvtsFiltered(data)
   }
 
@@ -133,43 +136,21 @@ export default (props) => {
           ) : (
             ''
           )}
-          {evtsFiltered?.map(function (item, i) {
+          {evtsFiltered?.map((item, index) => {
             return (
-              <Link
-                className="event-featured"
-                key={i}
-                to={{
-                  pathname: `/event/${item._id}`,
-                  state: { from: 'root' },
-                }}
-              >
-                <div>
-                  <h4> Date: {new Date(item.createdAt).toDateString()} </h4>
-
-                  {/* <div className="image">
-                    <img src={images[i]} alt="" />
-                  </div> */}
-                  <div className="info">
-                    <div className="left">
-                      <h3> {item.title} </h3>
-                      {/* <h4>
-                        {`${item.city} ${new Date(
-                          item.dates[0]
-                        ).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                        })} `}
-                      </h4> */}
-                    </div>
-                    <div className="right">
-                      <div className="round-like-btn">
-                        <img src={likeIcon} alt="" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Link>
+              <React.Fragment>
+                <EventCard
+                  title={item.title}
+                  date={item.createdAt}
+                  distance={
+                    distance?.find((el) => el.item === item._id)?.distance
+                  }
+                  city={item.city}
+                  image={images[index]}
+                  itemId={item._id}
+                  key={index}
+                />
+              </React.Fragment>
             )
           })}
         </div>

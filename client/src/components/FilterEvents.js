@@ -61,14 +61,14 @@ export default (props) => {
     if (events.length) setEventsFiltered(events)
   }
 
-  // useEffect(async () => {
-  //   if (dateRange?.startDate && dateRange?.endDate) {
-  //     const eventsFiltered = await filterDateRange(dateRange)
-  //     console.log(eventsFiltered)
-  //     setEventsFiltered(() => eventsFiltered)
-  //     // setEventsFiltered(eventsFiltered)
-  //   }
-  // }, [dateRange])
+  useEffect(async () => {
+    if (dateRange?.startDate && dateRange?.endDate) {
+      const eventsFiltered = await filterDateRange(dateRange)
+      console.log(eventsFiltered)
+      setEventsFiltered(() => eventsFiltered)
+      // setEventsFiltered(eventsFiltered)
+    }
+  }, [dateRange])
 
   return (
     <div filtereddata={props.filtereddata(eventsFiltered)}>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { CheckSession, FilterProperties, Preloader } from '../../components'
 import { app } from '../../base'
 import Geocode from 'react-geocode'
 import { getPreciseDistance } from 'geolib'
+import { PropertyCard } from '..'
 
 export default (props) => {
   CheckSession(localStorage.getItem('jwt'))
@@ -58,12 +58,19 @@ export default (props) => {
                   longitude: parseFloat(props.lng),
                 }
               )
-              let distance = `${parseFloat(dis / 1000).toFixed(1)}`
-              if (distance !== NaN)
-                setDistance((prev) => [
-                  ...prev,
-                  `${parseFloat(dis / 1000).toFixed(1)}`,
-                ])
+              // let distance = `${parseFloat(dis / 1000).toFixed(1)}`
+              setDistance((prev) => [
+                ...prev,
+                {
+                  item: el._id,
+                  distance: parseFloat(dis / 1000).toFixed(1),
+                },
+              ])
+              // if (distance !== NaN)
+              //   setDistance((prev) => [
+              //     ...prev,
+              //     `${parseFloat(dis / 1000).toFixed(1)}`,
+              //   ])
               return dis / 1000 <= props.radius ? el : []
             })
           )
@@ -97,9 +104,9 @@ export default (props) => {
     }
   }, [data, props.lat, props.lng, props.radius])
 
-  useEffect(() => {
-    // console.log(distance)
-  }, [distance])
+  // useEffect(() => {
+  //   // console.log(distance)
+  // }, [distance])
 
   useEffect(() => {
     const promises = data
@@ -136,29 +143,28 @@ export default (props) => {
           ''
         )}
         <div className="wrapper">
-          {propertiesFiltered?.map(function (item, i) {
+          {propertiesFiltered?.map((item, index) => {
+            let propImg = ''
+            {
+              images?.map((image, i) => {
+                if (image?.includes(item.images[0])) {
+                  propImg = image
+                }
+              })
+            }
             return (
-              <div key={i} className="list-item">
-                <h2> {item.description}</h2>
-                <h4>PRICE: {item.price} </h4>
-                <h4> Date: {new Date(item.createdAt).toDateString()} </h4>
-                <div className="image">
-                  {images?.map(function (image, i) {
-                    if (image?.includes(item.images[0])) {
-                      return <img key={i} src={image} alt="" />
-                    }
-                  })}
-                </div>
-                <ul>
-                  <Link
-                    to={{
-                      pathname: `/property/${item._id}/${item.author_id}`,
-                    }}
-                  >
-                    <li>DETAIL</li>
-                  </Link>
-                </ul>
-              </div>
+              <PropertyCard
+                description={item.description}
+                price={item.price}
+                date={item.createdAt}
+                distance={
+                  distance?.find((el) => el.item === item._id)?.distance
+                }
+                image={propImg}
+                authorId={item.author_id}
+                itemId={item._id}
+                key={index}
+              />
             )
           })}
         </div>

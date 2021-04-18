@@ -59,17 +59,19 @@ export const filterDateRange = async (dateRange) => {
   axios
     .get(`${process.env.REACT_APP_API_URL}/events`)
     .then((res) => {
+      let uniques // declare here
       res.data.events.map((item) => {
         item.dates.map((date) => {
           const evtDate = new Date(date).getTime()
           if (evtDate >= startDate && evtDate <= endDate) {
             newArray.push(item)
-            let uniques = [...new Set(newArray)]
-            console.log(uniques)
-            return uniques
+            uniques = [...new Set(newArray)]
+            // console.log(uniques)
+            // return uniques
           }
         })
       })
+      return uniques // return here
     })
     .catch((err) => {
       return err

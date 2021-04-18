@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { GetEventList } from '..'
-import { CheckSession, Header, LocateUser, Map } from '../../components'
+import { CheckSession, Header, Map } from '../../components'
 
 export default (props) => {
   CheckSession(localStorage.getItem('jwt'))
@@ -10,14 +10,16 @@ export default (props) => {
   const [userLon, setUserLon] = useState()
   const [radius, setRadius] = useState()
 
-  // useEffect(() => {
-  //   console.log(markers)
-  // }, [markers])
-
   useEffect(() => {
-    setUserLat(localStorage.getItem('userlat'))
-    setUserLon(localStorage.getItem('userlng'))
-    setLocationSharing(localStorage.getItem('locationsharing'))
+    const locSharing =
+      localStorage.getItem('locationsharing') == 'true' ? true : false
+    if (locSharing) {
+      const userlat = localStorage.getItem('userlat')
+      const userLon = localStorage.getItem('userlng')
+      setUserLat(userlat)
+      setUserLon(userLon)
+      setLocationSharing(locSharing)
+    }
   }, [])
 
   const handleRadius = (radius) => {

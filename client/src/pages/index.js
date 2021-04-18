@@ -13,6 +13,7 @@ export { default as UpdateEvent } from './Events/UpdateEvent'
 export { default as EventFormCreate } from './Events/EventFormCreate'
 export { default as EventFormUpdate } from './Events/EventFormUpdate'
 export { default as EventReview } from './Events/EventReview'
+export { default as EventCard } from './Events/EventCard'
 
 export { default as CreateProperty } from './Properties/CreateProperty'
 export { default as GetPropertyList } from './Properties/GetPropertyList'
@@ -22,6 +23,7 @@ export { default as UpdateProperty } from './Properties/UpdateProprety'
 export { default as PropertyFormCreate } from './Properties/PropertyFormCreate'
 export { default as PropertyFormUpdate } from './Properties/PropertyFormUpdate'
 export { default as PropertyReview } from './Properties/PropertyReview'
+export { default as PropertyCard } from './Properties/PropertyCard'
 
 export { default as GetReservationList } from './Reservations/GetReservationList'
 
