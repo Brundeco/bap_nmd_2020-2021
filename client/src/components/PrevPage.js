@@ -4,6 +4,7 @@ import { FontAwesome } from '.'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import SearchIcon from './../icons/search.svg'
 import RadiusIcon from './../icons/radius.svg'
+import FilterIcon from './../icons/filter.svg'
 
 export default (props) => {
   const location = useLocation()
@@ -62,15 +63,22 @@ export default (props) => {
     )
 
   return (
-    <div
-      className="prev-page-component"
-      radius={props.radius(optionsValue)}
-      onClick={handleClick}
-    >
-      <FontAwesome icon={faChevronLeft} />
-       {/* <div className="search">
-          <img src={SearchIcon} />
-        </div> */}
-    </div>
+    <React.Fragment>
+      <div
+        className="prev-page-component menu-actions-homepage"
+        radius={props.radius(optionsValue)}
+        onClick={handleClick}
+      >
+        <FontAwesome icon={faChevronLeft} />
+      </div>
+      {history.location.pathname.includes('events') ||
+      history.location.pathname.includes('properties') ? (
+        <div className="search">
+          <img src={FilterIcon} />
+        </div>
+      ) : (
+        ''
+      )}
+    </React.Fragment>
   )
 }

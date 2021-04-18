@@ -103,6 +103,33 @@ export const filterLessRecent = async (req, res) => {
   }
 }
 
+export const filterGetAutocomplete = async (req, res) => {
+  try {
+    const events = await Event.find({}).select({ title: 1, street: 1, _id: 0 })
+    res.status(200).json(events)
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}
+
+export const filterPostAutocomplete = async (req, res) => {
+  console.log(req.body)
+  try {
+    // const events = await Event.find({
+    //   title: { $regex: `.*${req.body.search}.*` },
+    // })
+    const events = await Event.find({
+      $or: [
+        { title: { $regex: `.*${req.body.search}.*` } },
+        { street: { $regex: `.*${req.body.search}.*` } },
+      ],
+    })
+    res.status(200).json(events)
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}
+
 // export const filterDateRange = async (req, res) => {
 //   const dateRange = req.body.dateRange
 //   console.log(dateRange)

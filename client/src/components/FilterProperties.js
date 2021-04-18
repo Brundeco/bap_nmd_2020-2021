@@ -7,7 +7,7 @@ import {
   filterMostRecent,
   filterLessRecent,
   filterSurface,
-} from './../functions/PropertyFilters'
+} from '../functions/PropertyFilterFunctions'
 
 export default (props) => {
   const [filterMode, setFilterMode] = useState('newest')

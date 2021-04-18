@@ -5,8 +5,8 @@ import markerIcon from './../icons/mapMarker.svg'
 const Marker = ({ title, address }) => (
   <div
     className="map-marker"
-    onMouseEnter={() => console.log('I was hovered')}
-    onMouseLeave={() => console.log('Hover was ended')}
+    // onMouseEnter={() => console.log('I was hovered')}
+    // onMouseLeave={() => console.log('Hover was ended')}
   >
     <img src={markerIcon} />
     <div className="map-marker-info">

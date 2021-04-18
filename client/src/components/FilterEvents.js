@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { InputField } from '.'
+import { InputField, SearchAutoComplete } from '.'
 import {
-  // filterPriceDesc,
-  // filterPriceAsc,
   filterDateRange,
   filterMostRecent,
   filterLessRecent,
-} from './../functions/EventFilters'
+} from '../functions/EventFilterFunctions'
 
 export default (props) => {
   const [filterMode, setFilterMode] = useState('newest')
   const [dateRange, setDateRange] = useState()
   const [eventsFiltered, setEventsFiltered] = useState([])
   const [showDateFields, setShowDateFields] = useState(false)
+  const [showSearchField, setShowSearchField] = useState(false)
   const [isActive, setisActive] = useState('newest')
 
   const handleChange = (name, value) => {
     setDateRange((prev) => ({ ...prev, [name]: value }))
   }
+
+  useEffect(() => {
+    console.log('changes detected')
+    console.log(eventsFiltered)
+  }, [eventsFiltered])
 
   useEffect(
     async (e) => {
@@ -29,30 +33,42 @@ export default (props) => {
       if (filterMode === 'oldest') {
         setisActive('oldest')
         const eventsFiltered = await filterLessRecent()
-        console.log(eventsFiltered)
         setEventsFiltered(eventsFiltered)
       }
       if (filterMode === 'daterange') {
         setisActive('daterange')
         setShowDateFields(true)
       }
+      if (filterMode === 'search') {
+        setisActive('search')
+        setShowSearchField(true)
+      }
     },
     [filterMode]
   )
-
-  useEffect(async () => {
-    if (dateRange?.startDate && dateRange?.endDate) {
-      const eventsFiltered = await filterDateRange(dateRange)
-      console.log(eventsFiltered)
-      setEventsFiltered(() => eventsFiltered)
-      // setEventsFiltered(eventsFiltered)
-    }
-  }, [dateRange])
 
   const closeForm = (e) => {
     e.preventDefault()
     setShowDateFields(false)
   }
+
+  const closeSearch = (e) => {
+    e.preventDefault()
+    setShowSearchField(false)
+  }
+
+  const handleFilteredEvents = (events) => {
+    if (events.length) setEventsFiltered(events)
+  }
+
+  // useEffect(async () => {
+  //   if (dateRange?.startDate && dateRange?.endDate) {
+  //     const eventsFiltered = await filterDateRange(dateRange)
+  //     console.log(eventsFiltered)
+  //     setEventsFiltered(() => eventsFiltered)
+  //     // setEventsFiltered(eventsFiltered)
+  //   }
+  // }, [dateRange])
 
   return (
     <div filtereddata={props.filtereddata(eventsFiltered)}>
@@ -74,6 +90,12 @@ export default (props) => {
       >
         Date range
       </button>
+      <button
+        className={isActive === 'search' ? 'active' : ''}
+        onClick={() => setFilterMode('search')}
+      >
+        search
+      </button>
       <form className={showDateFields ? 'show' : 'hide'}>
         <InputField
           name="startDate"
@@ -91,6 +113,19 @@ export default (props) => {
         />
         <button onClick={(e) => closeForm(e)}>Close filter</button>
       </form>
+      {/* <div className={showSearchField ? 'show' : 'hide'}>
+        <SearchAutoComplete events={handleFilteredEvents} />
+        <button onClick={(e) => closeSearch(e)}>Close search</button>
+      </div> */}
+
+      {showSearchField ? (
+        <div className="search">
+          <SearchAutoComplete events={handleFilteredEvents} />
+          <button onClick={(e) => closeSearch(e)}>Close search</button>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   )
 }

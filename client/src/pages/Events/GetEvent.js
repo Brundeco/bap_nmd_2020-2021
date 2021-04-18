@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
+import NoUserIcon from './../../icons/no-user.svg'
 import {
   Preloader,
   CheckSession,
@@ -15,6 +17,7 @@ export default ({ match }) => {
   const [data, setData] = useState()
   const storageRef = app.storage().ref()
   const [image, setImage] = useState()
+  const [authorImage, setAuthorImage] = useState()
   const [favorites, setFavorites] = useState([])
   const [liked, setLiked] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -22,10 +25,18 @@ export default ({ match }) => {
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/events/${match.params.id}`)
-      .then((res) => setData(res.data))
+      .then((res) => {
+        setData(res.data)
+        axios
+          .get(`${process.env.REACT_APP_API_URL}/users/${res.data.author_id}`)
+          .then((r) => {
+            if (r.data.image) setAuthorImage(r.data.image)
+          })
+      })
   }, [])
 
   useEffect(() => {
+    console.log(data)
     axios
       .get(`${process.env.REACT_APP_API_URL}/users/${user.id}`)
       .then((res) => {
@@ -77,7 +88,17 @@ export default ({ match }) => {
           </div>
           <div className="wrapper">
             <h1>{data?.title}</h1>
-            <h2>By Leda Lenskens | {ConvertDate(data?.createdAt)}</h2>
+            <h2>
+              <img
+                src={authorImage ? authorImage : NoUserIcon}
+                alt="authorimage"
+                className="authorimage"
+              />
+              <Link to={{ pathname: '/', state: { from: 'root' } }}>
+                {data?.author}
+              </Link>
+            </h2>
+            <h3>Created at {ConvertDate(data?.createdAt)}</h3>
             <p> {data?.description}</p>
             <div>
               <h3>Practical</h3>

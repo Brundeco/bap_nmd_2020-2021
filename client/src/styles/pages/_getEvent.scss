@@ -1,24 +1,24 @@
-// .event-screen .subject-image {
-//   height: 30vh;
-//   width: 100%;
-// }
+.event-screen .subject-image {
+  height: 30vh;
+  width: 100%;
+}
 
-// .event-screen .subject-image img {
-//   width: 100%;
-//   height: 100%;
-//   object-fit: cover;
-// }
+.event-screen .subject-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-// .event-screen .wrapper {
-//   padding: 5%;
-//   padding-bottom: 5vh;
-// }
+.event-screen .wrapper {
+  padding: 5%;
+  padding-bottom: 5vh;
+}
 
-// .event-screen h1 {
-//   font-size: 1.2em;
-//   font-weight: 900;
-//   margin: 3vh 0;
-// }
+.event-screen h1 {
+  font-size: 1.2em;
+  font-weight: 900;
+  margin: 3vh 0;
+}
 
 // .event-screen h2 {
 //   font-size: 0.9em;
@@ -50,17 +50,24 @@
 //   background: $theme-green;
 // }
 
-// .liked-event {
-//   background-color: white !important;
-//   border: 2px solid rgb(34, 83, 228) !important;
-//   font-weight: 700 !important;
-//   color: $base-white !important;
-//   color: rgb(34, 83, 228) !important;
-// }
+.liked-event {
+  background-color: white !important;
+  border: 2px solid rgb(34, 83, 228) !important;
+  font-weight: 700 !important;
+  color: $base-white !important;
+  color: rgb(34, 83, 228) !important;
+}
 
-// .not-liked-event {
-//   background-color: rgb(34, 83, 228) !important;
-//   border: 2px solid rgb(34, 83, 228) !important;
-//   font-weight: 700 !important;
-//   color: $base-white !important;
-// }
+.not-liked-event {
+  background-color: rgb(34, 83, 228) !important;
+  border: 2px solid rgb(34, 83, 228) !important;
+  font-weight: 700 !important;
+  color: $base-white !important;
+}
+
+.authorimage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  object-fit: cover;
+}

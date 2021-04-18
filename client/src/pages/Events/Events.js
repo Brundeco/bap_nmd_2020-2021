@@ -28,11 +28,11 @@ export default (props) => {
     <React.Fragment>
       <Header locationsharing={locationSharing} radius={handleRadius} />
       <div className="page-top-padding">
-        {userLat && userLon ? (
+        {/* {userLat && userLon ? (
           <Map lat={userLat} lon={userLon} coords={markers} />
         ) : (
           <Map lat={50.8503} lon={4.3517} coords={markers} />
-        )}
+        )} */}
         <div className="page-wrapper">
           <GetEventList
             radius={radius}
