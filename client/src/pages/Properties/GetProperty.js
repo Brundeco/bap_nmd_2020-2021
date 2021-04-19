@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import {
   Preloader,
-  PrevPage,
   ConvertDate,
   CheckSession,
   InputField,
@@ -11,8 +10,6 @@ import ImageSlider from '../../components/ImageSlider'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
 import { app } from '../../base'
-import LikeIconWhite from './../../icons/heart-full-white.svg'
-import LikeIconBlue from './../../icons/heart-full-blue.svg'
 import PriceIcon from './../../icons/property-detail/price.svg'
 import SurfaceIcon from './../../icons/property-detail/surface.svg'
 import CalenderIcon from './../../icons/property-detail/calendar.svg'
@@ -33,7 +30,6 @@ export default ({ match }) => {
   const [selectedDates, setSelectedDates] = useState([])
   const [dates, setDates] = useState([])
   const storageRef = app.storage().ref()
-  const [hoverState, setHoverState] = useState(false)
   const [showCalendar, setShowCalendar] = useState(false)
   const [conversationId, setConversationId] = useState()
   const [formData, setFormData] = useState()
@@ -144,8 +140,8 @@ export default ({ match }) => {
         favProperties: arr,
       })
       .then((res) => {
-        const favs = res
-        console.log(favs)
+        const favs = res.data.favProperties
+        setFavorites(favs)
         setData((prev) => ({ ...prev, favProperties: favs }))
         setLoading(false)
       })
@@ -153,8 +149,6 @@ export default ({ match }) => {
   }
 
   useEffect(() => {
-    console.log(favorites)
-
     favorites?.includes(match.params.id) ? setLiked(false) : setLiked(true)
   }, [favorites])
 
@@ -260,6 +254,7 @@ export default ({ match }) => {
   if (data != undefined) {
     return (
       <div className="property-detail-screen">
+        {loading ? <Preloader text="Just a second please" /> : ''}
         <div className="subject-image">
           <ImageSlider slides={images} index={handleIndex} />
         </div>
@@ -271,7 +266,6 @@ export default ({ match }) => {
               <p> {`${data?.firstname} ${data?.lastname}`} </p>
             </div>
             <div className="right">
-              {/* <section className="cta-section"> */}
               <button
                 className={
                   liked ? 'main-btn liked-event' : 'main-btn not-liked-event'
@@ -280,13 +274,6 @@ export default ({ match }) => {
               >
                 {liked ? 'Like' : 'Unlike'}
               </button>
-              {/* </section> */}
-              {/* <button
-                onMouseEnter={() => setHoverState(!hoverState)}
-                onMouseLeave={() => setHoverState(!hoverState)}
-              >
-                <img src={hoverState ? LikeIconBlue : LikeIconWhite} alt="" />
-              </button> */}
             </div>
           </div>
           <h3>Added on {propertyCreatedAt}</h3>
@@ -468,7 +455,7 @@ export default ({ match }) => {
   } else {
     return (
       <React.Fragment>
-        <Preloader text="property" />
+        <Preloader text="Loading property" />
       </React.Fragment>
     )
   }

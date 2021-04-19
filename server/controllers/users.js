@@ -82,7 +82,7 @@ export const login = async (req, res) => {
 
 export const getUser = async (req, res) => {
   const { id } = req.params
-  
+
   try {
     const user = await User.findById(id)
 
@@ -116,6 +116,9 @@ export const likeEvent = async (req, res) => {
 export const likeProperty = async (req, res) => {
   const { id } = req.params
   const { favProperties } = req.body
+
+  console.log(id)
+  console.log(favProperties)
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`)

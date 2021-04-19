@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 
 export default (props) => {
   return (
-    <div className="preloader-wrapper" >
-      <h2 className="preloader-title">Loading {props.text}</h2>
+    <div className="preloader-wrapper">
+      <h2 className="preloader-title"> {props.text}</h2>
       {/* <section>
         <div className="origin" />
         <div className="origin" />
@@ -15,5 +15,5 @@ export default (props) => {
         <div className="bounce-3"></div>
       </div>
     </div>
-  );
-};
+  )
+}

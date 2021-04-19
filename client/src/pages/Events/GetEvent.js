@@ -66,8 +66,8 @@ export default ({ match }) => {
         favEvents: arr,
       })
       .then((res) => {
-        const favs = res
-        console.log(favs)
+        const favs = res.data.favEvents
+        setFavorites(favs)
         setData((prev) => ({ ...prev, favEvents: favs }))
         setLoading(false)
       })
@@ -120,7 +120,7 @@ export default ({ match }) => {
   } else {
     return (
       <React.Fragment>
-        <Preloader />
+        <Preloader text={'Loading event'} />
       </React.Fragment>
     )
   }
