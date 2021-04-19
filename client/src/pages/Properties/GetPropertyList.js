@@ -173,7 +173,7 @@ export default (props) => {
   } else {
     return (
       <React.Fragment>
-        <Preloader text={'properties'} />
+        <Preloader text={'Loading properties'} />
       </React.Fragment>
     )
   }

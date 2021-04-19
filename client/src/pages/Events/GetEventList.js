@@ -126,7 +126,7 @@ export default (props) => {
   }
 
   if (data == undefined || data.length <= 1) {
-    return <Preloader text="events" />
+    return <Preloader text="Loading events" />
   } else {
     return (
       <div className="event-screen" markers={props.markers(coords)}>

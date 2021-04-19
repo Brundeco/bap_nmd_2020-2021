@@ -83,6 +83,12 @@ export default () => {
         >
           Not a member yet? / Sign up here
         </button>
+        <button
+          className="secondary-btn"
+          onClick={() => (window.location = '/password-reset-link')}
+        >
+          Forgot password
+        </button>
         {status == 'Login successfull' ? (
           <span className="success"> {status} </span>
         ) : (

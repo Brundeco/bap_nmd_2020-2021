@@ -1,7 +1,10 @@
 import User from '../models/users.js'
 import bcrypt from 'bcryptjs'
+import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
+import nodemailer from 'nodemailer'
+import dotenv from 'dotenv'
 
 export const register = async (req, res) => {
   const { username, phone, email, image, password } = req.body
@@ -77,6 +80,86 @@ export const login = async (req, res) => {
     res
       .status(400)
       .json({ message: 'This user could not be found in our database' })
+  }
+}
+
+export const passwordReset = async (req, res) => {
+  const { email } = req.body
+
+  try {
+    const user = await User.findOne({ email: email })
+    if (user === null) {
+      res.status(403).json({ message: 'No user found with that email adress' })
+    } else {
+      const token = crypto.randomBytes(20).toString('hex')
+      await user.updateOne({
+        resetPasswordToken: token,
+        resetPasswordExpires: Date.now() + 3600000,
+      })
+
+      const transporter = nodemailer.createTransport({
+        host: 'smtp-mail.outlook.com', // hostname
+        secureConnection: false, // TLS requires secureConnection to be false
+        port: 587, // port for secure SMTP
+        tls: {
+          ciphers: 'SSLv3',
+        },
+        auth: {
+          user: 'brundeco@student.arteveldehs.be',
+          pass: process.env.OUTLOOK_PASS,
+        },
+      })
+
+      let mailOptions = {
+        from: 'brundeco@student.arteveldehs.be', // sender address (who sends)
+        to: email, // list of receivers (who receives)
+        subject: 'Link to reset password!', // Subject line
+        text: `This is a password reset mail? Click on this link: ${process.env.CLIENT_URL}/reset/${token}/${email}`, // plaintext body
+        html: `This is a password reset mail? Click on this link: ${process.env.CLIENT_URL}/reset/${token}/${email}`, // html body
+      }
+
+      try {
+        transporter.sendMail(mailOptions, () => {
+          res.status(200).json({ message: 'Recovery mail sent' })
+        })
+      } catch (error) {
+        console.log(error)
+        res.status(400).json({ error })
+      }
+    }
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}
+
+export const passwordUpdate = async (req, res) => {
+  const { token } = req.params
+  try {
+    await User.findOne({
+      $and: [
+        {
+          resetPasswordToken: {
+            $in: token,
+          },
+        },
+        {
+          resetPasswordExpires: {
+            $gt: Date.now(),
+          },
+        },
+      ],
+    }).then((user) => {
+      if (user === null) {
+        console.log('Password reset link is expired or is invalid')
+        res.json('Password reset link is expired or is invalid')
+      } else {
+        res
+          .status(200)
+          .json({ message: 'Valid reset link', user: user.username })
+      }
+    })
+  } catch (error) {
+    res.status(404).json({ message: error.message })
   }
 }
 

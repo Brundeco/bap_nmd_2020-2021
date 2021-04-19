@@ -2,12 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import NoUserIcon from './../../icons/no-user.svg'
-import {
-  Preloader,
-  CheckSession,
-  ConvertDate,
-  PreloaderSpinningWheel,
-} from './../../components'
+import { Preloader, CheckSession, ConvertDate } from './../../components'
 import { app } from '../../base'
 
 export default ({ match }) => {
@@ -20,7 +15,7 @@ export default ({ match }) => {
   const [authorImage, setAuthorImage] = useState()
   const [favorites, setFavorites] = useState([])
   const [liked, setLiked] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     axios
@@ -42,6 +37,7 @@ export default ({ match }) => {
       .then((res) => {
         console.log(res)
         setFavorites(res.data.favEvents)
+        setLoading(false)
       })
       .catch((err) => console.log(err))
 

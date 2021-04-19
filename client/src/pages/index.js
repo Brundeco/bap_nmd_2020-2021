@@ -33,5 +33,7 @@ export { default as Messages } from './Chat/Messages'
 export { default as CreateUser } from './Users/CreateUser'
 export { default as LoginUser } from './Users/LoginUser'
 export { default as LogoutUser } from './Users/LogoutUser'
+export { default as PasswordResetLink } from './Users/PasswordResetLink'
+export { default as PasswordReset } from './Users/PasswordReset'
 
 export { default as NoLocation } from './NoLocation'

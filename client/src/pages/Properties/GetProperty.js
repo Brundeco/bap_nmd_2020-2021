@@ -38,7 +38,7 @@ export default ({ match }) => {
   const [paymentStatus, setPaymentStatus] = useState()
   const [favorites, setFavorites] = useState([])
   const [liked, setLiked] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [booking, setBooking] = useState({
     client: user.username,
     client_id: user.id,
@@ -66,6 +66,7 @@ export default ({ match }) => {
       .get(`${process.env.REACT_APP_API_URL}/users/${user.id}`)
       .then((res) => {
         setFavorites(res.data.favProperties)
+        setLoading(false)
       })
   }, [])
 
