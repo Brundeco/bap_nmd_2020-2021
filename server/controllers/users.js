@@ -99,7 +99,7 @@ export const passwordReset = async (req, res) => {
 
       const transporter = nodemailer.createTransport({
         host: 'smtp-mail.outlook.com', // hostname
-        secureConnection: false, // TLS requires secureConnection to be false
+        secureConnection: true, // TLS requires secureConnection to be false
         port: 587, // port for secure SMTP
         tls: {
           ciphers: 'SSLv3',
@@ -118,14 +118,20 @@ export const passwordReset = async (req, res) => {
         html: `This is a password reset mail? Click on this link: ${process.env.CLIENT_URL}/reset/${token}`, // html body
       }
 
-      try {
-        transporter.sendMail(mailOptions, () => {
-          res.status(200).json({ message: 'Recovery mail sent' })
-        })
-      } catch (error) {
-        console.log(error)
-        res.status(400).json({ error })
-      }
+      // try {
+
+      transporter.sendMail(mailOptions, (err, success) => {
+        if (err) {
+          console.log('there was an error')
+        } else {
+          console.log('Nodemailer success: ', success)
+          res.status(200).json({ message: 'Mail successfully sent' })
+        }
+      })
+      // } catch (error) {
+      //   console.log(error)
+      //   res.status(400).json({ error })
+      // }
     }
   } catch (error) {
     res.status(404).json({ message: error.message })
