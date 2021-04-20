@@ -123,6 +123,7 @@ export const passwordReset = async (req, res) => {
       transporter.sendMail(mailOptions, (err, success) => {
         if (err) {
           console.log('there was an error')
+          res.status(400).json({ messsage: err })
         } else {
           console.log('Nodemailer success: ', success)
           res.status(200).json({ message: 'Mail successfully sent' })
