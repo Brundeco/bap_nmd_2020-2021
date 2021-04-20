@@ -114,8 +114,8 @@ export const passwordReset = async (req, res) => {
         from: 'brundeco@student.arteveldehs.be', // sender address (who sends)
         to: email, // list of receivers (who receives)
         subject: 'Link to reset password!', // Subject line
-        text: `This is a password reset mail? Click on this link: ${process.env.CLIENT_URL}/reset/${token}/${email}`, // plaintext body
-        html: `This is a password reset mail? Click on this link: ${process.env.CLIENT_URL}/reset/${token}/${email}`, // html body
+        text: `This is a password reset mail? Click on this link: ${process.env.CLIENT_URL}/reset/${token}`, // plaintext body
+        html: `This is a password reset mail? Click on this link: ${process.env.CLIENT_URL}/reset/${token}`, // html body
       }
 
       try {
@@ -155,10 +155,43 @@ export const passwordUpdate = async (req, res) => {
       } else {
         res
           .status(200)
-          .json({ message: 'Valid reset link', user: user.username })
+          .json({ message: 'Valid reset link', username: user.username })
       }
     })
   } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}
+
+export const saveNewPassword = async (req, res) => {
+  console.log('hey')
+  console.log(req.params.username)
+  console.log(req.params.password)
+  try {
+    await User.findOne({
+      username: {
+        $in: req.params.username,
+      },
+    }).then((user) => {
+      if (user === null) {
+        console.log('No user found')
+        res.json('No user found')
+      } else {
+        bcrypt.hash(req.params.password, 10, async (err, hashedPass) => {
+          console.log(hashedPass)
+          await user
+            .updateOne({
+              password: hashedPass,
+              resetPasswordToken: null,
+              resetPasswordExpires: null,
+            })
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
+        })
+      }
+    })
+  } catch (error) {
+    console.log(error)
     res.status(404).json({ message: error.message })
   }
 }

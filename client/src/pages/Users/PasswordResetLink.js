@@ -1,47 +1,42 @@
-import React, { useState, useEffect } from 'react'
-import { InputField, PreloaderSpinningWheel } from '../../components'
+import React, { useState } from 'react'
+import { InputField, Preloader } from '../../components'
 import axios from 'axios'
 
 export default () => {
   const [data, setData] = React.useState({})
   const [status, setStatus] = useState()
-  const [progress, setProgress] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }))
   }
 
-  useEffect(() => {
-    console.log(data)
-  }, [data])
-
   const handleSubmit = (e) => {
     e.preventDefault()
-    // setProgress(true)
+    setLoading(true)
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/users/password-reset-link`, {
+      .post(`${process.env.REACT_APP_API_URL}/users/password-reset`, {
         email: data.email,
       })
       .then((res) => {
+        setSuccess(true)
+        setLoading(false)
         setStatus('Password reset link send!')
         console.log(res)
+        setLoading(false)
       })
       .catch((err) => {
         console.log(err.message)
-        setStatus(err.message)
+        setStatus('Password reset link could not be send')
+        setLoading(false)
       })
   }
 
   return (
     <div className="login-screen padding-correction">
-      <div className={progress ? 'await-result show' : 'await-result hide'}>
-        {progress ? (
-          <PreloaderSpinningWheel text="Sending mail to server" />
-        ) : (
-          ''
-        )}
-      </div>
+      {loading ? <Preloader text="Preparing reset link" /> : ''}
       <div className="wrapper">
         <h1>Reset password</h1>
         <form action="" onSubmit={handleSubmit}>
@@ -62,7 +57,9 @@ export default () => {
         >
           Back to login
         </button>
-        <span> {status} </span>
+        <span className={success ? 'status-success' : 'status-failure'}>
+          {status}
+        </span>
       </div>
     </div>
   )

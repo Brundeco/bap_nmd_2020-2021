@@ -6,28 +6,47 @@ export default ({ match }) => {
   const [data, setData] = React.useState({})
   const [status, setStatus] = useState()
   const [progress, setProgress] = useState(false)
+  const [username, setUsername] = useState()
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // setProgress(true)
-
     const token = match.params.token
     console.log(token)
 
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/users/password-update/${token}`)
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}/users/password-reset/${token}`)
       .then((res) => {
-        console.log(res)
+        if (res.data.message === 'Valid reset link') {
+          setUsername(res.data.username)
+        }
       })
       .catch((err) => {
         console.log(err.message)
         setStatus(err.message)
       })
   }
+
+  useEffect(async () => {
+    console.log('here')
+    if (username) {
+      console.log(username)
+      await axios
+        .put(
+          `${process.env.REACT_APP_API_URL}/users/password-reset/${username}/${data.password}`
+        )
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err.message)
+          setStatus(err.message)
+        })
+    }
+  }, [username])
 
   return (
     <div className="login-screen padding-correction">
@@ -49,7 +68,7 @@ export default ({ match }) => {
             required
           />
           <InputField
-            name="password"
+            name="passwordVerify"
             placeholder="Password"
             type="password"
             onChange={handleChange}

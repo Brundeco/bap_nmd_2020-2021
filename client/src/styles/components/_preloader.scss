@@ -87,9 +87,10 @@
 // Preloader 3 -> Bouncing dots
 
 .disable-click-evts {
+  background: rgba(255,255,255,0.8);
   pointer-events: all;
   width: 100vw;
-  height: 100vw;
+  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
@@ -115,6 +116,7 @@
   right: 0;
   bottom: 0;
   border-radius: 20px;
+  z-index: 100;
 }
 
 .loading-dots {

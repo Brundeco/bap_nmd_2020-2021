@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { InputField, PreloaderSpinningWheel } from './../../components'
+import { InputField, Preloader } from './../../components'
 import FileBase from 'react-file-base64'
 import axios from 'axios'
-import TextLogo from './../../icons/text_logo.svg'
 import SelectImage from './../../icons/add-img.svg'
 import replaceImage from './../../icons/reload.svg'
 
 export default () => {
   const [data, setData] = React.useState({})
   const [status, setStatus] = useState()
-  const [progress, setProgress] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }))
@@ -17,31 +17,29 @@ export default () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setProgress(true)
+    setLoading(true)
     if (data.password !== data.passwordRepeat) {
       setStatus('Passwords do not match')
     } else {
       axios
         .post(`${process.env.REACT_APP_API_URL}/users/register`, data)
         .then((res) => {
-          setProgress(false)
+          setSuccess(true)
+          setLoading(false)
           setStatus(res.data.message)
           window.location = '/login?email=' + res.data.user.email
         })
         .catch((err) => {
-          setProgress(false)
-          // setStatus(err.response.data.message)
+          setLoading(false)
+          setStatus(err.response.data.message)
         })
     }
   }
 
   return (
     <div className="login-screen padding-correction">
-      <div className={progress ? 'await-result show' : 'await-result hide'}>
-        {progress ? <PreloaderSpinningWheel text="Registering account" /> : ''}
-      </div>
+      {loading ? <Preloader text="Logging in" /> : ''}
       <div className="wrapper">
-        {/* <img src={TextLogo} alt="Suitswap logo" className="logo" /> */}
         <h1>Create account</h1>
         <form action="" onSubmit={handleSubmit}>
           <div></div>
@@ -115,11 +113,6 @@ export default () => {
           <button className="main-btn" onClick={handleSubmit}>
             Register
           </button>
-          {/* <input
-            className="main-btn register-btn"
-            type="submit"
-            value="Register"
-          /> */}
         </form>
         <button
           className="secondary-btn"
@@ -127,7 +120,9 @@ export default () => {
         >
           Already a member? / Login here
         </button>
-        <span> {status} </span>
+        <span className={success ? 'status-success' : 'status-failure'}>
+          {status}
+        </span>
       </div>
     </div>
   )

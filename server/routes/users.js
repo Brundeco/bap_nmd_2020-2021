@@ -8,6 +8,7 @@ import {
   likeProperty,
   passwordReset,
   passwordUpdate,
+  saveNewPassword
 } from '../controllers/users.js'
 
 const router = express.Router()
@@ -19,7 +20,8 @@ router.get('/:id', getUser)
 router.put('/like-event/:id', likeEvent)
 router.put('/like-property/:id', likeProperty)
 
-router.post('/password-reset-link', passwordReset)
-router.get('/password-update/:token', passwordUpdate)
+router.post('/password-reset', passwordReset)
+router.get('/password-reset/:token', passwordUpdate)
+router.put('/password-reset/:username/:password', saveNewPassword)
 
 export default router

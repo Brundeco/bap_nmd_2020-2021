@@ -43,7 +43,7 @@ function App() {
           <Route path="/register" component={CreateUser} />
           <Route path="/login" component={LoginUser} />
           <Route path="/password-reset-link" component={PasswordResetLink} />
-          <Route path="/reset/:token/:email" component={PasswordReset} />
+          <Route path="/reset/:token" component={PasswordReset} />
 
           <Route path="/no-location" component={NoLocation} />
 
