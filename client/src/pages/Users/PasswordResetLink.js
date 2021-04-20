@@ -23,7 +23,7 @@ export default () => {
       .then((res) => {
         setSuccess(true)
         setLoading(false)
-        setStatus('Password reset link send!')
+        setStatus('You have mail!')
         console.log(res)
         setLoading(false)
       })

@@ -1,21 +1,31 @@
 import React, { useState, useEffect } from 'react'
-import { InputField, PreloaderSpinningWheel } from '../../components'
+import { InputField, Preloader } from '../../components'
 import axios from 'axios'
 
 export default ({ match }) => {
   const [data, setData] = React.useState({})
   const [status, setStatus] = useState()
-  const [progress, setProgress] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [passwordsMatch, setPasswordsMatch] = useState(false)
   const [username, setUsername] = useState()
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }))
   }
 
+  useEffect(() => {
+    if (data?.password?.length > 5 && data.password === data.passwordVerify) {
+      setPasswordsMatch(true)
+    } else {
+      setPasswordsMatch(false)
+    }
+  }, [data])
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setLoading(true)
     const token = match.params.token
-    console.log(token)
 
     await axios
       .get(`${process.env.REACT_APP_API_URL}/users/password-reset/${token}`)
@@ -31,17 +41,20 @@ export default ({ match }) => {
   }
 
   useEffect(async () => {
-    console.log('here')
     if (username) {
-      console.log(username)
       await axios
         .put(
           `${process.env.REACT_APP_API_URL}/users/password-reset/${username}/${data.password}`
         )
         .then((res) => {
+          setSuccess(true)
+          setLoading(false)
+          setStatus(res.data.message)
           console.log(res)
+          window.location = '/login'
         })
         .catch((err) => {
+          setLoading(false)
           console.log(err.message)
           setStatus(err.message)
         })
@@ -50,13 +63,7 @@ export default ({ match }) => {
 
   return (
     <div className="login-screen padding-correction">
-      <div className={progress ? 'await-result show' : 'await-result hide'}>
-        {progress ? (
-          <PreloaderSpinningWheel text="Sending mail to server" />
-        ) : (
-          ''
-        )}
-      </div>
+      {loading ? <Preloader text="Logging in" /> : ''}
       <div className="wrapper">
         <h1>Reset password </h1>
         <form action="" onSubmit={handleSubmit}>
@@ -74,7 +81,10 @@ export default ({ match }) => {
             onChange={handleChange}
             required
           />
-          <button className="main-btn" onClick={handleSubmit}>
+          <button
+            className={passwordsMatch ? 'main-btn' : 'main-btn disabled-btn'}
+            onClick={handleSubmit}
+          >
             Reset password
           </button>
         </form>
@@ -84,7 +94,9 @@ export default ({ match }) => {
         >
           Back to login
         </button>
-        <span> {status} </span>
+        <span className={success ? 'status-success' : 'status-failure'}>
+          {status}
+        </span>
       </div>
     </div>
   )

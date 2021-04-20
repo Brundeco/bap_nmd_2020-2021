@@ -182,9 +182,6 @@ export const passwordUpdate = async (req, res) => {
 }
 
 export const saveNewPassword = async (req, res) => {
-  console.log('hey')
-  console.log(req.params.username)
-  console.log(req.params.password)
   try {
     await User.findOne({
       username: {
@@ -203,13 +200,14 @@ export const saveNewPassword = async (req, res) => {
               resetPasswordToken: null,
               resetPasswordExpires: null,
             })
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err))
+            .then(() => {
+              res.status(200).json({ message: 'All set! 🚀' })
+            })
+            .catch((err) => res.status(400).json({ message: err }))
         })
       }
     })
   } catch (error) {
-    console.log(error)
     res.status(404).json({ message: error.message })
   }
 }
