@@ -4,6 +4,7 @@ import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose'
 import nodemailer from 'nodemailer'
+import smtpTransport from 'nodemailer-smtp-transport'
 import dotenv from 'dotenv'
 
 export const register = async (req, res) => {
@@ -97,18 +98,28 @@ export const passwordReset = async (req, res) => {
         resetPasswordExpires: Date.now() + 3600000,
       })
 
-      const transporter = nodemailer.createTransport({
-        host: 'smtp-mail.outlook.com', // hostname
-        secureConnection: false, // TLS requires secureConnection to be false
-        port: 587, // port for secure SMTP
-        tls: {
-          ciphers: 'SSLv3',
-        },
-        auth: {
-          user: 'brundeco@student.arteveldehs.be',
-          pass: process.env.OUTLOOK_PASS,
-        },
-      })
+      let transporter = nodemailer.createTransport(
+        smtpTransport({
+          service: 'Hotmail',
+          auth: {
+            user: 'brundeco@student.arteveldehs.be',
+            pass: process.env.OUTLOOK_PASS,
+          },
+        })
+      )
+
+      // const transporter = nodemailer.createTransport({
+      //   host: 'smtp-mail.outlook.com', // hostname
+      //   secureConnection: false, // TLS requires secureConnection to be false
+      //   port: 587, // port for secure SMTP
+      //   tls: {
+      //     ciphers: 'SSLv3',
+      //   },
+      //   auth: {
+      //     user: 'brundeco@student.arteveldehs.be',
+      //     pass: process.env.OUTLOOK_PASS,
+      //   },
+      // })
 
       let mailOptions = {
         from: 'brundeco@student.arteveldehs.be', // sender address (who sends)
