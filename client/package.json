@@ -2,7 +2,7 @@
   "name": "app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://bap-nmd-2020-2021.netlify.app/",
+  "homepage": "https://www.popapp.be",
   "dependencies": {
     "@ant-design/icons": "^4.5.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",

@@ -98,66 +98,38 @@ export const passwordReset = async (req, res) => {
         resetPasswordExpires: Date.now() + 3600000,
       })
 
-      // let transporter = nodemailer.createTransport(
-      //   smtpTransport({
-      //     service: 'send.one.com',
-      //     auth: {
-      //       // user: 'brundeco@student.arteveldehs.be',
-      //       user: 'info@popapp.be',
-      //       pass: process.env.OUTLOOK_PASS,
-      //     },
-      //   })
-      // )
-
       const transporter = nodemailer.createTransport({
-        host: 'send.one.com', // hostname
-        secureConnection: false, // TLS requires secureConnection to be false
-        port: 587, // port for secure SMTP
-        // tls: {
-        //   ciphers: 'SSLv3',
-        // },
+        host: 'send.one.com',
+        secureConnection: false,
+        port: 587,
         auth: {
           user: 'info@popapp.be',
           pass: process.env.OUTLOOK_PASS,
         },
       })
 
-      // const transporter = nodemailer.createTransport({
-      //   host: 'smtp-mail.outlook.com', // hostname
-      //   secureConnection: false, // TLS requires secureConnection to be false
-      //   port: 587, // port for secure SMTP
-      //   tls: {
-      //     ciphers: 'SSLv3',
-      //   },
-      //   auth: {
-      //     user: 'brundeco@student.arteveldehs.be',
-      //     pass: process.env.OUTLOOK_PASS,
-      //   },
-      // })
-
       let mailOptions = {
-        from: 'info@popapp.be', // sender address (who sends)
-        to: email, // list of receivers (who receives)
-        subject: 'Link to reset password!', // Subject line
+        from: 'info@popapp.be',
+        to: email,
+        subject: 'Link to reset password!',
         text: `This is a password reset mail? Click on this link: ${process.env.CLIENT_URL}/reset/${token}`, // plaintext body
-        html: `This is a password reset mail? Click on this link: ${process.env.CLIENT_URL}/reset/${token}`, // html body
+        html: `This is a password reset mail? Click on this link: ${process.env.CLIENT_URL}/reset/${token}`,
       }
 
-      // try {
-
-      transporter.sendMail(mailOptions, (err, success) => {
-        if (err) {
-          console.log('there was an error')
-          res.status(400).json({ messsage: err })
-        } else {
-          console.log('Nodemailer success: ', success)
-          res.status(200).json({ message: 'Mail successfully sent' })
-        }
-      })
-      // } catch (error) {
-      //   console.log(error)
-      //   res.status(400).json({ error })
-      // }
+      try {
+        transporter.sendMail(mailOptions, (err, success) => {
+          if (err) {
+            console.log('there was an error')
+            res.status(400).json({ messsage: err })
+          } else {
+            console.log('Nodemailer success: ', success)
+            res.status(200).json({ message: 'Mail successfully sent' })
+          }
+        })
+      } catch (error) {
+        console.log(error)
+        res.status(400).json({ error })
+      }
     }
   } catch (error) {
     res.status(404).json({ message: error.message })
