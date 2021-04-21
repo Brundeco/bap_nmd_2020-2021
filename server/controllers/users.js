@@ -98,15 +98,29 @@ export const passwordReset = async (req, res) => {
         resetPasswordExpires: Date.now() + 3600000,
       })
 
-      let transporter = nodemailer.createTransport(
-        smtpTransport({
-          service: 'Hotmail',
-          auth: {
-            user: 'brundeco@student.arteveldehs.be',
-            pass: process.env.OUTLOOK_PASS,
-          },
-        })
-      )
+      // let transporter = nodemailer.createTransport(
+      //   smtpTransport({
+      //     service: 'send.one.com',
+      //     auth: {
+      //       // user: 'brundeco@student.arteveldehs.be',
+      //       user: 'info@popapp.be',
+      //       pass: process.env.OUTLOOK_PASS,
+      //     },
+      //   })
+      // )
+
+      const transporter = nodemailer.createTransport({
+        host: 'send.one.com', // hostname
+        secureConnection: false, // TLS requires secureConnection to be false
+        port: 587, // port for secure SMTP
+        // tls: {
+        //   ciphers: 'SSLv3',
+        // },
+        auth: {
+          user: 'info@popapp.be',
+          pass: process.env.OUTLOOK_PASS,
+        },
+      })
 
       // const transporter = nodemailer.createTransport({
       //   host: 'smtp-mail.outlook.com', // hostname
@@ -122,7 +136,7 @@ export const passwordReset = async (req, res) => {
       // })
 
       let mailOptions = {
-        from: 'brundeco@student.arteveldehs.be', // sender address (who sends)
+        from: 'info@popapp.be', // sender address (who sends)
         to: email, // list of receivers (who receives)
         subject: 'Link to reset password!', // Subject line
         text: `This is a password reset mail? Click on this link: ${process.env.CLIENT_URL}/reset/${token}`, // plaintext body

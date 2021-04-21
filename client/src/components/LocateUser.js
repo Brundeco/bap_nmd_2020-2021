@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { CheckSession } from '.'
 
 export default (props) => {
+  CheckSession(localStorage.getItem('jwt'))
   const [response, setResponse] = useState()
   const [loaded, setLoaded] = useState(false)
 
