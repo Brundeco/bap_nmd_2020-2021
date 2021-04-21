@@ -15,6 +15,16 @@ import chatRoutes from './routes/chat.js'
 import reservationRoutes from './routes/reservations.js'
 import mailingRoutes from './routes/mailing.js'
 
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// console.log(__dirname)
+// const __dirname = path.resolve(path.dirname(''))
+
+
 const app = express()
 app.use(cors())
 dotenv.config()
@@ -26,8 +36,11 @@ app.get('/', (req, res) => {
   res.send('Index.js was restructured')
 })
 
+
+
 app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
+app.use(express.static(__dirname + '/public'));
 
 let participants = []
 
