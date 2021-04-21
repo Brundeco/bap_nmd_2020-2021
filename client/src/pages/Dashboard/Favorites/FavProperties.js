@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { app } from '../../../base'
+import { Preloader } from '../../../components'
 
 export default () => {
   const user = JSON.parse(localStorage.getItem('user'))
@@ -43,12 +44,6 @@ export default () => {
     })
   }, [properties])
 
-  // useEffect(() => {
-  //   console.log(images)
-  //   let unique = [...new Set(images)]
-  //   console.log(unique)
-  // }, [images])
-
   if (favorites?.length > 0) {
     return (
       <div className="property-screen">
@@ -82,7 +77,7 @@ export default () => {
   } else {
     return (
       <React.Fragment>
-        <h1>Looking for favorite properties</h1>
+        <Preloader text="Loading favorite properties" />
       </React.Fragment>
     )
   }

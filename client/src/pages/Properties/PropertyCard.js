@@ -16,7 +16,7 @@ export default ({
       <h2> {description}</h2>
       <h4>Daily price: {price} </h4>
       <h4> Date: {new Date(date).toDateString()} </h4>
-      <h4>{`${distance} km`}</h4>
+      <h4>{distance == NaN ? '' : `${distance} sdsd km`}</h4>
       <div className="image">
         <img key={key} src={image} alt="" />
       </div>

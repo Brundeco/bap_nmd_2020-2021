@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { app } from '../../../base'
+import { Preloader } from '../../../components'
 
 export default () => {
   const user = JSON.parse(localStorage.getItem('user'))
@@ -45,7 +46,11 @@ export default () => {
   }, [events])
 
   useEffect(() => {
-    console.log(favorites)
+    if (favorites?.length > 0) {
+      console.log(favorites.length)
+    } else {
+      console.log('Less then 1 favorites')
+    }
   }, [favorites])
 
   if (favorites?.length > 0) {
@@ -54,7 +59,6 @@ export default () => {
         <div className="wrapper">
           {favorites.map((el, key) => {
             if (el) {
-              // console.log(el)
               return (
                 <div key={key}>
                   <h2>{}</h2>
@@ -82,7 +86,7 @@ export default () => {
   } else {
     return (
       <React.Fragment>
-        <h1>Looking for favorite events</h1>
+        <Preloader text="Loading favorite events" />
       </React.Fragment>
     )
   }

@@ -5,9 +5,9 @@ import FavEvents from './FavEvents'
 
 export default () => {
   CheckSession(localStorage.getItem('jwt'))
-  const [currentComponent, setCurrentComponent] = useState('favorites')
-  const dashboardTab = localStorage.getItem('dashboard')
-  const [isActive, setisActive] = useState('favorites')
+  const [currentComponent, setCurrentComponent] = useState('properties')
+  const dashboardTab = localStorage.getItem('favs')
+  const [isActive, setisActive] = useState('properties')
   const dashboardBtns = ['properties', 'events']
 
   useEffect(() => {
@@ -15,13 +15,12 @@ export default () => {
       setCurrentComponent(dashboardTab)
       setisActive(dashboardTab)
     } else {
-      setisActive('favorites')
+      setisActive('properties')
     }
   }, [])
 
   const handleClick = (component) => {
-    console.log(component)
-    localStorage.setItem('dashboard', component.value)
+    localStorage.setItem('favs', component.value)
     setCurrentComponent(component.value)
     setisActive(component.value)
   }

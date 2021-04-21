@@ -68,8 +68,6 @@ export default (props) => {
       data.houseNumber &&
       data.zip &&
       data.city &&
-      data.province &&
-      data.country &&
       data.description &&
       data.price &&
       data.surface &&

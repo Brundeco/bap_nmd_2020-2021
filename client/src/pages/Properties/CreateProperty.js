@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {
-  CheckSession,
-  PreloaderSpinningWheel,
-  PrevPage,
-} from './../../components'
+import { CheckSession, Preloader, PrevPage } from './../../components'
 import axios from 'axios'
 import { PropertyFormCreate, PropertyReview } from '..'
 import { app } from '../../base'
@@ -16,7 +12,8 @@ export default (props) => {
   const storageRef = app.storage()
   const [preview, setPreview] = useState(false)
   const [newPreview, setNewPreview] = useState(false)
-  const [progress, setProgress] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [preloaderMsg, setPreloaderMsg] = useState('Just a second please')
 
   useEffect(() => {
     console.log(data)
@@ -40,19 +37,26 @@ export default (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setProgress(true)
+    setLoading(true)
 
     Promise.all(
       files.map((file) =>
         storageRef.ref(`${data.firebaseRef}/${file.id}`).put(file)
       )
-    ).then(() => {
-      setProgress(false)
-    })
-
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/properties`, data)
-      .then((res) => console.log(res))
+    )
+      .then((res) => {
+        console.log(res)
+        axios
+          .post(`${process.env.REACT_APP_API_URL}/properties`, data)
+          .then(() => {
+            setPreloaderMsg('Succes, property added! 🚀')
+            localStorage.setItem('activity', 'My properties')
+            setTimeout(function () {
+              window.location = '/activity'
+            }, 2000)
+          })
+          .catch((err) => console.log(err))
+      })
       .catch((err) => console.log(err))
   }
 
@@ -65,13 +69,8 @@ export default (props) => {
           : 'create-product-screen no-scroll'
       }
     >
-      <div className={progress ? 'await-result show' : 'await-result hide'}>
-        {progress ? (
-          <PreloaderSpinningWheel text="Adding property to database" />
-        ) : (
-          ''
-        )}
-      </div>
+      {loading ? <Preloader text={preloaderMsg} /> : ''}
+
       <div className="page-wrapper">
         <PrevPage locationsharing={() => {}} radius={() => {}} />
         <PropertyFormCreate

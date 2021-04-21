@@ -58,7 +58,6 @@ export default (props) => {
                   longitude: parseFloat(props.lng),
                 }
               )
-              // let distance = `${parseFloat(dis / 1000).toFixed(1)}`
               setDistance((prev) => [
                 ...prev,
                 {
@@ -66,11 +65,6 @@ export default (props) => {
                   distance: parseFloat(dis / 1000).toFixed(1),
                 },
               ])
-              // if (distance !== NaN)
-              //   setDistance((prev) => [
-              //     ...prev,
-              //     `${parseFloat(dis / 1000).toFixed(1)}`,
-              //   ])
               return dis / 1000 <= props.radius ? el : []
             })
           )
@@ -104,10 +98,6 @@ export default (props) => {
     }
   }, [data, props.lat, props.lng, props.radius])
 
-  // useEffect(() => {
-  //   // console.log(distance)
-  // }, [distance])
-
   useEffect(() => {
     const promises = data
       ?.map((element) => {
@@ -122,17 +112,13 @@ export default (props) => {
     const promisesArr = promises?.flat()
     promisesArr &&
       Promise.all(promisesArr).then((newArray) => {
-        // console.log(newArray)
         setImages((prevPropsFiles) => [...prevPropsFiles, ...newArray])
       })
   }, [data])
 
   const handleFilters = (data) => {
-    // console.log(data)
     setPropertiesFiltered(data)
   }
-
-  console.log()
 
   if (data != undefined) {
     return (

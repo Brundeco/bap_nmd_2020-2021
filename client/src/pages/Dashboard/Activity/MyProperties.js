@@ -40,7 +40,6 @@ export default () => {
         {data?.map((item, i) => {
           return (
             <div className="main-list-item" key={i}>
-              {console.log(i)}
               <div className="list-part">
                 <Link
                   to={{

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { CheckSession, PrevPage } from './../../components'
+import { CheckSession, Preloader, PrevPage } from './../../components'
 import axios from 'axios'
 import { app } from '../../base'
 import EventFormCreate from './EventFormCreate'
@@ -13,6 +13,8 @@ export default () => {
   const storageRef = app.storage()
   const [preview, setPreview] = useState(false)
   const [newPreview, setNewPreview] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [preloaderMsg, setPreloaderMsg] = useState('Just a second please')
 
   const handleData = (formData) => {
     setData(formData)
@@ -28,16 +30,24 @@ export default () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(data)
+    setLoading(true)
 
     storageRef
       .ref(`${data.firebaseRef}/${file.id}`)
       .put(file)
-      .then((res) => console.log(res))
-
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/events`, data)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res)
+        axios
+          .post(`${process.env.REACT_APP_API_URL}/events`, data)
+          .then(() => {
+            setPreloaderMsg('Succes, event was added! 🚀')
+            localStorage.setItem('activity', 'My events')
+            setTimeout(function () {
+              window.location = '/activity'
+            }, 2000)
+          })
+          .catch((err) => console.log(err))
+      })
       .catch((err) => console.log(err))
   }
 
@@ -57,10 +67,10 @@ export default () => {
           : 'create-product-screen no-scroll'
       }
     >
+      {loading ? <Preloader text={preloaderMsg} /> : ''}
+
       <div className="page-wrapper">
         <PrevPage locationsharing={() => {}} radius={() => {}} />
-        {/* <Header locationsharing={() => {}} radius={() => {}} /> */}
-
         <EventFormCreate
           onSubmit={handleSubmit}
           formdata={handleData}
