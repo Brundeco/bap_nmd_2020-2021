@@ -1,0 +1,49 @@
+input::placeholder,
+textarea::placeholder {
+  color: $med-grey;
+  box-sizing: border-box;
+}
+
+input[type='email'],
+input[type='number'],
+input[type='text'],
+input[type='password'] {
+  @include main-input-field;
+  transition: $base-transition;
+}
+
+input[type='email']:focus,
+input[type='number']:focus,
+input[type='text']:focus,
+input[type='password']:focus {
+  border-bottom: 1px solid $base-black !important;
+  transition: $base-transition;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.form-col-sm {
+  width: 25%;
+}
+
+.form-col-md {
+  width: 45%;
+}
+
+.form-col-lg {
+  width: 65%;
+}
+
+.form-col-xl {
+  width: 80%;
+}
+
+.form-col-sm input,
+.form-col-lg input {
+  width: 100%;
+}

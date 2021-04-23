@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import NoUserIcon from './../../icons/no-user.svg'
+import CloseIcon from './../../icons/close.svg'
+import HeartBlue from './../../icons/heart-full-blue.svg'
+import HeartWhite from './../../icons/heart-full-white.svg'
 import { Preloader, CheckSession, ConvertDate } from './../../components'
+import DayPicker, { DateUtils } from 'react-day-picker'
+import 'react-day-picker/lib/style.css'
 import { app } from '../../base'
 
 export default ({ match }) => {
@@ -16,6 +21,9 @@ export default ({ match }) => {
   const [favorites, setFavorites] = useState([])
   const [liked, setLiked] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [dates, setDates] = useState([])
+  const [eventStartDate, setEventStartDate] = useState()
+  const [convertedDate, setConvertedDate] = useState()
 
   useEffect(() => {
     axios
@@ -31,11 +39,17 @@ export default ({ match }) => {
   }, [])
 
   useEffect(() => {
-    console.log(data)
+    data?.dates.map((el) => setDates((prev) => [...prev, new Date(el)]))
+
+    const orderedDates = data?.dates.sort((a, b) => {
+      return Date.parse(a) - Date.parse(b)
+    })
+    setEventStartDate(new Date(orderedDates?.[0]).getTime())
+
     axios
       .get(`${process.env.REACT_APP_API_URL}/users/${user.id}`)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         setFavorites(res.data.favEvents)
         setLoading(false)
       })
@@ -48,6 +62,13 @@ export default ({ match }) => {
         .then((url) => setImage(url))
         .catch((err) => console.log(err))
   }, [data])
+
+  useEffect(() => {
+    if (eventStartDate) {
+      const convDate = ConvertDate(eventStartDate)
+      setConvertedDate(convDate)
+    }
+  }, [eventStartDate])
 
   const handleLike = async (e) => {
     e.preventDefault()
@@ -76,41 +97,67 @@ export default ({ match }) => {
 
   if (data != undefined) {
     return (
-      <div>
-        <div className="event-screen">
-          {loading ? <Preloader text="Just a second please" /> : ''}
-          <div className="subject-image">
-            <img src={image} alt="" />
-          </div>
-          <div className="wrapper">
-            <h1>{data?.title}</h1>
-            <h2>
+      <div className="event-screen-detail">
+        {loading ? <Preloader text="Loading" /> : ''}
+        <Link
+          className="close-btn"
+          to={{ pathname: '/events', state: { from: 'root' } }}
+        >
+          <img src={CloseIcon} alt="close button" />
+        </Link>
+        {/* <div className="close-btn">
+          <img src={CloseIcon} alt="close button" />
+        </div> */}
+        <div className="subject-image">
+          <img src={image} alt="" />
+        </div>
+        <section className="top-section">
+          <h1 className="event-title main-title">{data?.title}</h1>
+          <div className="author-info flex flex-j-between">
+            <div className="flex flex-a-center">
               <img
                 src={authorImage ? authorImage : NoUserIcon}
                 alt="authorimage"
                 className="authorimage"
               />
-              <Link to={{ pathname: '/', state: { from: 'root' } }}>
-                {data?.author}
-              </Link>
-            </h2>
-            <h3>Created at {ConvertDate(data?.createdAt)}</h3>
-            <p> {data?.description}</p>
-            <div>
-              <h3>Practical</h3>
+              <p className="semi-bold">{data?.author}</p>
             </div>
-            <section className="cta-section">
+            <div className="flex flex-j-end flex-a-center">
               <button
-                className={
-                  liked ? 'main-btn liked-event' : 'main-btn not-liked-event'
-                }
+                className={liked ? 'main-btn' : 'secondary-btn'}
                 onClick={(e) => handleLike(e)}
               >
+                {/* <img src={liked ? HeartWhite : HeartBlue} alt="" /> */}
                 {liked ? 'Like' : 'Unlike'}
               </button>
-            </section>
+            </div>
           </div>
-        </div>
+
+          <h3 className="small-title-italic">
+            Created at {ConvertDate(data?.createdAt)}
+          </h3>
+          <p> {data?.description}</p>
+        </section>
+
+        <section className="bottom-section">
+          <h2 className="main-title">Practical</h2>
+          <ul>
+            <li>{convertedDate} </li>
+            <li>
+              From
+              {`${data?.startHrs}:${data?.startMins}hr till ${data?.endHrs}:${data?.endMins}`}
+            </li>
+            <li>
+              {`${data?.street} ${data?.houseNumber}, ${data?.zip} ${data?.city}`}
+            </li>
+          </ul>
+        </section>
+        <section>
+          <DayPicker
+            selectedDays={dates}
+            disabledDays={{ before: new Date() }}
+          />
+        </section>
       </div>
     )
   } else {

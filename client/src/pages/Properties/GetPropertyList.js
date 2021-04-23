@@ -19,7 +19,7 @@ export default (props) => {
   const [coords, setCoords] = useState([])
   const [propertiesFiltered, setPropertiesFiltered] = useState([])
   const [distance, setDistance] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     axios

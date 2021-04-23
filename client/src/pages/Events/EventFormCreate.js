@@ -234,11 +234,12 @@ export default (props) => {
 
         {/* <input type="submit" value="Submit" className="main-input-field" /> */}
       </form>
-      {formValid ? (
-        <button onClick={() => setPreview(!preview)}>Review info</button>
-      ) : (
-        ''
-      )}
+      <button
+        className={formValid ? 'main-btn' : 'main-btn disabled-btn'}
+        onClick={() => setPreview(!preview)}
+      >
+        Review info
+      </button>
     </React.Fragment>
   )
 }

@@ -41,15 +41,6 @@
   width: 30%;
 }
 
-.property-detail-screen .cta-section-top .right button {
-  @include main-btn;
-  padding: 10% 3%;
-  &:hover {
-    @include main-btn-outline;
-    padding: 10% 3%;
-  }
-}
-
 .property-detail-screen h3 {
   font-weight: 400;
   font-size: 0.9em;
@@ -159,12 +150,12 @@
   }
 }
 
-.property-detail-screen .cta-bottom-section .main-btn.disabled {
-  color: #b9b9b9 !important;
-  background-color: #e8e8e8;
-  border: 0px !important;
-  pointer-events: none;
-}
+// .property-detail-screen .cta-bottom-section .main-btn.disabled {
+//   color: #b9b9b9 !important;
+//   background-color: #e8e8e8;
+//   border: 0px !important;
+//   pointer-events: none;
+// }
 
 .property-detail-screen .cta-bottom-section button:last-child {
   @include main-btn-outline;

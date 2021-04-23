@@ -13,7 +13,7 @@ export default (props) => {
   const [dates, setDates] = useState([])
   const storageRef = app.storage().ref()
   const [image, setImage] = useState()
-
+  const [formValid, setFormValid] = useState(false)
   const [data, setData] = React.useState({
     author: user.username,
     author_id: user.id,
@@ -64,6 +64,28 @@ export default (props) => {
   }, [props.currentdata])
 
   const today = new Date()
+
+  useEffect(() => {
+    if (
+      data?.street &&
+      data?.houseNumber &&
+      data?.zip &&
+      data?.city &&
+      data?.description &&
+      data?.title &&
+      data?.startHrs &&
+      data?.startMins &&
+      data?.endHrs &&
+      data?.endMins &&
+      data?.price &&
+      data?.dates.length !== 0 &&
+      file !== undefined
+    ) {
+      setFormValid(true)
+    } else {
+      setFormValid(false)
+    }
+  }, [data])
 
   return (
     <React.Fragment>
@@ -237,7 +259,11 @@ export default (props) => {
           </div>
         </section>
 
-        <input type="submit" value="Submit" className="main-input-field" />
+        <input
+          type="submit"
+          value="Submit"
+          className={formValid ? 'main-btn' : 'main-btn disabled-btn'}
+        />
       </form>
     </React.Fragment>
   )

@@ -39,6 +39,7 @@ export default ({ match }) => {
   const [favorites, setFavorites] = useState([])
   const [liked, setLiked] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [formValid, setFormValid] = useState(false)
   const [booking, setBooking] = useState({
     client: user.username,
     client_id: user.id,
@@ -69,6 +70,10 @@ export default ({ match }) => {
         setLoading(false)
       })
   }, [])
+
+  useEffect(() => {
+    selectedDates?.length > 0 ? setFormValid(true) : setFormValid(false)
+  }, [selectedDates])
 
   useEffect(() => {
     console.log(data)
@@ -263,9 +268,7 @@ export default ({ match }) => {
             </div>
             <div className="right">
               <button
-                className={
-                  liked ? 'main-btn liked-event' : 'main-btn not-liked-event'
-                }
+                className={liked ? 'main-btn' : 'secondary-btn'}
                 onClick={(e) => handleLike(e)}
               >
                 {liked ? 'Like' : 'Unlike'}
@@ -359,7 +362,6 @@ export default ({ match }) => {
               <p>
                 {`${data?.street} ${data?.houseNumber},`} <br />
                 {`${data?.zip} ${data?.city} `} <br />
-                {`${data?.province} ${data?.country} `}
               </p>
             </div>
             <div className="contact">
@@ -378,7 +380,7 @@ export default ({ match }) => {
 
           <section className="cta-bottom-section">
             <button
-              className={dates.length !== 0 ? 'main-btn' : 'main-btn disabled'}
+              className={formValid ? 'main-btn' : 'main-btn disabled-btn'}
               onClick={() => setShow(!show)}
             >
               Make reservation

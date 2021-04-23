@@ -1,0 +1,21 @@
+p {
+  font-size: 0.95em;
+  line-height: 1.8em;
+}
+
+.semi-bold {
+  font-weight: 600;
+}
+
+.main-title {
+  font-size: 1.2em;
+  font-weight: 700;
+  margin-bottom: 3vh;
+}
+
+.small-title-italic {
+  font-size: 0.9em;
+  font-style: italic;
+  color: $text-grey;
+  margin-bottom: 3vh;
+}

@@ -1,0 +1,57 @@
+// MAPBOX SETTINGS //
+.show-popup {
+  display: block !important;
+}
+
+.hide-popup {
+  display: none !important;
+}
+
+.mapboxgl-popup {
+  display: none;
+}
+
+.mapboxgl-marker {
+  will-change: initial !important ;
+}
+
+.mapboxgl-marker img {
+  &:hover {
+    .mapboxgl-popup {
+      display: block;
+    }
+  }
+}
+
+// GOOGLE MAPS STYLES //
+
+.map-marker {
+  background-color: $base-white;
+}
+
+.map-marker .map-marker-info {
+  // transition: all 0.5s;
+  // padding: 65%;
+  // min-width: 10vw;
+  // min-height: 5vh;
+  // display: flex;
+  // background-color: white;
+  // box-sizing: border-box;
+  // flex-direction: column;
+}
+
+// .map-marker .map-marker-info {
+//   transition: $base-transition;
+//   padding: 5%;
+//   opacity: 0;
+//   height: auto;
+//   display: flex;
+// }
+
+// .map-marker {
+//   &:hover .map-marker-info {
+//     background-color: $base-white;
+//     opacity: 1;
+//     transition: $base-transition;
+//   }
+// }

@@ -14,6 +14,7 @@ export default (props) => {
   const [thumbnails, setThumbnails] = useState([])
   const [newImgArr, setNewImgArr] = useState([])
   const [dates, setDates] = useState([])
+  const [formValid, setFormValid] = useState(false)
   const storageRef = app.storage().ref()
   const [data, setData] = React.useState({
     author: user.username,
@@ -102,13 +103,35 @@ export default (props) => {
 
   const handleFiles = (e) => {
     Array.from(e.target.files).map((file) => {
-      // console.log(file)
       const newFile = file
       newFile['id'] = uuid()
-      // console.log(files)
       setFiles((prevState) => [...prevState, newFile])
     })
   }
+
+  useEffect(() => {
+    if (
+      (data?.firstname &&
+        data?.lastname &&
+        data?.phone &&
+        data?.email &&
+        data?.street &&
+        data?.houseNumber &&
+        data?.zip &&
+        data?.city &&
+        data?.description &&
+        data?.price &&
+        data?.surface &&
+        data?.areas &&
+        data?.dates.length !== 0 &&
+        files?.length > 1) ||
+      data?.images?.length > 1
+    ) {
+      setFormValid(true)
+    } else {
+      setFormValid(false)
+    }
+  }, [data, files])
 
   const today = new Date()
 
@@ -293,7 +316,10 @@ export default (props) => {
             })}
           </div>
         </section>
-        <button className="main-btn" onClick={props.formsubmit}>
+        <button
+          className={formValid ? 'main-btn' : 'main-btn disabled-btn'}
+          onClick={props.formsubmit}
+        >
           Update property
         </button>{' '}
         <button className="main-btn" onClick={props.delete}>

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
+
 * {
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
@@ -17,8 +19,13 @@ body {
 }
 
 li {
+  display: block;
+  margin-bottom: 15px;
   list-style-type: none;
-  display: inline-block;
+}
+
+::marker {
+  font-size: 0.8em;
 }
 
 a {
@@ -37,60 +44,6 @@ button {
   color: lightgray;
 }
 
-h2 {
-  @include main-h2-title;
-}
-
-// .App {
-//   width: 100vw;
-//   height: 100vh;
-//   position: relative;
-// }
-
-input::placeholder,
-textarea::placeholder {
-  color: $med-grey;
-  box-sizing: border-box;
-}
-
-input[type='email'],
-input[type='number'],
-input[type='text'],
-input[type='password'] {
-  @include main-input-field;
-  transition: $base-transition;
-}
-
-input[type='email']:focus,
-input[type='number']:focus,
-input[type='text']:focus,
-input[type='password']:focus {
-  border-bottom: 1px solid $base-black !important;
-  transition: $base-transition;
-}
-
-button {
-  outline: none;
-  border: none;
-  background: none;
-}
-
-button.main-btn {
-  @include main-btn;
-  margin-top: 4vh;
-  &:hover {
-    @include main-btn-outline;
-  }
-}
-
-button.secondary-btn {
-  @include main-btn-outline;
-  margin-top: 4vh;
-  &:hover {
-    @include main-btn;
-  }
-}
-
 .show {
   display: flex;
   margin: 5vh 0;
@@ -98,174 +51,4 @@ button.secondary-btn {
 
 .hide {
   display: none;
-}
-
-.page-top-padding {
-  padding-top: 20vh;
-}
-
-.page-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 0 5%;
-  box-sizing: border-box;
-  width: 100vw;
-}
-
-.form-row {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.form-col-sm {
-  width: 25%;
-}
-
-.form-col-md {
-  width: 45%;
-}
-
-.form-col-lg {
-  width: 65%;
-}
-
-.form-col-xl {
-  width: 80%;
-}
-
-.form-col-sm input,
-.form-col-lg input {
-  width: 100%;
-}
-
-.DayPicker-Day,
-.DayPicker-wrapper {
-  outline: none !important;
-}
-
-.DayPicker-NavButton--next,
-.DayPicker-NavButton--prev {
-  outline: none !important;
-}
-
-.small-img {
-  width: 100px;
-  height: 50px;
-}
-
-.DayPicker-Day--selected {
-  background-color: $theme-blue !important;
-}
-
-.DayPicker-Day--outside {
-  // background-color: rgba($color: #f3f3f3, $alpha: 1) !important;
-  background-color: rgba($color: $base-white, $alpha: 1) !important;
-}
-
-.DayPicker-Day--today {
-  color: $theme-blue !important;
-}
-
-.DayPicker-Day--selected.DayPicker-Day--today {
-  color: $base-white !important;
-}
-
-.DayPicker-Day.DayPicker-Day--disabled {
-  pointer-events: none !important;
-}
-
-.DayPicker {
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-  // background: #f3f3f3;
-  border: 2px solid #f3f3f3;
-  padding: 5%;
-  border-radius: 10px;
-}
-
-.DayPicker .DayPicker-Month {
-  margin-top: 0;
-}
-
-// MAPBOX SETTINGS //
-.show-popup {
-  display: block !important;
-}
-
-.hide-popup {
-  display: none !important;
-}
-
-.mapboxgl-popup {
-  display: none;
-}
-
-.mapboxgl-marker {
-  will-change: initial !important ;
-}
-
-.mapboxgl-marker img {
-  &:hover {
-    .mapboxgl-popup {
-      display: block;
-    }
-  }
-}
-
-// GOOGLE MAPS STYLES //
-
-.map-marker {
-  background-color: $base-white;
-}
-
-.map-marker .map-marker-info {
-  // transition: all 0.5s;
-  // padding: 65%;
-  // min-width: 10vw;
-  // min-height: 5vh;
-  // display: flex;
-  // background-color: white;
-  // box-sizing: border-box;
-  // flex-direction: column;
-}
-
-// .map-marker .map-marker-info {
-//   transition: $base-transition;
-//   padding: 5%;
-//   opacity: 0;
-//   height: auto;
-//   display: flex;
-// }
-
-// .map-marker {
-//   &:hover .map-marker-info {
-//     background-color: $base-white;
-//     opacity: 1;
-//     transition: $base-transition;
-//   }
-// }
-
-.await-result {
-  position: absolute;
-  z-index: 20;
-  width: 100vw;
-  background-color: rgba($color: $base-white, $alpha: 1);
-  transition: $base-transition;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.await-result.hide {
-  height: 50;
-  transition: $base-transition;
-}
-
-.await-result.show {
-  transition: $base-transition;
-  height: 100vh;
 }

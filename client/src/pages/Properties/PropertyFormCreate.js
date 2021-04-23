@@ -71,9 +71,9 @@ export default (props) => {
       data.description &&
       data.price &&
       data.surface &&
-      data.light &&
+      data.areas &&
       data.dates.length !== 0 &&
-      files?.length !== 0
+      files?.length > 1
     ) {
       setFormValid(true)
     } else {
@@ -140,9 +140,9 @@ export default (props) => {
             </div>
           </div>
           <InputField
-            name="light"
-            placeholder="Natural light"
-            type="text"
+            name="areas"
+            placeholder="Amount of areas"
+            type="number"
             onChange={handleChange}
             className="main-input-field"
             required
@@ -258,11 +258,12 @@ export default (props) => {
           </div>
         </section>
       </form>
-      {formValid ? (
-        <button onClick={() => setPreview(!preview)}>Review info</button>
-      ) : (
-        ''
-      )}
+      <button
+        className={formValid ? 'main-btn' : 'main-btn disabled-btn'}
+        onClick={() => setPreview(!preview)}
+      >
+        Review info
+      </button>
     </React.Fragment>
   )
 }

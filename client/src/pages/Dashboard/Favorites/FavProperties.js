@@ -36,6 +36,7 @@ export default () => {
   }, [])
 
   useEffect(() => {
+    console.log(properties)
     properties?.map((item) => {
       if (item) {
         storageRef
