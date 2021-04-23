@@ -217,17 +217,12 @@ export default ({ match }) => {
                   console.log('Dates in database are editted!')
                   axios
                     .post(`${process.env.REACT_APP_API_URL}/mailing`, {
-                      message: `Hey ${
-                        user.username
-                      }, your booking was completed. You paid a total of € ${
-                        dates.length * data.price
-                      }. If you have any questions concerning your reservation, please contact ${
-                        data.firstname
-                      } ${
-                        data.lastname
-                      } via our built in chat or on the following email: ${
-                        data.email
-                      }  Thanks for using Suitswap! Kind regards`,
+                      user: user.username,
+                      user_id: user.id,
+                      price: data.price * dates.length,
+                      firstname: data.firstname,
+                      lastname: data.lastname,
+                      email: data.email,
                       receiver: user.email,
                     })
                     .then((res) => {

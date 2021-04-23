@@ -46,7 +46,7 @@ export default () => {
                     pathname: `/update-property/${item._id}`,
                   }}
                 >
-                  <li>Update</li>
+                  <li>Edit</li>
                 </Link>
               </div>
               <div className="list-part">

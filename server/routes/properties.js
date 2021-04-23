@@ -9,6 +9,7 @@ import {
   getPropertiesAdmin,
   makePayment,
   getLikes,
+  deleteProperty,
   filterPriceAsc,
   filterPriceDesc,
   filterLessRecent,
@@ -27,6 +28,7 @@ router.put('/:id', updateProperty)
 router.put('/book/:id', bookProperty)
 router.post('/stripe', makePayment)
 router.post('/likes', getLikes)
+router.delete('/delete/:id', deleteProperty)
 
 router.get('/filter/price-asc', filterPriceAsc)
 router.get('/filter/price-desc', filterPriceDesc)

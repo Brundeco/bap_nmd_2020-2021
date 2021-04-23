@@ -42,13 +42,23 @@ export default () => {
           .then(() => {
             setPreloaderMsg('Succes, event was added! 🚀')
             localStorage.setItem('activity', 'My events')
-            setTimeout(function () {
+            setTimeout(() => {
               window.location = '/activity'
             }, 2000)
           })
-          .catch((err) => console.log(err))
+          .catch(() => {
+            setPreloaderMsg('Sorry, something went wrong! 😒')
+            setTimeout(() => {
+              setLoading(false)
+            }, 2000)
+          })
       })
-      .catch((err) => console.log(err))
+      .catch(() => {
+        setPreloaderMsg('Sorry, something went wrong! 😒')
+        setTimeout(() => {
+          setLoading(false)
+        }, 2000)
+      })
   }
 
   useEffect(() => {

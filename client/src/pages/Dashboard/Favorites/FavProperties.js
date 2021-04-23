@@ -10,6 +10,10 @@ export default () => {
   const [properties, setProperties] = useState([])
   const [images, setImages] = useState([])
   const storageRef = app.storage().ref()
+  const [loading, setLoading] = useState(true)
+  const [preloaderMsg, setPreloaderMsg] = useState(
+    'Loading favorite properties'
+  )
 
   useEffect(() => {
     axios
@@ -26,6 +30,7 @@ export default () => {
           .then((res) => {
             console.log(res.data)
             res.data.map((el) => setProperties((prev) => [...prev, el]))
+            setLoading(false)
           })
       })
   }, [])
@@ -44,41 +49,34 @@ export default () => {
     })
   }, [properties])
 
-  if (favorites?.length > 0) {
-    return (
-      <div className="property-screen">
-        <div className="wrapper">
-          {favorites.map((el, key) => {
-            if (el) {
-              return (
-                <div key={key}>
-                  <h2>{}</h2>
-                  <p>{el.city} </p>
-                  <img
-                    src={images[key]}
-                    alt=""
-                    style={{ width: '30vw', height: '5vh' }}
-                  />
-                  <Link
-                    className="main-btn"
-                    to={{
-                      pathname: `/property/${el._id}/${el.author_id}`,
-                    }}
-                  >
-                    Visit
-                  </Link>
-                </div>
-              )
-            }
-          })}
-        </div>
+  return (
+    <div className="property-screen">
+      <div className="wrapper">
+        {loading ? <Preloader text={preloaderMsg} /> : ''}
+        {favorites.map((el, key) => {
+          if (el) {
+            return (
+              <div key={key}>
+                <h2>{}</h2>
+                <p>{el.city} </p>
+                <img
+                  src={images[key]}
+                  alt=""
+                  style={{ width: '30vw', height: '5vh' }}
+                />
+                <Link
+                  className="main-btn"
+                  to={{
+                    pathname: `/property/${el._id}/${el.author_id}`,
+                  }}
+                >
+                  Visit
+                </Link>
+              </div>
+            )
+          }
+        })}
       </div>
-    )
-  } else {
-    return (
-      <React.Fragment>
-        <Preloader text="Loading favorite properties" />
-      </React.Fragment>
-    )
-  }
+    </div>
+  )
 }

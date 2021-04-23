@@ -19,6 +19,7 @@ export default (props) => {
   const [coords, setCoords] = useState([])
   const [propertiesFiltered, setPropertiesFiltered] = useState([])
   const [distance, setDistance] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     axios
@@ -69,6 +70,7 @@ export default (props) => {
             })
           )
           setPropertiesFiltered(evts.flat())
+          setLoading(false)
         } catch (error) {
           console.log(error)
         }
@@ -120,47 +122,38 @@ export default (props) => {
     setPropertiesFiltered(data)
   }
 
-  if (data != undefined) {
-    return (
-      <div className="property-screen">
-        {props.showfilters ? (
-          <FilterProperties filtereddata={handleFilters} />
-        ) : (
-          ''
-        )}
-        <div className="wrapper">
-          {propertiesFiltered?.map((item, index) => {
-            let propImg = ''
-            {
-              images?.map((image, i) => {
-                if (image?.includes(item.images[0])) {
-                  propImg = image
-                }
-              })
-            }
-            return (
-              <PropertyCard
-                description={item.description}
-                price={item.price}
-                date={item.createdAt}
-                distance={
-                  distance?.find((el) => el.item === item._id)?.distance
-                }
-                image={propImg}
-                authorId={item.author_id}
-                itemId={item._id}
-                key={index}
-              />
-            )
-          })}
-        </div>
+  return (
+    <div className="property-screen">
+      {loading ? <Preloader text="Searching around you" /> : ''}
+      {props.showfilters ? (
+        <FilterProperties filtereddata={handleFilters} />
+      ) : (
+        ''
+      )}
+      <div className="wrapper">
+        {propertiesFiltered?.map((item, index) => {
+          let propImg = ''
+          {
+            images?.map((image, i) => {
+              if (image?.includes(item.images[0])) {
+                propImg = image
+              }
+            })
+          }
+          return (
+            <PropertyCard
+              description={item.description}
+              price={item.price}
+              date={item.createdAt}
+              distance={distance?.find((el) => el.item === item._id)?.distance}
+              image={propImg}
+              authorId={item.author_id}
+              itemId={item._id}
+              key={index}
+            />
+          )
+        })}
       </div>
-    )
-  } else {
-    return (
-      <React.Fragment>
-        <Preloader text={'Loading properties'} />
-      </React.Fragment>
-    )
-  }
+    </div>
+  )
 }

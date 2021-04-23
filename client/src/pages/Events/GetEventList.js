@@ -19,6 +19,7 @@ export default (props) => {
   const [coords, setCoords] = useState([])
   const [locationSharing, setLocationSharing] = useState()
   const [distance, setDistance] = useState([])
+  const [loading, setLoading] = useState(true)
 
   // Fetch all events and store in state(data)
   useEffect(() => {
@@ -75,6 +76,7 @@ export default (props) => {
             })
           )
           setEvtsFiltered(evts.flat())
+          setLoading(false)
         } catch (error) {
           console.log(error)
         }
@@ -106,14 +108,14 @@ export default (props) => {
   }, [data, props.lat, props.lng, props.radius])
 
   // Fetch event images (Firebase Firestore) and store in state
-  useEffect(() => {
+  useEffect(async () => {
     if (evtsFiltered) {
       const arr = evtsFiltered?.map((item) => {
         return storageRef
           .child(item?.firebaseRef + '/' + item?.image)
           .getDownloadURL()
       })
-      Promise.all(arr)
+      await Promise.all(arr)
         .then((urls) => {
           setImages(urls)
         })
@@ -125,36 +127,29 @@ export default (props) => {
     setEvtsFiltered(data)
   }
 
-  if (data == undefined || data.length <= 1) {
-    return <Preloader text="Loading events" />
-  } else {
-    return (
-      <div className="event-screen" markers={props.markers(coords)}>
-        <div className="event-list">
-          {props.showfilters ? (
-            <FilterEvents filtereddata={handleFilters} />
-          ) : (
-            ''
-          )}
-          {evtsFiltered?.map((item, index) => {
-            return (
-              <React.Fragment>
-                <EventCard
-                  title={item.title}
-                  date={item.createdAt}
-                  distance={
-                    distance?.find((el) => el.item === item._id)?.distance
-                  }
-                  city={item.city}
-                  image={images[index]}
-                  itemId={item._id}
-                  key={index}
-                />
-              </React.Fragment>
-            )
-          })}
-        </div>
+  return (
+    <div className="event-screen" markers={props.markers(coords)}>
+      <div className="event-list">
+        {loading ? <Preloader text="Searching around you" /> : ''}
+        {props.showfilters ? <FilterEvents filtereddata={handleFilters} /> : ''}
+        {evtsFiltered?.map((item, index) => {
+          return (
+            <React.Fragment>
+              <EventCard
+                title={item.title}
+                date={item.createdAt}
+                distance={
+                  distance?.find((el) => el.item === item._id)?.distance
+                }
+                city={item.city}
+                image={images[index]}
+                itemId={item._id}
+                key={index}
+              />
+            </React.Fragment>
+          )
+        })}
       </div>
-    )
-  }
+    </div>
+  )
 }

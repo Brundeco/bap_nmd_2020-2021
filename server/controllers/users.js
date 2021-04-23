@@ -111,9 +111,19 @@ export const passwordReset = async (req, res) => {
       let mailOptions = {
         from: 'info@popapp.be',
         to: email,
-        subject: 'Link to reset password!',
-        text: `This is a password reset mail? Click on this link: ${process.env.CLIENT_URL}/reset/${token}`, // plaintext body
-        html: `This is a password reset mail? Click on this link: ${process.env.CLIENT_URL}/reset/${token}`,
+        subject: 'Popapp password reset link 🔐',
+        text: `We got you covered! <br> Click the link below to choose your new password. <br><br> <a href="${process.env.CLIENT_URL}/reset/${token}">Reset link</a>`,
+        html: `We got you covered! <br><br> Click the link below to choose your new password. <br><br> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+            <table border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="center" style="border-radius: 3px;" bgcolor="#414dfb"><a href=${process.env.CLIENT_URL}/reset/${token} target="_blank" style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; text-decoration: none;border-radius: 3px; padding: 12px 18px; border: 1px solid #414dfb; display: inline-block;">Reset link</a></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>`,
       }
 
       try {

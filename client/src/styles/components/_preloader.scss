@@ -158,10 +158,11 @@
 // Preloader 4 -> Animated dots after text
 
 .preloader-title {
-  font-size: 1.2em;
-  font-weight: 500;
-  margin-bottom: 5vh;
-  font-style: italic;
+  font-size: 1.2em !important;
+  font-weight: 500 !important;
+  margin-bottom: 5vh !important;
+  font-style: italic !important;
+  color: #000 !important;
 }
 
 .preloader-title:after {

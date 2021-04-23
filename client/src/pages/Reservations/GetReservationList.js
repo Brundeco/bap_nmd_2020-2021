@@ -14,13 +14,14 @@ export default () => {
   }, [])
 
   useEffect(() => {
-    console.log(data)
-  }, [data])
+    // console.log(data)
+    console.log('Wortelsap !! ')
+  }, [])
 
   if (data != undefined) {
     return (
       <React.Fragment>
-        <Header />
+        <Header locationsharing={() => {}} radius={() => {}} />
         <div className="property-screen">
           <div className="wrapper">
             {data?.map(function (item, i) {

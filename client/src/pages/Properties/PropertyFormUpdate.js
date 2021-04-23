@@ -166,7 +166,6 @@ export default (props) => {
             value={data?.light}
           />
         </section>
-
         <section>
           <h2>Address</h2>
           <div className="form-row">
@@ -214,7 +213,6 @@ export default (props) => {
             </div>
           </div>
         </section>
-
         <section>
           <h2>Contact info</h2>
           <InputField
@@ -250,7 +248,6 @@ export default (props) => {
             required
           />
         </section>
-
         <section>
           <h2>Images</h2>
 
@@ -298,6 +295,9 @@ export default (props) => {
         </section>
         <button className="main-btn" onClick={props.formsubmit}>
           Update property
+        </button>{' '}
+        <button className="main-btn" onClick={props.delete}>
+          Delete
         </button>
       </form>
     </div>

@@ -49,15 +49,25 @@ export default (props) => {
         axios
           .post(`${process.env.REACT_APP_API_URL}/properties`, data)
           .then(() => {
-            setPreloaderMsg('Succes, property added! 🚀')
+            setPreloaderMsg('Succes, property was added! 🚀')
             localStorage.setItem('activity', 'My properties')
             setTimeout(function () {
               window.location = '/activity'
             }, 2000)
           })
-          .catch((err) => console.log(err))
+          .catch(() => {
+            setPreloaderMsg('Sorry, something went wrong! 😒')
+            setTimeout(() => {
+              setLoading(false)
+            }, 2000)
+          })
       })
-      .catch((err) => console.log(err))
+      .catch(() => {
+        setPreloaderMsg('Sorry, something went wrong! 😒')
+        setTimeout(() => {
+          setLoading(false)
+        }, 2000)
+      })
   }
 
   return (

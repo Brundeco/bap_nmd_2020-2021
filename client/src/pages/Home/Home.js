@@ -11,6 +11,14 @@ export default (props) => {
   const [userLon, setUserLon] = useState()
   const [radius, setRadius] = useState()
 
+  useEffect(() => {
+    console.log(location)
+  }, [Location])
+
+  setTimeout(() => {
+    console.log(location)
+  }, 5000)
+
   useEffect(async () => {
     if (location.error == 'User denied Geolocation') {
       setLocationSharing(false)

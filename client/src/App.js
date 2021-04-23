@@ -58,7 +58,7 @@ function App() {
           <Route path="/update-property/:id" component={UpdateProperty} />
           <Route path="/property/:id/:author_id" component={GetProperty} />
 
-          <Route path="/reservations" component={GetReservationList} />
+          <Route path="/reservations/:id" component={GetReservationList} />
 
           <Route
             path="/chat/:recepient_id/:recepient/:conversation_id"
