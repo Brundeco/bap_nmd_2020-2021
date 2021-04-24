@@ -9,6 +9,7 @@ export default (props) => {
   const [userLat, setUserLat] = useState()
   const [userLon, setUserLon] = useState()
   const [radius, setRadius] = useState()
+  const [showFilters, setShowFilters] = useState()
 
   useEffect(() => {
     const locSharing =
@@ -26,25 +27,33 @@ export default (props) => {
     setRadius(radius)
   }
 
+  const handleFilters = (filters) => {
+    setShowFilters(filters)
+  }
+
   return (
     <React.Fragment>
-      <Header locationsharing={locationSharing} radius={handleRadius} />
-      <div className="page-top-padding">
-        {/* {userLat && userLon ? (
+      <Header
+        locationsharing={locationSharing}
+        radius={handleRadius}
+        showfilters={handleFilters}
+      />
+      <div className="events-screen">
+        <section>
+          {/* {userLat && userLon ? (
           <Map lat={userLat} lon={userLon} coords={markers} />
         ) : (
           <Map lat={50.8503} lon={4.3517} coords={markers} />
         )} */}
-        <div className="page-wrapper">
           <GetEventList
             radius={radius}
             locationsharing={locationSharing}
             markers={(coords) => setMarkers(coords)}
             lat={userLat}
             lng={userLon}
-            showfilters={true}
+            showfilters={showFilters}
           />
-        </div>
+        </section>
       </div>
     </React.Fragment>
   )

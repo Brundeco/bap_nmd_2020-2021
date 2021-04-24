@@ -10,6 +10,7 @@ export default (props) => {
   const [userLat, setUserLat] = useState()
   const [userLon, setUserLon] = useState()
   const [radius, setRadius] = useState()
+  const [showFilters, setShowFilters] = useState(false)
 
   useEffect(() => {
     console.log(location)
@@ -52,15 +53,16 @@ export default (props) => {
     <div>
       <Header locationsharing={locationSharing} radius={handleRadius} />
       <div className="home-screen">
-        <section className="event-section">
-          <div className="cta-top">
-            <h2>Events around you</h2>
+        <section className="expand">
+          <div className="cta">
+            <h2 className="main-title">Events around you</h2>
             <Link
+              className="secondary-btn"
               to={{
                 pathname: '/events',
               }}
             >
-              <li>Show all events</li>
+              <li>Show all</li>
             </Link>
           </div>
           <GetEventList
@@ -71,14 +73,17 @@ export default (props) => {
             lng={userLon}
             showfilters={false}
           />
-          <div className="cta-top">
-            <h2>Properties around you</h2>
+        </section>
+        <section className="expand">
+          <div className="cta">
+            <h2 className="main-title">Properties around you</h2>
             <Link
+              className="secondary-btn"
               to={{
                 pathname: '/properties',
               }}
             >
-              <li>Show all properties</li>
+              <li>Show all</li>
             </Link>
           </div>
           <GetPropertyList

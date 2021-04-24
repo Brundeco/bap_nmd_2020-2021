@@ -102,7 +102,10 @@ export default (props) => {
   }, [isActive])
 
   return (
-    <div filtereddata={props.filtereddata(propertiesFiltered)}>
+    <div
+      className="property-filters"
+      filtereddata={props.filtereddata(propertiesFiltered)}
+    >
       <button
         className={isActive === 'newest' ? 'active' : ''}
         onClick={() => setFilterMode('newest')}

@@ -90,7 +90,11 @@ export default ({ match, props }) => {
     <div className="create-product-screen">
       <div className="page-wrapper">
         {loading ? <Preloader text={preloaderMsg} /> : ''}
-        <Header locationsharing={() => {}} radius={() => {}} />
+        <Header
+          locationsharing={() => {}}
+          radius={() => {}}
+          showfilters={() => {}}
+        />
         <PropertyFormUpdate
           formsubmit={handleSubmit}
           delete={(e) => handleDelete(e)}

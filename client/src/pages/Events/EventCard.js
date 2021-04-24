@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 export default ({ distance, city, title, date, image, itemId }) => {
   return (
     <Link
-      className="event-featured"
+      className="event-card"
       to={{
         pathname: `/event/${itemId}`,
         state: { from: 'root' },
@@ -21,7 +21,11 @@ export default ({ distance, city, title, date, image, itemId }) => {
             <h4> Added on {new Date(date).toDateString()} </h4>
           </div>
           <div className="right">
-            <h4>{`${distance} km`}</h4>
+            <h4>
+              {distance == 'NaN' || distance == undefined
+                ? ''
+                : `${distance} km`}
+            </h4>
           </div>
         </div>
       </div>

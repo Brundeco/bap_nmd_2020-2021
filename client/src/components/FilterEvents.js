@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { InputField, SearchAutoComplete } from '.'
+import CloseIcon from './../icons/close.svg'
 import {
   filterDateRange,
   filterMostRecent,
@@ -17,11 +18,6 @@ export default (props) => {
   const handleChange = (name, value) => {
     setDateRange((prev) => ({ ...prev, [name]: value }))
   }
-
-  useEffect(() => {
-    console.log('changes detected')
-    console.log(eventsFiltered)
-  }, [eventsFiltered])
 
   useEffect(
     async (e) => {
@@ -71,12 +67,15 @@ export default (props) => {
   }, [dateRange])
 
   return (
-    <div filtereddata={props.filtereddata(eventsFiltered)}>
+    <div
+      className="event-filters"
+      filtereddata={props.filtereddata(eventsFiltered)}
+    >
       <button
         className={isActive === 'newest' ? 'active' : ''}
         onClick={() => setFilterMode('newest')}
       >
-        Newest
+        Recent
       </button>
       <button
         className={isActive === 'oldest' ? 'active' : ''}
@@ -97,21 +96,25 @@ export default (props) => {
         search
       </button>
       <form className={showDateFields ? 'show' : 'hide'}>
-        <InputField
-          name="startDate"
-          placeholder="Minimum price"
-          type="date"
-          onChange={handleChange}
-          className="main-input-field"
-        />
-        <InputField
-          name="endDate"
-          placeholder="Maximum price"
-          type="date"
-          onChange={handleChange}
-          className="main-input-field"
-        />
-        <button onClick={(e) => closeForm(e)}>Close filter</button>
+        <div className="flex">
+          <InputField
+            name="startDate"
+            placeholder="Minimum price"
+            type="date"
+            onChange={handleChange}
+            className="main-input-field"
+          />
+          <InputField
+            name="endDate"
+            placeholder="Maximum price"
+            type="date"
+            onChange={handleChange}
+            className="main-input-field"
+          />
+        </div>
+        <div className="close-btn" onClick={(e) => closeForm(e)}>
+          <img src={CloseIcon} alt="close button" />
+        </div>
       </form>
       {/* <div className={showSearchField ? 'show' : 'hide'}>
         <SearchAutoComplete events={handleFilteredEvents} />
@@ -119,9 +122,11 @@ export default (props) => {
       </div> */}
 
       {showSearchField ? (
-        <div className="search">
+        <div className="search show">
           <SearchAutoComplete events={handleFilteredEvents} />
-          <button onClick={(e) => closeSearch(e)}>Close search</button>
+          <div className="close-btn" onClick={(e) => closeSearch(e)}>
+            <img src={CloseIcon} alt="close button" />
+          </div>
         </div>
       ) : (
         ''

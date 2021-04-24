@@ -128,28 +128,24 @@ export default (props) => {
   }
 
   return (
-    <div className="event-screen" markers={props.markers(coords)}>
-      <div className="event-list">
-        {loading ? <Preloader text="Searching around you" /> : ''}
-        {props.showfilters ? <FilterEvents filtereddata={handleFilters} /> : ''}
-        {evtsFiltered?.map((item, index) => {
-          return (
-            <React.Fragment>
-              <EventCard
-                title={item.title}
-                date={item.createdAt}
-                distance={
-                  distance?.find((el) => el.item === item._id)?.distance
-                }
-                city={item.city}
-                image={images[index]}
-                itemId={item._id}
-                key={index}
-              />
-            </React.Fragment>
-          )
-        })}
-      </div>
+    <div className="event-list" markers={props.markers(coords)}>
+      {loading ? <Preloader text="Searching around you" /> : ''}
+      {props.showfilters ? <FilterEvents filtereddata={handleFilters} /> : ''}
+      {evtsFiltered?.map((item, index) => {
+        return (
+          <React.Fragment>
+            <EventCard
+              title={item.title}
+              date={item.createdAt}
+              distance={distance?.find((el) => el.item === item._id)?.distance}
+              city={item.city}
+              image={images[index]}
+              itemId={item._id}
+              key={index}
+            />
+          </React.Fragment>
+        )
+      })}
     </div>
   )
 }

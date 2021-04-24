@@ -3,8 +3,6 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import NoUserIcon from './../../icons/no-user.svg'
 import CloseIcon from './../../icons/close.svg'
-import HeartBlue from './../../icons/heart-full-blue.svg'
-import HeartWhite from './../../icons/heart-full-white.svg'
 import { Preloader, CheckSession, ConvertDate } from './../../components'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
@@ -105,9 +103,6 @@ export default ({ match }) => {
         >
           <img src={CloseIcon} alt="close button" />
         </Link>
-        {/* <div className="close-btn">
-          <img src={CloseIcon} alt="close button" />
-        </div> */}
         <div className="subject-image">
           <img src={image} alt="" />
         </div>
@@ -127,7 +122,6 @@ export default ({ match }) => {
                 className={liked ? 'main-btn' : 'secondary-btn'}
                 onClick={(e) => handleLike(e)}
               >
-                {/* <img src={liked ? HeartWhite : HeartBlue} alt="" /> */}
                 {liked ? 'Like' : 'Unlike'}
               </button>
             </div>

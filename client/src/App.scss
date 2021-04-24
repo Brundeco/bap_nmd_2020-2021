@@ -1,27 +1,47 @@
 @use 'sass:map';
 
-@import // Various
-  './styles/abstracts/variables',
-  './styles/mixins/mixins', './styles/abstracts/animations',
-  './styles/abstracts/grid', './styles/abstracts/typography',
-  // Initial
-  './styles/base/reset',
-  './styles/base/settings',
-  // Components
-  './styles/components/menu',
-  './styles/components/preloader', './styles/components/preloaderSpinningWheel',
-  './styles/components/session', './styles/components/prevPage',
-  './styles/components/header', './styles/components/footer',
-  './styles/components/slider', './styles//components/filters',
-  './styles/components/searchAutocomplete', './styles/components/datepicker',
-  './styles/components/maps', './styles/components/forms',
-  './styles/components/buttons',
-  //Pages
-  './styles/pages/home',
-  './styles/pages/createProperty', './styles/pages/createEvent',
-  './styles/pages/chat', './styles/pages/messages', './styles/pages/getProperty',
-  './styles/pages/getPropertyPreview', './styles/pages/getPropertyList',
-  './styles/pages/getPropertyListAdmin', './styles/pages/getEventList',
-  './styles/pages/getEvent', './styles/pages/loginUser',
-  './styles/pages/dashboard', './styles/pages/favorites',
-  './styles/pages/registerUser';
+/* VARIOUS */
+
+@import './styles/abstracts/variables', './styles/mixins/mixins',
+  './styles/abstracts/animations', './styles/abstracts/grid',
+  './styles/abstracts/typography';
+
+/* INITIAL */
+
+@import './styles/base/reset', './styles/base/settings';
+
+/* COMPONENTS */
+
+@import './styles/components/menu', './styles/components/preloader',
+  './styles/components/preloaderSpinningWheel', './styles/components/session',
+  './styles/components/prevPage', './styles/components/header',
+  './styles/components/footer', './styles/components/slider',
+  './styles//components/filters', './styles/components/searchAutocomplete',
+  './styles/components/datepicker', './styles/components/maps',
+  './styles/components/forms', './styles/components/buttons',
+  './styles/pages/users/loginUser', './styles/pages/users/registerUser';
+
+/* PAGES */
+
+/* Properties */
+
+@import './styles/pages/home', './styles/pages/properties/createProperty',
+  './styles/pages/properties/propertyCard',
+  './styles/pages/properties/getProperty',
+  './styles/pages/properties/getPropertyPreview',
+  './styles/pages/properties/getPropertyList',
+  './styles/pages/properties/getPropertyListAdmin';
+
+/* Events */
+
+@import './styles/pages/events/createEvent',
+  './styles/pages/events/getEventList', './styles/pages/events/getEvent',
+  './styles/pages/events/eventCard';
+
+/* Chat */
+
+@import './styles/pages/chat/chat', './styles/pages/messages';
+
+/* Trivia */
+
+@import './styles/pages/dashboard', './styles/pages/favorites';

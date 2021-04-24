@@ -1,0 +1,14 @@
+.home-screen {
+  li {
+    margin-bottom: 0;
+  }
+
+  .property-list {
+    overflow: auto;
+    white-space: nowrap;
+    height: auto;
+    margin-top: 5vh;
+    margin-bottom: 10vh;
+    padding-bottom: 3vh;
+  }
+}

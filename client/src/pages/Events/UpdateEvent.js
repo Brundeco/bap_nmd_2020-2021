@@ -51,7 +51,11 @@ export default ({ match }) => {
   return (
     <div className="create-product-screen">
       <div className="page-wrapper">
-        <Header locationsharing={() => {}} radius={() => {}} />
+        <Header
+          locationsharing={() => {}}
+          radius={() => {}}
+          showfilters={() => {}}
+        />
         <h1>Update event</h1>
         <EventFormUpdate
           currentdata={currentEvent}

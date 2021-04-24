@@ -12,23 +12,31 @@ export default ({
   authorId,
 }) => {
   return (
-    <div key={key} className="list-item">
-      <h2> {description}</h2>
-      <h4>Daily price: {price} </h4>
-      <h4> Date: {new Date(date).toDateString()} </h4>
-      <h4>{distance == NaN ? '' : `${distance} km`}</h4>
+    <Link
+      key={key}
+      className="property-card"
+      to={{
+        pathname: `/property/${itemId}/${authorId}`,
+      }}
+    >
       <div className="image">
         <img key={key} src={image} alt="" />
       </div>
-      <ul>
-        <Link
-          to={{
-            pathname: `/property/${itemId}/${authorId}`,
-          }}
-        >
-          <li>Detail</li>
-        </Link>
-      </ul>
-    </div>
+
+      <div className="info">
+        <div className="left">
+          {/* <h3> {`${street} ${houseNUmber}, `}</h3> */}
+
+          <h4>Daily price: €{price} </h4>
+          <h4> Date: {new Date(date).toDateString()} </h4>
+        </div>
+        <div className="right">
+          <h4>
+            {distance == 'NaN' || distance == undefined ? '' : `${distance} km`}
+          </h4>
+        </div>
+      </div>
+      <ul></ul>
+    </Link>
   )
 }

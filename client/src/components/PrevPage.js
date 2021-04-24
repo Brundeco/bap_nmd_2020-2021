@@ -3,6 +3,7 @@ import { useHistory, useLocation } from 'react-router'
 import { FontAwesome } from '.'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import SearchIcon from './../icons/search.svg'
+import CloseIcon from './../icons/close_white.svg'
 import RadiusIcon from './../icons/radius.svg'
 import FilterIcon from './../icons/filter.svg'
 
@@ -10,6 +11,7 @@ export default (props) => {
   const location = useLocation()
   const history = useHistory()
   const currentPath = location.pathname
+  const [showFilters, setShowFilters] = useState(false)
   const [showOptions, setShowOptions] = useState(false)
   const [optionsValue, setOptionsValue] = useState(
     localStorage.getItem('radius') || 5
@@ -33,9 +35,6 @@ export default (props) => {
         className="menu-actions-homepage"
         radius={props.radius(optionsValue)}
       >
-        {/* <div className="search">
-          <img src={SearchIcon} />
-        </div> */}
         <div className="radius" onClick={() => setShowOptions(!showOptions)}>
           <img src={RadiusIcon} />
         </div>
@@ -68,13 +67,17 @@ export default (props) => {
         className="prev-page-component menu-actions-homepage"
         radius={props.radius(optionsValue)}
         onClick={handleClick}
+        showfilters={props.showfilters(showFilters)}
       >
         <FontAwesome icon={faChevronLeft} />
       </div>
       {history.location.pathname.includes('events') ||
       history.location.pathname.includes('properties') ? (
-        <div className="search">
-          <img src={FilterIcon} />
+        <div
+          className={!showFilters ? 'search' : 'search active'}
+          onClick={() => setShowFilters(!showFilters)}
+        >
+          {!showFilters ? <img src={FilterIcon} /> : <img src={CloseIcon} />}
         </div>
       ) : (
         ''

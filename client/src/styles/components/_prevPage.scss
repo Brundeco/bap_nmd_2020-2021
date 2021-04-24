@@ -45,3 +45,30 @@
 .menu-actions-homepage .radius {
   background-color: $soft-green;
 }
+
+.search {
+  border-radius: 60px;
+  background: $soft-grey;
+  transition: $base-transition;
+
+  img {
+    padding: 15px;
+  }
+
+  &:hover {
+    background-color: rgb(221, 221, 221);
+    transition: $base-transition;
+    cursor: pointer;
+  }
+}
+
+.search.active {
+  background-color: rgb(8, 8, 8);
+  transition: $base-transition;
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: rgb(93, 93, 93);
+    transition: $base-transition;
+  }
+}

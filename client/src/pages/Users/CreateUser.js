@@ -115,7 +115,7 @@ export default () => {
           </button>
         </form>
         <button
-          className="secondary-btn"
+          className="simple-btn"
           onClick={() => (window.location = '/login')}
         >
           Already a member? / Login here

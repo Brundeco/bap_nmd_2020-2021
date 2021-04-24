@@ -74,13 +74,13 @@ export default () => {
           </button>
         </form>
         <button
-          className="secondary-btn"
+          className="simple-btn"
           onClick={() => (window.location = '/register')}
         >
           Not a member yet? / Sign up here
         </button>
         <button
-          className="secondary-btn"
+          className="simple-btn"
           onClick={() => (window.location = '/password-reset-link')}
         >
           Forgot password

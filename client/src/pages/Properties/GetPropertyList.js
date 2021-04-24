@@ -122,38 +122,40 @@ export default (props) => {
     setPropertiesFiltered(data)
   }
 
+  useEffect(() => {
+    console.log(props.showfilters)
+  }, [props.showfilters])
+
   return (
-    <div className="property-screen">
+    <div className="property-list">
       {loading ? <Preloader text="Searching around you" /> : ''}
       {props.showfilters ? (
         <FilterProperties filtereddata={handleFilters} />
       ) : (
         ''
       )}
-      <div className="wrapper">
-        {propertiesFiltered?.map((item, index) => {
-          let propImg = ''
-          {
-            images?.map((image, i) => {
-              if (image?.includes(item.images[0])) {
-                propImg = image
-              }
-            })
-          }
-          return (
-            <PropertyCard
-              description={item.description}
-              price={item.price}
-              date={item.createdAt}
-              distance={distance?.find((el) => el.item === item._id)?.distance}
-              image={propImg}
-              authorId={item.author_id}
-              itemId={item._id}
-              key={index}
-            />
-          )
-        })}
-      </div>
+      {propertiesFiltered?.map((item, index) => {
+        let propImg = ''
+        {
+          images?.map((image, i) => {
+            if (image?.includes(item.images[0])) {
+              propImg = image
+            }
+          })
+        }
+        return (
+          <PropertyCard
+            description={item.description}
+            price={item.price}
+            date={item.createdAt}
+            distance={distance?.find((el) => el.item === item._id)?.distance}
+            image={propImg}
+            authorId={item.author_id}
+            itemId={item._id}
+            key={index}
+          />
+        )
+      })}
     </div>
   )
 }

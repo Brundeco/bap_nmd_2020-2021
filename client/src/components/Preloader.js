@@ -5,6 +5,7 @@ export default (props) => {
     <div className="disable-click-evts">
       <div className="preloader-wrapper">
         <h2 className="preloader-title"> {props.text}</h2>
+        <img src={props.image} alt="" />
         {/* <section>
         <div className="origin" />
         <div className="origin" />

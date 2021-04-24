@@ -1,62 +1,59 @@
-.home-screen .wrapper {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  // padding: 15vh 5% 0 5%;
-  box-sizing: border-box;
-}
+.home-screen {
+  .cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-.home-screen .event-section {
-  width: 100%;
-  padding: 15vh 0 0 5%;
-  box-sizing: border-box;
-}
+    h2 {
+      margin: 0;
+    }
 
-.home-screen .cta-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    a {
+      width: auto;
+      margin-right: 5%;
+      white-space: nowrap;
+      padding: 1% 4%;
+      margin: 0 5% 0 0;
+    }
+  }
 
-.home-screen .cta-top a {
-  @include main-btn-outline;
-  width: auto;
-  padding: 1.5% 3%;
-  font-size: 0.8em;
-  margin-right: 7vw;
-  &:hover {
-    background-color: $theme-blue;
-    color: $base-white;
+  .event-section {
+    width: 100%;
+    padding: 15vh 0 0 5%;
+    box-sizing: border-box;
+  }
+
+  @include mq(small) {
+    // background-color: orange;
   }
 }
 
-.property-section-homepage {
-  width: 100%;
-  margin-bottom: 5vh;
-  background-color: $soft-grey;
-  padding: 10% 5%;
-  box-sizing: border-box;
-}
+// .property-section-homepage {
+//   width: 100%;
+//   margin-bottom: 5vh;
+//   background-color: $soft-grey;
+//   padding: 10% 5%;
+//   box-sizing: border-box;
+// }
 
-.property-section-homepage h2 {
-  // width: 100%;
-  text-align: center;
-}
+// .property-section-homepage h2 {
+//   // width: 100%;
+//   text-align: center;
+// }
 
-.property-section-homepage p {
-  font-weight: 300;
-  line-height: 20px;
-  text-align: center;
-  margin-bottom: 5vh;
-}
+// .property-section-homepage p {
+//   font-weight: 300;
+//   line-height: 20px;
+//   text-align: center;
+//   margin-bottom: 5vh;
+// }
 
-.property-section-homepage img {
-  width: 100%;
-}
+// .property-section-homepage img {
+//   width: 100%;
+// }
 
-.property-section-homepage .main-btn {
-  @include main-btn;
-  margin-top: 5vh;
-  background-color: $theme-green;
-}
+// .property-section-homepage .main-btn {
+//   @include main-btn;
+//   margin-top: 5vh;
+//   background-color: $theme-green;
+// }

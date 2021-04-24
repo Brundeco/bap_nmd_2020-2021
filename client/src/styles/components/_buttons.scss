@@ -7,7 +7,9 @@ button {
 .main-btn {
   @include main-btn;
   margin-top: 4vh;
-  &:hover {
+  &:hover,
+  &:focus,
+  &:active {
     @include main-btn-outline;
   }
 }
@@ -15,8 +17,21 @@ button {
 .secondary-btn {
   @include main-btn-outline;
   margin-top: 4vh;
-  &:hover {
+  &:hover,
+  &:focus,
+  &:active {
     @include main-btn;
+  }
+}
+
+.simple-btn {
+  text-decoration: underline;
+
+  &:hover,
+  &:focus,
+  &:active {
+    cursor: pointer;
+    filter: opacity(0.7);
   }
 }
 
@@ -41,7 +56,9 @@ button {
     height: 100%;
   }
 
-  &:hover {
+  &:hover,
+  &:focus,
+  &:active {
     // transform: scale(1.1);
     // transition: $base-transition;
     filter: invert(1);
@@ -49,26 +66,5 @@ button {
     -webkit-animation: rotate-90-cw 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)
       both;
     animation: rotate-90-cw 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  }
-}
-
-@-webkit-keyframes rotate-90-cw {
-  0% {
-    -webkit-transform: rotate(0);
-    transform: rotate(0);
-  }
-  100% {
-    -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);
-  }
-}
-@keyframes rotate-90-cw {
-  0% {
-    -webkit-transform: rotate(0);
-    transform: rotate(0);
-  }
-  100% {
-    -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);
   }
 }

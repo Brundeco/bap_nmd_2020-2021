@@ -1,0 +1,66 @@
+.property-card {
+  display: flex;
+  flex-direction: column;
+  display: flex;
+  margin-right: 5vw;
+  width: 75vw;
+  display: inline-block;
+
+  .image {
+    min-height: 70%;
+    width: 100%;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 5px 5px 0px 0px;
+    }
+  }
+
+  .info {
+    height: 30%;
+    width: 100%;
+    display: flex;
+    padding: 10% 3%;
+    border: 1px solid #e7e7e7;
+    border-radius: 0 0 10px 10px;
+    transition: $base-transition;
+
+    .left {
+      width: 80%;
+
+      h3 {
+        font-weight: 500 !important;
+        font-size: 1.1em;
+        text-overflow: ellipsis;
+      }
+
+      h4 {
+        font-weight: 300 !important;
+        font-size: 0.9em;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    }
+
+    .right {
+      width: 20%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    box-shadow: 0px 0px 37px 4px rgb(214 214 214 / 45%);
+    transition: $base-transition;
+    .info {
+      border: 1px solid $color-none;
+      transition: $base-transition;
+    }
+  }
+}
