@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import NoUserIcon from './../../icons/no-user.svg'
 import CloseIcon from './../../icons/close.svg'
 import { Preloader, CheckSession, ConvertDate } from './../../components'
@@ -12,6 +12,7 @@ export default ({ match }) => {
   CheckSession(localStorage.getItem('jwt'))
 
   const user = JSON.parse(localStorage.getItem('user'))
+  let history = useHistory()
   const [data, setData] = useState()
   const storageRef = app.storage().ref()
   const [image, setImage] = useState()
@@ -97,12 +98,9 @@ export default ({ match }) => {
     return (
       <div className="event-screen-detail">
         {loading ? <Preloader text="Loading" /> : ''}
-        <Link
-          className="close-btn"
-          to={{ pathname: '/events', state: { from: 'root' } }}
-        >
+        <button className="close-btn" onClick={() => history.goBack()}>
           <img src={CloseIcon} alt="close button" />
-        </Link>
+        </button>
         <div className="subject-image">
           <img src={image} alt="" />
         </div>
@@ -135,7 +133,13 @@ export default ({ match }) => {
 
         <section className="bottom-section">
           <h2 className="main-title">Practical</h2>
-          <ul>
+          <p>{convertedDate}</p>
+          <p>
+            From
+            {`${data?.startHrs}:${data?.startMins}hr till ${data?.endHrs}:${data?.endMins}`}
+          </p>
+          <p>{`${data?.street} ${data?.houseNumber}, ${data?.zip} ${data?.city}`}</p>
+          {/* <ul>
             <li>{convertedDate} </li>
             <li>
               From
@@ -144,7 +148,7 @@ export default ({ match }) => {
             <li>
               {`${data?.street} ${data?.houseNumber}, ${data?.zip} ${data?.city}`}
             </li>
-          </ul>
+          </ul> */}
         </section>
         <section>
           <DayPicker

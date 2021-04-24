@@ -3,14 +3,16 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { app } from '../../../base'
 import { Preloader } from '../../../components'
+import { EventCard } from '../..'
 
 export default () => {
   const user = JSON.parse(localStorage.getItem('user'))
   const [favorites, setFavorites] = useState([])
   const [events, setEvents] = useState([])
-
   const [images, setImages] = useState([])
   const storageRef = app.storage().ref()
+  const [loading, setLoading] = useState(true)
+  const [preloaderMsg, setPreloaderMsg] = useState('Just a second')
 
   useEffect(() => {
     axios
@@ -25,8 +27,13 @@ export default () => {
             likes: likes,
           })
           .then((res) => {
+            setLoading(false)
             console.log(res.data)
             res.data.map((el) => setEvents((prev) => [...prev, el]))
+          })
+          .catch((err) => {
+            console.log(err)
+            setLoading(false)
           })
       })
   }, [])
@@ -53,41 +60,27 @@ export default () => {
     }
   }, [favorites])
 
-  if (favorites?.length > 0) {
-    return (
-      <div className="property-screen">
-        <div className="wrapper">
-          {favorites.map((el, key) => {
-            if (el) {
-              return (
-                <div key={key}>
-                  <h2>{}</h2>
-                  <p>{el.city} </p>
-                  <img
-                    src={images[key]}
-                    alt=""
-                    style={{ width: '30vw', height: '5vh' }}
-                  />
-                  <Link
-                    className="main-btn"
-                    to={{
-                      pathname: `/property/${el._id}/${el.author_id}`,
-                    }}
-                  >
-                    Visit
-                  </Link>
-                </div>
-              )
-            }
-          })}
-        </div>
-      </div>
-    )
-  } else {
-    return (
-      <React.Fragment>
-        <Preloader text="Loading favorite events" />
-      </React.Fragment>
-    )
-  }
+  return (
+    <div className="property-screen">
+      <h2 className="main-title">Favorite events</h2>
+      {loading ? <Preloader text={preloaderMsg} /> : ''}
+      {events.map((item, key) => {
+        if (item) {
+          return (
+            <EventCard
+              title={item.title}
+              date={item.createdAt}
+              // distance={
+              //   distance?.find((el) => el.item === item._id)?.distance
+              // }
+              city={item.city}
+              image={images[key]}
+              itemId={item._id}
+              key={key}
+            />
+          )
+        }
+      })}
+    </div>
+  )
 }

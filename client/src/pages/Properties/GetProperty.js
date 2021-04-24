@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import CloseIcon from './../../icons/close.svg'
 import {
   Preloader,
@@ -24,6 +24,7 @@ export default ({ match }) => {
   CheckSession(localStorage.getItem('jwt'))
 
   const user = JSON.parse(localStorage.getItem('user'))
+  let history = useHistory()
   const [propertyCreatedAt, setPropertyCreatedAt] = useState()
   const [data, setData] = useState()
   const [images, setImages] = useState([])
@@ -257,15 +258,20 @@ export default ({ match }) => {
     return (
       <div className="property-detail-screen">
         {loading ? <Preloader text="Just a second please" /> : ''}
-        <Link
+
+        <button className="close-btn" onClick={() => history.goBack()}>
+          <img src={CloseIcon} alt="close button" />
+        </button>
+        {/* <Link
           className="close-btn"
           to={{ pathname: '/properties', state: { from: 'root' } }}
         >
           <img src={CloseIcon} alt="close button" />
-        </Link>
+        </Link> */}
         <Swiper slides={images} />
-        <div className="wrapper">
-          <h2>{`${data?.street} ${data?.houseNumber}, ${data?.zip} ${data?.city}`}</h2>
+
+        <section>
+          <h2 className="main-title">{`${data?.street} ${data?.houseNumber}, ${data?.zip} ${data?.city}`}</h2>
           <div className="cta-section-top">
             <div className="left">
               <img src={user.image} alt="" />
@@ -281,178 +287,178 @@ export default ({ match }) => {
             </div>
           </div>
           <h3>Added on {propertyCreatedAt}</h3>
+        </section>
+
+        <section>
           <p className="description"> {data?.description}</p>
+        </section>
 
-          <section className="general-info">
-            <h2 className="general-info-title">General info</h2>
-            <div className="item">
-              <div className="left">
-                <img src={PriceIcon} alt="" />
-              </div>
-              <div className="center">
-                <h4>Price</h4>
-                <p>Daily</p>
-              </div>
-              <div className="right">
-                <p>€ {data?.price} </p>
-              </div>
+        <section className="general-info">
+          <h2 className="general-info-title">General info</h2>
+          <div className="item">
+            <div className="left">
+              <img src={PriceIcon} alt="" />
             </div>
-
-            <div className="item">
-              <div className="left">
-                <img src={SurfaceIcon} alt="" />
-              </div>
-              <div className="center">
-                <h4>Available space</h4>
-                <p>Square meter</p>
-              </div>
-              <div className="right">
-                <p>{data?.surface} m2 </p>
-              </div>
+            <div className="center">
+              <h4>Price</h4>
+              <p>Daily</p>
             </div>
-
-            <div className="item">
-              <div className="left">
-                <img src={AreasIcon} alt="" />
-              </div>
-              <div className="center">
-                <h4>Areas</h4>
-                <p>Number of seperate rooms</p>
-              </div>
-              <div className="right">
-                <p> {data?.areas} </p>
-              </div>
+            <div className="right">
+              <p>€ {data?.price} </p>
             </div>
-
-            <div className="item">
-              <div className="left">
-                <img src={CalenderIcon} alt="" />
-              </div>
-              <div className="center">
-                <h4>Calendar</h4>
-                <p>Available data</p>
-              </div>
-              <div className="right">
-                <p onClick={() => setShowCalendar(!showCalendar)}>
-                  {showCalendar ? 'Close' : 'Open'}
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <div className={showCalendar ? 'calendar-show' : 'calendar-hide'}>
-            {dates.length === 0 ? (
-              <p className="calendar-alert-title">
-                Select at least one day to make a booking
-              </p>
-            ) : (
-              ''
-            )}
-            <DayPicker
-              selectedDays={selectedDates}
-              onDayClick={handleDayClick}
-              disabledDays={isDayDisabled}
-            />
           </div>
 
-          <section className="extra-info">
-            <div className="address">
-              <div className="img-box">
-                <img
-                  src={AddressIcon}
-                  alt="address-icon"
-                  className="address-icon"
-                />
-              </div>
-              <p>
-                {`${data?.street} ${data?.houseNumber},`} <br />
-                {`${data?.zip} ${data?.city} `} <br />
-              </p>
+          <div className="item">
+            <div className="left">
+              <img src={SurfaceIcon} alt="" />
             </div>
-            <div className="contact">
-              <img
-                src={ContactIcon}
-                alt="contact-icon"
-                className="contact-icon"
-              />
-              <p>
-                {`${data?.firstname} ${data?.lastname}`} <br />
-                {`${data?.email}`} <br />
-                {`${data?.phone}`}
-              </p>
+            <div className="center">
+              <h4>Available space</h4>
+              <p>Square meter</p>
             </div>
-          </section>
+            <div className="right">
+              <p>{data?.surface} m2 </p>
+            </div>
+          </div>
 
-          <section className="cta-bottom-section">
-            <button
-              className={formValid ? 'main-btn' : 'main-btn disabled-btn'}
-              onClick={() => setShow(!show)}
-            >
-              Make reservation
-            </button>
-            <button
-              onClick={() =>
-                (window.location = `/chat/${data?.author_id}/${data?.author}/${conversationId}`)
-              }
-            >
-              Chat with owner
-            </button>
-          </section>
-          <section className={show ? 'booking show' : 'booking hide'}>
-            <h2>Complete your booking</h2>
-            <form>
-              <InputField
-                name="name"
-                onChange={handleChange}
-                placeholder="Your complete name"
-                type="text"
-                className="main-input-field"
-              />
-              <InputField
-                name="email"
-                onChange={handleChange}
-                placeholder="Your email"
-                type="email"
-                className="main-input-field"
-                value={formData?.email ? formData?.email : user?.email}
-              />
-              <InputField
-                name="city"
-                onChange={handleChange}
-                placeholder="City"
-                type="text"
-                className="main-input-field"
-              />
-              <InputField
-                name="address"
-                onChange={handleChange}
-                placeholder="Street + housenumber"
-                type="text"
-                className="main-input-field"
-              />
-              <InputField
-                name="zip"
-                onChange={handleChange}
-                placeholder="Postal code"
-                type="number"
-                className="main-input-field"
-              />
-              <CardElement options={cardElementOptions} />
-              <h3>{paymentStatus}</h3>
-              <button
-                className="main-btn"
-                onClick={(e) => handleReservation(e)}
-              >
-                {processing
-                  ? 'Processing'
-                  : 'Pay €' + dates?.length * data?.price}
-              </button>
-            </form>
-            <button className="secondary-btn" onClick={() => setShow(!show)}>
-              Review booking
-            </button>
-          </section>
+          <div className="item">
+            <div className="left">
+              <img src={AreasIcon} alt="" />
+            </div>
+            <div className="center">
+              <h4>Areas</h4>
+              <p>Number of seperate rooms</p>
+            </div>
+            <div className="right">
+              <p> {data?.areas} </p>
+            </div>
+          </div>
+
+          <div className="item">
+            <div className="left">
+              <img src={CalenderIcon} alt="" />
+            </div>
+            <div className="center">
+              <h4>Calendar</h4>
+              <p>Available data</p>
+            </div>
+            <div className="right">
+              <p onClick={() => setShowCalendar(!showCalendar)}>
+                {showCalendar ? 'Close' : 'Open'}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <div className={showCalendar ? 'calendar-show' : 'calendar-hide'}>
+          {dates.length === 0 ? (
+            <p className="calendar-alert-title">
+              Select at least one day to make a booking
+            </p>
+          ) : (
+            ''
+          )}
+          <DayPicker
+            selectedDays={selectedDates}
+            onDayClick={handleDayClick}
+            disabledDays={isDayDisabled}
+          />
         </div>
+
+        <section className="extra-info">
+          <div className="address">
+            <div className="img-box">
+              <img
+                src={AddressIcon}
+                alt="address-icon"
+                className="address-icon"
+              />
+            </div>
+            <p>
+              {`${data?.street} ${data?.houseNumber},`} <br />
+              {`${data?.zip} ${data?.city} `} <br />
+            </p>
+          </div>
+          <div className="contact">
+            <img
+              src={ContactIcon}
+              alt="contact-icon"
+              className="contact-icon"
+            />
+            <p>
+              {`${data?.firstname} ${data?.lastname}`} <br />
+              {`${data?.email}`} <br />
+              {`${data?.phone}`}
+            </p>
+          </div>
+        </section>
+
+        <section className="cta-bottom-section">
+          <button
+            className={formValid ? 'main-btn' : 'main-btn disabled-btn'}
+            onClick={() => setShow(!show)}
+          >
+            Make reservation
+          </button>
+          <button
+            onClick={() =>
+              (window.location = `/chat/${data?.author_id}/${data?.author}/${conversationId}`)
+            }
+          >
+            Chat with owner
+          </button>
+        </section>
+        <section className={show ? 'booking show' : 'booking hide'}>
+          <h2 className="main-title">Complete your booking</h2>
+          <form>
+            <InputField
+              name="name"
+              onChange={handleChange}
+              placeholder="Your complete name"
+              type="text"
+              className="main-input-field"
+            />
+            <InputField
+              name="email"
+              onChange={handleChange}
+              placeholder="Your email"
+              type="email"
+              className="main-input-field"
+              value={formData?.email ? formData?.email : user?.email}
+            />
+            <InputField
+              name="city"
+              onChange={handleChange}
+              placeholder="City"
+              type="text"
+              className="main-input-field"
+            />
+            <InputField
+              name="address"
+              onChange={handleChange}
+              placeholder="Street + housenumber"
+              type="text"
+              className="main-input-field"
+            />
+            <InputField
+              name="zip"
+              onChange={handleChange}
+              placeholder="Postal code"
+              type="number"
+              className="main-input-field"
+            />
+            <CardElement options={cardElementOptions} />
+            <h3>{paymentStatus}</h3>
+            <button className="main-btn" onClick={(e) => handleReservation(e)}>
+              {processing
+                ? 'Processing'
+                : 'Pay €' + dates?.length * data?.price}
+            </button>
+          </form>
+          <button className="secondary-btn" onClick={() => setShow(!show)}>
+            Review booking
+          </button>
+        </section>
       </div>
     )
   } else {

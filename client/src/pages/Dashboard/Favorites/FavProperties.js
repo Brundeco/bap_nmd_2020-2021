@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { app } from '../../../base'
 import { Preloader } from '../../../components'
+import { PropertyCard } from '../..'
 
 export default () => {
   const user = JSON.parse(localStorage.getItem('user'))
@@ -11,14 +12,13 @@ export default () => {
   const [images, setImages] = useState([])
   const storageRef = app.storage().ref()
   const [loading, setLoading] = useState(true)
-  const [preloaderMsg, setPreloaderMsg] = useState(
-    'Loading favorite properties'
-  )
+  const [preloaderMsg, setPreloaderMsg] = useState('Just a second')
 
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/users/${user.id}`)
       .then((res) => {
+        console.log(res)
         res.data.favProperties?.map(async (el) => {
           setFavorites((prev) => [...prev, el])
         })
@@ -28,15 +28,19 @@ export default () => {
             likes: likes,
           })
           .then((res) => {
-            console.log(res.data)
+            setLoading(false)
+            console.log(res)
             res.data.map((el) => setProperties((prev) => [...prev, el]))
+          })
+          .catch((err) => {
+            console.log(err)
             setLoading(false)
           })
       })
   }, [])
 
   useEffect(() => {
-    console.log(properties)
+    // console.log(properties)
     properties?.map((item) => {
       if (item) {
         storageRef
@@ -52,32 +56,25 @@ export default () => {
 
   return (
     <div className="property-screen">
-      <div className="wrapper">
-        {loading ? <Preloader text={preloaderMsg} /> : ''}
-        {favorites.map((el, key) => {
-          if (el) {
-            return (
-              <div key={key}>
-                <h2>{}</h2>
-                <p>{el.city} </p>
-                <img
-                  src={images[key]}
-                  alt=""
-                  style={{ width: '30vw', height: '5vh' }}
-                />
-                <Link
-                  className="main-btn"
-                  to={{
-                    pathname: `/property/${el._id}/${el.author_id}`,
-                  }}
-                >
-                  Visit
-                </Link>
-              </div>
-            )
-          }
-        })}
-      </div>
+      <h2 className="main-title">Favorite properties</h2>
+      {loading ? <Preloader text={preloaderMsg} /> : ''}
+      {properties.map((item, key) => {
+        console.log(item)
+        return (
+          <PropertyCard
+            description={item.city}
+            price={item.price}
+            date={item.createdAt}
+            // distance={
+            //   distance?.find((el) => el.item === item._id)?.distance
+            // }
+            image={images[key]}
+            authorId={item.author_id}
+            itemId={item._id}
+            key={key}
+          />
+        )
+      })}
     </div>
   )
 }

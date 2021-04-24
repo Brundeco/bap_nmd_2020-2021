@@ -26,20 +26,19 @@ export default () => {
   }
 
   return (
-    <div className="dashboard-screen ">
-      <Header locationsharing={() => {}} radius={() => {}} />
-      <div className="page-wrapper">
-        <h2>Favorites</h2>
-        <nav>
+    <div>
+      <Header
+        locationsharing={() => {}}
+        radius={() => {}}
+        showfilters={() => {}}
+      />
+      <section>
+        <div className="event-filters flex flex-j-center">
           {dashboardBtns.map((button, index) => {
             return (
               <button
                 key={index}
-                className={
-                  button === isActive
-                    ? 'btn-dashboard btn-active-true'
-                    : 'btn-dashboard btn-active-false'
-                }
+                className={button === isActive ? 'active' : ''}
                 onClick={(e) => handleClick(e.target)}
                 value={button}
               >
@@ -47,15 +46,11 @@ export default () => {
               </button>
             )
           })}
-        </nav>
-        <div className="comps-to-render">
-          {currentComponent === 'properties' ? (
-            <FavProperties />
-          ) : (
-            <FavEvents />
-          )}
         </div>
-      </div>
+      </section>
+      <section>
+        {currentComponent === 'properties' ? <FavProperties /> : <FavEvents />}
+      </section>
     </div>
   )
 }

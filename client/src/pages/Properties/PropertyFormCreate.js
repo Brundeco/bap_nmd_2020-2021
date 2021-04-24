@@ -12,7 +12,7 @@ export default (props) => {
   const user = JSON.parse(localStorage.getItem('user'))
   const [files, setFiles] = useState([])
   const [dates, setDates] = useState([])
-  const [formValid, setFormValid] = useState(false)
+  const [formValid, setFormValid] = useState(true)
   const [preview, setPreview] = useState(false)
   const [data, setData] = React.useState({
     author: user.username,
@@ -77,7 +77,7 @@ export default (props) => {
     ) {
       setFormValid(true)
     } else {
-      setFormValid(false)
+      setFormValid(true)
     }
   }, [data, files])
 

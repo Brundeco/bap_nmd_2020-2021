@@ -16,7 +16,6 @@ export default (props) => {
 
   const handleFilters = (filters) => {
     setShowFilters(filters)
-    console.log(filters)
   }
 
   return (
