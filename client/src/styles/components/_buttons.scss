@@ -68,3 +68,47 @@ button {
     animation: rotate-90-cw 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   }
 }
+
+.file-upload-cta.fit.edit {
+  input {
+    width: 50px;
+    height: 50px;
+    cursor: pointer !important;
+  }
+
+  &:hover {
+    #show-custom-file-btn-edited {
+      background-color: lighten($theme-blue, 10%);
+      border: 1px solid lighten($theme-blue, 10%);
+    }
+  }
+}
+
+#show-custom-file-btn-edited {
+  cursor: pointer !important;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: $theme-blue;
+  text-decoration: none;
+  border-radius: 25px;
+  border: 1px solid $theme-blue;
+  pointer-events: none;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  color: $text-grey;
+  display: flex;
+  flex-direction: column;
+  font-weight: 300;
+  font-size: 0.7em;
+  margin-top: 0;
+  padding: 0;
+
+  img {
+    width: 20px;
+    cursor: pointer !important;
+  }
+}

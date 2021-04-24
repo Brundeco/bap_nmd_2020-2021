@@ -51,7 +51,11 @@ export default (props) => {
 
   return (
     <div>
-      <Header locationsharing={locationSharing} radius={handleRadius} />
+      <Header
+        locationsharing={locationSharing}
+        radius={handleRadius}
+        showfilters={() => {}}
+      />
       <div className="home-screen">
         <section className="expand">
           <div className="cta">

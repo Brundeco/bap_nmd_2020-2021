@@ -1,79 +1,74 @@
 .create-product-screen {
   padding: 5vh 0;
+
+  h1 {
+    font-weight: 600;
+    font-size: 1.1em;
+    margin-bottom: 5vh;
+  }
+
+  h2 {
+    font-size: 0.9em;
+    font-weight: 600;
+    margin: 5vh 0;
+  }
+
+  input[type='email'],
+  input[type='text'],
+  input[type='password'],
+  input[type='number'],
+  textarea {
+    @include main-input-field;
+    margin-bottom: 25px;
+  }
+
+  input[type='submit'] {
+    @include main-btn;
+    background: $theme-green;
+    margin-top: 3vh;
+  }
+
+  textarea {
+    resize: none !important;
+  }
+
+  .wallphoto {
+    display: block;
+    margin: 3vh auto !important;
+    border-radius: 5px;
+    width: 100%;
+    height: 50vw;
+    object-fit: cover;
+  }
+
+  .file-upload-cta {
+    margin-bottom: 5vh;
+  }
+
+  .form-hour-field {
+    padding: 4vw 0;
+    font-weight: 300;
+    font-size: 0.8em;
+    color: #8c8c8c;
+  }
+
+  button {
+    // @include main-btn;
+    margin: 0 auto;
+  }
+
+  button.delete-item {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    opacity: 0.3;
+    font-weight: 700;
+    color: white !important;
+  }
 }
 
 .create-product-screen.no-scroll {
   height: 100vh;
   overflow-y: hidden;
-}
-
-.create-product-screen h1 {
-  font-weight: 600;
-  font-size: 1.1em;
-  margin: 5vh 0;
-}
-
-.create-product-screen section {
-  margin-bottom: 7vh;
-}
-
-.create-product-screen h2 {
-  color: $base-black;
-  font-weight: 200;
-  font-size: 0.9em;
-}
-
-.create-product-screen input[type='email'],
-.create-product-screen input[type='text'],
-.create-product-screen input[type='password'],
-.create-product-screen input[type='number'],
-.create-product-screen textarea {
-  @include main-input-field;
-  margin-bottom: 25px;
-}
-
-.create-product-screen textarea {
-  resize: none !important;
-}
-
-.create-product-screen .wallphoto {
-  display: block;
-  margin: 3vh auto !important;
-  border-radius: 5px;
-  width: 100%;
-  height: 50vw;
-  object-fit: cover;
-}
-
-.create-product-screen .file-upload-cta {
-  margin-bottom: 5vh;
-}
-
-.create-product-screen input[type='submit'] {
-  @include main-btn;
-  background: $theme-green;
-  margin-top: 3vh;
-}
-
-.form-hour-field {
-  padding: 4vw 0;
-  font-weight: 300;
-  font-size: 0.8em;
-  color: #8c8c8c;
-}
-
-.create-product-screen button {
-  @include main-btn;
-  margin: 0 auto;
-}
-
-.create-product-screen button.delete-item {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 0;
-  opacity: 0.3;
-  background-color: rgba($color: black, $alpha: 0.1);
-  font-weight: 700;
-  color: white !important;
 }

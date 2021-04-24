@@ -74,12 +74,18 @@ export default (props) => {
 
   return (
     <React.Fragment>
-      <h1>Fill out the form below to create your event</h1>
-      <DayPicker
-        selectedDays={data.dates}
-        onDayClick={handleDayClick}
-        disabledDays={{ before: new Date() }}
-      />
+      <section>
+        <h1>Fill out the form below to create your event</h1>
+      </section>
+      <section>
+        <h2>When will your event take place?</h2>
+        <DayPicker
+          selectedDays={data.dates}
+          onDayClick={handleDayClick}
+          disabledDays={{ before: new Date() }}
+        />
+      </section>
+
       <form
         onSubmit={props.onSubmit}
         formdata={props.formdata(data)}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { CheckSession, Preloader, PrevPage } from './../../components'
+import { CheckSession, Header, Preloader, PrevPage } from './../../components'
 import axios from 'axios'
 import { PropertyFormCreate, PropertyReview } from '..'
 import { app } from '../../base'
@@ -72,7 +72,6 @@ export default (props) => {
 
   return (
     <div
-      className="create-product-screen"
       className={
         !preview || !newPreview
           ? 'create-product-screen'
@@ -80,23 +79,29 @@ export default (props) => {
       }
     >
       {loading ? <Preloader text={preloaderMsg} /> : ''}
+      {!preview ? (
+        <Header
+          locationsharing={() => {}}
+          radius={() => {}}
+          showfilters={() => {}}
+        />
+      ) : (
+        ''
+      )}
 
-      <div className="page-wrapper">
-        <PrevPage locationsharing={() => {}} radius={() => {}} />
-        <PropertyFormCreate
-          onSubmit={handleSubmit}
-          formdata={handleData}
-          files={handleFiles}
-          preview={handlePreview}
-        />
-        <PropertyReview
-          files={files}
-          data={data}
-          preview={preview}
-          newpreview={handleNewPreview}
-          handleSubmit={(e) => handleSubmit(e)}
-        />
-      </div>
+      <PropertyFormCreate
+        onSubmit={handleSubmit}
+        formdata={handleData}
+        files={handleFiles}
+        preview={handlePreview}
+      />
+      <PropertyReview
+        files={files}
+        data={data}
+        preview={preview}
+        newpreview={handleNewPreview}
+        handleSubmit={(e) => handleSubmit(e)}
+      />
     </div>
   )
 }

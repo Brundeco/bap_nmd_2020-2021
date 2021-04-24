@@ -14,6 +14,10 @@ const ImageSlider = (props) => {
   const [ids, setIds] = useState()
   const length = props.slides.length
 
+  useEffect(() => {
+    console.log(SliderData)
+  }, [SliderData])
+
   const nextSlide = () => {
     setCurrent(current === length - 1 ? 0 : current + 1)
   }
@@ -31,7 +35,7 @@ const ImageSlider = (props) => {
       {/* <button onClick={prevSlide} className="slide-arrow-homepage left"> */}
       <FaArrowAltCircleLeft className="left-arrow" onClick={prevSlide} />
       <FaArrowAltCircleRight className="right-arrow" onClick={nextSlide} />
-        {/* <FontAwesome icon={faChevronLeft} className="left-arrow" /> */}
+      {/* <FontAwesome icon={faChevronLeft} className="left-arrow" /> */}
       {/* </button> */}
       {SliderData.map((slide, index) => {
         return (

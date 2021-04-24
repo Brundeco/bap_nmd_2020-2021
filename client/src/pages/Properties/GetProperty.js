@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
+import CloseIcon from './../../icons/close.svg'
 import {
   Preloader,
   ConvertDate,
   CheckSession,
   InputField,
 } from '../../components'
-import ImageSlider from '../../components/ImageSlider'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
 import { app } from '../../base'
@@ -15,8 +16,8 @@ import SurfaceIcon from './../../icons/property-detail/surface.svg'
 import CalenderIcon from './../../icons/property-detail/calendar.svg'
 import ContactIcon from './../../icons/property-detail/contact.svg'
 import AddressIcon from './../../icons/property-detail/address.svg'
-import LightIcon from './../../icons/property-detail/light.svg'
-
+import AreasIcon from './../../icons/property-detail/diagram.svg'
+import Swiper from './../../components/Swiper'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 
 export default ({ match }) => {
@@ -256,9 +257,13 @@ export default ({ match }) => {
     return (
       <div className="property-detail-screen">
         {loading ? <Preloader text="Just a second please" /> : ''}
-        <div className="subject-image">
-          <ImageSlider slides={images} index={handleIndex} />
-        </div>
+        <Link
+          className="close-btn"
+          to={{ pathname: '/properties', state: { from: 'root' } }}
+        >
+          <img src={CloseIcon} alt="close button" />
+        </Link>
+        <Swiper slides={images} />
         <div className="wrapper">
           <h2>{`${data?.street} ${data?.houseNumber}, ${data?.zip} ${data?.city}`}</h2>
           <div className="cta-section-top">
@@ -308,14 +313,14 @@ export default ({ match }) => {
 
             <div className="item">
               <div className="left">
-                <img src={LightIcon} alt="" />
+                <img src={AreasIcon} alt="" />
               </div>
               <div className="center">
-                <h4>Light</h4>
-                <p>Natural light</p>
+                <h4>Areas</h4>
+                <p>Number of seperate rooms</p>
               </div>
               <div className="right">
-                <p> {data?.light} </p>
+                <p> {data?.areas} </p>
               </div>
             </div>
 

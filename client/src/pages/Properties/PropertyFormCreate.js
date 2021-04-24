@@ -3,7 +3,7 @@ import { CheckSession, InputField, Textarea } from '../../components'
 import DayPicker from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
 import uuid from 'react-uuid'
-import SelectImage from './../../icons/add-img.svg'
+import SelectImage from './../../icons/add.svg'
 import replaceImage from './../../icons/reload.svg'
 
 export default (props) => {
@@ -91,10 +91,11 @@ export default (props) => {
 
   return (
     <React.Fragment>
-      <h1>Fill out the form below to start hosting your property</h1>
-
       <section>
-        <h2>Available dates</h2>
+        <h1>Fill out the form below to start hosting your property</h1>
+      </section>
+      <section>
+        <h2>Dates you will be hosting</h2>
         <DayPicker
           selectedDays={data.dates}
           onDayClick={handleDayClick}
@@ -229,16 +230,17 @@ export default (props) => {
           />
         </section>
 
-        <section>
+        <section className="flex-col flex-j-center flex-a-center">
           <h2>Images</h2>
 
-          <div className="file-upload-cta fit">
+          <div className="file-upload-cta fit edit">
             <input type="file" onChange={handleFiles} multiple />
 
-            <button id="show-custom-file-btn">
+            <button id="show-custom-file-btn-edited">
               <img src={SelectImage} className="upload-icons" alt="" />
             </button>
           </div>
+
           <div className="img-gallery">
             {files.length !== 0 ? <h4>Click on an image to delete</h4> : ''}
 

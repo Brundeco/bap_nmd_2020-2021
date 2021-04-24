@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { CheckSession } from '../../components'
 import DayPicker from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
+import Swiper from './../../components/Swiper'
 
 export default (props) => {
   CheckSession(localStorage.getItem('jwt'))
@@ -36,12 +37,12 @@ export default (props) => {
         // className="property-preview-screen show"
         newpreview={props.newpreview(preview)}
       >
-        <div className="page-wrapper">
+        <section>
           <h1>Please review your property information below</h1>
-
           <div className="review-files">
             <h2>Images</h2>
-            {images?.map(function (item, i) {
+            <Swiper slides={images} formatimgs={true} />
+            {/* {images?.map(function (item, i) {
               return (
                 <React.Fragment key={i}>
                   <div className="img-box">
@@ -49,15 +50,18 @@ export default (props) => {
                   </div>
                 </React.Fragment>
               )
-            })}
+            })} */}
           </div>
+        </section>
 
+        <section>
           <h2>Available dates</h2>
           <DayPicker
             selectedDays={data?.dates}
             disabledDays={{ before: new Date() }}
           />
-
+        </section>
+        <section>
           <div className="content">
             <div className="general-info">
               <h2>General info</h2>
@@ -82,6 +86,8 @@ export default (props) => {
             </div>
             <p></p>
           </div>
+        </section>
+        <section>
           <section className="cta-bottom-section">
             <button
               className="main-btn"
@@ -93,7 +99,7 @@ export default (props) => {
               Ok, create property
             </button>
           </section>
-        </div>
+        </section>
       </div>
     </React.Fragment>
   )

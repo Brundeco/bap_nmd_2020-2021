@@ -19,7 +19,7 @@
   './styles//components/filters', './styles/components/searchAutocomplete',
   './styles/components/datepicker', './styles/components/maps',
   './styles/components/forms', './styles/components/buttons',
-  './styles/pages/users/loginUser', './styles/pages/users/registerUser';
+  './styles/components/swiper';
 
 /* PAGES */
 
@@ -41,6 +41,10 @@
 /* Chat */
 
 @import './styles/pages/chat/chat', './styles/pages/messages';
+
+/* Users */
+
+@import './styles/pages/users/loginUser', './styles/pages/users/registerUser';
 
 /* Trivia */
 

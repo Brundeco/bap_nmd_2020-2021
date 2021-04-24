@@ -1,0 +1,11 @@
+.swiper-button-prev,
+.swiper-button-next {
+  width: 40px !important;
+  height: 40px !important;
+  background: $soft-grey;
+  border-radius: 50px;
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background-color: $theme-blue;
+}

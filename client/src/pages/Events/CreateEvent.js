@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { CheckSession, Preloader, PrevPage } from './../../components'
+import { CheckSession, Header, Preloader, PrevPage } from './../../components'
 import axios from 'axios'
 import { app } from '../../base'
 import EventFormCreate from './EventFormCreate'
@@ -80,7 +80,11 @@ export default () => {
       {loading ? <Preloader text={preloaderMsg} /> : ''}
 
       <div className="page-wrapper">
-        <PrevPage locationsharing={() => {}} radius={() => {}} />
+        <Header
+          locationsharing={() => {}}
+          radius={() => {}}
+          showfilters={() => {}}
+        />
         <EventFormCreate
           onSubmit={handleSubmit}
           formdata={handleData}
