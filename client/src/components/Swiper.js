@@ -14,7 +14,6 @@ export default (props) => {
   const [slides, setSlides] = useState([])
   const [formatImgs, setFormatImgs] = useState(false)
   useEffect(() => {
-    console.log(props.slides)
     if (props.slides) setSlides(props.slides)
   }, [props.slides])
 

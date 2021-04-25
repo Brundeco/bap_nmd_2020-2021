@@ -55,38 +55,66 @@ export default (props) => {
         </section>
 
         <section>
-          <h2>Available dates</h2>
+          <h2>Days you will be hosting</h2>
           <DayPicker
             selectedDays={data?.dates}
             disabledDays={{ before: new Date() }}
           />
         </section>
+
         <section>
-          <div className="content">
-            <div className="general-info">
-              <h2>General info</h2>
-              <p>{data?.description}</p>
-              <p>{data?.price}</p>
-              <p>{data?.surface}</p>
-              <p>{data?.light}</p>
-            </div>
-            <div className="address">
-              <h2>Property location</h2>
-              <p>{data?.street}</p>
-              <p>{data?.houseNumber}</p>
-              <p>{data?.zip}</p>
-              <p>{data?.city}</p>
-            </div>
-            <div className="contact-info">
-              <h2>Your contact info</h2>
-              <p>{data?.email}</p>
-              <p>{data?.phone}</p>
-              <p>{data?.firstname}</p>
-              <p>{data?.lastname}</p>
-            </div>
-            <p></p>
+          <h2 className="main-title">General info</h2>
+          <div className="info-group">
+            <p className="semi-bold">Description</p>
+            <p>{data?.description}</p>
+          </div>
+          <div className="info-group">
+            <p className="semi-bold">Price</p>
+            <p>{data?.price}</p>
+          </div>
+          <div className="info-group">
+            <p className="semi-bold">Surface</p>
+            <p>{data?.surface}</p>
+          </div>
+          <div className="info-group">
+            <p className="semi-bold">Areas</p>
+            <p>{data?.areas}</p>
           </div>
         </section>
+
+        <section>
+          <h2 className="main-title">Location</h2>
+          <div className="info-group">
+            <p className="semi-bold">Address</p>
+            <p>
+              {`${data?.street}
+              ${data?.houseNumber}, 
+              ${data?.zip}
+              ${data?.city}`}
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 className="main-title">Contact details</h2>
+          <div className="info-group">
+            <p className="semi-bold">Email</p>
+            <p>{data?.email} </p>
+          </div>
+          <div className="info-group">
+            <p className="semi-bold">Phone</p>
+            <p>{data?.phone} </p>
+          </div>
+          <div className="info-group">
+            <p className="semi-bold">Firstname</p>
+            <p>{data?.firstname} </p>
+          </div>
+          <div className="info-group">
+            <p className="semi-bold">Lastname</p>
+            <p>{data?.lastname} </p>
+          </div>
+        </section>
+
         <section>
           <section className="cta-bottom-section">
             <button

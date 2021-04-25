@@ -7,9 +7,34 @@
   display: inline-block;
   margin-bottom: 5vh;
 
+  @include mq(small) {
+    width: 60vw;
+  }
+
+  @include mq(medium) {
+    width: 40vw;
+  }
+
+  @include mq(large) {
+    width: 30vw;
+  }
+
+  @include mq(huge) {
+    width: 24vw;
+    margin-right: 2vw;
+  }
+
   .image {
     min-height: 70%;
     width: 100%;
+
+    @include mq(small) {
+      height: 30vh;
+    }
+
+    @include mq(medium) {
+      height: 25vh;
+    }
 
     img {
       height: 100%;
@@ -47,10 +72,17 @@
     }
 
     .right {
-      width: 20%;
+      width: 30%;
       display: flex;
       justify-content: center;
       align-items: center;
+
+      h4 {
+        padding: 6% 13%;
+        background: #e0e4df;
+        border-radius: 20px;
+        font-size: 0.8em;
+      }
     }
   }
 

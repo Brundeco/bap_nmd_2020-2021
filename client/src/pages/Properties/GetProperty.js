@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom'
 import CloseIcon from './../../icons/close.svg'
+import NoUserIcon from './../../icons/no-user.svg'
 import {
   Preloader,
   ConvertDate,
@@ -21,7 +22,7 @@ import Swiper from './../../components/Swiper'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 
 export default ({ match }) => {
-  CheckSession(localStorage.getItem('jwt'))
+  // CheckSession(localStorage.getItem('jwt'))
 
   const user = JSON.parse(localStorage.getItem('user'))
   let history = useHistory()
@@ -43,8 +44,8 @@ export default ({ match }) => {
   const [loading, setLoading] = useState(true)
   const [formValid, setFormValid] = useState(false)
   const [booking, setBooking] = useState({
-    client: user.username,
-    client_id: user.id,
+    client: user?.username,
+    client_id: user?.id,
   })
   const stripe = useStripe()
   const elements = useElements()
@@ -65,12 +66,13 @@ export default ({ match }) => {
       .get(`${process.env.REACT_APP_API_URL}/properties/${match.params.id}`)
       .then((res) => setData(res.data))
 
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/users/${user.id}`)
-      .then((res) => {
-        setFavorites(res.data.favProperties)
-        setLoading(false)
-      })
+    user &&
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/users/${user?.id}`)
+        .then((res) => {
+          setFavorites(res.data.favProperties)
+          setLoading(false)
+        })
   }, [])
 
   useEffect(() => {
@@ -106,13 +108,16 @@ export default ({ match }) => {
     }))
     setPropertyCreatedAt(ConvertDate(data?.createdAt))
 
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/messages/conversation_id`, {
-        from: user.id,
-        to: data?.author_id,
-      })
-      .then((res) => setConversationId(res.data))
-      .catch((err) => console.log(err))
+    user &&
+      axios
+        .post(`${process.env.REACT_APP_API_URL}/messages/conversation_id`, {
+          from: user?.id,
+          to: data?.author_id,
+        })
+        .then((res) => setConversationId(res.data))
+        .catch((err) => console.log(err))
+
+    if (!user) setLoading(false)
   }, [data])
 
   const handleDayClick = (day, modifiers = {}) => {
@@ -143,17 +148,21 @@ export default ({ match }) => {
     let indexItem = arr.indexOf(match.params.id)
     indexItem === -1 ? arr.push(match.params.id) : arr.splice(indexItem, 1)
 
-    axios
-      .put(`${process.env.REACT_APP_API_URL}/users/like-property/${user.id}`, {
-        favProperties: arr,
-      })
-      .then((res) => {
-        const favs = res.data.favProperties
-        setFavorites(favs)
-        setData((prev) => ({ ...prev, favProperties: favs }))
-        setLoading(false)
-      })
-      .catch((err) => console.log(err))
+    user &&
+      axios
+        .put(
+          `${process.env.REACT_APP_API_URL}/user?s/like-property/${user?.id}`,
+          {
+            favProperties: arr,
+          }
+        )
+        .then((res) => {
+          const favs = res.data.favProperties
+          setFavorites(favs)
+          setData((prev) => ({ ...prev, favProperties: favs }))
+          setLoading(false)
+        })
+        .catch((err) => console.log(err))
   }
 
   useEffect(() => {
@@ -205,14 +214,16 @@ export default ({ match }) => {
             .post(`${process.env.REACT_APP_API_URL}/reservations`, {
               dates,
               price: dates.length * data.price,
+              firebase_ref: data.firebaseRef,
               property_owner_id: data.author_id,
               property_owner_firstname: data.firstname,
               property_owner_lastname: data.lastname,
               property_owner_email: data.email,
               property_owner_phone: data.phone,
               property_id: data._id,
+              image: data.images[0],
               property_address: `${data.street} ${data.houseNumber}, ${data.zip} ${data.city}`,
-              client_id: user.id,
+              client_id: user?.id,
             })
             .then(() => {
               axios
@@ -224,13 +235,13 @@ export default ({ match }) => {
                   console.log('Dates in database are editted!')
                   axios
                     .post(`${process.env.REACT_APP_API_URL}/mailing`, {
-                      user: user.username,
-                      user_id: user.id,
+                      user: user?.username,
+                      user_id: user?.id,
                       price: data.price * dates.length,
                       firstname: data.firstname,
                       lastname: data.lastname,
                       email: data.email,
-                      receiver: user.email,
+                      receiver: user?.email,
                     })
                     .then((res) => {
                       console.log(res.data.message)
@@ -250,7 +261,6 @@ export default ({ match }) => {
     } catch (error) {
       setProcessing(false)
       setPaymentStatus('Invalid card number or your card has expired')
-      console.log(error)
     }
   }
 
@@ -274,16 +284,18 @@ export default ({ match }) => {
           <h2 className="main-title">{`${data?.street} ${data?.houseNumber}, ${data?.zip} ${data?.city}`}</h2>
           <div className="cta-section-top">
             <div className="left">
-              <img src={user.image} alt="" />
+              <img src={NoUserIcon} alt="" />
               <p> {`${data?.firstname} ${data?.lastname}`} </p>
             </div>
             <div className="right">
-              <button
-                className={liked ? 'main-btn' : 'secondary-btn'}
-                onClick={(e) => handleLike(e)}
-              >
-                {liked ? 'Like' : 'Unlike'}
-              </button>
+              {user && (
+                <button
+                  className={liked ? 'main-btn' : 'secondary-btn'}
+                  onClick={(e) => handleLike(e)}
+                >
+                  {liked ? 'Like' : 'Unlike'}
+                </button>
+              )}
             </div>
           </div>
           <h3>Added on {propertyCreatedAt}</h3>
@@ -392,22 +404,30 @@ export default ({ match }) => {
             </p>
           </div>
         </section>
+        {!user || user.id === match.params.author_id ? (
+          <section className="disable-cta">
+            <p>
+              Chat and booking options are disabled since you own this property
+            </p>
+          </section>
+        ) : (
+          <section className="cta-bottom-section">
+            <button
+              className={formValid ? 'main-btn' : 'main-btn disabled-btn'}
+              onClick={() => setShow(!show)}
+            >
+              Make reservation
+            </button>
+            <button
+              onClick={() =>
+                (window.location = `/chat/${data?.author_id}/${data?.author}/${conversationId}`)
+              }
+            >
+              Chat with owner
+            </button>
+          </section>
+        )}
 
-        <section className="cta-bottom-section">
-          <button
-            className={formValid ? 'main-btn' : 'main-btn disabled-btn'}
-            onClick={() => setShow(!show)}
-          >
-            Make reservation
-          </button>
-          <button
-            onClick={() =>
-              (window.location = `/chat/${data?.author_id}/${data?.author}/${conversationId}`)
-            }
-          >
-            Chat with owner
-          </button>
-        </section>
         <section className={show ? 'booking show' : 'booking hide'}>
           <h2 className="main-title">Complete your booking</h2>
           <form>

@@ -1,0 +1,55 @@
+.reservation-detail-screen {
+  padding-top: 5vh;
+
+  .cta-bottom-section {
+    width: 100%;
+    margin: 3vh 0;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10vh;
+
+    img {
+      width: 20px;
+      margin-right: 20px;
+    }
+
+    button {
+      margin: 3vh 3vw;
+      font-size: 0.9em;
+
+      &:first-child {
+        @include main-btn;
+        &:hover {
+          @include main-btn-outline;
+        }
+      }
+
+      &:last-child {
+        @include main-btn-outline;
+        &:hover {
+          @include main-btn;
+        }
+      }
+    }
+  }
+
+  .info-group {
+    display: flex;
+
+    & p:first-child {
+      padding-right: 15px;
+    }
+  }
+
+  .info-group.dates {
+    display: flex;
+    background: #f7f7f7;
+    border-radius: 10px;
+    padding: 5%;
+    margin-top: 5%;
+
+    & p:first-child {
+      padding-right: 15px;
+    }
+  }
+}

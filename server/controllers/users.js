@@ -129,7 +129,6 @@ export const passwordReset = async (req, res) => {
       try {
         transporter.sendMail(mailOptions, (err, success) => {
           if (err) {
-            console.log('there was an error')
             res.status(400).json({ messsage: err })
           } else {
             console.log('Nodemailer success: ', success)
@@ -244,9 +243,6 @@ export const likeEvent = async (req, res) => {
 export const likeProperty = async (req, res) => {
   const { id } = req.params
   const { favProperties } = req.body
-
-  console.log(id)
-  console.log(favProperties)
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`)

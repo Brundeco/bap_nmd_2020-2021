@@ -5,6 +5,10 @@ section {
   position: relative;
   max-width: 1520px;
   width: 100%;
+
+  @include mq(large) {
+    padding: 0 1%;
+  }
 }
 
 section.expand {
@@ -12,6 +16,10 @@ section.expand {
   padding: 0 0 0 5%;
   position: relative;
   max-width: 1520px;
+  width: 100%;
+}
+
+.full-width {
   width: 100%;
 }
 

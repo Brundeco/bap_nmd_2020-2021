@@ -15,6 +15,9 @@ const reservationSchema = mongoose.Schema({
 
   client_id: String,
 
+  firebase_ref: String,
+  image: String,
+
   createdAt: {
     type: Number,
     default: Date.now(),

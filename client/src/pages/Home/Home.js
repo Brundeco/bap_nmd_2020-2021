@@ -4,7 +4,6 @@ import { Header, CheckSession, LocateUser } from '../../components'
 import { GetEventList, GetPropertyList } from '..'
 
 export default (props) => {
-  CheckSession(localStorage.getItem('jwt'))
   const location = LocateUser()
   const [locationSharing, setLocationSharing] = useState(true)
   const [userLat, setUserLat] = useState()

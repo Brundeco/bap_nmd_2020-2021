@@ -2,8 +2,6 @@ import Event from '../models/events.js'
 import mongoose from 'mongoose'
 
 export const getEvents = async (req, res) => {
-  console.log(req.user)
-
   try {
     const events = await Event.find()
 
@@ -15,10 +13,7 @@ export const getEvents = async (req, res) => {
 
 export const getEvent = async (req, res) => {
   const { id } = req.params
-
   try {
-    console.log(req.user)
-
     const event = await Event.findById(id)
 
     res.status(200).json(event)
@@ -28,12 +23,8 @@ export const getEvent = async (req, res) => {
 }
 
 export const getLikes = async (req, res) => {
-  console.log(req.body)
-
   try {
     const likedEvents = await Event.find({ _id: { $in: req.body.likes } })
-
-    console.log(likedEvents)
 
     res.status(200).json(likedEvents)
   } catch (error) {
@@ -44,9 +35,6 @@ export const getLikes = async (req, res) => {
 
 export const createEvent = async (req, res) => {
   const event = req.body
-
-  console.log(event)
-
   const newEvent = new Event(event)
   try {
     await newEvent.save()
@@ -64,7 +52,6 @@ export const updateEvent = async (req, res) => {
     return res.status(404).send(`No post with id: ${id}`)
 
   const newEvent = new Event(event)
-  console.log('Lets update this record')
 
   await Event.findByIdAndUpdate(id, newEvent, { new: true })
 
@@ -72,20 +59,16 @@ export const updateEvent = async (req, res) => {
 }
 
 export const getEventsAdmin = async (req, res) => {
-  console.log(req.body)
   try {
     const user = req.body
     const events = await Event.find({ author_id: user.id })
-    console.log(events)
     res.status(200).json(events)
   } catch (error) {
-    console.log(error)
     res.status(404).json({ message: error.message })
   }
 }
 
 export const filterMostRecent = async (req, res) => {
-  console.log('yeet')
   try {
     const events = await Event.find().sort({ _id: -1 })
     res.status(200).json(events)
@@ -113,11 +96,7 @@ export const filterGetAutocomplete = async (req, res) => {
 }
 
 export const filterPostAutocomplete = async (req, res) => {
-  console.log(req.body)
   try {
-    // const events = await Event.find({
-    //   title: { $regex: `.*${req.body.search}.*` },
-    // })
     const events = await Event.find({
       $or: [
         { title: { $regex: `.*${req.body.search}.*` } },
@@ -130,20 +109,20 @@ export const filterPostAutocomplete = async (req, res) => {
   }
 }
 
-// export const filterDateRange = async (req, res) => {
-//   const dateRange = req.body.dateRange
-//   console.log(dateRange)
+export const filterDateRange = async (req, res) => {
+  const dateRange = req.body.dateRange
+  console.log(dateRange)
 
-//   try {
-//     const events = await Event.find({
-//       dates: { $gte: dateRange.startdata, $lte: dateRange.endDate },
-//     }).sort({ price: 1 })
+  try {
+    const events = await Event.find({
+      dates: { $gte: dateRange.startdata, $lte: dateRange.endDate },
+    }).sort({ price: 1 })
 
-//     res.status(200).json(events)
-//   } catch (error) {
-//     res.status(404).json({ message: error.message })
-//   }
-// }
+    res.status(200).json(events)
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}
 
 export const filterFree = async (req, res) => {
   try {

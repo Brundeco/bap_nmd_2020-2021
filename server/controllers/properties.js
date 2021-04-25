@@ -60,7 +60,6 @@ export const updateProperty = async (req, res) => {
 export const bookProperty = async (req, res) => {
   const { id } = req.params
   const reservations = req.body
-  console.log(reservations)
 
   if (!mongoose.Types.ObjectId.isValid(id))
     console.log('Post with this id could not be found')
@@ -81,11 +80,9 @@ export const bookProperty = async (req, res) => {
 }
 
 export const getPropertiesAdmin = async (req, res) => {
-  console.log(req.body)
   try {
     const user = req.body
     const properties = await Property.find({ author_id: user.id })
-    console.log(properties)
     res.status(200).json(properties)
   } catch (error) {
     console.log(error)
@@ -94,12 +91,8 @@ export const getPropertiesAdmin = async (req, res) => {
 }
 
 export const getLikes = async (req, res) => {
-  console.log(req.body)
-
   try {
     const likedProps = await Property.find({ _id: { $in: req.body.likes } })
-
-    console.log(likedProps)
 
     res.status(200).json(likedProps)
   } catch (error) {
@@ -110,11 +103,9 @@ export const getLikes = async (req, res) => {
 
 export const deleteProperty = async (req, res) => {
   const { id } = req.params
-  console.log(id)
 
   try {
     await Property.findByIdAndRemove(id)
-    // console.log(item)
     res.status(200).json({message: 'Property deleted'})
   } catch (error) {
     console.log(error)

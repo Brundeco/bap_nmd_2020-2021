@@ -1,5 +1,5 @@
 .prev-page-component {
-  width: 10vw;
+  // width: 10vw;
   height: 10vw;
   display: flex;
   align-items: center;
@@ -24,12 +24,43 @@
 
 .menu-actions-homepage .search,
 .menu-actions-homepage .radius {
-  width: 40px;
+  min-width: 40px;
   height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 1000px;
+  transition: $base-transition;
+  background: #dfe4de;
+  cursor: pointer;
+
+  &:hover {
+    filter: opacity(0.7);
+    transition: $base-transition;
+  }
+}
+
+.menu-actions-homepage .radius-edit {
+  background: #dfe4de;
+  border-radius: 50px 0 0 50px;
+  transition: $base-transition;
+  min-width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px 0 0 50px;
+}
+
+.show-menu {
+  select {
+    padding: 0 2vw;
+    background: #dfe4de;
+    border: none;
+    height: 40px;
+    background: #dfe4de;
+    border-radius: 0 50px 50px 0;
+  }
 }
 
 .menu-actions-homepage .search img,

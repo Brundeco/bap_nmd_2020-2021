@@ -11,25 +11,23 @@
     margin-bottom: 10vh;
     padding-bottom: 3vh;
   }
-
-  // .event-list::-webkit-scrollbar {
-  //   width: 5em;
-  // }
-
-  // .event-list::-webkit-scrollbar-track {
-  //   border-radius: 20px;
-  // }
-
-  // .event-list::-webkit-scrollbar-thumb {
-  //   border-radius: 20px;
-  //   background-color: $theme-blue;
-  // }
-
-  // .event-list::-webkit-scrollbar-width {
-  //   scrollbar-width: thin !important;
-  // }
-
-  // .event-list::-webkit-scrollbar:vertical {
-  //   display: none;
-  // }
 }
+
+// .home-screen {
+//   li {
+//     margin-bottom: 0;
+//   }
+
+//   .event-list {
+//     overflow: auto;
+//     white-space: nowrap;
+//     height: auto;
+//     margin-top: 5vh;
+//     margin-bottom: 10vh;
+//     padding-bottom: 3vh;
+
+//     display: flex;
+//     flex-wrap: wrap;
+//     justify-content: space-between;
+//   }
+// }

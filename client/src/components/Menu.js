@@ -27,38 +27,49 @@ export default (props, { parentCallback }) => {
             >
               <img src={userImage} alt="" />
             </Link>
-            <h3> Bruno De Coene </h3>
+            <h3 className="main-title"> Bruno De Coene </h3>
           </div>
         </div>
 
-        <MenuLink
-          icon={SearchIcon}
-          title="Browse"
-          firstlink="Events"
-          firstlinkref="/events"
-          secondlink="Properties"
-          secondlinkref="/properties"
-        />
+        <div className="menu-center">
+          <div className="link-group">
+            <h4>Browse</h4>
+            <Link to={{ pathname: '/events', state: { from: 'root' } }}>
+              Events
+            </Link>
+            <Link to={{ pathname: '/properties', state: { from: 'root' } }}>
+              Properties
+            </Link>
+          </div>
 
-        <MenuLink
-          icon={SearchIcon}
-          title="Create"
-          firstlink="New event"
-          firstlinkref="/create-event"
-          secondlink="New property"
-          secondlinkref="/create-property"
-        />
+          <div className="link-group">
+            <h4>Create</h4>
+            <Link to={{ pathname: '/create-event', state: { from: 'root' } }}>
+              New event
+            </Link>
+            <Link
+              to={{ pathname: '/create-property', state: { from: 'root' } }}
+            >
+              New property
+            </Link>
+          </div>
 
-        <MenuLink
-          icon={SearchIcon}
-          title="Activity"
-          firstlink="Uploads"
-          firstlinkref="/activity"
-          secondlink="Favorites"
-          secondlinkref="/favorites"
-        />
-
-        <button onClick={(e) => logout(e)}>Logout</button>
+          <div className="link-group">
+            <h4>Activity</h4>
+            <Link to={{ pathname: '/activity', state: { from: 'root' } }}>
+              Uploads
+            </Link>
+            <Link to={{ pathname: '/favorites', state: { from: 'root' } }}>
+              Favorites
+            </Link>
+            <Link to={{ pathname: '/reservations', state: { from: 'root' } }}>
+              Reservations
+            </Link>
+          </div>
+        </div>
+        <div className="menu-bottom flex flex-a-center flex-j-center">
+          <button onClick={(e) => logout(e)}>Log out</button>
+        </div>
       </nav>
       <div className="close-menu">
         <div className="cross-box" onClick={() => props.childstatus(false)}>

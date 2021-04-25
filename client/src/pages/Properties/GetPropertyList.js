@@ -7,7 +7,6 @@ import { getPreciseDistance } from 'geolib'
 import { PropertyCard } from '..'
 
 export default (props) => {
-  CheckSession(localStorage.getItem('jwt'))
 
   Geocode.setApiKey(process.env.REACT_APP_GEOCODING_API_KEY)
   Geocode.enableDebug()
@@ -145,7 +144,7 @@ export default (props) => {
         }
         return (
           <PropertyCard
-            description={item.description}
+            surface={item.surface}
             price={item.price}
             date={item.createdAt}
             distance={distance?.find((el) => el.item === item._id)?.distance}

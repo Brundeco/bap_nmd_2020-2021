@@ -28,9 +28,9 @@ export default () => {
             likes: likes,
           })
           .then((res) => {
-            setLoading(false)
             console.log(res)
             res.data.map((el) => setProperties((prev) => [...prev, el]))
+            setLoading(false)
           })
           .catch((err) => {
             console.log(err)
@@ -58,23 +58,29 @@ export default () => {
     <div className="property-screen">
       <h2 className="main-title">Favorite properties</h2>
       {loading ? <Preloader text={preloaderMsg} /> : ''}
-      {properties.map((item, key) => {
-        console.log(item)
-        return (
-          <PropertyCard
-            description={item.city}
-            price={item.price}
-            date={item.createdAt}
-            // distance={
-            //   distance?.find((el) => el.item === item._id)?.distance
-            // }
-            image={images[key]}
-            authorId={item.author_id}
-            itemId={item._id}
-            key={key}
-          />
-        )
-      })}
+
+      {favorites?.length > 0 ? (
+        properties.map((item, key) => {
+          console.log(item)
+          return (
+            <PropertyCard
+              description={item.city}
+              price={item.price}
+              date={item.createdAt}
+              surface={item.surface}
+              // distance={
+              //   distance?.find((el) => el.item === item._id)?.distance
+              // }
+              image={images[key]}
+              authorId={item.author_id}
+              itemId={item._id}
+              key={key}
+            />
+          )
+        })
+      ) : (
+        <h2>Seems very empty here</h2>
+      )}
     </div>
   )
 }

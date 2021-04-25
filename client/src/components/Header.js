@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Menu, PrevPage } from '.'
+import MenuIcon from './../icons/menu.svg'
 
 export default (props) => {
   const [status, setStatus] = useState(false)
@@ -19,25 +20,31 @@ export default (props) => {
   }
 
   return (
-    <header
-      className="header"
-      radius={props.radius(radius)}
-      showfilters={props.showfilters(showFilters)}
-    >
-      <PrevPage
-        locationsharing={props.locationsharing}
-        radius={handleRadius}
-        showfilters={handleFilters}
-      />
-      <Menu
-        childstatus={handleChildStatus}
-        status={status}
-        className={status ? 'menu-wrapper show-menu' : 'menu-wrapper hide-menu'}
-      />
-      <div className="open-menu" onClick={() => setStatus(true)}>
-        <div className="line" />
-        <div className="line" />
-      </div>
-    </header>
+    <section>
+      <header
+        className="header"
+        radius={props.radius(radius)}
+        showfilters={props.showfilters(showFilters)}
+      >
+        <PrevPage
+          locationsharing={props.locationsharing}
+          radius={handleRadius}
+          showfilters={handleFilters}
+        />
+        <div className="flex full-width flex-j-end">
+          <Menu
+            childstatus={handleChildStatus}
+            status={status}
+            className={
+              status ? 'menu-wrapper show-menu' : 'menu-wrapper hide-menu'
+            }
+          />
+          <div className="open-menu" onClick={() => setStatus(true)}>
+            <img src={MenuIcon} />
+            {/* Menu */}
+          </div>
+        </div>
+      </header>
+    </section>
   )
 }

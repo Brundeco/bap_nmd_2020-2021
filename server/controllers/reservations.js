@@ -1,10 +1,10 @@
 import Reservation from '../models/reservations.js'
 
 export const getReservations = async (req, res) => {
-  console.log(req.params.id)
+  const { id } = req.params
 
   try {
-    const reservations = await Reservation.find()
+    const reservations = await Reservation.findById(id)
     res.status(200).json(reservations)
   } catch (err) {
     console.log(err)

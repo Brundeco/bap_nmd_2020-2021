@@ -40,21 +40,21 @@ export default () => {
         axios
           .post(`${process.env.REACT_APP_API_URL}/events`, data)
           .then(() => {
-            setPreloaderMsg('Succes, event was added! 🚀')
+            setPreloaderMsg('Event added! 🚀')
             localStorage.setItem('activity', 'My events')
             setTimeout(() => {
               window.location = '/activity'
             }, 2000)
           })
           .catch(() => {
-            setPreloaderMsg('Sorry, something went wrong! 😒')
+            setPreloaderMsg('Something went wrong...')
             setTimeout(() => {
               setLoading(false)
             }, 2000)
           })
       })
       .catch(() => {
-        setPreloaderMsg('Sorry, something went wrong! 😒')
+        setPreloaderMsg('Something went wrong...')
         setTimeout(() => {
           setLoading(false)
         }, 2000)
@@ -70,7 +70,6 @@ export default () => {
   }
   return (
     <div
-      // className="create-product-screen"
       className={
         !preview || !newPreview
           ? 'create-product-screen'

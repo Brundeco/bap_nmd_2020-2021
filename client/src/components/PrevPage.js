@@ -35,12 +35,15 @@ export default (props) => {
         className="menu-actions-homepage"
         radius={props.radius(optionsValue)}
       >
-        <div className="radius" onClick={() => setShowOptions(!showOptions)}>
+        <div
+          className={showOptions ? 'radius-edit' : 'radius'}
+          onClick={() => setShowOptions(!showOptions)}
+        >
           <img src={RadiusIcon} />
         </div>
         {props.locationsharing ? (
+          // <div className={true ? ' show-menu' : 'hide-menu'}>
           <div className={showOptions ? ' show-menu' : 'hide-menu'}>
-            <label>Select radius</label>
             <select
               value={optionsValue}
               onChange={(e) => {
@@ -56,7 +59,7 @@ export default (props) => {
             </select>
           </div>
         ) : (
-          <h3>Enable geolocation for better use of the app</h3>
+          ''
         )}
       </div>
     )

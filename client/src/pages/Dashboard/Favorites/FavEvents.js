@@ -13,6 +13,7 @@ export default () => {
   const storageRef = app.storage().ref()
   const [loading, setLoading] = useState(true)
   const [preloaderMsg, setPreloaderMsg] = useState('Just a second')
+  const [alert, setAlert] = useState('No favorites could be found')
 
   useEffect(() => {
     axios
@@ -53,9 +54,7 @@ export default () => {
   }, [events])
 
   useEffect(() => {
-    if (favorites?.length > 0) {
-      console.log(favorites.length)
-    } else {
+    if (!favorites?.length > 0) {
       console.log('Less then 1 favorites')
     }
   }, [favorites])
@@ -64,23 +63,28 @@ export default () => {
     <div className="property-screen">
       <h2 className="main-title">Favorite events</h2>
       {loading ? <Preloader text={preloaderMsg} /> : ''}
-      {events.map((item, key) => {
-        if (item) {
-          return (
-            <EventCard
-              title={item.title}
-              date={item.createdAt}
-              // distance={
-              //   distance?.find((el) => el.item === item._id)?.distance
-              // }
-              city={item.city}
-              image={images[key]}
-              itemId={item._id}
-              key={key}
-            />
-          )
-        }
-      })}
+
+      {favorites?.length > 0 ? (
+        events.map((item, key) => {
+          if (item) {
+            return (
+              <EventCard
+                title={item.title}
+                date={item.createdAt}
+                // distance={
+                //   distance?.find((el) => el.item === item._id)?.distance
+                // }
+                city={item.city}
+                image={images[key]}
+                itemId={item._id}
+                key={key}
+              />
+            )
+          }
+        })
+      ) : (
+        <h2> It seems very empty here </h2>
+      )}
     </div>
   )
 }

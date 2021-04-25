@@ -26,6 +26,8 @@ export { default as PropertyReview } from './Properties/PropertyReview'
 export { default as PropertyCard } from './Properties/PropertyCard'
 
 export { default as GetReservationList } from './Reservations/GetReservationList'
+export { default as ReservationCard } from './Reservations/ReservationCard'
+export { default as GetReservation } from './Reservations/GetReservation'
 
 export { default as Chat } from './Chat/Chat'
 export { default as Messages } from './Chat/Messages'

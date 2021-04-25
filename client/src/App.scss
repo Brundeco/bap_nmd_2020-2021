@@ -38,6 +38,10 @@
   './styles/pages/events/getEventList', './styles/pages/events/getEvent',
   './styles/pages/events/eventCard';
 
+/* Reservation */
+
+@import './styles/pages/reservations/getReservation';
+
 /* Chat */
 
 @import './styles/pages/chat/chat', './styles/pages/messages';

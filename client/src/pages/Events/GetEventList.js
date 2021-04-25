@@ -7,8 +7,6 @@ import { getPreciseDistance } from 'geolib'
 import { EventCard } from '..'
 
 export default (props) => {
-  CheckSession(localStorage.getItem('jwt'))
-
   Geocode.setApiKey(process.env.REACT_APP_GEOCODING_API_KEY)
   Geocode.enableDebug()
 

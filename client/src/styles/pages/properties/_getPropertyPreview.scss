@@ -8,6 +8,14 @@
   left: 0%;
   background-color: $base-white;
   padding: 5vh 0;
+
+  .info-group {
+    display: flex;
+
+    & p:first-child {
+      padding-right: 15px;
+    }
+  }
 }
 
 .review-screen .page-wrapper {
