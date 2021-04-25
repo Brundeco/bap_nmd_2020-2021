@@ -98,6 +98,7 @@ export default (props) => {
             if (coords.length !== data.length)
               setCoords((prev) => [...prev, coord])
           })
+          setLoading(false)
         } catch (error) {
           console.log(error)
         }

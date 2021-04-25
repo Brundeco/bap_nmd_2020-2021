@@ -40,7 +40,9 @@
 
 /* Reservation */
 
-@import './styles/pages/reservations/getReservation';
+@import './styles/pages/reservations/getReservation',
+  './styles/pages/reservations/getReservationList',
+  './styles/pages/reservations/reservationCard';
 
 /* Chat */
 

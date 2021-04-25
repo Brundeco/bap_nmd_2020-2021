@@ -18,7 +18,6 @@ export default ({ match }) => {
   const [dates, setDates] = useState([])
   const storageRef = app.storage().ref()
   const [images, setImages] = useState([])
-  console.log(match.params)
 
   const isDayDisabled = (day) => {
     return !dates.some((disabledDay) => DateUtils.isSameDay(day, disabledDay))
@@ -34,9 +33,11 @@ export default ({ match }) => {
 
     axios
       .get(
-        `${process.env.REACT_APP_API_URL}/reservations/${match.params.reservation_id}`
+        `${process.env.REACT_APP_API_URL}/reservations/detail/${match.params.reservation_id}`
       )
-      .then((res) => setReservation(res.data))
+      .then((res) => {
+        setReservation(res.data)
+      })
       .catch((err) => console.log(err))
   }, [])
 
@@ -51,7 +52,6 @@ export default ({ match }) => {
   }, [property])
 
   useEffect(() => {
-    console.log(reservation)
     reservation?.dates?.map((day) => {
       setDates((prev) => [...prev, new Date(day)])
     })
@@ -84,7 +84,7 @@ export default ({ match }) => {
 
         <div className="info-group">
           <p className="semi-bold">Amount paid</p>
-          <p>€ {reservation?.price}</p>
+          <p>€{reservation?.price}</p>
         </div>
         <div className="info-group">
           <p className="semi-bold">Payment date</p>
@@ -101,11 +101,11 @@ export default ({ match }) => {
         <h2 className="main-title">Details about the property</h2>
         <div className="info-group">
           <p className="semi-bold">Dailyprice</p>
-          <p>{property?.price}</p>
+          <p>€{property?.price}</p>
         </div>
         <div className="info-group">
           <p className="semi-bold">Space</p>
-          <p>{property?.surface}</p>
+          <p>{property?.surface} m2</p>
         </div>
         <div className="info-group">
           <p className="semi-bold">Ares</p>

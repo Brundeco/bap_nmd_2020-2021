@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Link, useHistory } from 'react-router-dom'
+import {  useHistory } from 'react-router-dom'
 import CloseIcon from './../../icons/close.svg'
 import NoUserIcon from './../../icons/no-user.svg'
 import {
   Preloader,
   ConvertDate,
-  CheckSession,
   InputField,
 } from '../../components'
 import DayPicker, { DateUtils } from 'react-day-picker'
@@ -22,8 +21,6 @@ import Swiper from './../../components/Swiper'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 
 export default ({ match }) => {
-  // CheckSession(localStorage.getItem('jwt'))
-
   const user = JSON.parse(localStorage.getItem('user'))
   let history = useHistory()
   const [propertyCreatedAt, setPropertyCreatedAt] = useState()
@@ -245,7 +242,7 @@ export default ({ match }) => {
                     })
                     .then((res) => {
                       console.log(res.data.message)
-                      // window.location = `/reservations/${user.id}`
+                      window.location = `/reservations`
                     })
                     .catch((err) => {
                       console.log(err.response)

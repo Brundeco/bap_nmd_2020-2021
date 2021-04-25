@@ -17,12 +17,12 @@ export default (props) => {
   const [showPriceFields, setShowPriceFields] = useState(false)
 
   const [showOptions, setShowOptions] = useState(false)
-  const [optionsValue, setOptionsValue] = useState()
+  const [optionsValue, setOptionsValue] = useState(50)
   const options = [
-    { label: '<= 50 m2', value: 50 },
-    { label: '<= 100 m2', value: 100 },
-    { label: '<= 200 m2', value: 200 },
-    { label: '>= 500 m2', value: 500 },
+    { label: '50 m2', value: 50 },
+    { label: '100 m2', value: 100 },
+    { label: '200 m2', value: 200 },
+    { label: '500 m2', value: 500 },
   ]
 
   const handleChange = (name, value) => {

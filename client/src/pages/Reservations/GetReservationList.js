@@ -13,6 +13,7 @@ export default () => {
   const storageRef = app.storage().ref()
 
   useEffect(() => {
+    console.log('here we are')
     axios
       .get(`${process.env.REACT_APP_API_URL}/reservations/${user.id}`)
       .then((res) => setData(res.data))
@@ -20,6 +21,7 @@ export default () => {
 
   useEffect(async () => {
     if (data) {
+      console.log(data)
       data?.map(async (item) => {
         return storageRef
           .child(item?.firebase_ref + '/' + item?.image)
@@ -44,20 +46,22 @@ export default () => {
           radius={() => {}}
           showfilters={() => {}}
         />
-        {data.map((item, index) => {
-          return (
-            <ReservationCard
-              address={item.property_address}
-              price={item.price}
-              date={item.createdAt}
-              image={featuredImg}
-              authorid={item.property_owner_id}
-              propid={item.property_id}
-              resid={item._id}
-              key={index}
-            />
-          )
-        })}
+        <div className="reservation-screen">
+          {data.map((item, index) => {
+            return (
+              <ReservationCard
+                address={item.property_address}
+                price={item.price}
+                date={item.createdAt}
+                image={featuredImg}
+                authorid={item.property_owner_id}
+                propid={item.property_id}
+                resid={item._id}
+                key={index}
+              />
+            )
+          })}
+        </div>
       </React.Fragment>
     )
   } else {
