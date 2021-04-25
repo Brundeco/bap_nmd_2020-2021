@@ -9,7 +9,7 @@ import 'react-day-picker/lib/style.css'
 import { app } from '../../base'
 
 export default ({ match }) => {
-  CheckSession(localStorage.getItem('jwt'))
+  // CheckSession(localStorage.getItem('jwt'))
 
   const user = JSON.parse(localStorage.getItem('user'))
   let history = useHistory()
@@ -29,6 +29,7 @@ export default ({ match }) => {
       .get(`${process.env.REACT_APP_API_URL}/events/${match.params.id}`)
       .then((res) => {
         setData(res.data)
+        setLoading(false)
         axios
           .get(`${process.env.REACT_APP_API_URL}/users/${res.data.author_id}`)
           .then((r) => {
@@ -45,20 +46,22 @@ export default ({ match }) => {
     })
     setEventStartDate(new Date(orderedDates?.[0]).getTime())
 
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/users/${user.id}`)
-      .then((res) => {
-        // console.log(res)
-        setFavorites(res.data.favEvents)
-        setLoading(false)
-      })
-      .catch((err) => console.log(err))
+    user &&
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/users/${user?.id}`)
+        .then((res) => {
+          setFavorites(res.data.favEvents)
+        })
+        .catch((err) => console.log(err))
 
     if (data?.firebaseRef !== undefined && data?.image !== undefined)
       storageRef
         .child(data?.firebaseRef + '/' + data?.image)
         .getDownloadURL()
-        .then((url) => setImage(url))
+        .then((url) => {
+          setImage(url)
+          setLoading(false)
+        })
         .catch((err) => console.log(err))
   }, [data])
 
@@ -78,7 +81,7 @@ export default ({ match }) => {
     indexItem === -1 ? arr.push(match.params.id) : arr.splice(indexItem, 1)
 
     axios
-      .put(`${process.env.REACT_APP_API_URL}/users/like-event/${user.id}`, {
+      .put(`${process.env.REACT_APP_API_URL}/users/like-event/${user?.id}`, {
         favEvents: arr,
       })
       .then((res) => {
@@ -116,12 +119,14 @@ export default ({ match }) => {
               <p className="semi-bold">{data?.author}</p>
             </div>
             <div className="flex flex-j-end flex-a-center">
-              <button
-                className={liked ? 'main-btn' : 'secondary-btn'}
-                onClick={(e) => handleLike(e)}
-              >
-                {liked ? 'Like' : 'Unlike'}
-              </button>
+              {user && (
+                <button
+                  className={liked ? 'main-btn' : 'secondary-btn'}
+                  onClick={(e) => handleLike(e)}
+                >
+                  {liked ? 'Like' : 'Unlike'}
+                </button>
+              )}
             </div>
           </div>
 

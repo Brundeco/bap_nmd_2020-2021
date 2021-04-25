@@ -27,7 +27,7 @@ export default (props, { parentCallback }) => {
             >
               <img src={userImage} alt="" />
             </Link>
-            <h3 className="main-title"> Bruno De Coene </h3>
+            <h3 className="main-title"> {user?.username} </h3>
           </div>
         </div>
 
@@ -67,9 +67,15 @@ export default (props, { parentCallback }) => {
             </Link>
           </div>
         </div>
-        <div className="menu-bottom flex flex-a-center flex-j-center">
-          <button onClick={(e) => logout(e)}>Log out</button>
-        </div>
+        {user ? (
+          <div className="menu-bottom flex flex-a-center flex-j-center">
+            <button onClick={(e) => logout(e)}>Log out</button>
+          </div>
+        ) : (
+          <div className="menu-bottom flex flex-a-center flex-j-center">
+            <button onClick={() => (window.location = '/login')}>Log in</button>
+          </div>
+        )}
       </nav>
       <div className="close-menu">
         <div className="cross-box" onClick={() => props.childstatus(false)}>

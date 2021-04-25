@@ -37,7 +37,7 @@ export default (props) => {
   useEffect(async () => {
     if (locationSharing == true) {
       console.log('Location sharing TRUE')
-      if (data?.length > 1) {
+      if (data?.length >= 1) {
         try {
           const evts = await Promise.all(
             data.map(async (el) => {
@@ -81,7 +81,7 @@ export default (props) => {
       }
     } else {
       console.log('Location sharing FALSE')
-      if (data?.length > 1) {
+      if (data?.length >= 1) {
         try {
           setEvtsFiltered(data)
           data.map(async (el) => {

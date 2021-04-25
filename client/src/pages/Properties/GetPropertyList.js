@@ -7,7 +7,6 @@ import { getPreciseDistance } from 'geolib'
 import { PropertyCard } from '..'
 
 export default (props) => {
-
   Geocode.setApiKey(process.env.REACT_APP_GEOCODING_API_KEY)
   Geocode.enableDebug()
 
@@ -32,7 +31,7 @@ export default (props) => {
 
   useEffect(async () => {
     if (locationSharing == true) {
-      if (data?.length > 1) {
+      if (data?.length >= 1) {
         try {
           const evts = await Promise.all(
             data.map(async (el) => {
@@ -75,7 +74,8 @@ export default (props) => {
         }
       }
     } else {
-      if (data?.length > 1) {
+      if (data?.length >= 1) {
+        console.log()
         try {
           setPropertiesFiltered(data)
           data.map(async (el) => {
@@ -118,6 +118,7 @@ export default (props) => {
   }, [data])
 
   const handleFilters = (data) => {
+    console.log(data)
     setPropertiesFiltered(data)
   }
 
@@ -152,6 +153,7 @@ export default (props) => {
             authorId={item.author_id}
             itemId={item._id}
             key={index}
+            city={item.city}
           />
         )
       })}

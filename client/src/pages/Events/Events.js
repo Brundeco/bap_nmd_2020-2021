@@ -3,7 +3,8 @@ import { GetEventList } from '..'
 import { CheckSession, Header, Map } from '../../components'
 
 export default (props) => {
-  CheckSession(localStorage.getItem('jwt'))
+  // CheckSession(localStorage.getItem('jwt'))
+  
   const [locationSharing, setLocationSharing] = useState()
   const [markers, setMarkers] = useState([])
   const [userLat, setUserLat] = useState()

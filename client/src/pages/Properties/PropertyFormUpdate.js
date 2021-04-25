@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { CheckSession, InputField, Textarea } from '../../components'
-import SelectImage from './../../icons/add-img.svg'
+import SelectImage from './../../icons/add.svg'
 import DayPicker from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
 import uuid from 'react-uuid'
@@ -136,13 +136,16 @@ export default (props) => {
   const today = new Date()
 
   return (
-    <div className="create-product-screen">
-      <h1>Fill out the form below to start hosting your property</h1>
-      <DayPicker
-        selectedDays={data?.dates}
-        onDayClick={handleDayClick}
-        disabledDays={{ before: today }}
-      />
+    <div>
+      <section>
+        <h1>Fill out the form below to start hosting your property</h1>
+        <DayPicker
+          selectedDays={data?.dates}
+          onDayClick={handleDayClick}
+          disabledDays={{ before: today }}
+        />
+      </section>
+
       <form
         onSubmit={props.onSubmit}
         formdata={props.formdata(data)}
@@ -271,16 +274,19 @@ export default (props) => {
             required
           />
         </section>
-        <section>
+
+        <section className="flex-col flex-j-center flex-a-center">
           <h2>Images</h2>
 
-          <div className="file-upload-cta fit">
+          <div className="file-upload-cta fit edit">
             <input type="file" onChange={handleFiles} multiple />
-            <button id="show-custom-file-btn">
-              <img src={SelectImage} alt="" />
+            <button id="show-custom-file-btn-edited">
+              <img src={SelectImage} alt="upload-icons" />
             </button>
           </div>
           <div className="img-gallery">
+            {files.length !== 0 || thumbnails?.length !== 0 ? <h4>Click on an image to delete</h4> : ''}
+
             {files?.map((item, i) => {
               return (
                 <React.Fragment key={i}>
@@ -316,15 +322,18 @@ export default (props) => {
             })}
           </div>
         </section>
-        <button
-          className={formValid ? 'main-btn' : 'main-btn disabled-btn'}
-          onClick={props.formsubmit}
-        >
-          Update property
-        </button>{' '}
-        <button className="main-btn" onClick={props.delete}>
-          Delete
-        </button>
+
+        <section className="cta-bottom-section">
+          <button
+            className={formValid ? 'main-btn' : 'main-btn disabled-btn'}
+            onClick={props.formsubmit}
+          >
+            Update property
+          </button>{' '}
+          <button className="main-btn" onClick={props.delete}>
+            Delete
+          </button>
+        </section>
       </form>
     </div>
   )

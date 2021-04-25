@@ -404,7 +404,12 @@ export default ({ match }) => {
             </p>
           </div>
         </section>
-        {!user || user.id === match.params.author_id ? (
+
+        {!user ? (
+          <section className="disable-cta">
+            <p>To chat or make a reservation you need to be logged in</p>
+          </section>
+        ) : user.id === match.params.author_id ? (
           <section className="disable-cta">
             <p>
               Chat and booking options are disabled since you own this property

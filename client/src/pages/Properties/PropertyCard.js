@@ -10,6 +10,7 @@ export default ({
   key,
   itemId,
   authorId,
+  city,
 }) => {
   return (
     <Link
@@ -25,6 +26,7 @@ export default ({
 
       <div className="info">
         <div className="left">
+          <h3> {city} </h3>
           <h3> {`${surface} m2`}</h3>
 
           <h4>Daily price: €{price} </h4>

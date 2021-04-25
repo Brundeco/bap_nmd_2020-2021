@@ -63,7 +63,6 @@ export default () => {
     <div className="property-screen">
       <h2 className="main-title">Favorite events</h2>
       {loading ? <Preloader text={preloaderMsg} /> : ''}
-
       {favorites?.length > 0 ? (
         events.map((item, key) => {
           if (item) {
