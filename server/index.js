@@ -59,6 +59,7 @@ socketio.on('connection', (socket) => {
       console.log(receiver)
       console.log('string')
       participants.forEach((participant) => {
+        console.log(participant)
         socketio.to(participant.socketId).emit('receive-message', data.message)
       })
     }
