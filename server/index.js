@@ -55,8 +55,11 @@ try {
       })
 
       // if (obj) console.log('Object true')
-      if (receiver)
+      if (receiver) {
+        console.log(receiver)
+        console.log('string')
         socketio.to(receiver[0].socketId).emit('receive-message', data.message)
+      }
     })
 
     socket.on('disconnect', () => {

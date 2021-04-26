@@ -28,6 +28,7 @@ export default ({ match }) => {
         socket.emit('registration', user.id)
         socket.on('receive-message', (message) => {
           console.log(message)
+          console.log('Message zou hier moeten komen')
           setMessages((prev) => [...prev, message])
         })
       })
