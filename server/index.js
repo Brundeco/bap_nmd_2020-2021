@@ -34,41 +34,43 @@ app.use(express.static(__dirname + '/public/'))
 
 let participants = []
 
-try {
-  socketio.on('connection', (socket) => {
-    // console.log(socket.id)
-    socket.on('registration', (id) => {
-      console.log('ID !! ')
-      console.log(id)
-      participants.push({ socketId: socket.id, id: id })
-      console.log('All participants !!')
-      console.log(participants)
-    })
-
-    socket.on('new-message', (data) => {
-      console.log('data')
-      console.log(data)
-      console.log('data')
-
-      const receiver = participants.filter((obj) => {
-        return obj.id === data.id ? obj : false
-      })
-
-      // if (obj) console.log('Object true')
-      if (receiver) {
-        console.log(receiver)
-        console.log('string')
-        socketio.to(receiver[0].socketId).emit('receive-message', data.message)
-      }
-    })
-
-    socket.on('disconnect', () => {
-      // console.log('User left')
-    })
+// try {
+socketio.on('connection', (socket) => {
+  // console.log(socket.id)
+  socket.on('registration', (id) => {
+    console.log('ID !! ')
+    console.log(id)
+    participants.push({ socketId: socket.id, id: id })
+    console.log('All participants !!')
+    console.log(participants)
   })
-} catch (error) {
-  console.log(error)
-}
+
+  socket.on('new-message', (data) => {
+    console.log('data')
+    console.log(data)
+    console.log('data')
+
+    const receiver = participants.filter((obj) => {
+      return obj.id === data.id ? obj : false
+    })
+
+    // if (obj) console.log('Object true')
+    if (receiver) {
+      console.log(receiver)
+      console.log('string')
+      participants.forEach((participant) => {
+        socketio.to(participant.socketId).emit('receive-message', data.message)
+      })
+    }
+  })
+
+  socket.on('disconnect', () => {
+    // console.log('User left')
+  })
+})
+// } catch (error) {
+//   console.log(error)
+// }
 
 app.use('/auth', authRoutes)
 app.use('/events', eventRoutes)

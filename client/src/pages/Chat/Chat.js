@@ -23,24 +23,24 @@ export default ({ match }) => {
   console.log('New chat version')
 
   useEffect(() => {
-    try {
-      socket.on('connect', () => {
-        socket.emit('registration', user.id)
-        socket.on('receive-message', (message) => {
-          console.log(message)
-          console.log('Message zou hier moeten komen')
-          setMessages((prev) => [...prev, message])
-        })
+    // try {
+    socket.on('connect', () => {
+      socket.emit('registration', user.id)
+      socket.on('receive-message', (message) => {
+        console.log(message)
+        console.log('Message zou hier moeten komen')
+        setMessages((prev) => [...prev, message])
       })
-      axios
-        .get(
-          `${process.env.REACT_APP_API_URL}/messages/filter/${match.params.conversation_id}`
-        )
-        .then((res) => setMessages(res.data))
-        .catch((err) => console.log(err))
-    } catch (error) {
-      console.log(error)
-    }
+    })
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/messages/filter/${match.params.conversation_id}`
+      )
+      .then((res) => setMessages(res.data))
+      .catch((err) => console.log(err))
+    // } catch (error) {
+    //   console.log(error)
+    // }
   }, [])
 
   const postMessage = () => {
