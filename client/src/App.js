@@ -26,6 +26,7 @@ import {
   Properties,
   PasswordReset,
   PasswordResetLink,
+  Profile,
 } from './pages'
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
 
           <Route path="/register" component={CreateUser} />
           <Route path="/login" component={LoginUser} />
+          <Route path="/profile" component={Profile} />
           <Route path="/password-reset-link" component={PasswordResetLink} />
           <Route path="/reset/:token" component={PasswordReset} />
 

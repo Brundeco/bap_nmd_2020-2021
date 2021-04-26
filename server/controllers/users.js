@@ -207,6 +207,20 @@ export const saveNewPassword = async (req, res) => {
   }
 }
 
+export const deleteUser = async (req, res) => {
+  const { id } = req.params
+  console.log(id)
+
+  console.log('delete all users !!')
+  try {
+    const user = await User.findByIdAndRemove(id)
+
+    res.status(200).json(user)
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}
+
 export const getUser = async (req, res) => {
   const { id } = req.params
 

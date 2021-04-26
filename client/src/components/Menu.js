@@ -66,13 +66,18 @@ export default (props, { parentCallback }) => {
               Reservations
             </Link>
           </div>
+
+          <div className="link-group">
+            <h4>Profile settings</h4>
+            <Link to={{ pathname: '/profile', state: { from: 'root' } }}>Edit profile</Link>
+          </div>
         </div>
         {user ? (
-          <div className="menu-bottom flex flex-a-center flex-j-center">
+          <div className="menu-bottom flex flex-a-center flex-j-start">
             <button onClick={(e) => logout(e)}>Log out</button>
           </div>
         ) : (
-          <div className="menu-bottom flex flex-a-center flex-j-center">
+          <div className="menu-bottom flex flex-a-center flex-j-start">
             <button onClick={() => (window.location = '/login')}>Log in</button>
           </div>
         )}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Header, CheckSession, LocateUser } from '../../components'
+import { Header, LocateUser } from '../../components'
 import { GetEventList, GetPropertyList } from '..'
 
 export default (props) => {
@@ -9,15 +9,6 @@ export default (props) => {
   const [userLat, setUserLat] = useState()
   const [userLon, setUserLon] = useState()
   const [radius, setRadius] = useState()
-  const [showFilters, setShowFilters] = useState(false)
-
-  useEffect(() => {
-    console.log(location)
-  }, [Location])
-
-  setTimeout(() => {
-    console.log(location)
-  }, 5000)
 
   useEffect(async () => {
     if (location.error == 'User denied Geolocation') {
@@ -43,10 +34,6 @@ export default (props) => {
   const handleRadius = (radius) => {
     setRadius(radius)
   }
-
-  useEffect(() => {
-    // console.log(locationSharing)
-  }, [locationSharing])
 
   return (
     <div>

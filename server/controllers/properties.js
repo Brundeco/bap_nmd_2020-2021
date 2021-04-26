@@ -106,7 +106,21 @@ export const deleteProperty = async (req, res) => {
 
   try {
     await Property.findByIdAndRemove(id)
-    res.status(200).json({message: 'Property deleted'})
+    res.status(200).json({ message: 'Property deleted' })
+  } catch (error) {
+    console.log(error)
+    res.status(404).json({ message: error.message })
+  }
+}
+
+export const deleteProperties = async (req, res) => {
+  const { id } = req.params
+
+  try {
+    await Property.deleteMany({ author_id: id })
+    res
+      .status(200)
+      .json({ message: 'All your propreties where succesfully deleted' })
   } catch (error) {
     console.log(error)
     res.status(404).json({ message: error.message })

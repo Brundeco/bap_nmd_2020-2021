@@ -19,6 +19,7 @@ export default () => {
     e.preventDefault()
     setLoading(true)
     if (data.password !== data.passwordRepeat) {
+      setLoading(false)
       setStatus('Passwords do not match')
     } else {
       axios

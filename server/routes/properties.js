@@ -5,6 +5,7 @@ import {
   createProperty,
   getProperty,
   updateProperty,
+  deleteProperties,
   bookProperty,
   getPropertiesAdmin,
   makePayment,
@@ -29,6 +30,7 @@ router.put('/book/:id', bookProperty)
 router.post('/stripe', makePayment)
 router.post('/likes', getLikes)
 router.delete('/delete/:id', deleteProperty)
+router.delete('/:id', deleteProperties)
 
 router.get('/filter/price-asc', filterPriceAsc)
 router.get('/filter/price-desc', filterPriceDesc)

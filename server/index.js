@@ -49,10 +49,14 @@ try {
       console.log('data')
       console.log(data)
       console.log('data')
-      let obj = participants.find((object) => object.id === parseInt(data.id))
-      console.log(obj)
+
+      const receiver = participants.filter((obj) => {
+        return obj.id === data.id ? obj : false
+      })
+
       // if (obj) console.log('Object true')
-      if (obj) socketio.to(obj.socketId).emit('receive-message', data.message)
+      if (receiver)
+        socketio.to(receiver[0].socketId).emit('receive-message', data.message)
     })
 
     socket.on('disconnect', () => {

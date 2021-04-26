@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import {  useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import CloseIcon from './../../icons/close.svg'
 import NoUserIcon from './../../icons/no-user.svg'
-import {
-  Preloader,
-  ConvertDate,
-  InputField,
-} from '../../components'
+import { Preloader, ConvertDate, InputField } from '../../components'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
 import { app } from '../../base'
@@ -67,7 +63,7 @@ export default ({ match }) => {
       axios
         .get(`${process.env.REACT_APP_API_URL}/users/${user?.id}`)
         .then((res) => {
-          setFavorites(res.data.favProperties)
+          setFavorites(res?.data?.favProperties)
           setLoading(false)
         })
   }, [])
@@ -139,27 +135,27 @@ export default ({ match }) => {
 
   const handleLike = async (e) => {
     e.preventDefault()
-    setLoading(true)
+    // setLoading(true)
 
-    let arr = [...favorites]
-    let indexItem = arr.indexOf(match.params.id)
-    indexItem === -1 ? arr.push(match.params.id) : arr.splice(indexItem, 1)
+    // let arr = [...favorites]
+    // let indexItem = arr.indexOf(match.params.id)
+    // indexItem === -1 ? arr.push(match.params.id) : arr.splice(indexItem, 1)
 
-    user &&
-      axios
-        .put(
-          `${process.env.REACT_APP_API_URL}/user?s/like-property/${user?.id}`,
-          {
-            favProperties: arr,
-          }
-        )
-        .then((res) => {
-          const favs = res.data.favProperties
-          setFavorites(favs)
-          setData((prev) => ({ ...prev, favProperties: favs }))
-          setLoading(false)
-        })
-        .catch((err) => console.log(err))
+    // user &&
+    //   axios
+    //     .put(
+    //       `${process.env.REACT_APP_API_URL}/users/like-property/${user?.id}`,
+    //       {
+    //         favProperties: arr,
+    //       }
+    //     )
+    //     .then((res) => {
+    //       const favs = res.data.favProperties
+    //       setFavorites(favs)
+    //       setData((prev) => ({ ...prev, favProperties: favs }))
+    //       setLoading(false)
+    //     })
+    //     .catch((err) => console.log(err))
   }
 
   useEffect(() => {

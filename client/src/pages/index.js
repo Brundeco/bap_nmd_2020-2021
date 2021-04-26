@@ -1,6 +1,7 @@
 export { default as Home } from './Home/Home'
 
 export { default as Activity } from './Dashboard/Activity/Activity'
+export { default as Profile } from './Dashboard/Profile/Profile'
 export { default as Favorites } from './Dashboard/Favorites/Favorites'
 export { default as MyProperties } from './Dashboard/Activity/MyProperties'
 export { default as MyEvents } from './Dashboard/Activity/MyEvents'

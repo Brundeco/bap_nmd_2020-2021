@@ -27,7 +27,8 @@ export default ({ match }) => {
       socket.on('connect', () => {
         socket.emit('registration', user.id)
         socket.on('receive-message', (message) => {
-          messages.push(message)
+          console.log(message)
+          setMessages((prev) => [...prev, message])
         })
       })
       axios

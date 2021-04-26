@@ -18,7 +18,6 @@ export default () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/users/${user.id}`)
       .then((res) => {
-        console.log(res)
         res.data.favProperties?.map(async (el) => {
           setFavorites((prev) => [...prev, el])
         })
@@ -40,18 +39,21 @@ export default () => {
   }, [])
 
   useEffect(() => {
-    // console.log(properties)
-    properties?.map((item) => {
-      if (item) {
-        storageRef
-          .child(item.firebaseRef + '/' + item.images[0])
-          .getDownloadURL()
-          .then((url) => {
-            setImages((prev) => [...prev, url])
-          })
-          .catch((err) => console.log(err))
-      }
-    })
+    const promises = properties
+      ?.map((element) => {
+        return element?.images?.map(async (el) => {
+          const url = await storageRef
+            .child(element.firebaseRef + '/' + el)
+            .getDownloadURL()
+          return url
+        })
+      })
+      .filter(Boolean)
+    const promisesArr = promises?.flat()
+    promisesArr &&
+      Promise.all(promisesArr).then((newArray) => {
+        setImages((prevPropsFiles) => [...prevPropsFiles, ...newArray])
+      })
   }, [properties])
 
   return (
@@ -61,7 +63,6 @@ export default () => {
 
       {favorites?.length > 0 ? (
         properties.map((item, key) => {
-          console.log(item)
           return (
             <PropertyCard
               description={item.city}

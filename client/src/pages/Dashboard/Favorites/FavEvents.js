@@ -28,9 +28,9 @@ export default () => {
             likes: likes,
           })
           .then((res) => {
-            setLoading(false)
             console.log(res.data)
             res.data.map((el) => setEvents((prev) => [...prev, el]))
+            setLoading(false)
           })
           .catch((err) => {
             console.log(err)
