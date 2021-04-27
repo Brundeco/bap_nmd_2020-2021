@@ -47,20 +47,30 @@ export default () => {
           showfilters={() => {}}
         />
         <div className="reservation-screen">
-          {data.map((item, index) => {
-            return (
-              <ReservationCard
-                address={item.property_address}
-                price={item.price}
-                date={item.createdAt}
-                image={featuredImg}
-                authorid={item.property_owner_id}
-                propid={item.property_id}
-                resid={item._id}
-                key={index}
-              />
-            )
-          })}
+          {data?.length > 0 ? (
+            data.map((item, index) => {
+              return (
+                <ReservationCard
+                  address={item.property_address}
+                  price={item.price}
+                  date={item.createdAt}
+                  image={featuredImg}
+                  authorid={item.property_owner_id}
+                  propid={item.property_id}
+                  resid={item._id}
+                  key={index}
+                />
+              )
+            })
+          ) : (
+            <div>
+              <h2 className="semi-bold">No reservations could be found.</h2>
+              <h4>
+                If you should make any future reservations, here is where you
+                will find them.
+              </h4>
+            </div>
+          )}
         </div>
       </React.Fragment>
     )
