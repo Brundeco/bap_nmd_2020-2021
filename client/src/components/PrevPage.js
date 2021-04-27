@@ -77,7 +77,7 @@ export default (props) => {
       {history.location.pathname.includes('events') ||
       history.location.pathname.includes('properties') ? (
         <div
-          className={!showFilters ? 'search' : 'search active'}
+          className={!showFilters ? 'toggle-filters search' : 'toggle-filters search active'}
           onClick={() => setShowFilters(!showFilters)}
         >
           {!showFilters ? <img src={FilterIcon} /> : <img src={CloseIcon} />}

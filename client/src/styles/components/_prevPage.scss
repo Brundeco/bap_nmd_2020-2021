@@ -10,8 +10,16 @@
   }
 }
 
-.prev-page-component svg path {
-  fill: #000;
+.prev-page-component svg {
+  // padding: 12px !important;
+  // background: #dfe4de !important;
+  // width: 40px !important;
+  // height: 40px !important;
+  // border-radius: 40px !important;
+
+  path {
+    fill: #000;
+  }
 }
 
 .menu-actions-homepage {
@@ -82,14 +90,22 @@
   background: $soft-grey;
   transition: $base-transition;
 
-  img {
-    padding: 15px;
-  }
-
   &:hover {
     background-color: rgb(221, 221, 221);
     transition: $base-transition;
     cursor: pointer;
+  }
+}
+
+.toggle-filters {
+  // width: 30px;
+  // height: 30px;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+
+  img {
+    padding: 15px;
   }
 }
 

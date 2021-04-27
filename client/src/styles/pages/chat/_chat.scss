@@ -8,36 +8,38 @@
     border-bottom: 1px solid #d8d8d8;
   }
 
-  .conversation-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 60vh;
-    overflow: scroll;
+  .chat-content {
+    .conversation-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 60vh;
+      overflow: scroll;
 
-    .float-right {
-      margin-bottom: 20px;
-      display: inline-flex;
-      justify-content: flex-end;
+      .float-right {
+        margin-bottom: 20px;
+        display: inline-flex;
+        justify-content: flex-end;
 
-      p {
-        background-color: $theme-blue;
-        color: white;
-        padding: 10px 30px;
-        border-radius: 100px;
-        max-width: 70%;
+        p {
+          background-color: $theme-blue;
+          color: white;
+          padding: 10px 30px;
+          border-radius: 20px;
+          max-width: 70%;
+        }
       }
-    }
 
-    .float-left {
-      margin-bottom: 20px;
-      display: inline-flex;
-      justify-content: flex-start;
+      .float-left {
+        margin-bottom: 20px;
+        display: inline-flex;
+        justify-content: flex-start;
 
-      p {
-        background-color: $soft-grey;
-        padding: 10px 30px;
-        border-radius: 100px;
-        max-width: 70%;
+        p {
+          background-color: $soft-grey;
+          padding: 10px 30px;
+          border-radius: 20px;
+          max-width: 70%;
+        }
       }
     }
   }

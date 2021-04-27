@@ -21,6 +21,10 @@ export default () => {
     }
   }, [])
 
+  useEffect(() => {
+    console.log(data)
+  }, [data])
+
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }))
   }
@@ -34,12 +38,14 @@ export default () => {
       .then((res) => {
         setSuccess(true)
         setLoading(false)
+        console.log(res)
         setStatus(res.data.message)
         localStorage.setItem('user', JSON.stringify(res.data.user))
         localStorage.setItem('jwt', res.data.token)
         if (CheckSession(res.data.token)) window.location = '/'
       })
       .catch((err) => {
+        console.log(err)
         setLoading(false)
         setStatus(err.response?.data?.message)
       })

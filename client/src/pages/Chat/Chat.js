@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import io from 'socket.io-client'
 import axios from 'axios'
-import { Textarea, Header, FontAwesome, CheckSession } from '../../components'
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { Header, CheckSession } from '../../components'
 import PaperplaneIcon from './../../icons/send-paperplane_black.svg'
-import ScrollToBottom from 'react-scroll-to-bottom'
 
 export default ({ match }) => {
   CheckSession(localStorage.getItem('jwt'))
@@ -12,6 +10,7 @@ export default ({ match }) => {
   const user = JSON.parse(localStorage.getItem('user'))
   const sender = JSON.parse(localStorage.getItem('user'))
   const [messages, setMessages] = useState([])
+  const messagesEndRef = useRef(null)
   const recepient = match.params
   const ENDPOINT = `${process.env.REACT_APP_API_URL}`
   const socket = io(ENDPOINT)
@@ -50,6 +49,7 @@ export default ({ match }) => {
         read: false,
       })
       .then((res) => {
+        setData({ message: '' })
         fetchMessages()
         socket.emit('new-message', {
           id: match.params.recepient_id,
@@ -57,6 +57,20 @@ export default ({ match }) => {
         })
       })
       .catch((err) => console.log(err))
+  }
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
+
+  const onKeyPress = async (e) => {
+    if (e.which === 13) {
+      postMessage()
+    }
   }
 
   return (
@@ -75,42 +89,40 @@ export default ({ match }) => {
 
         <section>
           <div className="chat-content">
-            <ScrollToBottom debsug={false}>
-              <section className="conversation-wrapper">
-                {messages?.map((message, i) => {
-                  return (
-                    <div
-                      key={i}
-                      className={
-                        message.fromName == user.username
-                          ? 'float-right'
-                          : 'float-left'
-                      }
-                    >
-                      <p>{message.message}</p>
-                    </div>
-                  )
-                })}
-              </section>
-            </ScrollToBottom>
+            <section className="conversation-wrapper">
+              {messages?.map((message, i) => {
+                return (
+                  <div
+                    key={i}
+                    className={
+                      message.fromName == user.username
+                        ? 'float-right'
+                        : 'float-left'
+                    }
+                  >
+                    <p>{message.message}</p>
+                  </div>
+                )
+              })}
+              <div ref={messagesEndRef} />
+            </section>
           </div>
         </section>
 
-        {/* <section> */}
-          <div className="chat-cta">
-            <textarea
-              className="send-message"
-              placeholder="message"
-              name="message"
-              onChange={(e) => handleChange('message', e.target.value)}
-              value={data.message}
-              required="required"
-            />
-            <button className="send-message-btn" onClick={() => postMessage()}>
-              <img src={PaperplaneIcon} alt="" /> send
-            </button>
-          </div>
-        {/* </section> */}
+        <div className="chat-cta">
+          <textarea
+            className="send-message"
+            placeholder="message"
+            name="message"
+            onChange={(e) => handleChange('message', e.target.value)}
+            value={data.message}
+            required="required"
+            onKeyPress={onKeyPress}
+          />
+          <button className="send-message-btn" onClick={() => postMessage()}>
+            <img src={PaperplaneIcon} alt="" /> send
+          </button>
+        </div>
       </div>
     </React.Fragment>
   )

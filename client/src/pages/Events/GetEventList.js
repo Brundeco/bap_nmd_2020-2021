@@ -122,6 +122,10 @@ export default (props) => {
     }
   }, [evtsFiltered])
 
+  useEffect(() => {
+    console.log(loading)
+  }, [loading])
+
   const handleFilters = (data) => {
     setEvtsFiltered(data)
   }
@@ -130,21 +134,30 @@ export default (props) => {
     <div className="event-list" markers={props.markers(coords)}>
       {loading ? <Preloader text="Searching around you" /> : ''}
       {props.showfilters ? <FilterEvents filtereddata={handleFilters} /> : ''}
-      {evtsFiltered?.map((item, index) => {
-        return (
-          <React.Fragment>
-            <EventCard
-              title={item.title}
-              date={item.createdAt}
-              distance={distance?.find((el) => el.item === item._id)?.distance}
-              city={item.city}
-              image={images[index]}
-              itemId={item._id}
-              key={index}
-            />
-          </React.Fragment>
-        )
-      })}
+      {evtsFiltered.length >= 1 ? (
+        evtsFiltered?.map((item, index) => {
+          console.log(evtsFiltered.length)
+          return (
+            <React.Fragment key={index}>
+              <EventCard
+                title={item.title}
+                date={item.createdAt}
+                distance={
+                  distance?.find((el) => el.item === item._id)?.distance
+                }
+                city={item.city}
+                image={images[index]}
+                itemId={item._id}
+              />
+            </React.Fragment>
+          )
+        })
+      ) : (
+        <div>
+          <h2 className="semi-bold">No events where found.</h2>
+          <h4>Please extend your radius or check your filter options.</h4>
+        </div>
+      )}
     </div>
   )
 }

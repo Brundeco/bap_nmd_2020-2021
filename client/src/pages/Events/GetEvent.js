@@ -74,25 +74,25 @@ export default ({ match }) => {
 
   const handleLike = async (e) => {
     e.preventDefault()
-      // setLoading(true)
+    setLoading(true)
 
-      // let arr = [...favorites]
-      // console.log(arr)
-      // console.log(arr)
-      // let indexItem = arr.indexOf(match.params.id)
-      // indexItem === -1 ? arr.push(match.params.id) : arr.splice(indexItem, 1)
-      // console.log(arr)
+    let arr = [...favorites]
+    console.log(arr)
+    console.log(arr)
+    let indexItem = arr.indexOf(match.params.id)
+    indexItem === -1 ? arr.push(match.params.id) : arr.splice(indexItem, 1)
+    console.log(arr)
 
-      // axios
-      //   .put(`${process.env.REACT_APP_API_URL}/users/like-event/${user?.id}`, {
-      //     favEvents: arr,
-      //   })
-      //   .then(async (res) => {
-      //     const favs = await res.data.favEvents
-      //     setFavorites(favs)
-      //     setData((prev) => ({ ...prev, favEvents: favs }))
-      //     setLoading(false)
-      //   })
+    axios
+      .put(`${process.env.REACT_APP_API_URL}/users/like-event/${user?.id}`, {
+        favEvents: arr,
+      })
+      .then(async (res) => {
+        const favs = await res.data.favEvents
+        setFavorites(favs)
+        setData((prev) => ({ ...prev, favEvents: favs }))
+        setLoading(false)
+      })
       .catch((err) => console.log(err))
   }
 

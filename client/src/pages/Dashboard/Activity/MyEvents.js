@@ -30,10 +30,10 @@ export default () => {
     }
   }, [data])
 
-  if (data != undefined) {
-    return (
-      <React.Fragment>
-        {data?.map((item, i) => {
+  return (
+    <React.Fragment>
+      {data?.length > 0 ? (
+        data?.map((item, i) => {
           return (
             <div className="main-list-item" key={i}>
               <div className="list-part">
@@ -53,10 +53,13 @@ export default () => {
               </div>
             </div>
           )
-        })}
-      </React.Fragment>
-    )
-  } else {
-    return <h2>You don't have events yet</h2>
-  }
+        })
+      ) : (
+        <div>
+          <h2 className="semi-bold">Nothing found</h2>
+          <h4>You did not create you own events yet</h4>
+        </div>
+      )}
+    </React.Fragment>
+  )
 }

@@ -93,3 +93,21 @@ export const createConversationId = async (req, res) => {
     res.status(409).json({ message: error.message })
   }
 }
+
+export const deleteConversations = async (req, res) => {
+  const { id } = req.params
+
+  console.log('Delete all mesages bitch')
+
+  try {
+    await Messages.deleteMany({
+      $or: [{ from: id }, { to: id }],
+    })
+    res
+      .status(200)
+      .json({ message: 'All your conversations where succesfully deleted' })
+  } catch (error) {
+    console.log(error)
+    res.status(404).json({ message: error.message })
+  }
+}

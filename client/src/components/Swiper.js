@@ -29,11 +29,13 @@ export default (props) => {
       pagination={{ clickable: true }}
       //   scrollbar={{ draggable: false }}
     >
-      {slides.map((el) => {
+      {slides.map((el, key) => {
         return (
-          <SwiperSlide>
-            <img src={formatImgs ? URL.createObjectURL(el) : el} alt="" />
-          </SwiperSlide>
+          <React.Fragment key={key}>
+            <SwiperSlide>
+              <img src={formatImgs ? URL.createObjectURL(el) : el} alt="" />
+            </SwiperSlide>
+          </React.Fragment>
         )
       })}
     </Swiper>

@@ -95,6 +95,7 @@ export default (props) => {
         } catch (error) {
           console.log(error)
         }
+      } else {
       }
     }
   }, [data, props.lat, props.lng, props.radius])
@@ -134,29 +135,37 @@ export default (props) => {
       ) : (
         ''
       )}
-      {propertiesFiltered?.map((item, index) => {
-        let propImg = ''
-        {
-          images?.map((image, i) => {
-            if (image?.includes(item.images[0])) {
-              propImg = image
-            }
-          })
-        }
-        return (
-          <PropertyCard
-            surface={item.surface}
-            price={item.price}
-            date={item.createdAt}
-            distance={distance?.find((el) => el.item === item._id)?.distance}
-            image={propImg}
-            authorId={item.author_id}
-            itemId={item._id}
-            key={index}
-            city={item.city}
-          />
-        )
-      })}
+
+      {propertiesFiltered.length >= 1 ? (
+        propertiesFiltered?.map((item, index) => {
+          let propImg = ''
+          {
+            images?.map((image, i) => {
+              if (image?.includes(item.images[0])) {
+                propImg = image
+              }
+            })
+          }
+          return (
+            <PropertyCard
+              surface={item.surface}
+              price={item.price}
+              date={item.createdAt}
+              distance={distance?.find((el) => el.item === item._id)?.distance}
+              image={propImg}
+              authorId={item.author_id}
+              itemId={item._id}
+              key={index}
+              city={item.city}
+            />
+          )
+        })
+      ) : (
+        <div>
+          <h2 className="semi-bold">No properties where found.</h2>
+          <h4>Please extend your radius or check your filter options.</h4>
+        </div>
+      )}
     </div>
   )
 }

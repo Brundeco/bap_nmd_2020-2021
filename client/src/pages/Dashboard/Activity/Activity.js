@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { CheckSession, Header } from '../../../components'
-import LogoutUser from '../../Users/LogoutUser'
 import MyProperties from './MyProperties'
 import MyEvents from './MyEvents'
 

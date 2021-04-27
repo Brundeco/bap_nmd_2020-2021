@@ -3,7 +3,6 @@ import { GetPropertyList } from '..'
 import { CheckSession, Header, Map } from '../../components'
 
 export default () => {
-  
   const [locationSharing, setLocationSharing] = useState()
   const [markers, setMarkers] = useState([])
   const [userLat, setUserLat] = useState()

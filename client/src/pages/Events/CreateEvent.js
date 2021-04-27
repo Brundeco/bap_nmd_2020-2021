@@ -61,10 +61,6 @@ export default () => {
       })
   }
 
-  useEffect(() => {
-    console.log(data)
-  }, [data])
-
   const handleFile = (file) => {
     setFile(file)
   }

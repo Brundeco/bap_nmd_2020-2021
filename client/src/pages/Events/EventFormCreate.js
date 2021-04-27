@@ -3,6 +3,8 @@ import { CheckSession, InputField, Textarea } from '../../components'
 import DayPicker from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
 import uuid from 'react-uuid'
+import SelectImage from './../../icons/add.svg'
+import replaceImage from './../../icons/reload.svg'
 
 export default (props) => {
   CheckSession(localStorage.getItem('jwt'))
@@ -92,14 +94,27 @@ export default (props) => {
         file={props.file(file)}
         preview={props.preview(preview)}
       >
-        <section>
+        <section className="flex-col flex-j-center flex-a-center">
           <h2>Event image</h2>
-          <div className="file-upload-cta">
+          {/* <div className="file-upload-cta">
             <input type="file" onChange={handleFile} multiple />
             <button id="show-custom-file-btn">
               <span>{data?.image ? 'Replace picture' : 'Event wallpaper'}</span>
             </button>
+          </div> */}
+
+          <div className="file-upload-cta fit edit">
+            <input type="file" onChange={handleFile} multiple />
+
+            <button id="show-custom-file-btn-edited">
+              <img
+                src={file ? replaceImage : SelectImage}
+                className="upload-icons"
+                alt=""
+              />
+            </button>
           </div>
+
           <div>
             <img
               src={file && URL.createObjectURL(file)}
