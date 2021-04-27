@@ -4,9 +4,8 @@ import SearchIcon from './../icons/menu-search-icon.svg'
 import ProfileIcon from './../icons/profile.svg'
 import CloseMenu from './../icons/close-menu.svg'
 import { Link } from 'react-router-dom'
-import { MenuLink } from '.'
 
-export default (props, { parentCallback }) => {
+export default (props) => {
   const user = JSON.parse(localStorage.getItem('user'))
   const userImage = user != null ? user.image : ProfileIcon
 
@@ -73,13 +72,16 @@ export default (props, { parentCallback }) => {
               Messages
             </Link>
           </div>
-
-          <div className="link-group">
-            <h4>Profile settings</h4>
-            <Link to={{ pathname: '/profile', state: { from: 'root' } }}>
-              Edit profile
-            </Link>
-          </div>
+          {user ? (
+            <div className="link-group">
+              <h4>Profile settings</h4>
+              <Link to={{ pathname: '/profile', state: { from: 'root' } }}>
+                Edit profile
+              </Link>
+            </div>
+          ) : (
+            ''
+          )}
         </div>
         {user ? (
           <div className="menu-bottom flex flex-a-center flex-j-start">

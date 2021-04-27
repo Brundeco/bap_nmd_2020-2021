@@ -3,6 +3,7 @@ import { InputField, CheckSession, Preloader } from '../../components'
 import axios from 'axios'
 import queryString from 'query-string'
 import { useLocation } from 'react-router'
+import { Link } from 'react-router-dom'
 
 export default () => {
   localStorage.clear()
@@ -79,18 +80,19 @@ export default () => {
             Login
           </button>
         </form>
-        <button
-          className="simple-btn"
-          onClick={() => (window.location = '/register')}
+        <Link
+          className="secondary-btn mg-top-none"
+          to={{ pathname: '/register', state: { from: 'root' } }}
         >
-          Not a member yet? / Sign up here
-        </button>
-        <button
+          Sign up
+        </Link>
+
+        <Link
           className="simple-btn"
-          onClick={() => (window.location = '/password-reset-link')}
+          to={{ pathname: '/password-reset-link', state: { from: 'root' } }}
         >
           Forgot password
-        </button>
+        </Link>
         <span className={success ? 'status-success' : 'status-failure'}>
           {status}
         </span>

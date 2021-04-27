@@ -6,65 +6,61 @@
   padding: 10vh 5%;
   box-sizing: border-box;
   width: 100vw;
-}
 
-// .login-screen.padding-correction {
-//   padding-top: 10vh;
-// }
+  .wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 5vh;
+
+    @include mq(medium) {
+      button,
+      a {
+        width: 50%;
+        margin-bottom: 30px;
+        padding: 15px 20px;
+      }
+    }
+  }
+
+  .logo {
+    width: 100px;
+    margin-bottom: 3vh;
+  }
+
+  h1 {
+    margin-bottom: 5vh;
+    font-size: 1.2em;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    @include mq(medium) {
+      input {
+        width: 50%;
+        margin-bottom: 30px;
+      }
+    }
+  }
+
+  h5:empty {
+    display: none !important;
+  }
+}
 
 .login-screen.full-screen {
   height: 100vh;
 }
 
-.login-screen .wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 5vh;
-}
-
-.login-screen .logo {
-  width: 100px;
-  margin-bottom: 3vh;
-}
-
-.login-screen h1 {
-  margin-bottom: 5vh;
-  font-size: 1.2em;
-}
-
-.login-screen form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-.login-screen button.main-btn {
-  @include main-btn;
-  margin-top: 4vh;
-}
-
-.login-screen button.secondary-btn {
-  font-size: 0.8em;
-  margin-top: 2vh;
-}
-
 .file-button {
   display: none !important;
 }
-
-// .login-screen h5 {
-//   margin-top: 10vh;
-//   position: absolute;
-//   bottom: 15vh;
-//   padding: 3% 10%;
-//   border-radius: 3px;
-//   font-weight: 300;
-//   color: rgb(176, 34, 34);
-// }
 
 .status-success {
   font-weight: 500;
@@ -78,8 +74,4 @@
   font-size: 0.9em;
   color: red;
   margin-top: 2vh;
-}
-
-.login-screen h5:empty {
-  display: none !important;
 }

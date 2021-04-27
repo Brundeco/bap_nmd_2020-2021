@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { InputField, Preloader } from '../../components'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 export default () => {
   const [data, setData] = React.useState({})
@@ -63,12 +64,12 @@ export default () => {
             Reset password
           </button>
         </form>
-        <button
-          className="secondary-btn"
-          onClick={() => (window.location = '/login')}
+        <Link
+          className="secondary-btn mg-top-none"
+          to={{ pathname: '/login', state: { from: 'root' } }}
         >
           Back to login
-        </button>
+        </Link>
         {/* <span className={success ? 'status-success' : 'status-failure'}>
           {status}
         </span> */}

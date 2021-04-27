@@ -52,3 +52,27 @@ button {
 .hide {
   display: none;
 }
+
+.menu-link-extra {
+  display: inline-block;
+  color: $theme-blue;
+  text-decoration: underline;
+  font-weight: 500;
+  padding-left: 5px;
+}
+
+.mg-bottom-none {
+  margin-bottom: 0 !important;
+}
+
+.mg-top-none {
+  margin-top: 0 !important;
+}
+
+.mg-left-none {
+  margin-left: 0 !important;
+}
+
+.mg-right-none {
+  margin-right: 0 !important;
+}

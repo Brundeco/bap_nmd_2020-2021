@@ -4,6 +4,7 @@ import FileBase from 'react-file-base64'
 import axios from 'axios'
 import SelectImage from './../../icons/add-img.svg'
 import replaceImage from './../../icons/reload.svg'
+import { Link } from 'react-router-dom'
 
 export default () => {
   const [data, setData] = React.useState({})
@@ -115,12 +116,13 @@ export default () => {
             Register
           </button>
         </form>
-        <button
+
+        <Link
           className="simple-btn"
-          onClick={() => (window.location = '/login')}
+          to={{ pathname: '/login', state: { from: 'root' } }}
         >
           Already a member? / Login here
-        </button>
+        </Link>
         <span className={success ? 'status-success' : 'status-failure'}>
           {status}
         </span>

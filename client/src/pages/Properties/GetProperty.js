@@ -14,6 +14,7 @@ import ContactIcon from './../../icons/property-detail/contact.svg'
 import AddressIcon from './../../icons/property-detail/address.svg'
 import AreasIcon from './../../icons/property-detail/diagram.svg'
 import Swiper from './../../components/Swiper'
+import { Link } from 'react-router-dom'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 
 export default ({ match }) => {
@@ -400,7 +401,15 @@ export default ({ match }) => {
 
         {!user ? (
           <section className="disable-cta">
-            <p>To chat or make a reservation you need to be logged in</p>
+            <p>
+              To chat or make a reservation you need to be 
+              <Link
+                className="menu-link-extra"
+                to={{ pathname: '/login', state: { from: 'root' } }}
+              >
+                logged in
+              </Link>
+            </p>
           </section>
         ) : user.id === match.params.author_id ? (
           <section className="disable-cta">
