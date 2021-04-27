@@ -3,7 +3,7 @@ import io from 'socket.io-client'
 import axios from 'axios'
 import { Textarea, Header, FontAwesome, CheckSession } from '../../components'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import PaperplaneIcon from './../../icons/send-paperplane.svg'
+import PaperplaneIcon from './../../icons/send-paperplane_black.svg'
 import ScrollToBottom from 'react-scroll-to-bottom'
 
 export default ({ match }) => {
@@ -20,27 +20,23 @@ export default ({ match }) => {
     setData((prev) => ({ ...prev, [name]: value }))
   }
 
-  console.log('New chat version')
-
-  useEffect(() => {
-    // try {
-    socket.on('connect', () => {
-      socket.emit('registration', user.id)
-      socket.on('receive-message', (message) => {
-        console.log(message)
-        console.log('Message zou hier moeten komen')
-        setMessages((prev) => [...prev, message])
-      })
-    })
+  const fetchMessages = () => {
     axios
       .get(
         `${process.env.REACT_APP_API_URL}/messages/filter/${match.params.conversation_id}`
       )
       .then((res) => setMessages(res.data))
       .catch((err) => console.log(err))
-    // } catch (error) {
-    //   console.log(error)
-    // }
+  }
+
+  useEffect(() => {
+    socket.on('connect', () => {
+      socket.emit('registration', user.id)
+      socket.on('receive-message', () => {
+        fetchMessages()
+      })
+    })
+    fetchMessages()
   }, [])
 
   const postMessage = () => {
@@ -54,62 +50,68 @@ export default ({ match }) => {
         read: false,
       })
       .then((res) => {
-        let arr = messages
-        arr.push(res.data)
-        setMessages([...arr])
+        fetchMessages()
         socket.emit('new-message', {
           id: match.params.recepient_id,
           message: res.data.message,
         })
-        setData((prev) => ({
-          ...prev,
-          message: '',
-        }))
       })
       .catch((err) => console.log(err))
   }
 
   return (
-    <div className="dashboard-screen ">
-      {/* <Header /> */}
-      <div className="chat-screen page-wrapper">
-        <div className="chat-top">
-          <h1> Gesprek met {match.params.recepient}</h1>
-        </div>
+    <React.Fragment>
+      <Header
+        locationsharing={() => {}}
+        radius={() => {}}
+        showfilters={() => {}}
+      />
+      <div className="chat-screen">
+        <section>
+          <div className="chat-info">
+            <h1 className="main-title">Gesprek met {match.params.recepient}</h1>
+          </div>
+        </section>
 
-        <ScrollToBottom debsug={false}>
-          <section className="conversation-box">
-            {messages?.map((message, i) => {
-              return (
-                <p
-                  key={i}
-                  className={
-                    message.fromName == user.username
-                      ? 'float-right'
-                      : 'float-left'
-                  }
-                >
-                  {message.message}
-                </p>
-              )
-            })}
-          </section>
-        </ScrollToBottom>
+        <section>
+          <div className="chat-content">
+            <ScrollToBottom debsug={false}>
+              <section className="conversation-wrapper">
+                {messages?.map((message, i) => {
+                  return (
+                    <div
+                      key={i}
+                      className={
+                        message.fromName == user.username
+                          ? 'float-right'
+                          : 'float-left'
+                      }
+                    >
+                      <p>{message.message}</p>
+                    </div>
+                  )
+                })}
+              </section>
+            </ScrollToBottom>
+          </div>
+        </section>
 
-        <div className="chat-bottom">
-          <textarea
-            className="send-message"
-            placeholder="message"
-            name="message"
-            onChange={(e) => handleChange('message', e.target.value)}
-            value={data.message}
-            required="required"
-          />
-          <button className="send-message-btn" onClick={() => postMessage()}>
-            <img src={PaperplaneIcon} alt="" />
-          </button>
-        </div>
+        {/* <section> */}
+          <div className="chat-cta">
+            <textarea
+              className="send-message"
+              placeholder="message"
+              name="message"
+              onChange={(e) => handleChange('message', e.target.value)}
+              value={data.message}
+              required="required"
+            />
+            <button className="send-message-btn" onClick={() => postMessage()}>
+              <img src={PaperplaneIcon} alt="" /> send
+            </button>
+          </div>
+        {/* </section> */}
       </div>
-    </div>
+    </React.Fragment>
   )
 }

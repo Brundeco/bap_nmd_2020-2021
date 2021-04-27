@@ -68,8 +68,17 @@ export default (props, { parentCallback }) => {
           </div>
 
           <div className="link-group">
+            <h4>Chat</h4>
+            <Link to={{ pathname: '/messages', state: { from: 'root' } }}>
+              Messages
+            </Link>
+          </div>
+
+          <div className="link-group">
             <h4>Profile settings</h4>
-            <Link to={{ pathname: '/profile', state: { from: 'root' } }}>Edit profile</Link>
+            <Link to={{ pathname: '/profile', state: { from: 'root' } }}>
+              Edit profile
+            </Link>
           </div>
         </div>
         {user ? (

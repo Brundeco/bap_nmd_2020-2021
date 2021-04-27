@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { CheckSession, ConvertDate, Header } from '../../components'
+import NoUserIcon from './../../icons/no-user.svg'
 import axios from 'axios'
 
 export default ({ match }) => {
@@ -33,56 +34,66 @@ export default ({ match }) => {
   }, [messages])
 
   return (
-    <div className="conversations-screen">
-      {/* <Header radius={'6'} /> */}
-      <div className="page-wrapper">
-        <h2>Conversations</h2>
-        {conversations &&
-          Object.keys(conversations).map((key, i) => {
-            console.log(conversations[key].slice(-1)[0].from)
-            const timestamp = new Date(
-              conversations[key].slice(-1)[0].createdAt
-            )
-            console.log(timestamp)
-            return (
-              <section
-                key={i}
-                className="chat"
-                onClick={() =>
-                  (window.location = `/chat/${
-                    conversations[key].slice(-1)[0].from == user.id
-                      ? conversations[key].slice(-1)[0].to
-                      : conversations[key].slice(-1)[0].from
-                  }/${
-                    conversations[key].slice(-1)[0].fromName == user.username
-                      ? conversations[key].slice(-1)[0].toName
-                      : conversations[key].slice(-1)[0].fromName
-                  }/${conversations[key][0].conversationId}`)
-                }
-              >
-                <div className="left">
-                  <p>BD</p>
-                </div>
-                <div className="center">
-                  <h4>
-                    {conversations[key].slice(-1)[0].fromName == user.username
-                      ? conversations[key].slice(-1)[0].toName
-                      : conversations[key].slice(-1)[0].fromName}
-                  </h4>
-                  <p> {conversations[key].slice(-1)[0].message} </p>
-                </div>
-                <div className="right">
-                  <span>
-                    {timestamp.toLocaleTimeString([], {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </span>
-                </div>
-              </section>
-            )
-          })}
+    <React.Fragment>
+      <Header
+        locationsharing={() => {}}
+        radius={() => {}}
+        showfilters={() => {}}
+      />
+
+      <div className="messages-screen">
+        <section>
+          <h2>Conversations</h2>
+        </section>
+
+        <section>
+          {conversations &&
+            Object.keys(conversations).map((key, i) => {
+              const timestamp = new Date(
+                conversations[key].slice(-1)[0].createdAt
+              )
+              return (
+                <section key={i} className="message-detail">
+                  <button
+                    onClick={() =>
+                      (window.location = `/chat/${
+                        conversations[key].slice(-1)[0].from == user.id
+                          ? conversations[key].slice(-1)[0].to
+                          : conversations[key].slice(-1)[0].from
+                      }/${
+                        conversations[key].slice(-1)[0].fromName ==
+                        user.username
+                          ? conversations[key].slice(-1)[0].toName
+                          : conversations[key].slice(-1)[0].fromName
+                      }/${conversations[key][0].conversationId}`)
+                    }
+                  >
+                    <div className="left">
+                      <img src={NoUserIcon} alt="" />
+                    </div>
+                    <div className="center">
+                      <h4>
+                        {conversations[key].slice(-1)[0].fromName ==
+                        user.username
+                          ? conversations[key].slice(-1)[0].toName
+                          : conversations[key].slice(-1)[0].fromName}
+                      </h4>
+                      <p> {conversations[key].slice(-1)[0].message} </p>
+                    </div>
+                    <div className="right">
+                      <span>
+                        {timestamp.toLocaleTimeString([], {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
+                      </span>
+                    </div>
+                  </button>
+                </section>
+              )
+            })}
+        </section>
       </div>
-    </div>
+    </React.Fragment>
   )
 }

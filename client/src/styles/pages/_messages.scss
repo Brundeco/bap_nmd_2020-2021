@@ -1,57 +1,59 @@
-.conversations-screen {
-  padding-top: 15vh;
-}
+.messages-screen {
+  .message-detail {
+    background-color: $soft-grey;
+    border-radius: 10px;
+    margin: 30px 0;
+    padding: 50px 20px;
 
-.conversations-screen .chat {
-  margin: 5vh 0;
-  border-radius: 5px;
-  display: flex;
-}
+    button {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
 
-.conversations-screen .left {
-  width: 15vw;
-  height: 15vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgb(229, 229, 229);
-  border-radius: 5px;
-}
+      .left {
+        width: 20%;
+        padding-right: 5vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-.conversations-screen .left p {
-}
+        img {
+          width: 50px;
+        }
+      }
 
-.conversations-screen .center {
-  margin-left: 5vw;
-  width: 55%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+      .center {
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
 
-.conversations-screen .center h4 {
-  margin: 0;
-  font-weight: 500;
-  font-size: 1em;
-}
+        h4 {
+          margin-bottom: 10px;
+          font-weight: 600;
+        }
 
-.conversations-screen .center p {
-  margin: 0;
-  font-weight: 100;
-  font-size: 0.75em;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
+        p {
+          text-align: left;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 100%;
+        }
+      }
 
-.conversations-screen .right {
-  width: 25%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
-}
+      .right {
+        display: flex;
+        justify-content: flex-end;
+        width: 20%;
 
-.conversations-screen .right span {
-  font-weight: 100;
-  font-size: 0.75em;
+        span {
+          color: $text-grey;
+          font-size: 0.8em;
+        }
+      }
+    }
+  }
 }
