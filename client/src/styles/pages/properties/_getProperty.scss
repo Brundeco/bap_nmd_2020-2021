@@ -74,6 +74,10 @@
       height: 10vw;
       display: flex;
 
+      @include mq(medium) {
+        height: auto;
+      }
+
       .left {
         height: 10vw;
         width: 10vw;
@@ -83,6 +87,11 @@
         justify-content: center;
         align-items: center;
         margin-right: 3vw;
+
+        @include mq(medium) {
+          height: 70px;
+          width: 70px;
+        }
 
         img {
           width: 60%;
@@ -165,7 +174,8 @@
   }
 
   .extra-info {
-    margin: 10vh 0 5vh;
+    border-top: 1px solid #e2e2e2;
+    padding: 3vh 0;
 
     > div {
       width: 100%;
@@ -245,6 +255,12 @@
       background: $soft-grey;
       padding: 2%;
       border-radius: 5px;
+    }
+  }
+
+  section {
+    @include mq(medium) {
+      width: 65%;
     }
   }
 }

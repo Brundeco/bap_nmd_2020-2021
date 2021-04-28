@@ -1,6 +1,12 @@
 .event-screen-detail {
   padding-bottom: 10vh;
 
+  .top-section,
+  .bottom-section,
+  .date-section {
+    width: 65%;
+  }
+
   .subject-image {
     height: 30vh;
     width: 100%;

@@ -11,7 +11,7 @@ export default (props) => {
 
   const logout = (e) => {
     e.preventDefault()
-    localStorage.clear()
+    // localStorage.clear()
     window.location = '/login'
   }
 
@@ -24,7 +24,11 @@ export default (props) => {
               className="link-to-dashboard"
               to={{ pathname: '/', state: { from: 'root' } }}
             >
-              <img src={userImage} alt="" />
+              {user !== null ? (
+                <img className="menu-user-img" src={userImage} alt="" />
+              ) : (
+                <img className="menu-profile-icon" src={ProfileIcon} alt="" />
+              )}
             </Link>
             <h3 className="main-title"> {user?.username} </h3>
           </div>
@@ -85,11 +89,22 @@ export default (props) => {
         </div>
         {user ? (
           <div className="menu-bottom flex flex-a-center flex-j-start">
-            <button onClick={(e) => logout(e)}>Log out</button>
+            <Link
+              className="menu-bottom flex flex-a-center flex-j-start"
+              to={{ pathname: '/login', state: { from: 'root' } }}
+            >
+              Logout
+            </Link>
           </div>
         ) : (
           <div className="menu-bottom flex flex-a-center flex-j-start">
-            <button onClick={() => (window.location = '/login')}>Log in</button>
+            {/* <button onClick={(e) => logout(e)}>Log out</button> */}
+            <Link
+              className="menu-bottom flex flex-a-center flex-j-start"
+              to={{ pathname: '/login', state: { from: 'root' } }}
+            >
+              Log in
+            </Link>
           </div>
         )}
       </nav>

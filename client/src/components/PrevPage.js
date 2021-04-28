@@ -3,7 +3,7 @@ import { useHistory, useLocation } from 'react-router'
 import { FontAwesome } from '.'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import SearchIcon from './../icons/search.svg'
-import CloseIcon from './../icons/close_white.svg'
+import CloseIcon from './../icons/close.svg'
 import RadiusIcon from './../icons/radius.svg'
 import FilterIcon from './../icons/filter.svg'
 

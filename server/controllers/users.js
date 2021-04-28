@@ -8,7 +8,15 @@ import smtpTransport from 'nodemailer-smtp-transport'
 import dotenv from 'dotenv'
 
 export const register = async (req, res) => {
-  const { username, phone, email, image, password } = req.body
+  const {
+    username,
+    phone,
+    email,
+    image,
+    password,
+    firstname,
+    lastname,
+  } = req.body
 
   bcrypt.hash(password, 10, async (err, hashedPass) => {
     if (err) {
@@ -20,6 +28,8 @@ export const register = async (req, res) => {
         username,
         phone,
         email,
+        firstname,
+        lastname,
         image,
         password: hashedPass,
       }
@@ -66,6 +76,8 @@ export const login = async (req, res) => {
             email: foundUser.email,
             id: foundUser._id,
             username: foundUser.username,
+            firstname: foundUser.firstname,
+            lastname: foundUser.lastname,
             image: foundUser.image,
             phone: foundUser.phone,
             createdAt: foundUser.createdAt,
@@ -229,6 +241,22 @@ export const getUser = async (req, res) => {
 
     res.status(200).json(user)
   } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}
+
+export const updateUser = async (req, res) => {
+  const { id } = req.params
+  const user = req.body
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No post with id: ${id}`)
+
+  try {
+    await User.findByIdAndUpdate(id, user, { new: true })
+    res.json(user)
+  } catch (error) {
+    console.log(error)
     res.status(404).json({ message: error.message })
   }
 }

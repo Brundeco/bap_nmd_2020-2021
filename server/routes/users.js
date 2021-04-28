@@ -10,6 +10,7 @@ import {
   passwordReset,
   passwordUpdate,
   saveNewPassword,
+  updateUser,
 } from '../controllers/users.js'
 
 const router = express.Router()
@@ -17,6 +18,7 @@ const router = express.Router()
 router.post('/register', register)
 router.post('/login', login)
 router.get('/:id', getUser)
+router.put('/:id', updateUser)
 router.delete('/:id', deleteUser)
 
 router.put('/like-event/:id', likeEvent)

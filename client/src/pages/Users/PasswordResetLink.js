@@ -7,7 +7,6 @@ export default () => {
   const [data, setData] = React.useState({})
   const [status, setStatus] = useState()
   const [loading, setLoading] = useState(false)
-  // const [success, setSuccess] = useState(false)
   const [preloaderMsg, setPreloaderMsg] = useState('Preparing reset link')
   const [updatePreloader, setUpdatePreloader] = useState('false')
 
@@ -34,7 +33,7 @@ export default () => {
       .catch((err) => {
         console.log(err.message)
         setUpdatePreloader(true)
-        setPreloaderMsg('Something went wrong... 😒')
+        setPreloaderMsg('Something went wrong...')
         setTimeout(function () {
           setLoading(false)
         }, 3000)

@@ -22,9 +22,13 @@ input[type='password']:focus {
 
 .form-row {
   display: flex;
-  flex-direction: row;
   width: 100%;
+  flex-direction: column;
   justify-content: space-between;
+
+  @include mq(medium) {
+    flex-direction: row;
+  }
 }
 
 .form-col-sm {
@@ -32,7 +36,11 @@ input[type='password']:focus {
 }
 
 .form-col-md {
-  width: 45%;
+  width: 100%;
+
+  @include mq(medium) {
+    width: 45%;
+  }
 }
 
 .form-col-lg {

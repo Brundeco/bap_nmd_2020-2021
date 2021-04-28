@@ -31,19 +31,19 @@ export default (props) => {
           radius={handleRadius}
           showfilters={handleFilters}
         />
-        <div className="flex full-width flex-j-end">
-          <Menu
-            childstatus={handleChildStatus}
-            status={status}
-            className={
-              status ? 'menu-wrapper show-menu' : 'menu-wrapper hide-menu'
-            }
-          />
-          <div className="open-menu" onClick={() => setStatus(true)}>
-            <img src={MenuIcon} />
-            {/* Menu */}
-          </div>
+        {/* <div className="flex full-width flex-j-end"> */}
+        <Menu
+          childstatus={handleChildStatus}
+          status={status}
+          className={
+            status ? 'menu-wrapper show-menu' : 'menu-wrapper hide-menu'
+          }
+        />
+        <div className="open-menu" onClick={() => setStatus(true)}>
+          <img src={MenuIcon} />
+          {/* Menu */}
         </div>
+        {/* </div> */}
       </header>
     </section>
   )

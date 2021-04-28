@@ -158,7 +158,7 @@ export default ({ match }) => {
             </li>
           </ul> */}
         </section>
-        <section>
+        <section className="date-section">
           <DayPicker
             selectedDays={dates}
             disabledDays={{ before: new Date() }}

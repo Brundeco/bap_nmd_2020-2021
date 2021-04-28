@@ -14,10 +14,14 @@ export default () => {
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }))
+    console.log(data)
+    console.log('wuk doeme?')
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    console.log('submit theis form!!!!')
     setLoading(true)
     if (data.password !== data.passwordRepeat) {
       setLoading(false)
@@ -45,16 +49,10 @@ export default () => {
         <h1>Create account</h1>
         <form action="" onSubmit={handleSubmit}>
           <div></div>
+
           <InputField
             name="username"
             placeholder="Username"
-            type="text"
-            onChange={handleChange}
-            required
-          />
-          <InputField
-            name="phone"
-            placeholder="Phone"
             type="text"
             onChange={handleChange}
             required
@@ -66,6 +64,30 @@ export default () => {
             onChange={handleChange}
             required
           />
+
+          <InputField
+            name="firstname"
+            placeholder="Firstname"
+            type="text"
+            onChange={handleChange}
+            required
+          />
+          <InputField
+            name="lastname"
+            placeholder="Lastname"
+            type="text"
+            onChange={handleChange}
+            required
+          />
+
+          <InputField
+            name="phone"
+            placeholder="Phone"
+            type="text"
+            onChange={handleChange}
+            required
+          />
+
           <InputField
             name="password"
             placeholder="Password"
@@ -80,6 +102,7 @@ export default () => {
             onChange={handleChange}
             required
           />
+
           <h6>
             {data?.image
               ? 'Click again to replace your image'
