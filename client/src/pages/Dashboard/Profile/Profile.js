@@ -6,10 +6,11 @@ import {
   CheckSession,
 } from '../../../components'
 import {
-  deleteMessages,
-  deleteProperties,
-  deleteEvents,
-  deleteUser,
+  // deleteMessages,
+  // deleteProperties,
+  // deleteEvents,
+  // deleteUser,
+  deleteUserContent,
 } from '../../../functions/DeleteUserContent'
 import axios from 'axios'
 import FileBase from 'react-file-base64'
@@ -43,10 +44,7 @@ export default () => {
     setStatus(state)
     setShowBtn(state)
     if (state) {
-      deleteProperties(user.id)
-      deleteEvents(user.id)
-      deleteMessages(user.id)
-      deleteUser(user.id)
+      deleteUserContent(user.id)
     }
   }
 
