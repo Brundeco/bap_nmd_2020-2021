@@ -53,8 +53,9 @@
   }
 
   button {
-    // @include main-btn;
     margin: 0 auto;
+    max-height: 50px;
+    max-width: 300px;
   }
 
   button.delete-item {

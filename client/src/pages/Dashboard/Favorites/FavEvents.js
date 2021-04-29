@@ -60,8 +60,9 @@ export default () => {
   }, [favorites])
 
   return (
-    <div className="property-screen">
-      <h2 className="main-title">Favorite events</h2>
+    <React.Fragment>
+      {/* <div className="property-screen"> */}
+      {/* <h2 className="main-title">Favorite events</h2> */}
       {loading ? <Preloader text={preloaderMsg} /> : ''}
       {favorites?.length > 0 ? (
         events.map((item, key) => {
@@ -82,8 +83,18 @@ export default () => {
           }
         })
       ) : (
-        <h2> It seems very empty here </h2>
+        <div className="alert-empty">
+          <h2 className="semi-bold">No likes found</h2>
+          <h4>Discover events by clicking the button below</h4>
+          <button
+            className="main-btn"
+            onClick={() => (window.location = '/events')}
+          >
+            Discover
+          </button>
+        </div>
       )}
-    </div>
+      {/* </div> */}
+    </React.Fragment>
   )
 }

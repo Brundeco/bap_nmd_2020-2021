@@ -33,9 +33,11 @@ export default ({
           <h4> Date: {new Date(date).toDateString()} </h4>
         </div>
         <div className="right">
-          <h4>
-            {distance == 'NaN' || distance == undefined ? '' : `${distance} km`}
-          </h4>
+          {distance == 'NaN' || distance == undefined ? (
+            ''
+          ) : (
+            <h4>{`${distance} km`}</h4>
+          )}
         </div>
       </div>
       <ul></ul>

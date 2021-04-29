@@ -26,31 +26,37 @@ export default () => {
   }
 
   return (
-    <div>
+    <React.Fragment>
       <Header
         locationsharing={() => {}}
         radius={() => {}}
         showfilters={() => {}}
       />
-      <section>
-        <div className="event-filters flex flex-j-center">
-          {dashboardBtns.map((button, index) => {
-            return (
-              <button
-                key={index}
-                className={button === isActive ? 'active' : ''}
-                onClick={(e) => handleClick(e.target)}
-                value={button}
-              >
-                {button}
-              </button>
-            )
-          })}
-        </div>
-      </section>
-      <section>
-        {currentComponent === 'My properties' ? <MyProperties /> : <MyEvents />}
-      </section>
-    </div>
+      <div className="activity-screen">
+        <section>
+          <div className="event-filters flex flex-j-center">
+            {dashboardBtns.map((button, index) => {
+              return (
+                <button
+                  key={index}
+                  className={button === isActive ? 'active' : ''}
+                  onClick={(e) => handleClick(e.target)}
+                  value={button}
+                >
+                  {button}
+                </button>
+              )
+            })}
+          </div>
+        </section>
+        <section className="activity-component">
+          {currentComponent === 'My properties' ? (
+            <MyProperties />
+          ) : (
+            <MyEvents />
+          )}
+        </section>
+      </div>
+    </React.Fragment>
   )
 }

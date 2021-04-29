@@ -74,7 +74,16 @@ export default () => {
         showfilters={() => {}}
       />
 
-      <section className={showForm ? 'show-block' : 'hide'}>
+      <section className="about-user">
+        <div className="wrapper">
+          <img className="user-image" src={user?.image} alt="user-image" />
+          <h2 className="main-title">
+            {`${user?.firstname} ${user?.lastname}`}{' '}
+          </h2>
+        </div>
+      </section>
+
+      <section className={showForm ? 'show-block-auto' : 'hide'}>
         <h2 className="main-title">Update your profile</h2>
 
         <form className="update-user-form">
@@ -163,7 +172,7 @@ export default () => {
             </div>
             <img
               src={data?.image}
-              className={data?.image ? 'wallphoto' : ''}
+              className={data?.image ? 'user-image-preview wallphoto' : ''}
               alt={data?.image ? '' : ''}
               onClick={() =>
                 setData({

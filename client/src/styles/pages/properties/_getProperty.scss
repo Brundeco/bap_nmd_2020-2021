@@ -156,6 +156,9 @@
     button {
       margin: 3vh 3vw;
       font-size: 0.9em;
+      max-height: 50px;
+      max-width: 300px;
+      // margin-top: 30px;
 
       &:first-child {
         @include main-btn;

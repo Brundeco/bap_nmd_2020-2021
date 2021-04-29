@@ -62,9 +62,15 @@ export default () => {
           )
         })
       ) : (
-        <div>
+        <div className="alert-empty">
           <h2 className="semi-bold">Nothing found</h2>
-          <h4>You did not create you own propreties yet</h4>
+          <h4>You did not create your own propreties yet</h4>
+          <button
+            className="main-btn"
+            onClick={() => (window.location = '/create-property')}
+          >
+            Create property
+          </button>
         </div>
       )}
     </React.Fragment>

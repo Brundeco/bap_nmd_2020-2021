@@ -55,9 +55,15 @@ export default () => {
           )
         })
       ) : (
-        <div>
+        <div className="alert-empty">
           <h2 className="semi-bold">Nothing found</h2>
-          <h4>You did not create you own events yet</h4>
+          <h4>You did not create your own events yet</h4>
+          <button
+            className="main-btn"
+            onClick={() => (window.location = '/create-event')}
+          >
+            Create event
+          </button>
         </div>
       )}
     </React.Fragment>

@@ -38,7 +38,6 @@ export default () => {
       .post(`${process.env.REACT_APP_API_URL}/users/login`, data)
       .then((res) => {
         setSuccess(true)
-        setLoading(false)
         console.log(res)
         setStatus(res.data.message)
         localStorage.setItem('user', JSON.stringify(res.data.user))

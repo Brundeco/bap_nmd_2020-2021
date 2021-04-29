@@ -18,22 +18,6 @@ export default (props) => {
   return (
     <div className={props.className}>
       <nav className="menu">
-        <div className="menu-top">
-          <div className="user-img">
-            <Link
-              className="link-to-dashboard"
-              to={{ pathname: '/', state: { from: 'root' } }}
-            >
-              {user !== null ? (
-                <img className="menu-user-img" src={userImage} alt="" />
-              ) : (
-                <img className="menu-profile-icon" src={ProfileIcon} alt="" />
-              )}
-            </Link>
-            <h3 className="main-title"> {user?.username} </h3>
-          </div>
-        </div>
-
         <div className="menu-center">
           <div className="link-group">
             <h4>Browse</h4>

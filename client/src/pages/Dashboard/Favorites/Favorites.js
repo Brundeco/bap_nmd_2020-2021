@@ -26,7 +26,7 @@ export default () => {
   }
 
   return (
-    <div>
+    <div className="favorites-screen">
       <Header
         locationsharing={() => {}}
         radius={() => {}}
@@ -48,7 +48,7 @@ export default () => {
           })}
         </div>
       </section>
-      <section>
+      <section className="favorites-component">
         {currentComponent === 'properties' ? <FavProperties /> : <FavEvents />}
       </section>
     </div>

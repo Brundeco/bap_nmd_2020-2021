@@ -1,42 +1,23 @@
-.dashboard-screen {
-  padding-top: 15vh;
-}
+.activity-screen,
+.favorites-screen {
+  .activity-component,
+  .favorites-component {
+    .alert-empty {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 8vh;
 
-.dashboard-screen nav {
-  width: 100%;
-  height: 6vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 5vh;
-}
+      h2 {
+        margin-bottom: 20px;
+      }
 
-.btn-dashboard {
-  background: $color-none;
-  border: 0px solid $color-none;
-  width: 50%;
-  padding: 2% 0;
-  outline: none;
-  border-radius: 50px;
-  margin: 0 1vw;
-  font-size: 0.8em;
-}
-
-.btn-active-true {
-  background-color: $theme-blue;
-  color: $base-white;
-}
-
-.btn-active-false {
-  background-color: $color-none;
-  color: $text-grey;
-}
-
-.dashboard-screen .dashboard-btn-create {
-  @include main-btn;
-}
-
-.dashboard-screen .dashboard-btn-create:nth-of-type(1) {
-  @include main-btn;
-  background-color: $theme-green;
+      button {
+        max-height: 50px;
+        max-width: 300px;
+        margin-top: 30px;
+      }
+    }
+  }
 }
