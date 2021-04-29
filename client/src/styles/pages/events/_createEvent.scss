@@ -24,7 +24,6 @@
 
   input[type='submit'] {
     @include main-btn;
-    background: $theme-green;
     margin-top: 3vh;
   }
 
@@ -52,7 +51,8 @@
     color: #8c8c8c;
   }
 
-  button {
+  button,
+  .max-width-btn {
     margin: 0 auto;
     max-height: 50px;
     max-width: 300px;
@@ -72,4 +72,44 @@
 .create-product-screen.no-scroll {
   height: 100vh;
   overflow-y: hidden;
+}
+
+.date-and-time {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-direction: column;
+
+  @include mq(medium) {
+    flex-direction: row;
+  }
+
+  .DayPicker {
+    width: 100%;
+    margin-bottom: 20px;
+
+    @include mq(medium) {
+      width: 48%;
+      margin-bottom: 0;
+    }
+  }
+
+  .wrapper {
+    border: 1px solid #e4e4e4;
+    border-radius: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 5% 0;
+
+    @include mq(medium) {
+      flex-direction: row;
+      width: 48%;
+    }
+  }
 }

@@ -12,10 +12,8 @@ const eventSchema = mongoose.Schema({
   zip: Number,
 
   dates: Array,
-  startHrs: Number,
-  startMins: Number,
-  endHrs: Number,
-  endMins: Number,
+  start: String,
+  end: String,
 
   author_id: String,
   author: String,

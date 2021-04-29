@@ -144,19 +144,9 @@ export default ({ match }) => {
           <p>{convertedDate}</p>
           <p>
             From
-            {`${data?.startHrs}:${data?.startMins}hr till ${data?.endHrs}:${data?.endMins}`}
+            {`${data?.start} hr till ${data?.end} hr`}
           </p>
           <p>{`${data?.street} ${data?.houseNumber}, ${data?.zip} ${data?.city}`}</p>
-          {/* <ul>
-            <li>{convertedDate} </li>
-            <li>
-              From
-              {`${data?.startHrs}:${data?.startMins}hr till ${data?.endHrs}:${data?.endMins}`}
-            </li>
-            <li>
-              {`${data?.street} ${data?.houseNumber}, ${data?.zip} ${data?.city}`}
-            </li>
-          </ul> */}
         </section>
         <section className="date-section">
           <DayPicker

@@ -4,6 +4,8 @@ import DayPicker from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
 import uuid from 'react-uuid'
 import { app } from '../../base'
+import SelectImage from './../../icons/add.svg'
+import replaceImage from './../../icons/reload.svg'
 
 export default (props) => {
   CheckSession(localStorage.getItem('jwt'))
@@ -12,7 +14,6 @@ export default (props) => {
   const [file, setFile] = useState()
   const [dates, setDates] = useState([])
   const storageRef = app.storage().ref()
-  const [image, setImage] = useState()
   const [formValid, setFormValid] = useState(false)
   const [data, setData] = React.useState({
     author: user.username,
@@ -38,7 +39,6 @@ export default (props) => {
       ...prev,
       dates: dates?.map((date) => new Date(date)),
     }))
-    // console.log(dates)
   }, [dates])
 
   const handleFile = (e) => {
@@ -49,6 +49,24 @@ export default (props) => {
   }
 
   useEffect(() => {
+    console.log(data?.firebaseRef)
+    console.log(data?.image)
+    if (data?.image && data?.firebaseRef) {
+      console.log('image found')
+      storageRef
+        .child(data.firebaseRef + '/' + data?.image)
+        .getDownloadURL()
+        .then((url) => {
+          setData({
+            ...data,
+            image: url,
+          })
+        })
+        .catch((err) => console.log(err))
+    }
+  }, [data])
+
+  useEffect(() => {
     setData(props.currentdata)
 
     let newArray = [...dates]
@@ -56,16 +74,10 @@ export default (props) => {
       newArray.push(new Date(day).getTime())
     )
     setDates(newArray)
-
-    storageRef
-      .child(props.currentdata?.firebaseRef + '/' + props.currentdata?.image)
-      .getDownloadURL()
-      .then((url) => setImage(url))
   }, [props.currentdata])
 
-  const today = new Date()
-
   useEffect(() => {
+    console.log(data)
     if (
       data?.street &&
       data?.houseNumber &&
@@ -73,13 +85,11 @@ export default (props) => {
       data?.city &&
       data?.description &&
       data?.title &&
-      data?.startHrs &&
-      data?.startMins &&
-      data?.endHrs &&
-      data?.endMins &&
+      data?.start &&
+      data?.end &&
       data?.price &&
       data?.dates.length !== 0 &&
-      file !== undefined
+      (file !== undefined || data?.image !== undefined)
     ) {
       setFormValid(true)
     } else {
@@ -89,34 +99,73 @@ export default (props) => {
 
   return (
     <React.Fragment>
-      <h1>Fill out the form below to create your event</h1>
-      <DayPicker
-        selectedDays={data?.dates}
-        onDayClick={handleDayClick}
-        disabledDays={{ before: today }}
-      />
+      <section>
+        <h1>Fill out the form below to create your event</h1>
+        <div className="date-and-time">
+          <DayPicker
+            selectedDays={data?.dates}
+            onDayClick={handleDayClick}
+            disabledDays={{ before: new Date() }}
+          />
+          <div className="wrapper">
+            <div className="time-group">
+              <h3>Starthour</h3>
+              <InputField
+                name="start"
+                onChange={handleChange}
+                placeholder="13"
+                type="time"
+                className="main-input-field"
+                value={data?.start}
+              />
+            </div>
+            <div className="time-group">
+              <h3>Endhour</h3>
+              <InputField
+                name="end"
+                onChange={handleChange}
+                placeholder="00"
+                type="time"
+                className="main-input-field"
+                value={data?.end}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       <form
         onSubmit={props.onSubmit}
         formdata={props.formdata(data)}
         file={props.file(file)}
       >
-        <section>
+        <section className="flex-col flex-j-center flex-a-center">
           <h2>Event image</h2>
-          <div className="file-upload-cta">
+          <div className="file-upload-cta fit edit">
             <input type="file" onChange={handleFile} multiple />
-            <button id="show-custom-file-btn">
-              <span>
-                {data?.image ? 'Replace picture' : 'Event wallpaper'}{' '}
-              </span>
+
+            <button id="show-custom-file-btn-edited">
+              <img src={replaceImage} className="upload-icons" alt="" />
             </button>
           </div>
-          <div>
-            <img
-              src={file != undefined ? URL.createObjectURL(file) : image}
-              className={data?.image ? 'wallphoto' : ''}
-              alt={data?.image ? 'Event wallphoto' : ''}
-            />
-          </div>
+
+          {file ? (
+            <div>
+              <img
+                src={file && URL.createObjectURL(file)}
+                className={data?.image ? 'wallphoto' : ''}
+                alt={data?.image ? 'Event wallphoto' : ''}
+              />
+            </div>
+          ) : (
+            <div>
+              <img
+                src={data?.image}
+                className={data?.image ? 'wallphoto' : ''}
+                alt={data?.image ? 'Event wallphoto' : ''}
+              />
+            </div>
+          )}
         </section>
         <section>
           <h2>General information</h2>
@@ -136,64 +185,6 @@ export default (props) => {
             className="main-input-field"
             value={data?.description}
           />
-          <div className="form-row">
-            <div className="form-col-md">
-              <div className="form-row">
-                <div className="form-col-md">
-                  <InputField
-                    name="startHrs"
-                    onChange={handleChange}
-                    placeholder="13"
-                    type="number"
-                    className="main-input-field"
-                    value={data?.startHrs}
-                  />
-                </div>
-                <div className="form-col-md">
-                  <InputField
-                    name="startMins"
-                    onChange={handleChange}
-                    placeholder="00"
-                    type="number"
-                    className="main-input-field"
-                    value={data?.startMins}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="form-col-md">
-              <p className="form-hour-field">Start hour</p>
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-col-md">
-              <div className="form-row">
-                <div className="form-col-md">
-                  <InputField
-                    name="endHrs"
-                    onChange={handleChange}
-                    placeholder="20"
-                    type="number"
-                    className="main-input-field"
-                    value={data?.endHrs}
-                  />
-                </div>
-                <div className="form-col-md">
-                  <InputField
-                    name="endMins"
-                    onChange={handleChange}
-                    placeholder="30"
-                    type="number"
-                    className="main-input-field"
-                    value={data?.endMins}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="form-col-md">
-              <p className="form-hour-field">End hour</p>
-            </div>
-          </div>
           <div className="form-row">
             <div className="form-col-lmd">
               <InputField
@@ -258,12 +249,16 @@ export default (props) => {
             </div>
           </div>
         </section>
-
-        <input
-          type="submit"
-          value="Submit"
-          className={formValid ? 'main-btn' : 'main-btn disabled-btn'}
-        />
+        <button
+          className={
+            formValid
+              ? 'main-btn max-width-btn'
+              : 'main-btn disabled-btn max-width-btn'
+          }
+        >
+          Submit
+          <input type="submit" className="input-submit-btn" />
+        </button>
       </form>
     </React.Fragment>
   )

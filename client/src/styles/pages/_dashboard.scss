@@ -1,13 +1,17 @@
 .activity-screen,
-.favorites-screen {
+.favorites-screen,
+.reservation-screen {
   .activity-component,
-  .favorites-component {
+  .favorites-component,
+  .reservations-component {
     .alert-empty {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       margin-top: 8vh;
+      padding: 0 5%;
+      text-align: center;
 
       h2 {
         margin-bottom: 20px;

@@ -24,6 +24,11 @@ section.expand {
   width: 100%;
 }
 
+.f-width-f-height {
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
 // flexbox
 .flex-col {
   display: flex;

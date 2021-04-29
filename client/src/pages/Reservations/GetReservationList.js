@@ -63,12 +63,19 @@ export default () => {
               )
             })
           ) : (
-            <div>
-              <h2 className="semi-bold">No reservations could be found.</h2>
-              <h4>
-                If you should make any future reservations, here is where you
-                will find them.
-              </h4>
+            <div className="reservations-component">
+              <div className="alert-empty">
+                <h2 className="semi-bold">No reservations</h2>
+                <h4>
+                  Let's click the button below and start discovering properties.
+                </h4>
+                <button
+                  className="main-btn"
+                  onClick={() => (window.location = '/events')}
+                >
+                  Discover
+                </button>
+              </div>
             </div>
           )}
         </div>

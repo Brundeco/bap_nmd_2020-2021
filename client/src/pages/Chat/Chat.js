@@ -120,7 +120,8 @@ export default ({ match }) => {
             onKeyPress={onKeyPress}
           />
           <button className="send-message-btn" onClick={() => postMessage()}>
-            <img src={PaperplaneIcon} alt="" /> send
+            <img src={PaperplaneIcon} alt="" />
+            <p></p>
           </button>
         </div>
       </div>

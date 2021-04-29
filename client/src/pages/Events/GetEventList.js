@@ -110,6 +110,7 @@ export default (props) => {
   useEffect(async () => {
     if (evtsFiltered) {
       const arr = evtsFiltered?.map((item) => {
+        console.log(item)
         return storageRef
           .child(item?.firebaseRef + '/' + item?.image)
           .getDownloadURL()

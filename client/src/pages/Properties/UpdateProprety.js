@@ -6,12 +6,11 @@ import { CheckSession, Header, Preloader } from '../../components'
 
 export default ({ match, props }) => {
   CheckSession(localStorage.getItem('jwt'))
+
   const [currentProprety, setCurrentProprety] = useState()
   const storageRef = app.storage()
   const [data, setData] = useState()
   const [files, setFiles] = useState([])
-  const [updatedImgs, setUpdatedImgs] = useState([])
-  const [fetchImgUrls, setFetchImgUrls] = useState([])
   const [loading, setLoading] = useState(false)
   const [preloaderMsg, setPreloaderMsg] = useState('Just a second please')
 
@@ -20,7 +19,6 @@ export default ({ match, props }) => {
       .get(`${process.env.REACT_APP_API_URL}/properties/${match.params.id}`)
       .then((res) => {
         setCurrentProprety(res.data)
-        setFetchImgUrls(res.data?.images)
       })
   }, [])
 
@@ -50,7 +48,7 @@ export default ({ match, props }) => {
       )
       .then((res) => {
         setData(res.data)
-        setPreloaderMsg('Niet tonen aub!')
+        setPreloaderMsg('Property updated')
         setTimeout(() => {
           window.location = '/activity'
         }, 3000)

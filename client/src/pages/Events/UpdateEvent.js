@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { EventFormUpdate } from '..'
 import { app } from '../../base'
-import { CheckSession, Header } from '../../components'
+import { CheckSession, Header, Preloader } from '../../components'
 
 export default ({ match }) => {
   CheckSession(localStorage.getItem('jwt'))
@@ -11,6 +11,8 @@ export default ({ match }) => {
   const [currentEvent, setCurrentEvent] = useState()
   const [file, setFile] = useState()
   const storageRef = app.storage()
+  const [loading, setLoading] = useState(false)
+  const [preloaderMsg, setPreloaderMsg] = useState('Just a second please')
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }))
@@ -22,19 +24,31 @@ export default ({ match }) => {
       .then((res) => setCurrentEvent(res.data))
   }, [])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    storageRef
+    await storageRef
       .ref(`${data?.firebaseRef}/${file?.id}`)
       .put(file)
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
 
-    axios
+    await axios
       .put(`${process.env.REACT_APP_API_URL}/events/${match.params.id}`, data)
-      .then((res) => setData(res.data))
-      .catch((err) => console.log(err))
+      .then((res) => {
+        setData(res.data)
+        setPreloaderMsg('Event updated')
+        setTimeout(() => {
+          window.location = '/activity'
+        }, 3000)
+      })
+      .catch((err) => {
+        console.log(err)
+        setPreloaderMsg('Something went wrong')
+        setTimeout(() => {
+          setLoading(false)
+        }, 3000)
+      })
   }
 
   const handleData = (formdata) => {
@@ -44,19 +58,16 @@ export default ({ match }) => {
     setFile(file)
   }
 
-  useEffect(() => {
-    console.log(data)
-  }, [data])
-
   return (
     <div className="create-product-screen">
       <div className="page-wrapper">
+        {loading ? <Preloader text={preloaderMsg} /> : ''}
+
         <Header
           locationsharing={() => {}}
           radius={() => {}}
           showfilters={() => {}}
         />
-        <h1>Update event</h1>
         <EventFormUpdate
           currentdata={currentEvent}
           onSubmit={handleSubmit}

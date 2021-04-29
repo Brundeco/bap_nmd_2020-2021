@@ -250,7 +250,7 @@ export default (props) => {
                   <div className="img-box">
                     <img src={URL.createObjectURL(item)} alt="" />
                     <button
-                      className="delete-item"
+                      className="delete-item f-width-f-height"
                       onClick={(e) => handleDeleteNewFiles(e, data, i)}
                     ></button>
                   </div>
@@ -260,6 +260,18 @@ export default (props) => {
           </div>
         </section>
       </form>
+
+      <section>
+        {!formValid ? (
+          <h3 className="form-message">
+            Fill out all fields, pick at least one date and select at least two
+            pictures.
+          </h3>
+        ) : (
+          ''
+        )}
+      </section>
+
       <button
         className={formValid ? 'main-btn' : 'main-btn disabled-btn'}
         onClick={() => setPreview(!preview)}

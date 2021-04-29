@@ -58,7 +58,6 @@ export default () => {
 
   return (
     <div className="property-screen">
-      {/* <h2 className="main-title">Favorite properties</h2> */}
       {loading ? <Preloader text={preloaderMsg} /> : ''}
 
       {favorites?.length > 0 ? (
@@ -82,7 +81,7 @@ export default () => {
       ) : (
         <div className="alert-empty">
           <h2 className="semi-bold">No likes found</h2>
-          <h4>Discover events by clicking the button below</h4>
+          <h4>Discover properties by clicking the button below</h4>
           <button
             className="main-btn"
             onClick={() => (window.location = '/events')}

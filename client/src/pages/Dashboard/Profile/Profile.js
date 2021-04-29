@@ -206,7 +206,7 @@ export default () => {
       )}
 
       {!showForm ? (
-        <section className="flex flex-j-center">
+        <section className="cta-bottom flex flex-j-center">
           <Link
             className="secondary-btn fix"
             to={{ pathname: '/password-reset-link', state: { from: 'root' } }}

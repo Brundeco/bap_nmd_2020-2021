@@ -285,7 +285,11 @@ export default (props) => {
             </button>
           </div>
           <div className="img-gallery">
-            {files.length !== 0 || thumbnails?.length !== 0 ? <h4>Click on an image to delete</h4> : ''}
+            {files.length !== 0 || thumbnails?.length !== 0 ? (
+              <h4>Click on an image to delete</h4>
+            ) : (
+              ''
+            )}
 
             {files?.map((item, i) => {
               return (
@@ -313,7 +317,7 @@ export default (props) => {
                   >
                     <img src={item} alt="" className="thumbnail" />
                     <button
-                      className="delete-item"
+                      className="delete-item f-width-f-height"
                       onClick={(e) => handleDelete(e, data, i)}
                     ></button>
                   </div>

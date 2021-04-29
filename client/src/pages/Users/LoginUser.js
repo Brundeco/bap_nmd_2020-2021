@@ -55,7 +55,7 @@ export default () => {
     <div className="login-screen full-screen">
       {loading ? <Preloader text="Logging in" /> : ''}
       <div className="wrapper">
-        <h1>Sign in to suitswap</h1>
+        <h1>Sign in to Popapp</h1>
         <form action="" onSubmit={handleSubmit}>
           <InputField
             name="email"

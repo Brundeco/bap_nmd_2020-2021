@@ -32,10 +32,9 @@ export default (props) => {
     <React.Fragment>
       <div
         className={preview ? 'review-screen show' : 'review-screen hide'}
-        // className="review-screen show"
         newpreview={props.newpreview(preview)}
       >
-        <div className="page-wrapper">
+        <section>
           <h1>Please review your event information below</h1>
 
           <div className="review-files">
@@ -45,11 +44,22 @@ export default (props) => {
             </div>
           </div>
 
-          <h2>Available dates</h2>
-          <DayPicker
-            selectedDays={data?.dates}
-            disabledDays={{ before: new Date() }}
-          />
+          <div className="date-and-time">
+            <DayPicker
+              selectedDays={data?.dates}
+              disabledDays={{ before: new Date() }}
+            />
+            <div className="wrapper">
+              <div className="time-group">
+                <h3>Starthour</h3>
+                <p> {data?.start} hr </p>
+              </div>
+              <div className="time-group">
+                <h3>Endhour</h3>
+                <p> {data?.end} hr </p>
+              </div>
+            </div>
+          </div>
 
           <div className="content">
             <div className="general-info">
@@ -64,12 +74,6 @@ export default (props) => {
               <p>{data?.zip}</p>
               <p>{data?.city}</p>
             </div>
-            <div className="contact-info">
-              <h2>Practical</h2>
-              <p> {`Event starts at ${data?.startHrs}  ${data?.startMins}`} </p>
-              <p> {`Event ends at ${data?.endHrs}  ${data?.endMins}`} </p>
-            </div>
-            <p></p>
           </div>
           <section className="cta-bottom-section">
             <button
@@ -82,7 +86,7 @@ export default (props) => {
               Ok, create property
             </button>
           </section>
-        </div>
+        </section>
       </div>
     </React.Fragment>
   )

@@ -53,6 +53,7 @@ export default (props) => {
   }, [preview])
 
   useEffect(() => {
+    console.log(data)
     if (
       data.street &&
       data.houseNumber &&
@@ -60,10 +61,8 @@ export default (props) => {
       data.city &&
       data.description &&
       data.title &&
-      data.startHrs &&
-      data.startMins &&
-      data.endHrs &&
-      data.endMins &&
+      data.start &&
+      data.end &&
       data.price &&
       data.dates.length !== 0 &&
       file !== undefined
@@ -81,11 +80,36 @@ export default (props) => {
       </section>
       <section>
         <h2>When will your event take place?</h2>
-        <DayPicker
-          selectedDays={data.dates}
-          onDayClick={handleDayClick}
-          disabledDays={{ before: new Date() }}
-        />
+
+        <div className="date-and-time">
+          <DayPicker
+            selectedDays={data.dates}
+            onDayClick={handleDayClick}
+            disabledDays={{ before: new Date() }}
+          />
+          <div className="wrapper">
+            <div className="time-group">
+              <h3>Starthour</h3>
+              <InputField
+                name="start"
+                onChange={handleChange}
+                placeholder="13"
+                type="time"
+                className="main-input-field"
+              />
+            </div>
+            <div className="time-group">
+              <h3>Endhour</h3>
+              <InputField
+                name="end"
+                onChange={handleChange}
+                placeholder="00"
+                type="time"
+                className="main-input-field"
+              />
+            </div>
+          </div>
+        </div>
       </section>
 
       <form
@@ -96,13 +120,6 @@ export default (props) => {
       >
         <section className="flex-col flex-j-center flex-a-center">
           <h2>Event image</h2>
-          {/* <div className="file-upload-cta">
-            <input type="file" onChange={handleFile} multiple />
-            <button id="show-custom-file-btn">
-              <span>{data?.image ? 'Replace picture' : 'Event wallpaper'}</span>
-            </button>
-          </div> */}
-
           <div className="file-upload-cta fit edit">
             <input type="file" onChange={handleFile} multiple />
 
@@ -139,60 +156,6 @@ export default (props) => {
             onChange={handleChange}
             className="main-input-field"
           />
-          <div className="form-row">
-            <div className="form-col-md">
-              <div className="form-row">
-                <div className="form-col-md">
-                  <InputField
-                    name="startHrs"
-                    onChange={handleChange}
-                    placeholder="13"
-                    type="number"
-                    className="main-input-field"
-                  />
-                </div>
-                <div className="form-col-md">
-                  <InputField
-                    name="startMins"
-                    onChange={handleChange}
-                    placeholder="00"
-                    type="number"
-                    className="main-input-field"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="form-col-md">
-              <p className="form-hour-field">Start hour</p>
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-col-md">
-              <div className="form-row">
-                <div className="form-col-md">
-                  <InputField
-                    name="endHrs"
-                    onChange={handleChange}
-                    placeholder="20"
-                    type="number"
-                    className="main-input-field"
-                  />
-                </div>
-                <div className="form-col-md">
-                  <InputField
-                    name="endMins"
-                    onChange={handleChange}
-                    placeholder="30"
-                    type="number"
-                    className="main-input-field"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="form-col-md">
-              <p className="form-hour-field">End hour</p>
-            </div>
-          </div>
           <div className="form-row">
             <div className="form-col-lmd">
               <InputField
