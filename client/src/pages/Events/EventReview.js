@@ -69,10 +69,10 @@ export default (props) => {
             </div>
             <div className="address">
               <h2>Event location</h2>
-              <p>{data?.street}</p>
-              <p>{data?.houseNumber}</p>
-              <p>{data?.zip}</p>
-              <p>{data?.city}</p>
+
+              <p>
+                {`${data?.street} ${data?.houseNumber}, ${data?.zip} ${data?.city}`}
+              </p>
             </div>
           </div>
           <section className="cta-bottom-section">
@@ -83,7 +83,7 @@ export default (props) => {
               Let's make some changes
             </button>
             <button className="main-btn" onClick={(e) => props.handleSubmit(e)}>
-              Ok, create property
+              Ok, create event
             </button>
           </section>
         </section>

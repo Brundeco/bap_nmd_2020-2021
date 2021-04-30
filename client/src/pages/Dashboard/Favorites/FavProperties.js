@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 import { app } from '../../../base'
 import { Preloader } from '../../../components'
 import { PropertyCard } from '../..'
@@ -62,16 +61,21 @@ export default () => {
 
       {favorites?.length > 0 ? (
         properties.map((item, key) => {
+          let propImg = ''
+          {
+            images?.map((image, i) => {
+              if (image?.includes(item.images[0])) {
+                propImg = image
+              }
+            })
+          }
           return (
             <PropertyCard
               description={item.city}
               price={item.price}
               date={item.createdAt}
               surface={item.surface}
-              // distance={
-              //   distance?.find((el) => el.item === item._id)?.distance
-              // }
-              image={images[key]}
+              image={propImg}
               authorId={item.author_id}
               itemId={item._id}
               key={key}

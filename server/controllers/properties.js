@@ -104,6 +104,8 @@ export const getLikes = async (req, res) => {
 export const deleteProperty = async (req, res) => {
   const { id } = req.params
 
+  console.log(id)
+
   try {
     await Property.findByIdAndRemove(id)
     res.status(200).json({ message: 'Property deleted' })

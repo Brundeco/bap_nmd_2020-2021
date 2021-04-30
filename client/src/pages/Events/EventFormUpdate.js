@@ -259,6 +259,9 @@ export default (props) => {
           Submit
           <input type="submit" className="input-submit-btn" />
         </button>
+        <button className="main-btn" onClick={props.delete}>
+          Delete
+        </button>
       </form>
     </React.Fragment>
   )

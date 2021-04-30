@@ -13,6 +13,7 @@ import {
   filterGetAutocomplete,
   filterPostAutocomplete,
   deleteEvents,
+  deleteEvent,
 } from '../controllers/events.js'
 
 const router = express.Router()
@@ -29,6 +30,7 @@ router.get('/filter/most-recent', filterMostRecent)
 router.get('/filter/less-recent', filterLessRecent)
 router.get('/filter/get/autocomplete', filterGetAutocomplete)
 router.post('/filter/post/autocomplete', filterPostAutocomplete)
+router.delete('/delete/:id', deleteEvent)
 router.delete('/:id', deleteEvents)
 
 // router.get('/filter/price-asc', filterPriceAsc)

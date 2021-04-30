@@ -1,4 +1,7 @@
 .profile-screen {
+  padding: 0 !important;
+  padding-bottom: 10vh !important;
+
   button.fix,
   a.fix {
     width: 100%;
@@ -75,6 +78,10 @@
 
     @include mq(medium) {
       flex-direction: row;
+    }
+
+    a, button {
+      margin-bottom: 20px;
     }
   }
 

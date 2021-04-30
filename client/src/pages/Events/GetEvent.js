@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom'
 import NoUserIcon from './../../icons/no-user.svg'
-import CloseIcon from './../../icons/close.svg'
-import { Preloader, CheckSession, ConvertDate } from './../../components'
+import CloseIcon from './../../icons/new-close.svg'
+import { Preloader, ConvertDate } from './../../components'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
 import { app } from '../../base'
 
 export default ({ match }) => {
-  // CheckSession(localStorage.getItem('jwt'))
 
   const user = JSON.parse(localStorage.getItem('user'))
   let history = useHistory()

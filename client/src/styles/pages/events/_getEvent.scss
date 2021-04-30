@@ -5,6 +5,10 @@
   .bottom-section,
   .date-section {
     width: 65%;
+
+    @include mq(small) {
+      width: 100%;
+    }
   }
 
   .subject-image {

@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { useHistory, useLocation } from 'react-router'
-import SearchIcon from './../icons/menu-search-icon.svg'
-import ProfileIcon from './../icons/profile.svg'
+import React from 'react'
 import CloseMenu from './../icons/close-menu.svg'
 import { Link } from 'react-router-dom'
 
 export default (props) => {
   const user = JSON.parse(localStorage.getItem('user'))
-  const userImage = user != null ? user.image : ProfileIcon
 
   const logout = (e) => {
     e.preventDefault()
-    // localStorage.clear()
+    localStorage.clear()
     window.location = '/login'
   }
 
@@ -19,6 +15,10 @@ export default (props) => {
     <div className={props.className}>
       <nav className="menu">
         <div className="menu-center">
+          <div className="link-group">
+            <Link to={{ pathname: '/', state: { from: 'root' } }}>Home</Link>
+          </div>
+
           <div className="link-group">
             <h4>Browse</h4>
             <Link to={{ pathname: '/events', state: { from: 'root' } }}>
@@ -73,16 +73,15 @@ export default (props) => {
         </div>
         {user ? (
           <div className="menu-bottom flex flex-a-center flex-j-start">
-            <Link
+            <button
               className="menu-bottom flex flex-a-center flex-j-start"
-              to={{ pathname: '/login', state: { from: 'root' } }}
+              onClick={(e) => logout(e)}
             >
               Logout
-            </Link>
+            </button>
           </div>
         ) : (
           <div className="menu-bottom flex flex-a-center flex-j-start">
-            {/* <button onClick={(e) => logout(e)}>Log out</button> */}
             <Link
               className="menu-bottom flex flex-a-center flex-j-start"
               to={{ pathname: '/login', state: { from: 'root' } }}

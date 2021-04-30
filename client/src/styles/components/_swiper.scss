@@ -4,6 +4,18 @@
   height: 40px !important;
   background: $soft-grey;
   border-radius: 50px;
+  background-image: url('../../icons/chevicon.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20%;
+}
+
+.swiper-button-next {
+  transform: rotate(180deg);
+}
+
+.swiper-button-prev {
+  transform: rotate(0deg);
 }
 
 .swiper-pagination-bullet.swiper-pagination-bullet-active {

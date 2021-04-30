@@ -58,6 +58,18 @@ export const updateEvent = async (req, res) => {
   res.json(updateEvent)
 }
 
+export const deleteEvent = async (req, res) => {
+  const { id } = req.params
+
+  try {
+    await Event.findByIdAndRemove(id)
+    res.status(200).json({ message: 'Property deleted' })
+  } catch (error) {
+    console.log(error)
+    res.status(404).json({ message: error.message })
+  }
+}
+
 export const deleteEvents = async (req, res) => {
   const { id } = req.params
 

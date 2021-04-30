@@ -7,7 +7,6 @@ import Swiper from './../../components/Swiper'
 export default (props) => {
   CheckSession(localStorage.getItem('jwt'))
 
-  const user = JSON.parse(localStorage.getItem('user'))
   const [data, setData] = useState()
   const [images, setImages] = useState([])
   const [preview, setPreview] = useState(false)
@@ -24,17 +23,10 @@ export default (props) => {
     setImages(props.files)
   }, [props.files])
 
-  useEffect(() => {
-    images.forEach((img) => {
-      console.log(URL.createObjectURL(img))
-    })
-  }, [images])
-
   return (
     <React.Fragment>
       <div
         className={preview ? 'review-screen show' : 'review-screen hide'}
-        // className="property-preview-screen show"
         newpreview={props.newpreview(preview)}
       >
         <section>
@@ -42,15 +34,6 @@ export default (props) => {
           <div className="review-files">
             <h2>Images</h2>
             <Swiper slides={images} formatimgs={true} />
-            {/* {images?.map(function (item, i) {
-              return (
-                <React.Fragment key={i}>
-                  <div className="img-box">
-                    <img src={URL.createObjectURL(item)} alt="" />
-                  </div>
-                </React.Fragment>
-              )
-            })} */}
           </div>
         </section>
 

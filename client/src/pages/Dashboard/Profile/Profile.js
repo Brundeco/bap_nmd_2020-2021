@@ -183,7 +183,7 @@ export default () => {
             />
           </section>
 
-          <div className="flex flex-j-center full-width">
+          <div className="cta-bottom flex flex-j-center full-width">
             <button className="secondary-btn fix" onClick={handleSubmit}>
               Save updates
             </button>

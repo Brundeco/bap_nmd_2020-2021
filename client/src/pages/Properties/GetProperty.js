@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
-import CloseIcon from './../../icons/close.svg'
+import CloseIcon from './../../icons/new-close.svg'
 import NoUserIcon from './../../icons/no-user.svg'
 import { Preloader, ConvertDate, InputField } from '../../components'
 import DayPicker, { DateUtils } from 'react-day-picker'
@@ -356,20 +356,22 @@ export default ({ match }) => {
           </div>
         </section>
 
-        <div className={showCalendar ? 'calendar-show' : 'calendar-hide'}>
-          {dates.length === 0 ? (
-            <p className="calendar-alert-title">
-              Select at least one day to make a booking
-            </p>
-          ) : (
-            ''
-          )}
-          <DayPicker
-            selectedDays={selectedDates}
-            onDayClick={handleDayClick}
-            disabledDays={isDayDisabled}
-          />
-        </div>
+        <section>
+          <div className={showCalendar ? 'calendar-show' : 'calendar-hide'}>
+            {dates.length === 0 ? (
+              <p className="calendar-alert-title">
+                Select at least one day to make a booking
+              </p>
+            ) : (
+              ''
+            )}
+            <DayPicker
+              selectedDays={selectedDates}
+              onDayClick={handleDayClick}
+              disabledDays={isDayDisabled}
+            />
+          </div>
+        </section>
 
         <section className="extra-info">
           <div className="address">
@@ -402,7 +404,7 @@ export default ({ match }) => {
         {!user ? (
           <section className="disable-cta">
             <p>
-              To chat or make a reservation you need to be 
+              To chat or make a reservation you need to be
               <Link
                 className="menu-link-extra"
                 to={{ pathname: '/login', state: { from: 'root' } }}

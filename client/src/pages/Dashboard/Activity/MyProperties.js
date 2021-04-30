@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { app } from '../../../base'
+import { ConvertDate } from '../../../components'
 
 export default () => {
   const user = JSON.parse(localStorage.getItem('user')).id
@@ -38,27 +39,28 @@ export default () => {
       {data?.length > 0 ? (
         data?.map((item, i) => {
           return (
-            <div className="main-list-item" key={i}>
-              <div className="list-part">
-                <Link
-                  to={{
-                    pathname: `/update-property/${item._id}`,
-                  }}
-                >
-                  <li>Edit</li>
-                </Link>
-              </div>
-              <div className="list-part">
-                {propFiles?.map(function (image, i) {
+            <Link
+              key={i}
+              className="main-list-item"
+              to={{
+                pathname: `/update-property/${item._id}`,
+              }}
+            >
+              <div className="image">
+                {propFiles?.map((image, i) => {
                   if (image?.includes(item.images[0])) {
                     return <img src={image} alt="" />
                   }
                 })}
               </div>
-              <div className="list-part">
-                <h3> {item?.zip + ', ' + item?.city} </h3>
+              <div className="info">
+                <h3 className="main-title">
+                  {item?.street + ', ' + item?.houseNumber},
+                  {item?.zip + ', ' + item?.city}
+                </h3>
+                <span> Added on {ConvertDate(data?.createdAt)} </span>
               </div>
-            </div>
+            </Link>
           )
         })
       ) : (

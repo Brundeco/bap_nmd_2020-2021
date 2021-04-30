@@ -6,7 +6,7 @@ button {
 
 .main-btn {
   @include main-btn;
-  margin-top: 4vh;
+  // margin-top: 4vh;
   &:hover,
   &:focus,
   &:active {
@@ -16,7 +16,7 @@ button {
 
 .secondary-btn {
   @include main-btn-outline;
-  margin-top: 4vh;
+  // margin-top: 4vh;
   &:hover,
   &:focus,
   &:active {
@@ -129,6 +129,11 @@ button {
   margin: 3vh 0;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+
+  @include mq(medium) {
+    flex-direction: row;
+  }
 }
 
 .input-submit-btn {

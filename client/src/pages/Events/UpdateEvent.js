@@ -58,6 +58,30 @@ export default ({ match }) => {
     setFile(file)
   }
 
+  const handleDelete = (e) => {
+    e.preventDefault()
+    setLoading(true)
+
+    axios
+      .delete(
+        `${process.env.REACT_APP_API_URL}/events/delete/${match.params.id}`
+      )
+      .then((res) => {
+        console.log(res)
+        setTimeout(() => {
+          setPreloaderMsg('Event was deleted 👋')
+          window.location = '/activity'
+        }, 1500)
+      })
+      .catch((err) => {
+        console.log(err)
+        setTimeout(() => {
+          setPreloaderMsg('Something went wrong')
+          setLoading(false)
+        }, 1500)
+      })
+  }
+
   return (
     <div className="create-product-screen">
       <div className="page-wrapper">
@@ -70,6 +94,7 @@ export default ({ match }) => {
         />
         <EventFormUpdate
           currentdata={currentEvent}
+          delete={(e) => handleDelete(e)}
           onSubmit={handleSubmit}
           formdata={handleData}
           file={handleFile}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { app } from '../../../base'
+import { ConvertDate } from '../../../components'
 
 export default () => {
   const user = JSON.parse(localStorage.getItem('user')).id
@@ -35,23 +36,21 @@ export default () => {
       {data?.length > 0 ? (
         data?.map((item, i) => {
           return (
-            <div className="main-list-item" key={i}>
-              <div className="list-part">
-                <Link
-                  to={{
-                    pathname: `/update-event/${item._id}`,
-                  }}
-                >
-                  <li>Update</li>
-                </Link>
-              </div>
-              <div className="list-part">
+            <Link
+              key={i}
+              className="main-list-item"
+              to={{
+                pathname: `/update-event/${item._id}`,
+              }}
+            >
+              <div className="image">
                 <img src={images[i]} alt="event-image" />
               </div>
-              <div className="list-part">
-                <h3> {item?.zip + ', ' + item?.city} </h3>
+              <div className="info">
+                <h3 className="main-title">{item?.title}</h3>
+                <span> Added on {ConvertDate(data?.createdAt)} </span>
               </div>
-            </div>
+            </Link>
           )
         })
       ) : (
