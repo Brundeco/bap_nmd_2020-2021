@@ -135,7 +135,7 @@ export default () => {
               )}
             </button>
           </div>
-          <button className="main-btn" onClick={handleSubmit}>
+          <button className="main-btn mg-top-std" onClick={handleSubmit}>
             Register
           </button>
         </form>

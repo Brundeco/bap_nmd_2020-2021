@@ -8,6 +8,7 @@ import {
   filterLessRecent,
   filterSurface,
 } from '../functions/PropertyFilterFunctions'
+import CloseIcon from './../icons/new-close.svg'
 
 export default (props) => {
   const [filterMode, setFilterMode] = useState('newest')
@@ -156,7 +157,10 @@ export default (props) => {
           onChange={handleChange}
           className="main-input-field"
         />
-        <button onClick={(e) => closeForm(e)}>Close filter</button>
+        <div className="close-btn" onClick={(e) => closeForm(e)}>
+          <img src={CloseIcon} alt="close button" />
+        </div>
+        {/* <button onClick={(e) => closeForm(e)}>Close filter</button> */}
       </form>
       {showOptions ? (
         <div>
@@ -172,7 +176,11 @@ export default (props) => {
               </option>
             ))}
           </select>
-          <button onClick={(e) => closeSelect(e)}>Close filter</button>
+
+          <div className="close-btn" onClick={(e) => closeSelect(e)}>
+            <img src={CloseIcon} alt="close button" />
+          </div>
+          {/* <button onClick={(e) => closeSelect(e)}>Close filter</button> */}
         </div>
       ) : (
         ''

@@ -6,10 +6,10 @@ section {
   max-width: 1520px;
   width: 100%;
 
-  @include mq(large) {
-    padding: 0 1%;
-    width: 80%;
-  }
+  // @include mq(large) {
+  //   // padding: 0 1%;
+  //   width: 80%;
+  // }
 }
 
 section.expand {

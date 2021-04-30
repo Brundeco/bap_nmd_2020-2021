@@ -131,6 +131,10 @@ button {
   justify-content: center;
   flex-direction: column;
 
+  button:first-child {
+    margin-bottom: 20px;
+  }
+
   @include mq(medium) {
     flex-direction: row;
   }

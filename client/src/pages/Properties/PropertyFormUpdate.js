@@ -80,7 +80,7 @@ export default (props) => {
       const promisesArr = promises?.flat()
       promisesArr &&
         Promise.all(promisesArr).then((newArray) => {
-          setThumbnails((prevImgs) => [...newArray])
+          setThumbnails([...newArray])
         })
     } catch (error) {
       console.log(error)
@@ -96,10 +96,16 @@ export default (props) => {
   const handleDeleteNewFiles = (e, i) => {
     e.preventDefault()
     let newImgArr = []
+    console.log(newImgArr)
     files.map((file) => newImgArr.push(file))
     newImgArr.splice(i, 1)
+    console.log(newImgArr)
     setFiles(newImgArr)
   }
+
+  useEffect(() => {
+    console.log(files)
+  }, [files])
 
   const handleFiles = (e) => {
     Array.from(e.target.files).map((file) => {
@@ -334,7 +340,7 @@ export default (props) => {
           >
             Update property
           </button>{' '}
-          <button className="main-btn" onClick={props.delete}>
+          <button className="secondary-btn" onClick={props.delete}>
             Delete
           </button>
         </section>

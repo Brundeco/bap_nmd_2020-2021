@@ -13,6 +13,28 @@
   }
 }
 
+.events-screen {
+  .event-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    @include mq(medium) {
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+
+    .event-card {
+      margin-bottom: 40px;
+
+      // @include mq(large) {
+      //   width: 30vw;
+      // }
+    }
+  }
+}
+
 // .home-screen {
 //   li {
 //     margin-bottom: 0;

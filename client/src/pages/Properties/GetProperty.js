@@ -446,6 +446,11 @@ export default ({ match }) => {
               placeholder="Your complete name"
               type="text"
               className="main-input-field"
+              value={
+                formData?.email
+                  ? formData?.email
+                  : `${user?.firstname} ${user?.lastname}`
+              }
             />
             <InputField
               name="email"

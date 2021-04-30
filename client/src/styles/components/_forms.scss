@@ -110,3 +110,7 @@ input[type='time']::-webkit-clear-button {
 input[type='time']::-webkit-inner-spin-button {
   display: none;
 }
+
+.StripeElement.StripeElement--empty {
+  width: 100%;
+}

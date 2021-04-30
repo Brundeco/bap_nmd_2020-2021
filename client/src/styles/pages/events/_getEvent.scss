@@ -4,11 +4,15 @@
   .top-section,
   .bottom-section,
   .date-section {
-    width: 65%;
+    // width: 65%;
 
-    @include mq(small) {
-      width: 100%;
-    }
+    // @include mq(small) {
+    //   width: 100%;
+    // }
+  }
+
+  .close-btn {
+    border-radius: 0 !important;
   }
 
   .subject-image {

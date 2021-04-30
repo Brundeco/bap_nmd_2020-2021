@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { InputField, SearchAutoComplete } from '.'
-import CloseIcon from './../icons/close.svg'
+import CloseIcon from './../icons/new-close.svg'
 import {
   filterDateRange,
   filterMostRecent,
