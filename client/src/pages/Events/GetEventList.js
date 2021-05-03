@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Preloader, FilterEvents } from './../../components'
+import { Preloader, FilterEvents, ConvertDate } from './../../components'
 import { app } from '../../base'
 import Geocode from 'react-geocode'
 import { getPreciseDistance } from 'geolib'
@@ -137,18 +137,19 @@ export default (props) => {
       {props.showfilters ? <FilterEvents filtereddata={handleFilters} /> : ''}
       {evtsFiltered.length >= 1 ? (
         evtsFiltered?.map((item, index) => {
-          // console.log(evtsFiltered.length)
+          // console.log(item?.dates[0].getTime())
           return (
             <React.Fragment key={index}>
               <EventCard
                 title={item.title}
-                date={item.createdAt}
+                date={item.dates[0]}
                 distance={
                   distance?.find((el) => el.item === item._id)?.distance
                 }
                 city={item.city}
                 image={images[index]}
                 itemId={item._id}
+                zip={item.zip}
               />
             </React.Fragment>
           )

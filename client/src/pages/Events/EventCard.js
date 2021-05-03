@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export default ({ distance, city, title, date, image, itemId }) => {
+export default ({ distance, city, title, date, image, itemId, zip }) => {
   return (
     <Link
       className="event-card"
@@ -17,8 +17,10 @@ export default ({ distance, city, title, date, image, itemId }) => {
         <div className="info">
           <div className="left">
             <h3> {title} </h3>
-            <h3>{city}</h3>
-            <h4> Added on {new Date(date).toDateString()} </h4>
+            {/* <div className="flex"> */}
+            <h4 className="semi-bold"> {` ${zip} ${city} `} </h4>
+            <h4> Starts on {new Date(date).toDateString()} </h4>
+            {/* </div> */}
           </div>
           <div className="right">
             {distance == 'NaN' || distance == undefined ? (

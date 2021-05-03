@@ -143,6 +143,7 @@ export default (props) => {
           return (
             <PropertyCard
               surface={item.surface}
+              zip={item.zip}
               price={item.price}
               date={item.createdAt}
               distance={distance?.find((el) => el.item === item._id)?.distance}

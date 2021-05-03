@@ -11,16 +11,35 @@ footer {
     width: 100%;
     border-top: 1px solid #dedede;
     display: flex;
-  }
+    flex-direction: column;
 
-  h2,
-  h3 {
-    width: 100%;
-    padding: 30px 0 70px;
-  }
+    @include mq(large) {
+      flex-direction: row;
+    }
 
-  h3 {
-    display: flex;
-    justify-content: flex-end;
+    h2 {
+      padding-top: 30px;
+      padding-bottom: 10px;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+
+      @include mq(large) {
+        padding-bottom: 60px;
+      }
+    }
+
+    h3 {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      padding-bottom: 30px;
+
+      @include mq(large) {
+        justify-content: flex-end;
+        padding-top: 30px;
+        padding-bottom: 0;
+      }
+    }
   }
 }

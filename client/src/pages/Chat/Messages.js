@@ -13,10 +13,11 @@ export default ({ match }) => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/messages/${user.id}`)
       .then((res) => setMessages(res.data))
-      .catch(console.log('NO DATA'))
+      .catch((err) => console.log(err))
   }, [])
 
   useEffect(() => {
+    console.log(messages)
     let groupBy = (array, key) => {
       return array.reduce((result, obj) => {
         ;(result[obj[key]] = result[obj[key]] || []).push(obj)
@@ -46,9 +47,9 @@ export default ({ match }) => {
           <h2>Conversations</h2>
         </section>
 
-        <section>
-          {conversations &&
-            Object.keys(conversations).map((key, i) => {
+        {messages?.length > 0 ? (
+          <section>
+            {Object.keys(conversations).map((key, i) => {
               const timestamp = new Date(
                 conversations[key].slice(-1)[0].createdAt
               )
@@ -92,7 +93,12 @@ export default ({ match }) => {
                 </section>
               )
             })}
-        </section>
+          </section>
+        ) : (
+          <section>
+            <h2 className="main-title">You don't have messages yet</h2>
+          </section>
+        )}
       </div>
     </React.Fragment>
   )

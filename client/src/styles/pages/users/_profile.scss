@@ -48,11 +48,17 @@
       }
 
       h2 {
-        color: $text-grey;
-        font-size: 1.3em;
+        color: $base-black;
+        font-size: 1.1em;
         text-transform: capitalize;
-        margin: 2vh 0;
+        margin: 50px 0 0px;
         font-weight: 400;
+      }
+
+      h3 {
+        font-size: 1em;
+        margin-top: 10px;
+        color: #b1b1b1;
       }
     }
   }
@@ -80,7 +86,8 @@
       flex-direction: row;
     }
 
-    a, button {
+    a,
+    button {
       margin-bottom: 20px;
     }
   }

@@ -11,6 +11,7 @@ export default ({
   itemId,
   authorId,
   city,
+  zip,
 }) => {
   return (
     <Link
@@ -26,11 +27,12 @@ export default ({
 
       <div className="info">
         <div className="left">
-          <h3> {city} </h3>
-          <h3> {`${surface} m2`}</h3>
-
-          <h4>Daily price: €{price} </h4>
-          <h4> Date: {new Date(date).toDateString()} </h4>
+          <div className="flex">
+            <h3> {`${zip} ${city}`} </h3>
+            <span>•</span>
+            <h3> {`${surface} m2`}</h3>
+          </div>
+          <h4>{`Daily price: € ${price}`} </h4>
         </div>
         <div className="right">
           {distance == 'NaN' || distance == undefined ? (

@@ -4,6 +4,7 @@ import {
   InputField,
   Preloader,
   CheckSession,
+  ConvertDate,
 } from '../../../components'
 import {
   // deleteMessages,
@@ -80,6 +81,7 @@ export default () => {
           <h2 className="main-title">
             {`${user?.firstname} ${user?.lastname}`}{' '}
           </h2>
+          <h3> {`Popapp member since ${ConvertDate(user._createdAt)}`} </h3>
         </div>
       </section>
 

@@ -49,7 +49,7 @@
     height: 30%;
     width: 100%;
     display: flex;
-    padding: 10% 3%;
+    padding: 10% 3% 6%;
     border: 1px solid #e7e7e7;
     border-radius: 0 0 10px 10px;
     transition: $base-transition;
@@ -61,6 +61,14 @@
         font-weight: 500 !important;
         font-size: 1.1em;
         text-overflow: ellipsis;
+
+        &:first-child {
+          margin-right: 10px;
+        }
+
+        &:last-child {
+          margin-left: 10px;
+        }
       }
 
       h4 {
@@ -69,6 +77,7 @@
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+        margin-top: 10px;
       }
     }
 
