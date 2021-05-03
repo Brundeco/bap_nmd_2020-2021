@@ -42,7 +42,6 @@ export default (props) => {
           <img src={RadiusIcon} />
         </div>
         {props.locationsharing ? (
-          // <div className={true ? ' show-menu' : 'hide-menu'}>
           <div className={showOptions ? ' show-menu' : 'hide-menu'}>
             <select
               value={optionsValue}
@@ -77,7 +76,11 @@ export default (props) => {
       {history.location.pathname.includes('events') ||
       history.location.pathname.includes('properties') ? (
         <div
-          className={!showFilters ? 'toggle-filters search' : 'toggle-filters search active'}
+          className={
+            !showFilters
+              ? 'toggle-filters search'
+              : 'toggle-filters search active'
+          }
           onClick={() => setShowFilters(!showFilters)}
         >
           {!showFilters ? <img src={FilterIcon} /> : <img src={CloseIcon} />}

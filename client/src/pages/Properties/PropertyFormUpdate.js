@@ -144,7 +144,7 @@ export default (props) => {
   return (
     <div>
       <section>
-        <h1>Fill out the form below to start hosting your property</h1>
+        <h1>Fill out the form below to update your property</h1>
         <DayPicker
           selectedDays={data?.dates}
           onDayClick={handleDayClick}

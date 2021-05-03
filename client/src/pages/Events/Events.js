@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { GetEventList } from '..'
 import { CheckSession, Header, Map } from '../../components'
 
-export default (props) => {
-  // CheckSession(localStorage.getItem('jwt'))
-  
+export default () => {
   const [locationSharing, setLocationSharing] = useState()
   const [markers, setMarkers] = useState([])
   const [userLat, setUserLat] = useState()
@@ -24,6 +22,10 @@ export default (props) => {
     }
   }, [])
 
+  // useEffect(() => {
+  //   console.log(markers)
+  // }, [markers])
+
   const handleRadius = (radius) => {
     setRadius(radius)
   }
@@ -39,13 +41,10 @@ export default (props) => {
         radius={handleRadius}
         showfilters={handleFilters}
       />
-      <div className="events-screen">
-        <section>
-          {/* {userLat && userLon ? (
-          <Map lat={userLat} lon={userLon} coords={markers} />
-        ) : (
-          <Map lat={50.8503} lon={4.3517} coords={markers} />
-        )} */}
+      <div className="events-screen map-sidebar">
+        <section className="main">
+          <h1 className="main-title">Currently available events</h1>
+
           <GetEventList
             radius={radius}
             locationsharing={locationSharing}
@@ -54,6 +53,15 @@ export default (props) => {
             lng={userLon}
             showfilters={showFilters}
           />
+        </section>
+        <section className="map">
+          <h1 className="main-title">Map view</h1>
+
+          {userLat && userLon ? (
+            <Map lat={userLat} lon={userLon} coords={markers} />
+          ) : (
+            <Map lat={50.8503} lon={4.3517} coords={markers} />
+          )}
         </section>
       </div>
     </React.Fragment>

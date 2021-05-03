@@ -1,0 +1,39 @@
+.map-sidebar {
+  display: flex;
+  justify-content: space-between;
+
+  .main {
+    width: 100%;
+
+    @include mq(huge) {
+      width: 65%;
+      padding: 0 0 0 5%;
+    }
+  }
+
+  .map {
+    display: none;
+    width: 40%;
+    max-height: 60vh;
+    padding: 0 5% 0 0;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 50px;
+
+    @include mq(medium) {
+      text-align: left;
+    }
+  }
+
+  @include mq(huge) {
+    .main {
+      width: 65%;
+    }
+
+    .map {
+      display: block;
+    }
+  }
+}

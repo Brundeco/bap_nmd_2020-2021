@@ -41,7 +41,6 @@ export const filterPriceRange = async (priceRange) => {
 }
 
 export const filterMostRecent = async () => {
-  console.log('Most recent')
   return axios
     .get(`${process.env.REACT_APP_API_URL}/properties/filter/most-recent`)
     .then((res) => {
@@ -54,8 +53,6 @@ export const filterMostRecent = async () => {
 }
 
 export const filterLessRecent = async () => {
-  console.log('Less recent')
-
   return axios
     .get(`${process.env.REACT_APP_API_URL}/properties/filter/less-recent`)
     .then((res) => {

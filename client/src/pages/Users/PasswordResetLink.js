@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { InputField, Preloader } from '../../components'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 export default () => {
   const [data, setData] = React.useState({})
-  const [status, setStatus] = useState()
   const [loading, setLoading] = useState(false)
   const [preloaderMsg, setPreloaderMsg] = useState('Preparing reset link')
   const [updatePreloader, setUpdatePreloader] = useState('false')
+  let history = useHistory()
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }))
@@ -37,7 +37,6 @@ export default () => {
         setTimeout(function () {
           setLoading(false)
         }, 3000)
-        // setStatus('Password reset link could not be send')
         setLoading(false)
       })
   }
@@ -60,18 +59,15 @@ export default () => {
             required
           />
           <button className="main-btn" onClick={handleSubmit}>
-            Reset password
+            Send link
           </button>
         </form>
-        <Link
+        <button
           className="secondary-btn mg-top-none"
-          to={{ pathname: '/login', state: { from: 'root' } }}
+          onClick={() => history.goBack()}
         >
-          Back to login
-        </Link>
-        {/* <span className={success ? 'status-success' : 'status-failure'}>
-          {status}
-        </span> */}
+          Back
+        </button>
       </div>
     </div>
   )

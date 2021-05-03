@@ -1,57 +1,40 @@
-// MAPBOX SETTINGS //
-.show-popup {
-  display: block !important;
-}
+.map-marker {
+  background-color: $base-white;
 
-.hide-popup {
-  display: none !important;
-}
+  .map-marker-info {
+    opacity: 0;
+    background-color: $base-white;
+    width: 300px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(250, 250, 250, 0.95);
 
-.mapboxgl-popup {
-  display: none;
-}
+    h4 {
+      font-size: 1.4em;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-.mapboxgl-marker {
-  will-change: initial !important ;
-}
+    p {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 1.2em;
+      margin-top: 5px;
+    }
+  }
 
-.mapboxgl-marker img {
   &:hover {
-    .mapboxgl-popup {
-      display: block;
+    transition: $base-transition;
+    .map-marker-info {
+      transition: $base-transition;
+      opacity: 1;
     }
   }
 }
-
-// GOOGLE MAPS STYLES //
-
-.map-marker {
-  background-color: $base-white;
-}
-
-.map-marker .map-marker-info {
-  // transition: all 0.5s;
-  // padding: 65%;
-  // min-width: 10vw;
-  // min-height: 5vh;
-  // display: flex;
-  // background-color: white;
-  // box-sizing: border-box;
-  // flex-direction: column;
-}
-
-// .map-marker .map-marker-info {
-//   transition: $base-transition;
-//   padding: 5%;
-//   opacity: 0;
-//   height: auto;
-//   display: flex;
-// }
-
-// .map-marker {
-//   &:hover .map-marker-info {
-//     background-color: $base-white;
-//     opacity: 1;
-//     transition: $base-transition;
-//   }
-// }

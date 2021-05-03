@@ -9,13 +9,16 @@ import {
   filterSurface,
 } from '../functions/PropertyFilterFunctions'
 import CloseIcon from './../icons/new-close.svg'
+import axios from 'axios'
 
 export default (props) => {
   const [filterMode, setFilterMode] = useState('newest')
   const [priceRange, setPriceRange] = useState()
+  const [dateRange, setDateRange] = useState()
   const [propertiesFiltered, setPropertiesFiltered] = useState([])
   const [isActive, setisActive] = useState('newest')
   const [showPriceFields, setShowPriceFields] = useState(false)
+  const [showDateFields, setShowDateFields] = useState(false)
 
   const [showOptions, setShowOptions] = useState(false)
   const [optionsValue, setOptionsValue] = useState(50)
@@ -30,9 +33,9 @@ export default (props) => {
     setPriceRange((prev) => ({ ...prev, [name]: value }))
   }
 
-  useEffect(() => {
-    console.log(optionsValue)
-  }, [optionsValue])
+  const handleDaterange = (name, value) => {
+    setDateRange((prev) => ({ ...prev, [name]: value }))
+  }
 
   useEffect(
     async (e) => {
@@ -60,6 +63,10 @@ export default (props) => {
         setisActive('pricerange')
         setShowPriceFields(true)
       }
+      if (filterMode === 'daterange') {
+        setisActive('daterange')
+        setShowDateFields(true)
+      }
       if (filterMode === 'surface') {
         setisActive('surface')
         setShowOptions(true)
@@ -77,9 +84,45 @@ export default (props) => {
     }
   }, [priceRange])
 
+  useEffect(async () => {
+    if (dateRange?.startDate && dateRange?.endDate) {
+      const startDate = new Date(dateRange.startDate).getTime()
+      const endDate = new Date(dateRange.endDate).getTime()
+      let newArray = []
+
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/properties`)
+        .then((res) => {
+          let uniques
+          res.data.map((item) => {
+            item.dates.map((date) => {
+              const evtDate = new Date(date).getTime()
+              if (evtDate >= startDate && evtDate <= endDate) {
+                newArray.push(item)
+                uniques = [...new Set(newArray)]
+              }
+            })
+          })
+          if (!uniques) {
+            setPropertiesFiltered([])
+          } else {
+            setPropertiesFiltered(uniques)
+          }
+        })
+        .catch((err) => {
+          return err
+        })
+    }
+  }, [dateRange])
+
   const closeForm = (e) => {
     e.preventDefault()
     setShowPriceFields(false)
+  }
+
+  const closeDates = (e) => {
+    e.preventDefault()
+    setShowDateFields(false)
   }
 
   const closeSelect = (e) => {
@@ -137,6 +180,12 @@ export default (props) => {
         Price range
       </button>
       <button
+        className={isActive === 'daterange' ? 'active' : ''}
+        onClick={() => setFilterMode('daterange')}
+      >
+        Date range
+      </button>
+      <button
         className={isActive === 'surface' ? 'active' : ''}
         onClick={() => setFilterMode('surface')}
       >
@@ -145,15 +194,15 @@ export default (props) => {
       <form className={showPriceFields ? 'show' : 'hide'}>
         <InputField
           name="minVal"
-          placeholder="Minimum price"
           type="number"
+          placeholder="Minimum price"
           onChange={handleChange}
           className="main-input-field"
         />
         <InputField
           name="maxVal"
-          placeholder="Maximum price"
           type="number"
+          placeholder="Maximum price"
           onChange={handleChange}
           className="main-input-field"
         />
@@ -161,6 +210,32 @@ export default (props) => {
           <img src={CloseIcon} alt="close button" />
         </div>
         {/* <button onClick={(e) => closeForm(e)}>Close filter</button> */}
+      </form>
+
+      <form className={showDateFields ? 'show' : 'hide'}>
+        <div className="flex">
+          <div className="daterange-group">
+            <h3>Start date</h3>
+            <InputField
+              name="startDate"
+              type="date"
+              onChange={handleDaterange}
+              className="main-input-field"
+            />
+          </div>
+          <div className="daterange-group">
+            <h3>End date</h3>
+            <InputField
+              name="endDate"
+              type="date"
+              onChange={handleDaterange}
+              className="main-input-field"
+            />
+          </div>
+        </div>
+        <div className="close-btn" onClick={(e) => closeDates(e)}>
+          <img src={CloseIcon} alt="close button" />
+        </div>
       </form>
       {showOptions ? (
         <div>

@@ -37,21 +37,29 @@ export default () => {
         radius={handleRadius}
         showfilters={handleFilters}
       />
-      <div className="properties-screen">
-        <section>
-          {/* {userLat && userLon ? (
-          <Map lat={userLat} lon={userLon} coords={markers} />
-        ) : (
-          <Map lat={50.8503} lon={4.3517} coords={markers} />
-        )} */}
+      <div className="properties-screen map-sidebar">
+        <section className="main">
+          <h1 className="main-title">Currently available properties</h1>
+
           <GetPropertyList
             radius={radius}
             locationsharing={locationSharing}
-            markers={(coords) => setMarkers(coords)}
+            markers={(coords) => {
+              setMarkers(coords)
+            }}
             lat={userLat}
             lng={userLon}
             showfilters={showFilters}
           />
+        </section>
+        <section className="map">
+          <h1 className="main-title">Map view</h1>
+
+          {userLat && userLon ? (
+            <Map lat={userLat} lon={userLon} coords={markers} />
+          ) : (
+            <Map lat={50.8503} lon={4.3517} coords={markers} />
+          )}
         </section>
       </div>
     </React.Fragment>

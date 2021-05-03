@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import GoogleMapReact from 'google-map-react'
 import markerIcon from './../icons/mapMarker.svg'
+import { Link } from 'react-router-dom'
 
-const Marker = ({ title, address }) => (
-  <div
-    className="map-marker"
-    // onMouseEnter={() => console.log('I was hovered')}
-    // onMouseLeave={() => console.log('Hover was ended')}
-  >
+const Marker = ({ title, address, path }) => (
+  <div className="map-marker">
     <img src={markerIcon} />
-    <div className="map-marker-info">
+    <Link
+      to={{ pathname: path, state: { from: 'root' } }}
+      className="map-marker-info"
+    >
       <h4> {title} </h4>
       <p> {address} </p>
-    </div>
+    </Link>
   </div>
 )
 
@@ -32,12 +32,8 @@ export default (props) => {
   return (
     <div
       style={{
-        height: '30vh',
-        width: '100vw',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '0 5%',
+        height: '100%',
+        width: '100%',
       }}
     >
       <div
@@ -53,7 +49,7 @@ export default (props) => {
           defaultZoom={zoom}
         >
           {props.coords.map((el, key) => {
-            // console.log(el)
+            console.log(el)
             return (
               <Marker
                 key={key}
@@ -61,6 +57,7 @@ export default (props) => {
                 lng={parseFloat(el[0])}
                 title={el[3]}
                 address={el[4]}
+                path={el[2]}
               />
             )
           })}

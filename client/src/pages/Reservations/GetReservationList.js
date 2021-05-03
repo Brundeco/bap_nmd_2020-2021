@@ -47,6 +47,7 @@ export default () => {
           showfilters={() => {}}
         />
         <div className="reservation-screen">
+          <h2 className="main-title">All your reservations are listed below</h2>
           {data?.length > 0 ? (
             data.map((item, index) => {
               return (
@@ -71,7 +72,7 @@ export default () => {
                 </h4>
                 <button
                   className="main-btn"
-                  onClick={() => (window.location = '/events')}
+                  onClick={() => (window.location = '/properties')}
                 >
                   Discover
                 </button>

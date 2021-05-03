@@ -66,12 +66,12 @@ export const filterDateRange = async (dateRange) => {
           if (evtDate >= startDate && evtDate <= endDate) {
             newArray.push(item)
             uniques = [...new Set(newArray)]
-            // console.log(uniques)
-            // return uniques
+            console.log(uniques)
+            return uniques
           }
         })
       })
-      return uniques // return here
+      return uniques
     })
     .catch((err) => {
       return err

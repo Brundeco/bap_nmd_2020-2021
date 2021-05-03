@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { InputField, SearchAutoComplete } from '.'
 import CloseIcon from './../icons/new-close.svg'
 import {
-  filterDateRange,
   filterMostRecent,
   filterLessRecent,
 } from '../functions/EventFilterFunctions'
+import axios from 'axios'
 
 export default (props) => {
   const [filterMode, setFilterMode] = useState('newest')
@@ -59,10 +59,29 @@ export default (props) => {
 
   useEffect(async () => {
     if (dateRange?.startDate && dateRange?.endDate) {
-      const eventsFiltered = await filterDateRange(dateRange)
-      console.log(eventsFiltered)
-      setEventsFiltered(() => eventsFiltered)
-      // setEventsFiltered(eventsFiltered)
+      const startDate = new Date(dateRange.startDate).getTime()
+      const endDate = new Date(dateRange.endDate).getTime()
+      let newArray = []
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/events`)
+        .then((res) => {
+          let uniques
+          res.data.events.map((item) => {
+            item.dates.map((date) => {
+              const evtDate = new Date(date).getTime()
+              if (evtDate >= startDate && evtDate <= endDate) {
+                newArray.push(item)
+                uniques = [...new Set(newArray)]
+              }
+            })
+          })
+          if (!uniques) {
+            setEventsFiltered([])
+          } else {
+            setEventsFiltered(uniques)
+          }
+        })
+        .catch((err) => console.log(err))
     }
   }, [dateRange])
 
@@ -81,7 +100,7 @@ export default (props) => {
         className={isActive === 'oldest' ? 'active' : ''}
         onClick={() => setFilterMode('oldest')}
       >
-        Oldest
+        Latest
       </button>
       <button
         className={isActive === 'daterange' ? 'active' : ''}
@@ -97,29 +116,31 @@ export default (props) => {
       </button>
       <form className={showDateFields ? 'show' : 'hide'}>
         <div className="flex">
-          <InputField
-            name="startDate"
-            placeholder="Minimum price"
-            type="date"
-            onChange={handleChange}
-            className="main-input-field"
-          />
-          <InputField
-            name="endDate"
-            placeholder="Maximum price"
-            type="date"
-            onChange={handleChange}
-            className="main-input-field"
-          />
+          <div className="daterange-group">
+            <h3>Start date</h3>
+            <InputField
+              name="startDate"
+              placeholder="Minimum price"
+              type="date"
+              onChange={handleChange}
+              className="main-input-field"
+            />
+          </div>
+          <div className="daterange-group">
+            <h3>End date</h3>
+            <InputField
+              name="endDate"
+              placeholder="Maximum price"
+              type="date"
+              onChange={handleChange}
+              className="main-input-field"
+            />
+          </div>
         </div>
         <div className="close-btn" onClick={(e) => closeForm(e)}>
           <img src={CloseIcon} alt="close button" />
         </div>
       </form>
-      {/* <div className={showSearchField ? 'show' : 'hide'}>
-        <SearchAutoComplete events={handleFilteredEvents} />
-        <button onClick={(e) => closeSearch(e)}>Close search</button>
-      </div> */}
 
       {showSearchField ? (
         <div className="search show">

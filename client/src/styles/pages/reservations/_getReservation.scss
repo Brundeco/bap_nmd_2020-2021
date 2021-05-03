@@ -14,8 +14,12 @@
     }
 
     button {
-      margin: 3vh 3vw;
+      // margin: 3vh 3vw;
+      // font-size: 0.9em;
+      margin: 20px 3vw 0;
       font-size: 0.9em;
+      max-height: 50px;
+      max-width: 300px;
 
       &:first-child {
         @include main-btn;
@@ -43,13 +47,22 @@
 
   .info-group.dates {
     display: flex;
-    background: #f7f7f7;
     border-radius: 10px;
-    padding: 5%;
+    padding: 5% 5% 5% 0;
     margin-top: 5%;
 
     & p:first-child {
       padding-right: 15px;
+    }
+  }
+
+  .swiper-container {
+    height: 65vh;
+  }
+
+  @include mq(large) {
+    .swiper-container {
+      height: 70vh;
     }
   }
 }

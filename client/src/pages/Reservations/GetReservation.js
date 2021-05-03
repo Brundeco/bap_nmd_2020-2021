@@ -6,7 +6,7 @@ import { app } from '../../base'
 import PhoneIcon from './../../icons/phone.svg'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
-import CloseIcon from './../../icons/close.svg'
+import CloseIcon from './../../icons/new-close.svg'
 import { ConvertDate } from '../../components'
 
 export default ({ match }) => {
@@ -42,6 +42,7 @@ export default ({ match }) => {
   }, [])
 
   useEffect(() => {
+    console.log(property)
     axios
       .post(`${process.env.REACT_APP_API_URL}/messages/conversation_id`, {
         from: user.id,
@@ -80,7 +81,7 @@ export default ({ match }) => {
       </button>
 
       <section>
-        <h2 className="main-title">Details about the reservation</h2>
+        <h2 className="main-title">Reservation details</h2>
 
         <div className="info-group">
           <p className="semi-bold">Amount paid</p>
@@ -89,6 +90,10 @@ export default ({ match }) => {
         <div className="info-group">
           <p className="semi-bold">Payment date</p>
           <p>{ConvertDate(reservation?.createdAt)}</p>
+        </div>
+        <div className="info-group">
+          <p className="semi-bold">Property owner</p>
+          <p>{`${property?.firstname} ${property?.lastname}`}</p>
         </div>
 
         <div className="info-group dates flex-col">
@@ -108,7 +113,7 @@ export default ({ match }) => {
           <p>{property?.surface} m2</p>
         </div>
         <div className="info-group">
-          <p className="semi-bold">Ares</p>
+          <p className="semi-bold">Areas</p>
           <p>{property?.areas}</p>
         </div>
         <div className="info-group">
@@ -122,10 +127,10 @@ export default ({ match }) => {
       </section>
 
       <section>
-        <h2 className="main-title">
+        <p>
           For further questions about your reservation we would like you to
           contact the property owner. Please use the contact details below.{' '}
-        </h2>
+        </p>
         <section className="cta-bottom-section">
           <button className={'main-btn'} onClick={() => {}}>
             <img src={PhoneIcon} alt="" /> {`${property?.phone}`}

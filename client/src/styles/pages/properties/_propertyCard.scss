@@ -1,22 +1,23 @@
-.property-card {
+.property-card,
+.event-card {
   display: flex;
   flex-direction: column;
   display: flex;
   margin-right: 5vw;
   width: 75vw;
   display: inline-block;
-  margin-bottom: 5vh;
+  // margin-bottom: 5vh;
 
   @include mq(small) {
     width: 60vw;
   }
 
   @include mq(medium) {
-    width: 40vw;
+    width: 44%;
   }
 
   @include mq(large) {
-    width: 30vw;
+    width: 38%;
   }
 
   @include mq(huge) {
@@ -95,5 +96,11 @@
       border: 1px solid $color-none;
       transition: $base-transition;
     }
+  }
+}
+
+.properties-screen {
+  .property-card {
+    margin-bottom: 35px;
   }
 }

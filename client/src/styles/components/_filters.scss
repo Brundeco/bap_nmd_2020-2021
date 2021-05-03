@@ -1,62 +1,11 @@
-.event-filters {
-  height: auto;
-  display: flex;
-  margin: 1vh auto;
-  position: relative;
-  flex-wrap: wrap;
-
-  button {
-    padding: 10px 20px;
-    border-radius: 5px;
-    white-space: nowrap;
-    background-color: $soft-grey;
-    margin: 5px;
-  }
-
-  button.active {
-    background-color: $theme-blue;
-    color: #fff;
-  }
-
-  form.show,
-  .search.show {
-    position: absolute;
-    background: rgba(250, 250, 250, 0.8);
-    padding: 2% 3%;
-    box-sizing: border-box;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    box-shadow: 0px 0px 37px 4px rgb(214 214 214 / 45%);
-
-    .close-btn {
-      position: static;
-      margin: 2vh 0 1vh;
-    }
-  }
-
-  form.show {
-    input {
-      background: white;
-      border: none;
-      border-radius: 5px;
-      height: 5vh;
-      border: 1px solid #b7b7b7;
-      padding: 3%;
-      box-sizing: border-box;
-    }
-  }
-}
-
+.event-filters,
 .property-filters {
   height: auto;
   display: flex;
-  margin: 1vh auto;
+  margin: 0 auto 30px;
   position: relative;
   flex-wrap: wrap;
+  width: 100%;
 
   button {
     padding: 10px 20px;
@@ -71,10 +20,15 @@
     color: #fff;
   }
 
+  .close-btn {
+    position: static;
+    margin: 2vh 0 1vh;
+  }
+
   form.show,
   .search.show {
     position: absolute;
-    background: rgba(250, 250, 250, 0.8);
+    background: rgba(250, 250, 250, 0.95);
     padding: 2% 3%;
     box-sizing: border-box;
     border-radius: 10px;
@@ -84,11 +38,6 @@
     align-items: center;
     width: 100%;
     box-shadow: 0px 0px 37px 4px rgb(214 214 214 / 45%);
-
-    .close-btn {
-      position: static;
-      margin: 2vh 0 1vh;
-    }
   }
 
   form.show {
@@ -100,6 +49,14 @@
       border: 1px solid #b7b7b7;
       padding: 3%;
       box-sizing: border-box;
+    }
+  }
+
+  .daterange-group {
+    margin: 0 15px;
+
+    input {
+      width: 100%;
     }
   }
 }

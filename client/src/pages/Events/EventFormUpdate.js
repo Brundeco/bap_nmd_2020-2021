@@ -100,7 +100,7 @@ export default (props) => {
   return (
     <React.Fragment>
       <section>
-        <h1>Fill out the form below to create your event</h1>
+        <h1>Fill out the form below to update your event</h1>
         <div className="date-and-time">
           <DayPicker
             selectedDays={data?.dates}

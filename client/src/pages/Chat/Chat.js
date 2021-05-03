@@ -83,7 +83,9 @@ export default ({ match }) => {
       <div className="chat-screen">
         <section>
           <div className="chat-info">
-            <h1 className="main-title">Gesprek met {match.params.recepient}</h1>
+            <h1 className="main-title">
+              Conversation with {match.params.recepient}
+            </h1>
           </div>
         </section>
 

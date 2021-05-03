@@ -20,8 +20,6 @@ export default ({
         pathname: `/property/${itemId}/${authorId}`,
       }}
     >
-      {console.log(image)}
-
       <div className="image">
         <img key={key} src={image} alt="" />
       </div>

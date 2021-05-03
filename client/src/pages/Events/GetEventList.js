@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Preloader, CheckSession, FilterEvents } from './../../components'
+import { Preloader, FilterEvents } from './../../components'
 import { app } from '../../base'
 import Geocode from 'react-geocode'
 import { getPreciseDistance } from 'geolib'
@@ -36,7 +36,7 @@ export default (props) => {
   // Filter events based on accessibility (nearby the user), store filtered events in state
   useEffect(async () => {
     if (locationSharing == true) {
-      console.log('Location sharing TRUE')
+      // console.log('Location sharing TRUE')
       if (data?.length >= 1) {
         try {
           const evts = await Promise.all(
@@ -80,7 +80,7 @@ export default (props) => {
         }
       }
     } else {
-      console.log('Location sharing FALSE')
+      // console.log('Location sharing FALSE')
       if (data?.length >= 1) {
         try {
           setEvtsFiltered(data)
@@ -110,7 +110,7 @@ export default (props) => {
   useEffect(async () => {
     if (evtsFiltered) {
       const arr = evtsFiltered?.map((item) => {
-        console.log(item)
+        // console.log(item)
         return storageRef
           .child(item?.firebaseRef + '/' + item?.image)
           .getDownloadURL()
@@ -124,7 +124,7 @@ export default (props) => {
   }, [evtsFiltered])
 
   useEffect(() => {
-    console.log(loading)
+    // console.log(loading)
   }, [loading])
 
   const handleFilters = (data) => {
@@ -137,7 +137,7 @@ export default (props) => {
       {props.showfilters ? <FilterEvents filtereddata={handleFilters} /> : ''}
       {evtsFiltered.length >= 1 ? (
         evtsFiltered?.map((item, index) => {
-          console.log(evtsFiltered.length)
+          // console.log(evtsFiltered.length)
           return (
             <React.Fragment key={index}>
               <EventCard

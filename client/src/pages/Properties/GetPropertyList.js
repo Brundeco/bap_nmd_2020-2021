@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { CheckSession, FilterProperties, Preloader } from '../../components'
+import { FilterProperties, Preloader } from '../../components'
 import { app } from '../../base'
 import Geocode from 'react-geocode'
 import { getPreciseDistance } from 'geolib'
@@ -41,7 +41,7 @@ export default (props) => {
               const coord = [
                 res.results[0].geometry.location.lng,
                 res.results[0].geometry.location.lat,
-                `/event/${el._id}`,
+                `/property/${el._id}/${el.author_id}`,
                 el.title,
                 `${el.street} ${el.houseNumber}, ${el.zip} ${el.city}`,
               ]
@@ -75,7 +75,6 @@ export default (props) => {
       }
     } else {
       if (data?.length >= 1) {
-        console.log()
         try {
           setPropertiesFiltered(data)
           data.map(async (el) => {
@@ -119,16 +118,11 @@ export default (props) => {
   }, [data])
 
   const handleFilters = (data) => {
-    console.log(data)
     setPropertiesFiltered(data)
   }
 
-  useEffect(() => {
-    console.log(props.showfilters)
-  }, [props.showfilters])
-
   return (
-    <div className="property-list">
+    <div className="property-list" markers={props.markers(coords)}>
       {loading ? <Preloader text="Searching around you" /> : ''}
       {props.showfilters ? (
         <FilterProperties filtereddata={handleFilters} />
