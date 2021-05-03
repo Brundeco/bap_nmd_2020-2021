@@ -74,26 +74,24 @@ export default () => {
     >
       {loading ? <Preloader text={preloaderMsg} /> : ''}
 
-      <div className="page-wrapper">
-        <Header
-          locationsharing={() => {}}
-          radius={() => {}}
-          showfilters={() => {}}
-        />
-        <EventFormCreate
-          onSubmit={handleSubmit}
-          formdata={handleData}
-          file={handleFile}
-          preview={handlePreview}
-        />
-        <EventReview
-          files={file}
-          data={data}
-          preview={preview}
-          newpreview={handleNewPreview}
-          handleSubmit={(e) => handleSubmit(e)}
-        />
-      </div>
+      <Header
+        locationsharing={() => {}}
+        radius={() => {}}
+        showfilters={() => {}}
+      />
+      <EventFormCreate
+        onSubmit={handleSubmit}
+        formdata={handleData}
+        file={handleFile}
+        preview={handlePreview}
+      />
+      <EventReview
+        files={file}
+        data={data}
+        preview={preview}
+        newpreview={handleNewPreview}
+        handleSubmit={(e) => handleSubmit(e)}
+      />
     </div>
   )
 }

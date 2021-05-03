@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Header, LocateUser } from '../../components'
+import { Footer, Header, LocateUser } from '../../components'
 import { GetEventList, GetPropertyList } from '..'
 
 export default (props) => {
@@ -86,6 +86,7 @@ export default (props) => {
           />
         </section>
       </div>
+      <Footer />
     </div>
   )
 }

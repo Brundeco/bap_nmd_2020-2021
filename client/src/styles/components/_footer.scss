@@ -1,28 +1,26 @@
 footer {
-  position: fixed;
-  bottom: 10vh;
+  height: 10vh;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
-  left: 0;
-  right: 0;
-}
+  justify-content: flex-start;
+  padding: 0 5%;
+  font-size: 0.6em;
+  max-width: 100%;
+  padding-top: 30px;
 
-footer button {
-  margin: 0 1vh;
-  background: #F3F9FF;
-  border: none;
-  outline: none;
-  width: 25vw;
-  height: 4vh;
-  border-radius: 5px;
-}
+  div {
+    width: 100%;
+    border-top: 1px solid #dedede;
+    display: flex;
+  }
 
-footer button:nth-of-type(2) {
-  background: $theme-red;
-}
+  h2,
+  h3 {
+    width: 100%;
+    padding: 30px 0 70px;
+  }
 
-footer button img {
-  width: 10px;
+  h3 {
+    display: flex;
+    justify-content: flex-end;
+  }
 }

@@ -61,8 +61,7 @@ export default () => {
 
   return (
     <React.Fragment>
-      {/* <div className="property-screen"> */}
-      {/* <h2 className="main-title">Favorite events</h2> */}
+      <h2 className="main-title">My favorite events</h2>
       {loading ? <Preloader text={preloaderMsg} /> : ''}
       {favorites?.length > 0 ? (
         events.map((item, key) => {

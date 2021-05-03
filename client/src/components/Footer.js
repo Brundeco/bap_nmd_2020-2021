@@ -1,12 +1,12 @@
-import React from "react";
-import { DeleteUser } from ".";
-import { LogoutUser } from "../pages";
+import React from 'react'
 
 export default () => {
   return (
     <footer>
-      <LogoutUser onClick={onclick} />
-      <DeleteUser onClick={onclick} />
+      <div>
+        <h2> © 2021 Popapp </h2>
+        <h3> Arteveldehogeschool, opleiding Grafische en digitale media </h3>
+      </div>
     </footer>
-  );
-};
+  )
+}

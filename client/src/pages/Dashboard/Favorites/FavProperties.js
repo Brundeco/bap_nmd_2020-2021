@@ -57,6 +57,8 @@ export default () => {
 
   return (
     <div className="property-screen">
+      <h2 className="main-title">My favorite properties</h2>
+
       {loading ? <Preloader text={preloaderMsg} /> : ''}
 
       {favorites?.length > 0 ? (
