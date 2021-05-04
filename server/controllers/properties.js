@@ -149,26 +149,6 @@ export const makePayment = async (req, res) => {
   }
 }
 
-// export const makePaymentBancontact = async (req, res) => {
-//   if (req.method === 'POST') {
-//     try {
-//       const { amount } = req.body
-//       const paymentIntent = await stripe.paymentIntents.create({
-//         amount,
-//         currency: 'eur',
-//         payment_method_types: ['bancontact'],
-//       })
-
-//       res.status(200).send(paymentIntent.client_secret)
-//     } catch (err) {
-//       res.status(500).json({ statusCode: 500, message: err.message })
-//     }
-//   } else {
-//     res.setHeader('Allow', 'POST')
-//     res.status(405).end('Method Not Allowed')
-//   }
-// }
-
 export const filterPriceAsc = async (req, res) => {
   try {
     const properties = await Property.find().sort({ price: 1 })

@@ -49,7 +49,6 @@ export default (props) => {
           defaultZoom={zoom}
         >
           {props.coords.map((el, key) => {
-            console.log(el)
             return (
               <Marker
                 key={key}

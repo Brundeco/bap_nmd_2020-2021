@@ -1,15 +1,25 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import CloseMenu from './../icons/close-menu.svg'
 import { Link } from 'react-router-dom'
 
 export default (props) => {
   const user = JSON.parse(localStorage.getItem('user'))
+  const [data, setData] = useState()
 
   const logout = (e) => {
     e.preventDefault()
     localStorage.clear()
     window.location = '/login'
   }
+
+  useEffect(() => {
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/properties/admin`, {
+        id: user.id,
+      })
+      .then((res) => setData(res.data))
+  }, [])
 
   return (
     <div className={props.className}>
@@ -57,14 +67,19 @@ export default (props) => {
             <Link to={{ pathname: '/reservations', state: { from: 'root' } }}>
               Reservations
             </Link>
-            <Link
-              to={{
-                pathname: '/customer-reservations',
-                state: { from: 'root' },
-              }}
-            >
-              Bookings
-            </Link>
+
+            {data?.length > 0 ? (
+              <Link
+                to={{
+                  pathname: '/customer-reservations',
+                  state: { from: 'root' },
+                }}
+              >
+                Bookings
+              </Link>
+            ) : (
+              ''
+            )}
           </div>
 
           <div className="link-group">
