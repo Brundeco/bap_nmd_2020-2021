@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   Header,
   InputField,
@@ -6,13 +6,7 @@ import {
   CheckSession,
   ConvertDate,
 } from '../../../components'
-import {
-  // deleteMessages,
-  // deleteProperties,
-  // deleteEvents,
-  // deleteUser,
-  deleteUserContent,
-} from '../../../functions/DeleteUserContent'
+import { deleteUserContent } from '../../../functions/DeleteUserContent'
 import axios from 'axios'
 import FileBase from 'react-file-base64'
 import SelectImage from './../../../icons/add.svg'

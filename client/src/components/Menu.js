@@ -16,7 +16,12 @@ export default (props) => {
       <nav className="menu">
         <div className="menu-center">
           <div className="link-group">
-            <Link to={{ pathname: '/', state: { from: 'root' } }}>Home</Link>
+            <Link
+              className="redirect-home-btn"
+              to={{ pathname: '/', state: { from: 'root' } }}
+            >
+              Home
+            </Link>
           </div>
 
           <div className="link-group">
@@ -51,6 +56,14 @@ export default (props) => {
             </Link>
             <Link to={{ pathname: '/reservations', state: { from: 'root' } }}>
               Reservations
+            </Link>
+            <Link
+              to={{
+                pathname: '/customer-reservations',
+                state: { from: 'root' },
+              }}
+            >
+              Bookings
             </Link>
           </div>
 

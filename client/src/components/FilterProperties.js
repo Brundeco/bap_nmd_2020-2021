@@ -26,7 +26,7 @@ export default (props) => {
     { label: '50 m2', value: 50 },
     { label: '100 m2', value: 100 },
     { label: '200 m2', value: 200 },
-    { label: '500 m2', value: 500 },
+    { label: '1000 m2', value: 1000000 },
   ]
 
   const handleChange = (name, value) => {

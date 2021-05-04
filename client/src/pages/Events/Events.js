@@ -46,7 +46,7 @@ export default () => {
           <h1 className="main-title">Currently available events</h1>
 
           <GetEventList
-            radius={radius}
+            radius={100000}
             locationsharing={locationSharing}
             markers={(coords) => setMarkers(coords)}
             lat={userLat}

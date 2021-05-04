@@ -28,6 +28,8 @@ import {
   PasswordResetLink,
   Profile,
 } from './pages'
+import GetCustomerReservationList from './pages/CustomerReservations/GetCustomerReservationList'
+import GetCustomerReservation from './pages/CustomerReservations/GetCustomerReservation'
 
 function App() {
   const stripePromise = loadStripe(
@@ -65,6 +67,15 @@ function App() {
           <Route
             path="/reservation/:reservation_id/:property_id"
             component={GetReservation}
+          />
+
+          <Route
+            path="/customer-reservations"
+            component={GetCustomerReservationList}
+          />
+          <Route
+            path="/customer-reservation/:reservation_id/:property_id"
+            component={GetCustomerReservation}
           />
 
           <Route

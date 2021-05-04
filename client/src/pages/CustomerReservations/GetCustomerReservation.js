@@ -14,42 +14,38 @@ export default ({ match }) => {
   let history = useHistory()
   const [property, setProperty] = useState()
   const [reservation, setReservation] = useState()
-  const [conversationId, setConversationId] = useState()
   const [dates, setDates] = useState([])
   const storageRef = app.storage().ref()
   const [images, setImages] = useState([])
+  const [client, setClient] = useState()
 
   const isDayDisabled = (day) => {
     return !dates.some((disabledDay) => DateUtils.isSameDay(day, disabledDay))
   }
 
-  useEffect(() => {
-    axios
+  useEffect(async () => {
+    await axios
       .get(
         `${process.env.REACT_APP_API_URL}/properties/${match.params.property_id}`
       )
       .then((res) => setProperty(res.data))
       .catch((err) => console.log(err))
 
-    axios
+    await axios
       .get(
         `${process.env.REACT_APP_API_URL}/reservations/detail/${match.params.reservation_id}`
       )
-      .then((res) => {
+      .then(async (res) => {
         setReservation(res.data)
+        console.log(res.data.client_id)
+
+        await axios
+          .get(`${process.env.REACT_APP_API_URL}/users/${res.data.client_id}`)
+          .then((res) => setClient(res.data))
+          .catch((err) => console.log(err))
       })
       .catch((err) => console.log(err))
   }, [])
-
-  useEffect(() => {
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/messages/conversation_id`, {
-        from: user.id,
-        to: property?.author_id,
-      })
-      .then((res) => setConversationId(res.data))
-      .catch((err) => console.log(err))
-  }, [property])
 
   useEffect(() => {
     reservation?.dates?.map((day) => {
@@ -80,68 +76,39 @@ export default ({ match }) => {
       </button>
 
       <section>
-        <h2 className="main-title">Reservation details</h2>
+        <h2 className="main-title">Your property was booked</h2>
 
         <div className="info-group">
-          <p className="semi-bold">Amount paid</p>
+          <p className="semi-bold">Amount paid by customer</p>
           <p>€{reservation?.price}</p>
         </div>
         <div className="info-group">
           <p className="semi-bold">Payment date</p>
           <p>{ConvertDate(reservation?.createdAt)}</p>
         </div>
-        <div className="info-group">
-          <p className="semi-bold">Property owner</p>
-          <p>{`${property?.firstname} ${property?.lastname}`}</p>
-        </div>
+      </section>
 
+      <section>
+        <h2 className="main-title">Cient details</h2>
+        <div className="info-group">
+          <p className="semi-bold">Full name</p>
+          <p>{`${client?.firstname} ${client?.lastname}`} </p>
+        </div>
+        <div className="info-group">
+          <p className="semi-bold">Email</p>
+          <p>{client?.email} m2</p>
+        </div>
+        <div className="info-group">
+          <p className="semi-bold">Phone</p>
+          <p>{client?.phone}</p>
+        </div>
+      </section>
+
+      <section>
         <div className="info-group dates flex-col">
           <p className="semi-bold">Reserved dates</p>
           <DayPicker selectedDays={dates} disabledDays={isDayDisabled} />
         </div>
-      </section>
-
-      <section>
-        <h2 className="main-title">Details about the property</h2>
-        <div className="info-group">
-          <p className="semi-bold">Dailyprice</p>
-          <p>€{property?.price}</p>
-        </div>
-        <div className="info-group">
-          <p className="semi-bold">Space</p>
-          <p>{property?.surface} m2</p>
-        </div>
-        <div className="info-group">
-          <p className="semi-bold">Areas</p>
-          <p>{property?.areas}</p>
-        </div>
-        <div className="info-group">
-          <p className="semi-bold">Address</p>
-          <p>{`${property?.street} ${property?.houseNumber}, ${property?.zip} ${property?.city}`}</p>
-        </div>
-      </section>
-
-      <section>
-        <Swiper slides={images} />
-      </section>
-
-      <section>
-        <p>
-          For further questions about your reservation we would like you to
-          contact the property owner. Please use the contact details below.{' '}
-        </p>
-        <section className="cta-bottom-section">
-          <button className={'main-btn'} onClick={() => {}}>
-            <img src={PhoneIcon} alt="" /> {`${property?.phone}`}
-          </button>
-          <button
-            onClick={() =>
-              (window.location = `/chat/${property?.author_id}/${property?.author}/${conversationId}`)
-            }
-          >
-            Chat with owner
-          </button>
-        </section>
       </section>
     </div>
   )

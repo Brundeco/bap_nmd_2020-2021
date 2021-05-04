@@ -111,6 +111,11 @@ input[type='time']::-webkit-inner-spin-button {
   display: none;
 }
 
-.StripeElement.StripeElement--empty {
+.StripeElement {
   width: 100%;
+  // border-bottom: 1px solid black;
+  // padding-bottom: 20px;
+  background-color: rgb(241, 241, 241);
+  padding: 20px;
+  border-radius: 5px;
 }

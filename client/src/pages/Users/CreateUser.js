@@ -21,7 +21,6 @@ export default () => {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    console.log('submit theis form!!!!')
     setLoading(true)
     if (data.password !== data.passwordRepeat) {
       setLoading(false)

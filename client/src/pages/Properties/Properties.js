@@ -42,7 +42,7 @@ export default () => {
           <h1 className="main-title">Currently available properties</h1>
 
           <GetPropertyList
-            radius={radius}
+            radius={100000}
             locationsharing={locationSharing}
             markers={(coords) => {
               setMarkers(coords)

@@ -32,3 +32,26 @@ export const createReservation = async (req, res) => {
     res.status(409).json({ message: error.message })
   }
 }
+
+export const getCustomerReservations = async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const reservations = await Reservation.find({
+      property_owner_id: { $in: id },
+    })
+    res.status(200).json(reservations)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const getCustomerReservation = async (req, res) => {
+  const { id } = req.params
+  try {
+    const reservations = await Reservation.findById(id)
+    res.status(200).json(reservations)
+  } catch (err) {
+    console.log(err)
+  }
+}
