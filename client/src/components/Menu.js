@@ -14,11 +14,13 @@ export default (props) => {
   }
 
   useEffect(() => {
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/properties/admin`, {
-        id: user.id,
-      })
-      .then((res) => setData(res.data))
+    if (user?.id) {
+      axios
+        .post(`${process.env.REACT_APP_API_URL}/properties/admin`, {
+          id: user?.id,
+        })
+        .then((res) => setData(res.data))
+    }
   }, [])
 
   return (
