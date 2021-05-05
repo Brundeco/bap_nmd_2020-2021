@@ -7,7 +7,6 @@ dotenv.config()
 
 export const sendMail = async (req, res) => {
   const mailInfo = req.body
-  console.log(mailInfo)
 
   const transporter = nodemailer.createTransport({
     host: 'send.one.com',

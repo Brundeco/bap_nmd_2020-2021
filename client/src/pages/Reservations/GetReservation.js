@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Swiper from './../../components/Swiper'
 import { app } from '../../base'
 import PhoneIcon from './../../icons/phone.svg'

@@ -68,11 +68,25 @@
     font-weight: 700;
     color: white !important;
   }
+
+  .time-group {
+    margin: 20px;
+
+    h3 {
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+  }
 }
 
 .create-product-screen.no-scroll {
   height: 100vh;
   overflow-y: hidden;
+}
+
+.create-product-screen.no-scroll-evts {
+  height: 100vh;
+  overflow: hidden;
 }
 
 .date-and-time {

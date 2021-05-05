@@ -20,9 +20,9 @@ export default (props) => {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/properties`)
-      .then((res) => setData(res.data))
+    axios.get(`${process.env.REACT_APP_API_URL}/properties`).then((res) => {
+      setData(res.data)
+    })
   }, [])
 
   useEffect(() => {
@@ -95,6 +95,10 @@ export default (props) => {
           console.log(error)
         }
       } else {
+        setTimeout(() => {
+          setLoading(false)
+        }, 2500)
+        setPropertiesFiltered([])
       }
     }
   }, [data, props.lat, props.lng, props.radius])
@@ -150,7 +154,7 @@ export default (props) => {
               image={propImg}
               authorId={item.author_id}
               itemId={item._id}
-              key={index}
+              id={index}
               city={item.city}
             />
           )

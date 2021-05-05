@@ -6,7 +6,6 @@ import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 
 export default () => {
-  // localStorage.clear()
   const location = useLocation()
   const email = queryString.parse(location.search).email
   const [data, setData] = React.useState({ email: '', password: '' })
@@ -22,10 +21,6 @@ export default () => {
     }
   }, [])
 
-  useEffect(() => {
-    console.log(data)
-  }, [data])
-
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }))
   }
@@ -38,14 +33,12 @@ export default () => {
       .post(`${process.env.REACT_APP_API_URL}/users/login`, data)
       .then((res) => {
         setSuccess(true)
-        console.log(res)
         setStatus(res.data.message)
         localStorage.setItem('user', JSON.stringify(res.data.user))
         localStorage.setItem('jwt', res.data.token)
         if (CheckSession(res.data.token)) window.location = '/'
       })
       .catch((err) => {
-        console.log(err)
         setLoading(false)
         setStatus(err.response?.data?.message)
       })

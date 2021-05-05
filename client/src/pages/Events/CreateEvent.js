@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { CheckSession, Header, Preloader, PrevPage } from './../../components'
+import React, { useState } from 'react'
+import { CheckSession, Header, Preloader } from './../../components'
 import axios from 'axios'
 import { app } from '../../base'
 import EventFormCreate from './EventFormCreate'
@@ -36,7 +36,6 @@ export default () => {
       .ref(`${data.firebaseRef}/${file.id}`)
       .put(file)
       .then((res) => {
-        console.log(res)
         axios
           .post(`${process.env.REACT_APP_API_URL}/events`, data)
           .then(() => {

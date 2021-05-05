@@ -97,8 +97,6 @@ export const createConversationId = async (req, res) => {
 export const deleteConversations = async (req, res) => {
   const { id } = req.params
 
-  console.log('Delete all mesages bitch')
-
   try {
     await Messages.deleteMany({
       $or: [{ from: id }, { to: id }],

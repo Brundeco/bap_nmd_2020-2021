@@ -137,7 +137,6 @@ export const filterPostAutocomplete = async (req, res) => {
 
 export const filterDateRange = async (req, res) => {
   const dateRange = req.body.dateRange
-  console.log(dateRange)
 
   try {
     const events = await Event.find({

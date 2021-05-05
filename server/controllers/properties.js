@@ -34,7 +34,6 @@ export const createProperty = async (req, res) => {
   const newProperty = new Property(property)
   try {
     await newProperty.save()
-    console.log('Property added')
     res.status(201).send('Property added')
   } catch (error) {
     res.status(409).json({ message: error.message })
@@ -168,7 +167,6 @@ export const filterPriceDesc = async (req, res) => {
 }
 
 export const filterMostRecent = async (req, res) => {
-  console.log('yeet')
   try {
     const properties = await Property.find().sort({ _id: 1 })
     res.status(200).json(properties)
@@ -189,7 +187,6 @@ export const filterLessRecent = async (req, res) => {
 export const filterPriceRange = async (req, res) => {
   const priceRange = req.body.priceRange
 
-  console.log(priceRange)
   try {
     const properties = await Property.find({
       price: { $gte: priceRange.minVal, $lte: priceRange.maxVal },
@@ -203,7 +200,6 @@ export const filterPriceRange = async (req, res) => {
 
 export const filterSurface = async (req, res) => {
   const surface = req.body.surface
-  // console.log(surface)
 
   try {
     const properties = await Property.find({

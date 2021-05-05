@@ -24,6 +24,7 @@ export default (props) => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/events`)
       .then((res) => {
+        console.log(res.data.events)
         setData(res.data.events)
       })
       .catch((err) => console.log(err))
@@ -36,7 +37,6 @@ export default (props) => {
   // Filter events based on accessibility (nearby the user), store filtered events in state
   useEffect(async () => {
     if (locationSharing == true) {
-      // console.log('Location sharing TRUE')
       if (data?.length >= 1) {
         try {
           const evts = await Promise.all(
@@ -80,7 +80,6 @@ export default (props) => {
         }
       }
     } else {
-      // console.log('Location sharing FALSE')
       if (data?.length >= 1) {
         try {
           setEvtsFiltered(data)
@@ -102,6 +101,11 @@ export default (props) => {
         } catch (error) {
           console.log(error)
         }
+      } else {
+        setTimeout(() => {
+          setLoading(false)
+        }, 2500)
+        setEvtsFiltered([])
       }
     }
   }, [data, props.lat, props.lng, props.radius])
@@ -110,7 +114,6 @@ export default (props) => {
   useEffect(async () => {
     if (evtsFiltered) {
       const arr = evtsFiltered?.map((item) => {
-        // console.log(item)
         return storageRef
           .child(item?.firebaseRef + '/' + item?.image)
           .getDownloadURL()
@@ -123,10 +126,6 @@ export default (props) => {
     }
   }, [evtsFiltered])
 
-  useEffect(() => {
-    // console.log(loading)
-  }, [loading])
-
   const handleFilters = (data) => {
     setEvtsFiltered(data)
   }
@@ -137,7 +136,6 @@ export default (props) => {
       {props.showfilters ? <FilterEvents filtereddata={handleFilters} /> : ''}
       {evtsFiltered.length >= 1 ? (
         evtsFiltered?.map((item, index) => {
-          // console.log(item?.dates[0].getTime())
           return (
             <React.Fragment key={index}>
               <EventCard

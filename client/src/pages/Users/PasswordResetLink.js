@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { InputField, Preloader } from '../../components'
 import axios from 'axios'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 export default () => {
   const [data, setData] = React.useState({})
@@ -22,16 +22,14 @@ export default () => {
       .post(`${process.env.REACT_APP_API_URL}/users/password-reset`, {
         email: data.email,
       })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         setUpdatePreloader(true)
         setPreloaderMsg('You have mail! 💌')
         setTimeout(function () {
           setLoading(false)
         }, 3000)
       })
-      .catch((err) => {
-        console.log(err.message)
+      .catch(() => {
         setUpdatePreloader(true)
         setPreloaderMsg('Something went wrong...')
         setTimeout(function () {

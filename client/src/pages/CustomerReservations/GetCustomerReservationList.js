@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { CheckSession, Header, Preloader } from '../../components'
 import { app } from '../../base'
-import { ReservationCard } from '..'
 import CustomerReservationCard from './CustomerReservationCard'
 
 export default () => {
   CheckSession(localStorage.getItem('jwt'))
   const user = JSON.parse(localStorage.getItem('user'))
   const [data, setData] = useState()
-  const [property, setProperty] = useState()
   const [featuredImg, setFeaturedImg] = useState()
   const storageRef = app.storage().ref()
 
@@ -21,7 +19,6 @@ export default () => {
 
   useEffect(async () => {
     if (data) {
-      console.log(data)
       data?.map(async (item) => {
         return storageRef
           .child(item?.firebase_ref + '/' + item?.image)
@@ -33,10 +30,6 @@ export default () => {
       })
     }
   }, [data])
-
-  useEffect(() => {
-    console.log(property)
-  }, [property])
 
   if (data != undefined) {
     return (

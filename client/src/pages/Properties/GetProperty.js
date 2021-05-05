@@ -43,7 +43,6 @@ export default ({ match }) => {
   })
   const stripe = useStripe()
   const elements = useElements()
-  const handleIndex = () => {}
 
   const handleChange = (name, value) => {
     setFormData((prev) => ({ ...prev, [name]: value }))
@@ -74,7 +73,6 @@ export default ({ match }) => {
   }, [selectedDates])
 
   useEffect(() => {
-    console.log(data)
     // Get Firestore img Urls
     const promises = data?.images
       ?.map(async (el) => {
@@ -226,7 +224,6 @@ export default ({ match }) => {
                   booking.dates
                 )
                 .then(() => {
-                  console.log('Dates in database are editted!')
                   axios
                     .post(`${process.env.REACT_APP_API_URL}/mailing`, {
                       user: user?.username,
@@ -238,7 +235,6 @@ export default ({ match }) => {
                       receiver: user?.email,
                     })
                     .then((res) => {
-                      console.log(res.data.message)
                       window.location = `/reservations`
                     })
                     .catch((err) => {
@@ -266,13 +262,10 @@ export default ({ match }) => {
         <button className="close-btn" onClick={() => history.goBack()}>
           <img src={CloseIcon} alt="close button" />
         </button>
-        {/* <Link
-          className="close-btn"
-          to={{ pathname: '/properties', state: { from: 'root' } }}
-        >
-          <img src={CloseIcon} alt="close button" />
-        </Link> */}
-        <Swiper slides={images} />
+
+        <div className="img-gallery-wrapper">
+          <Swiper slides={images} />
+        </div>
 
         <section>
           <h2 className="main-title">{`${data?.street} ${data?.houseNumber}, ${data?.zip} ${data?.city}`}</h2>
@@ -292,7 +285,7 @@ export default ({ match }) => {
               )}
             </div>
           </div>
-          <h3>Added on {propertyCreatedAt}</h3>
+          <h3>Added on {ConvertDate(data?._createdAt)} </h3>
         </section>
 
         <section>

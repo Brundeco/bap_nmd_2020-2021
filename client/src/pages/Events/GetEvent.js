@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import NoUserIcon from './../../icons/no-user.svg'
 import CloseIcon from './../../icons/new-close.svg'
 import { Preloader, ConvertDate } from './../../components'
@@ -9,7 +9,6 @@ import 'react-day-picker/lib/style.css'
 import { app } from '../../base'
 
 export default ({ match }) => {
-
   const user = JSON.parse(localStorage.getItem('user'))
   let history = useHistory()
   const [data, setData] = useState()
@@ -76,11 +75,8 @@ export default ({ match }) => {
     setLoading(true)
 
     let arr = [...favorites]
-    console.log(arr)
-    console.log(arr)
     let indexItem = arr.indexOf(match.params.id)
     indexItem === -1 ? arr.push(match.params.id) : arr.splice(indexItem, 1)
-    console.log(arr)
 
     axios
       .put(`${process.env.REACT_APP_API_URL}/users/like-event/${user?.id}`, {
@@ -133,7 +129,7 @@ export default ({ match }) => {
           </div>
 
           <h3 className="small-title-italic">
-            Created at {ConvertDate(data?.createdAt)}
+            Created on {ConvertDate(data?._createdAt)}
           </h3>
           <p> {data?.description}</p>
         </section>

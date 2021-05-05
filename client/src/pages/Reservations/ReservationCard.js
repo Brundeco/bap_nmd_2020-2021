@@ -25,8 +25,6 @@ export default ({ price, address, title, date, image, resid, propid }) => {
             <h4 className="price-bg-color">{`Paid €${price}`}</h4>
           </div>
         </div>
-        {/* <div className="right">
-        </div> */}
       </div>
     </Link>
   )

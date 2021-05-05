@@ -1,6 +1,17 @@
 .property-detail-screen {
-  .swiper-container {
-    margin-bottom: 5vh;
+  .img-gallery-wrapper {
+    width: 100%;
+    margin-bottom: 60px;
+
+    @include mq(medium) {
+      width: 100%;
+      height: 60vh;
+    }
+
+    .swiper-container {
+      margin-bottom: 5vh;
+      height: 100%;
+    }
   }
 
   .subject-image {

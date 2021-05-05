@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Link, useHistory } from 'react-router-dom'
-import Swiper from './../../components/Swiper'
+import { useHistory } from 'react-router-dom'
 import { app } from '../../base'
-import PhoneIcon from './../../icons/phone.svg'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
 import CloseIcon from './../../icons/new-close.svg'
 import { ConvertDate } from '../../components'
 
 export default ({ match }) => {
-  const user = JSON.parse(localStorage.getItem('user'))
   let history = useHistory()
   const [property, setProperty] = useState()
   const [reservation, setReservation] = useState()
@@ -37,7 +34,6 @@ export default ({ match }) => {
       )
       .then(async (res) => {
         setReservation(res.data)
-        console.log(res.data.client_id)
 
         await axios
           .get(`${process.env.REACT_APP_API_URL}/users/${res.data.client_id}`)
@@ -96,7 +92,7 @@ export default ({ match }) => {
         </div>
         <div className="info-group">
           <p className="semi-bold">Email</p>
-          <p>{client?.email} m2</p>
+          <p>{client?.email}</p>
         </div>
         <div className="info-group">
           <p className="semi-bold">Phone</p>

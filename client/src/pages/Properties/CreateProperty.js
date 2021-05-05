@@ -75,7 +75,7 @@ export default (props) => {
       className={
         !preview || !newPreview
           ? 'create-product-screen'
-          : 'create-product-screen no-scroll'
+          : 'create-product-screen no-scroll-evts'
       }
     >
       {loading ? <Preloader text={preloaderMsg} /> : ''}

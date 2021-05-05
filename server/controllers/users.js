@@ -143,7 +143,6 @@ export const passwordReset = async (req, res) => {
           if (err) {
             res.status(400).json({ messsage: err })
           } else {
-            console.log('Nodemailer success: ', success)
             res.status(200).json({ message: 'Mail successfully sent' })
           }
         })
@@ -196,11 +195,9 @@ export const saveNewPassword = async (req, res) => {
       },
     }).then((user) => {
       if (user === null) {
-        console.log('No user found')
         res.json('No user found')
       } else {
         bcrypt.hash(req.params.password, 10, async (err, hashedPass) => {
-          console.log(hashedPass)
           await user
             .updateOne({
               password: hashedPass,
@@ -221,9 +218,7 @@ export const saveNewPassword = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   const { id } = req.params
-  console.log(id)
-
-  console.log('delete all users !!')
+ 
   try {
     const user = await User.findByIdAndRemove(id)
 

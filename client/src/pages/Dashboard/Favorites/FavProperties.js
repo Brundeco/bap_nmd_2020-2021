@@ -26,7 +26,6 @@ export default () => {
             likes: likes,
           })
           .then((res) => {
-            console.log(res)
             res.data.map((el) => setProperties((prev) => [...prev, el]))
             setLoading(false)
           })
@@ -58,9 +57,7 @@ export default () => {
   return (
     <div className="property-screen">
       <h2 className="main-title">My favorite properties</h2>
-
       {loading ? <Preloader text={preloaderMsg} /> : ''}
-
       {favorites?.length > 0 ? (
         properties.map((item, key) => {
           let propImg = ''
@@ -81,6 +78,8 @@ export default () => {
               authorId={item.author_id}
               itemId={item._id}
               key={key}
+              city={item.city}
+              zip={item.zip}
             />
           )
         })

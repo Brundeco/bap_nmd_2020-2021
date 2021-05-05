@@ -37,13 +37,18 @@ export default (props) => {
         <section>
           <h1>Please review your event information below</h1>
 
-          <div className="review-files">
-            <h2>Event wallpaper</h2>
-            <div className="img-box">
-              <img src={image && URL.createObjectURL(image)} alt="" />
+          <section>
+            <div className="review-files fix">
+              <h2 className="mg-bottom-title">Event wallpaper</h2>
+              <div className="img-box">
+                <img src={image && URL.createObjectURL(image)} alt="" />
+              </div>
             </div>
-          </div>
+          </section>
 
+          <div>
+            <h2 className="mg-bottom-title">Selected date(s)</h2>
+          </div>
           <div className="date-and-time">
             <DayPicker
               selectedDays={data?.dates}
@@ -63,12 +68,12 @@ export default (props) => {
 
           <div className="content">
             <div className="general-info">
-              <h2>General info</h2>
+              <h2 className="mg-bottom-title">General info</h2>
               <p>{data?.title}</p>
               <p>{data?.description}</p>
             </div>
             <div className="address">
-              <h2>Event location</h2>
+              <h2 className="mg-bottom-title">Event location</h2>
 
               <p>
                 {`${data?.street} ${data?.houseNumber}, ${data?.zip} ${data?.city}`}

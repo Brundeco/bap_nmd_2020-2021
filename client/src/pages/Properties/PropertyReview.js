@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { CheckSession } from '../../components'
 import DayPicker from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
-import Swiper from './../../components/Swiper'
 
 export default (props) => {
   CheckSession(localStorage.getItem('jwt'))
 
   const [data, setData] = useState()
-  const [images, setImages] = useState([])
   const [preview, setPreview] = useState(false)
 
   useEffect(() => {
@@ -19,10 +17,6 @@ export default (props) => {
     setData(props.data)
   }, [props.data])
 
-  useEffect(() => {
-    setImages(props.files)
-  }, [props.files])
-
   return (
     <React.Fragment>
       <div
@@ -32,13 +26,23 @@ export default (props) => {
         <section>
           <h1>Please review your property information below</h1>
           <div className="review-files">
-            <h2>Images</h2>
-            <Swiper slides={images} formatimgs={true} />
+            <h2 className="mg-bottom-title">Images</h2>
+            <div className="img-gallery">
+              {props.files?.map((item, i) => {
+                return (
+                  <React.Fragment key={i}>
+                    <div className="img-box">
+                      <img src={URL.createObjectURL(item)} alt="" />
+                    </div>
+                  </React.Fragment>
+                )
+              })}
+            </div>
           </div>
         </section>
 
         <section>
-          <h2>Days you will be hosting</h2>
+          <h2 className="mg-bottom-title">Days you will be hosting</h2>
           <DayPicker
             selectedDays={data?.dates}
             disabledDays={{ before: new Date() }}
@@ -46,13 +50,13 @@ export default (props) => {
         </section>
 
         <section>
-          <h2 className="main-title">General info</h2>
+          <h2 className="mg-bottom-title">General info</h2>
           <div className="info-group">
             <p className="semi-bold">Description</p>
             <p>{data?.description}</p>
           </div>
           <div className="info-group">
-            <p className="semi-bold">Price</p>
+            <p className="semi-bold">Daily price</p>
             <p>{data?.price}</p>
           </div>
           <div className="info-group">
@@ -66,7 +70,7 @@ export default (props) => {
         </section>
 
         <section>
-          <h2 className="main-title">Location</h2>
+          <h2 className="mg-bottom-title">Location</h2>
           <div className="info-group">
             <p className="semi-bold">Address</p>
             <p>
@@ -79,7 +83,7 @@ export default (props) => {
         </section>
 
         <section>
-          <h2 className="main-title">Contact details</h2>
+          <h2 className="mg-bottom-title">Your contact details</h2>
           <div className="info-group">
             <p className="semi-bold">Email</p>
             <p>{data?.email} </p>

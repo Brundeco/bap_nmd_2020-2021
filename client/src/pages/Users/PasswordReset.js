@@ -36,7 +36,6 @@ export default ({ match }) => {
         }
       })
       .catch((err) => {
-        console.log(err.message)
         setStatus(err.message)
       })
   }
@@ -51,12 +50,10 @@ export default ({ match }) => {
           setSuccess(true)
           setLoading(false)
           setStatus(res.data.message)
-          console.log(res)
           window.location = '/login'
         })
         .catch((err) => {
           setLoading(false)
-          console.log(err.message)
           setStatus(err.message)
         })
     }

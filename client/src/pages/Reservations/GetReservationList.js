@@ -8,12 +8,10 @@ export default () => {
   CheckSession(localStorage.getItem('jwt'))
   const user = JSON.parse(localStorage.getItem('user'))
   const [data, setData] = useState()
-  const [property, setProperty] = useState()
   const [featuredImg, setFeaturedImg] = useState()
   const storageRef = app.storage().ref()
 
   useEffect(() => {
-    console.log('here we are')
     axios
       .get(`${process.env.REACT_APP_API_URL}/reservations/${user.id}`)
       .then((res) => setData(res.data))
@@ -21,7 +19,6 @@ export default () => {
 
   useEffect(async () => {
     if (data) {
-      console.log(data)
       data?.map(async (item) => {
         return storageRef
           .child(item?.firebase_ref + '/' + item?.image)
@@ -33,10 +30,6 @@ export default () => {
       })
     }
   }, [data])
-
-  useEffect(() => {
-    console.log(property)
-  }, [property])
 
   if (data != undefined) {
     return (

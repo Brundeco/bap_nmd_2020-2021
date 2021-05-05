@@ -14,8 +14,6 @@ export default () => {
 
   const handleChange = (name, value) => {
     setData((prev) => ({ ...prev, [name]: value }))
-    console.log(data)
-    console.log('wuk doeme?')
   }
 
   const handleSubmit = (e) => {

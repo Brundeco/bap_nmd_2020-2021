@@ -17,10 +17,6 @@ import mailingRoutes from './routes/mailing.js'
 
 import path from 'path'
 const __dirname = path.resolve()
-
-console.log(__dirname)
-// const __dirname = path.resolve(path.dirname(''))
-
 const app = express()
 app.use(cors())
 dotenv.config()
@@ -34,44 +30,25 @@ app.use(express.static(__dirname + '/public/'))
 
 let participants = []
 
-// try {
 socketio.on('connection', (socket) => {
-  // console.log(socket.id)
   socket.on('registration', (id) => {
-    console.log('ID !! ')
-    console.log(id)
     participants.push({ socketId: socket.id, id: id })
-    console.log('All participants !!')
-    console.log(participants)
   })
 
   socket.on('new-message', (data) => {
-    console.log('data')
-    console.log(data)
-    console.log('data')
-
     const receiver = participants.filter((obj) => {
       return obj.id === data.id ? obj : false
     })
 
-    // if (obj) console.log('Object true')
     if (receiver) {
-      console.log(receiver)
-      console.log('string')
       participants.forEach((participant) => {
-        console.log(participant)
         socketio.to(participant.socketId).emit('receive-message', data.message)
       })
     }
   })
 
-  socket.on('disconnect', () => {
-    // console.log('User left')
-  })
+  socket.on('disconnect', () => {})
 })
-// } catch (error) {
-//   console.log(error)
-// }
 
 app.use('/auth', authRoutes)
 app.use('/events', eventRoutes)

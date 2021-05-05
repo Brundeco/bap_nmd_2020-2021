@@ -7,7 +7,6 @@ import {
   updateEvent,
   getEventsAdmin,
   getLikes,
-  // filterDateRange,
   filterLessRecent,
   filterMostRecent,
   filterGetAutocomplete,
@@ -25,15 +24,11 @@ router.post('/', createEvent)
 router.put('/:id', updateEvent)
 router.post('/likes', getLikes)
 
-// router.post('/filter/date-range', filterDateRange)
 router.get('/filter/most-recent', filterMostRecent)
 router.get('/filter/less-recent', filterLessRecent)
 router.get('/filter/get/autocomplete', filterGetAutocomplete)
 router.post('/filter/post/autocomplete', filterPostAutocomplete)
 router.delete('/delete/:id', deleteEvent)
 router.delete('/:id', deleteEvents)
-
-// router.get('/filter/price-asc', filterPriceAsc)
-// router.get('/filter/price-desc', filterPriceDesc)
 
 export default router

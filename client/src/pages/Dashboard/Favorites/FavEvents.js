@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 import { app } from '../../../base'
 import { Preloader } from '../../../components'
 import { EventCard } from '../..'
@@ -13,7 +12,6 @@ export default () => {
   const storageRef = app.storage().ref()
   const [loading, setLoading] = useState(true)
   const [preloaderMsg, setPreloaderMsg] = useState('Just a second')
-  const [alert, setAlert] = useState('No favorites could be found')
 
   useEffect(() => {
     axios
@@ -28,7 +26,6 @@ export default () => {
             likes: likes,
           })
           .then((res) => {
-            console.log(res.data)
             res.data.map((el) => setEvents((prev) => [...prev, el]))
             setLoading(false)
           })
@@ -53,12 +50,6 @@ export default () => {
     })
   }, [events])
 
-  useEffect(() => {
-    if (!favorites?.length > 0) {
-      console.log('Less then 1 favorites')
-    }
-  }, [favorites])
-
   return (
     <React.Fragment>
       <h2 className="main-title">My favorite events</h2>
@@ -70,9 +61,7 @@ export default () => {
               <EventCard
                 title={item.title}
                 date={item.createdAt}
-                // distance={
-                //   distance?.find((el) => el.item === item._id)?.distance
-                // }
+                zip={item.zip}
                 city={item.city}
                 image={images[key]}
                 itemId={item._id}
@@ -93,7 +82,6 @@ export default () => {
           </button>
         </div>
       )}
-      {/* </div> */}
     </React.Fragment>
   )
 }

@@ -218,6 +218,17 @@ export default (props) => {
 
         {/* <input type="submit" value="Submit" className="main-input-field" /> */}
       </form>
+
+      <section>
+        {!formValid ? (
+          <h3 className="form-message">
+            To continue fill out all fields, pick at least one date and a start
+            and end hour. Also choose a wallpaper for your event.
+          </h3>
+        ) : (
+          ''
+        )}
+      </section>
       <button
         className={formValid ? 'main-btn' : 'main-btn disabled-btn'}
         onClick={() => setPreview(!preview)}

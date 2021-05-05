@@ -19,6 +19,10 @@ export default (props) => {
     author_id: user.id,
     images: [],
     firebaseRef: uuid(),
+    firstname: user?.firstname,
+    lastname: user?.lastname,
+    phone: user?.phone,
+    email: user?.email,
   })
 
   const handleChange = (name, value) => {
@@ -122,7 +126,7 @@ export default (props) => {
             <div className="form-col-md">
               <InputField
                 name="price"
-                placeholder="Price"
+                placeholder="Daily price"
                 type="number"
                 onChange={handleChange}
                 className="main-input-field"
@@ -205,6 +209,7 @@ export default (props) => {
             placeholder="Email"
             type="email"
             onChange={handleChange}
+            value={data?.email ? data?.email : user?.email}
             required
           />
           <InputField
@@ -212,6 +217,7 @@ export default (props) => {
             placeholder="Phone"
             type="number"
             onChange={handleChange}
+            value={data?.phone ? data?.phone : user?.phone}
             required
           />
           <InputField
@@ -219,6 +225,7 @@ export default (props) => {
             placeholder="Firstname"
             type="text"
             onChange={handleChange}
+            value={data?.firstname ? data?.firstname : user?.firstname}
             required
           />
           <InputField
@@ -226,6 +233,7 @@ export default (props) => {
             placeholder="Lastname"
             type="text"
             onChange={handleChange}
+            value={data?.lastname ? data?.lastname : user?.lastname}
             required
           />
         </section>
@@ -264,7 +272,7 @@ export default (props) => {
       <section>
         {!formValid ? (
           <h3 className="form-message">
-            Fill out all fields, pick at least one date and select at least two
+            To continue fill out all fields, pick at least one date and select at least two
             pictures.
           </h3>
         ) : (
